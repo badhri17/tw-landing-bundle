@@ -1,0 +1,6 @@
+allowBuilds:
+  '@salla.sa/twilight-bundles': true
+  esbuild: true
+onlyBuiltDependencies:
+  - '@salla.sa/twilight-bundles'
+  - esbuild
