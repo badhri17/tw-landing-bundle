@@ -111,6 +111,18 @@ export class GrowthElement extends LitElement {
     return toLatinDigits(s);
   }
 
+  /**
+   * The inverse: render a number in the digits the store's language uses, so a
+   * counter or a step badge matches the copy beside it. Latin digits outside
+   * Arabic, Arabic-Indic inside it.
+   */
+  protected _localeNum(n: number): string {
+    if (this._lang() !== "ar") return String(n);
+    return String(n).replace(/\d/g, (d) =>
+      String.fromCharCode(0x0660 + Number(d))
+    );
+  }
+
   // ------------------------------------------------------------
   // Page anchors — how hero nav links reach the other components
   // ------------------------------------------------------------
@@ -207,7 +219,9 @@ export class GrowthElement extends LitElement {
     const target = document.getElementById(id);
     if (!target) return; // let the browser try; nothing worse than a no-op
     e.preventDefault();
-    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const reduce = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
     target.scrollIntoView({
       block: "start",
       behavior: reduce ? "auto" : "smooth",

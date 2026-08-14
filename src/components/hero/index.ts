@@ -782,6 +782,7 @@ export default class GrowthHero extends GrowthElement {
                 data-border=${c.nav_border ? "on" : "off"}
                 data-fixed=${navFixed ? "on" : "off"}
                 data-scrolled=${navFixed && this._navPastHero ? "on" : "off"}
+                data-anim=${enableAnim ? this._animState : "in"}
               >
                 <div class="nav-inner">
                   <a class="nav-logo" href=${c.nav_home_url || "#"}>
@@ -834,19 +835,32 @@ export default class GrowthHero extends GrowthElement {
                   aria-modal="true"
                   aria-hidden=${this._menuOpen ? "false" : "true"}
                 >
-                  <button
-                    class="menu-close"
-                    type="button"
-                    aria-label=${this._lang() === "en" ? "Close" : "إغلاق"}
-                    @click=${this._closeMenu}
-                  >
-                    ✕
-                  </button>
+                  <!-- The sheet mirrors the bar it drops out of, so the brand
+                       stays put instead of being replaced by a bare list. -->
+                  <div class="menu-head">
+                    <span class="menu-brand">
+                      ${navLogo
+                        ? html`<img src=${navLogo} alt=${navStoreName || "logo"} />`
+                        : html`<span>${navStoreName}</span>`}
+                    </span>
+                    <button
+                      class="menu-close"
+                      type="button"
+                      aria-label=${this._lang() === "en" ? "Close" : "إغلاق"}
+                      @click=${this._closeMenu}
+                    >
+                      <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M6 6l12 12M18 6L6 18" />
+                      </svg>
+                    </button>
+                  </div>
                   <ul class="menu-links">
-                    ${navItems.map((it) => html`<li>${navLink(it)}</li>`)}
+                    ${navItems.map(
+                      (it, i) => html`<li style=${`--i:${i}`}>${navLink(it)}</li>`
+                    )}
                   </ul>
                   ${navCta
-                    ? html`<div class="menu-cta">
+                    ? html`<div class="menu-cta" style=${`--i:${navItems.length}`}>
                         <a class="btn btn-primary" href=${navCta.href}
                           >${navCta.label}</a
                         >

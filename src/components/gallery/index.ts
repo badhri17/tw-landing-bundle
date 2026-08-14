@@ -325,14 +325,6 @@ export default class GrowthGallery extends GrowthElement {
     </div>`;
   }
 
-  /** Arabic-Indic digits when the store is Arabic, so the counter matches. */
-  private _localeNum(n: number): string {
-    if (this._lang() !== "ar") return String(n);
-    return String(n).replace(/\d/g, (d) =>
-      String.fromCharCode(0x0660 + Number(d))
-    );
-  }
-
   render() {
     const c: GalleryConfig = this.config || {};
     const images = this._images();

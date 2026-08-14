@@ -104,7 +104,7 @@ export default defineConfig({
     // ... other plugins
     sallaDemoPlugin({
       // Show only specific components
-      components: ['product-card', 'scroll-top'],
+      components: ['hero', 'use-cases'],
       
       // Customize grid layout
       grid: {

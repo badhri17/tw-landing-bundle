@@ -150,13 +150,26 @@ export const heroStyles = css`
     z-index: 3;
     padding-inline: var(--gh-inline-pad);
     padding-block: clamp(0.75rem, 1.8vw, 1.15rem);
-  }
-  .nav[data-fixed="on"] {
-    position: fixed;
+    /* One transition list for the whole bar. The fixed variant used to declare
+       its own, which would have replaced this one wholesale and killed the
+       drop-in — "transition" is a single property, not a merge. */
     transition:
+      transform 0.62s var(--gh-easing),
+      opacity 0.5s var(--gh-easing),
       background-color 0.28s var(--gh-easing),
       color 0.28s var(--gh-easing),
       box-shadow 0.28s var(--gh-easing);
+  }
+  .nav[data-fixed="on"] { position: fixed; }
+  /* The bar drops in from above the fold on load. Ends on "none" rather than
+     translateY(0) so the fixed bar stops being a containing block once landed. */
+  .nav[data-anim="ready"] {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+  .nav[data-anim="in"] {
+    opacity: 1;
+    transform: none;
   }
   /* Past the hero the bar has arbitrary sections behind it, so it stops being
      transparent and carries its own surface — otherwise the white-on-image
@@ -171,14 +184,21 @@ export const heroStyles = css`
     /* currentColor at full strength is too loud for a hairline */
     border-block-end-color: color-mix(in srgb, currentColor 18%, transparent);
   }
+  /* Three tracks so the links are centred on the BAR, not on the gap left over
+     after the logo — the outer tracks stay equal whatever they hold. When the
+     links are display:none (mobile) the other two still land in 1 and 3,
+     because every child names its own column. */
   .nav-inner {
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
     align-items: center;
     gap: clamp(1rem, 3vw, 2.5rem);
     margin-inline: auto;
     max-width: var(--gh-nav-max, 1280px);
   }
   .nav-logo {
+    grid-column: 1;
+    justify-self: start;
     flex: 0 0 auto;
     display: inline-flex;
     align-items: center;
@@ -199,39 +219,47 @@ export const heroStyles = css`
 
   .nav-links {
     display: none; /* mobile-first: the hamburger owns navigation */
+    grid-column: 2;
+    justify-content: center;
     list-style: none;
     margin: 0;
     padding: 0;
-    gap: clamp(1rem, 2.2vw, 2rem);
-    flex: 1 1 auto;
+    gap: clamp(1.25rem, 2.6vw, 2.75rem);
   }
   .nav-links a {
     position: relative;
+    display: inline-block;
     color: inherit;
     text-decoration: none;
-    font-size: 0.9375rem;
+    font-size: clamp(0.95rem, 1.1vw, 1.0625rem);
     font-weight: 500;
-    opacity: 0.88;
+    letter-spacing: 0.005em;
+    opacity: 0.86;
     white-space: nowrap;
-    transition: opacity 0.2s var(--gh-easing);
+    transition:
+      opacity 0.22s var(--gh-easing),
+      transform 0.28s var(--gh-easing);
   }
+  /* Grows from the middle out — a rule that unrolls from one end reads like a
+     text cursor next to a centred set of links. */
   .nav-links a::after {
     content: "";
     position: absolute;
-    inset-block-end: -4px;
+    inset-block-end: -5px;
     inset-inline: 0;
     height: 1.5px;
     background: currentColor;
     transform: scaleX(0);
-    transform-origin: inline-start;
-    transition: transform 0.28s var(--gh-easing);
+    transform-origin: center;
+    transition: transform 0.34s var(--gh-easing);
   }
-  .nav-links a:hover { opacity: 1; }
+  .nav-links a:hover { opacity: 1; transform: translateY(-1px); }
   .nav-links a:hover::after { transform: scaleX(1); }
 
   .nav-actions {
+    grid-column: 3;
+    justify-self: end;
     flex: 0 0 auto;
-    margin-inline-start: auto;
     display: flex;
     align-items: center;
     gap: 0.75rem;
@@ -287,68 +315,163 @@ export const heroStyles = css`
   .menu-backdrop {
     position: absolute;
     inset: 0;
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.55);
+    backdrop-filter: blur(3px);
     opacity: 0;
-    transition: opacity 0.3s var(--gh-easing);
+    transition: opacity 0.36s var(--gh-easing);
   }
   .menu[data-open="true"] .menu-backdrop { opacity: 1; }
+
+  /* A sheet dropping out of the top edge, not a drawer off the side: it arrives
+     from the same place the bar lives, so the burger reads as opening the bar
+     rather than summoning a panel from somewhere else. Height follows the
+     content and is capped at the viewport, so a two-link menu is a shallow
+     sheet instead of a mostly-empty full screen. */
   .menu-panel {
     position: absolute;
-    inset-block: 0;
-    inset-inline-end: 0;
-    width: min(84vw, 340px);
-    padding: 1.25rem;
+    inset-block-start: 0;
+    inset-inline: 0;
+    max-height: 100%;
+    padding: clamp(0.9rem, 3.5vw, 1.35rem) var(--gh-inline-pad)
+      clamp(2rem, 8vw, 3rem);
     display: flex;
     flex-direction: column;
-    gap: 1.25rem;
+    gap: clamp(1.5rem, 5vw, 2.25rem);
     overflow-y: auto;
-    background: var(--gh-menu-bg, #0b0b0f);
+    background: var(--gh-menu-bg, rgba(11, 11, 15, 0.96));
     color: var(--gh-menu-fg, #fff);
-    transform: translateX(100%);
-    transition: transform 0.34s var(--gh-easing);
+    backdrop-filter: blur(20px) saturate(1.15);
+    border-end-start-radius: clamp(18px, 5vw, 28px);
+    border-end-end-radius: clamp(18px, 5vw, 28px);
+    box-shadow: 0 26px 70px -28px rgba(0, 0, 0, 0.75);
+    transform: translateY(-101%);
+    transition: transform 0.52s var(--gh-easing);
   }
-  .menu-panel:dir(rtl) { transform: translateX(-100%); }
-  .menu[data-open="true"] .menu-panel { transform: translateX(0); }
+  .menu[data-open="true"] .menu-panel { transform: translateY(0); }
+
+  /* Mirrors the bar's own row, so the sheet reads as the bar expanding. */
+  .menu-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    min-height: var(--gh-nav-logo-h, 32px);
+  }
+  .menu-brand {
+    display: inline-flex;
+    align-items: center;
+    font-weight: 700;
+    font-size: 1.0625rem;
+    letter-spacing: -0.01em;
+  }
+  .menu-brand img {
+    display: block;
+    height: var(--gh-nav-logo-h, 32px);
+    width: auto;
+    max-width: 180px;
+    object-fit: contain;
+  }
   .menu-close {
-    align-self: flex-end;
-    width: 40px;
-    height: 40px;
+    flex: 0 0 auto;
+    width: 42px;
+    height: 42px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    background: none;
-    border: 0;
+    background: color-mix(in srgb, currentColor 10%, transparent);
+    border: 1px solid color-mix(in srgb, currentColor 18%, transparent);
+    border-radius: 50%;
     color: inherit;
     cursor: pointer;
-    font-size: 1.5rem;
-    line-height: 1;
+    transition:
+      background-color 0.24s var(--gh-easing),
+      transform 0.24s var(--gh-easing);
   }
+  .menu-close:hover {
+    background: color-mix(in srgb, currentColor 20%, transparent);
+    transform: rotate(90deg);
+  }
+  .menu-close svg {
+    width: 18px;
+    height: 18px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+  }
+
   .menu-links {
     list-style: none;
     margin: 0;
     padding: 0;
     display: flex;
     flex-direction: column;
-    gap: 0.25rem;
+    align-items: center;
+    gap: clamp(0.3rem, 1.4vw, 0.7rem);
+  }
+  /* Each link falls in behind the sheet, one after the next. The delay is
+     driven by --i, set per row by the component. */
+  .menu-links li,
+  .menu-cta {
+    opacity: 0;
+    transform: translateY(-16px);
+    transition:
+      opacity 0.45s var(--gh-easing),
+      transform 0.45s var(--gh-easing);
+  }
+  .menu[data-open="true"] .menu-links li,
+  .menu[data-open="true"] .menu-cta {
+    opacity: 1;
+    transform: none;
+    transition-delay: calc(0.16s + var(--i, 0) * 0.065s);
   }
   .menu-links a {
-    display: block;
-    padding: 0.85rem 0.25rem;
+    position: relative;
+    display: inline-block;
+    padding: 0.45rem 0.3rem;
     color: inherit;
     text-decoration: none;
-    font-size: 1.125rem;
-    font-weight: 600;
-    border-block-end: 1px solid rgba(128, 128, 128, 0.22);
+    font-size: clamp(1.6rem, 7.5vw, 2.25rem);
+    font-weight: 700;
+    line-height: 1.25;
+    letter-spacing: -0.02em;
+    text-align: center;
   }
-  .menu-cta { margin-top: auto; }
-  .menu-cta .btn { width: 100%; }
+  .menu-links a::after {
+    content: "";
+    position: absolute;
+    inset-block-end: 0.15rem;
+    inset-inline: 0.3rem;
+    height: 2px;
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: center;
+    transition: transform 0.34s var(--gh-easing);
+  }
+  .menu-links a:hover::after { transform: scaleX(1); }
+
+  .menu-cta { display: flex; justify-content: center; }
+  .menu-cta .btn {
+    min-width: min(280px, 70vw);
+    justify-content: center;
+  }
 
   @media (prefers-reduced-motion: reduce) {
     .menu-panel,
     .menu-backdrop,
+    .menu-close,
     .nav,
+    .nav-links a,
     .nav-links a::after,
+    .menu-links a::after,
     .nav-burger span { transition: none; }
+    .menu-links li,
+    .menu-cta {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+    .nav[data-anim="ready"] { opacity: 1; transform: none; }
   }
 
   /* Keep hero content clear of the bar. Only applied when a nav is rendered,

@@ -56,6 +56,8 @@ export type HeroNavTargetKind =
   | "metrics"
   | "product-features"
   | "gallery"
+  | "ingredients"
+  | "use-cases"
   | "custom"
   | "link";
 

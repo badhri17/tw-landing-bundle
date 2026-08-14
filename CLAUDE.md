@@ -9,7 +9,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - **Platform:** Salla Twilight Engine
 - **Language priority:** Arabic-first (RTL default), LTR as fallback
 - **Planned:** 4 prefilled templates organized around **store verticals**. The bundle owner fills the template content themselves — do not invent vertical themes or prefill `templates/` unless explicitly asked.
-- **Component source:** `hero`, `collection`, `interactive-product` and `testimonials` were ported from the sibling bundle `~/Desktop/tw-growth-kit` (see *Porting components* below); `metrics`, `product-features` and `gallery` were written here.
+- **Component source:** `hero`, `collection`, `interactive-product` and `testimonials` were ported from the sibling bundle `~/Desktop/tw-growth-kit` (see *Porting components* below); `metrics`, `product-features`, `gallery`, `ingredients` and `use-cases` were written here.
 - **No storefront merchandising.** The ported components arrived with growth-kit features that only make sense on a storefront home or product page, and those have been stripped on purpose: `collection` lost its `use_case` mode switch (`home` vs `bundle`), its per-slide `variable-list` product link and its «تسوّق الآن» CTA; `testimonials` lost its shoppable product chip. A landing page drives one conversion, owned by the hero — sections must not sprout competing links or product cards. Re-porting either component wholesale from the growth kit will drag these back; diff against the current version instead of overwriting.
 
 ## Commands
@@ -53,7 +53,7 @@ The registration key is derived from the **folder name** (`src/components/hero/`
 
 Cross-component code has a single source of truth in `src/shared/`:
 
-- `growth-element.ts` — `GrowthElement` (extends `LitElement`), the base class every landing component extends: the registration bridge plus protected helpers `localizedString` (multilang), `_lang`, `_pickValue` (dropdowns), `_num` / `_toLatinDigits` (numbers, Arabic-Indic digit aware).
+- `growth-element.ts` — `GrowthElement` (extends `LitElement`), the base class every landing component extends: the registration bridge plus protected helpers `localizedString` (multilang), `_lang`, `_pickValue` (dropdowns), `_num` / `_toLatinDigits` (numbers, Arabic-Indic digit aware) and its inverse `_localeNum` (render a counter or a step badge in the store's own digits).
 - `types.ts` — `MaybeMultiLang`.
 
 `gallery` also carries `side-element.ts` — the reusable **عنصر بصري جانبي** (decorative transparent PNG parked against one edge, hanging partly outside the section). It is co-located rather than in `src/shared/` because only one component uses it so far; it takes `_pickValue`/`_num` as arguments instead of importing `GrowthElement`, so adopting it in the FAQ section later is a file move plus a copy of its ~14 bundle fields.
@@ -96,7 +96,8 @@ Asset rules enforced by `tw-preview` (see `node_modules/@salla.sa/twilight-bundl
 
 Salla has no picker that enumerates the components on a page, so in-page nav links run on an anchor-id convention that every landing component takes part in:
 
-- Each component exposes an `anchor_id` text field (placeholder = its default slug: `hero`, `collection`, `interactive-product`, `testimonials`, `metrics`, `product-features`, `gallery`) and calls `this._syncAnchor(this.config?.anchor_id, "<slug>")` from `updated()` — every cycle, because Salla may inject `config` after the first render.
+- Each component exposes an `anchor_id` text field (placeholder = its default slug: `hero`, `collection`, `interactive-product`, `testimonials`, `metrics`, `product-features`, `gallery`, `ingredients`, `use-cases`) and calls `this._syncAnchor(this.config?.anchor_id, "<slug>")` from `updated()` — every cycle, because Salla may inject `config` after the first render.
+- ⚠️ **`_syncAnchor` overwrites whatever `id` the host element already had.** It runs on the first `updated()`, which is a microtask after the element upgrades — so any page that tags instances with its own ids (a test harness, a hand-written preview page) loses them before its next script runs, and `getElementById("my-id")` comes back `null`. Address instances by `querySelectorAll("<tag>")` and index instead.
 - `_syncAnchor` (in `GrowthElement`) writes the id onto the **host element**, never inside the render root: every component renders into a shadow root, and neither `#hash` navigation nor `getElementById` can see an id inside someone else's shadow tree. It also de-duplicates (`collection`, `collection-2`, …), sets `scroll-margin-top`, and performs a one-shot self-scroll when the page was loaded with a matching `#hash` — the browser resolves the fragment long before the component upgrades.
 - The hero's `nav_items[].target` dropdown lists every landing component by slug, plus `custom` (free-text id) and `link` (the off-page `variable-list` picker). **A new landing component must be added to that dropdown's `options`** as well as to `HeroNavTargetKind` in `src/components/hero/types.ts`.
 
@@ -104,7 +105,9 @@ Salla has no picker that enumerates the components on a page, so in-page nav lin
 
 Every component needs an entry here: `name` (must match the folder in `src/components/`), a UUID `key`, and a `fields` array that drives what the merchant panel renders. Field `type`s include `string`, `number`, `boolean`, `items` (dropdown), `collection`, and `static` (UI-only dividers/titles). All merchant-facing `label`, `placeholder`, `title` and `description` values must be **Arabic**.
 
-The file currently holds two groups: the landing components (`hero`, `collection`, `interactive-product`, `testimonials`, `metrics`, `product-features`, `gallery`) at the top, and the starter-kit demo components below them (`getting-started-guide`, `basic-inputs`, `items-select-input`, `dropdown-list-source-input`, `advanced-inputs`, `product-card`, `table-list`, `scroll-top`) — kept as reference, to be cleaned up before publishing.
+The file currently holds two groups: the landing components (`hero`, `collection`, `interactive-product`, `testimonials`, `metrics`, `product-features`, `gallery`, `ingredients`, `use-cases`) at the top, and the starter-kit demo components below them (`getting-started-guide`, `basic-inputs`, `items-select-input`, `dropdown-list-source-input`, `advanced-inputs`, `product-card`) — kept as reference, to be cleaned up before publishing. `scroll-top` and `table-list` were the first two removed.
+
+⚠️ **`tw-delete-component` does not touch `templates/`.** It deletes `src/components/<name>/` and the `twilight-bundle.json` entry, and stops there — so a component that also appears in a template file leaves an orphan behind, and `tw-preview` hard-fails on it later. Both removals above were in `templates/starter-template.json` and had to be pulled out by hand. Delete the stale `dist/<name>.js` too; the build does not prune it.
 
 ### Templates (`templates/`)
 
@@ -162,6 +165,37 @@ Plain values (`--x: #fff`, `--cols: 3`) are fine on `:host`: the inline declarat
 
 See `product-features/style.ts`, which uses this to swap the mobile/desktop card scale.
 
+### Radial placement without JS or CSS trig
+
+`ingredients` has a `circle` layout — a ring orbiting the product with the ingredients sitting on it. Everything is placed with the rotate / counter-rotate **arm** trick rather than JS-computed coordinates: an arm is stretched over the whole stage (`position:absolute; inset:0`) and rotated to the item's angle, its single child is parked at `top: calc(50% - <radius>)`, then counter-rotated by `rotate(calc(-1 * var(--a)))` so it sits upright.
+
+Why it matters: the stage is `aspect-ratio: 1`, so a **percentage** radius is the same length horizontally and vertically. Every measurement stays a percentage, which means the whole composition is responsive with no resize listener, no `ResizeObserver`, and no dependency on CSS `sin()`/`cos()` — and mobile/desktop differ by nothing more than redeclaring two custom properties in the media query.
+
+Two consequences to remember:
+- Anything appended **after** the counter-rotation lands in a screen-aligned frame (that is where the per-item vertical nudge and the entrance `scale()` go); anything before it is in the rotated frame.
+- Items in this layout are absolutely positioned, so a lazy image that has not decoded collapses its box and jumps on arrival. Reserve the cell (`.ing-orbit .ing-media { aspect-ratio: 1 }` + `object-fit: contain`) rather than dropping `loading="lazy"`.
+
+### Which card is in the middle of a bleeding strip
+
+`use-cases` has a `row` layout — the same edge-to-edge scroll-snapping strip as `gallery`, but the frame nearest the middle is brought forward and the rest are dimmed and scaled down (`.uc-strip[data-focus="on"]`). Three things make that work:
+
+- **Measure with rectangles, never `scrollLeft`.** In RTL, `scrollLeft` is the one number engines genuinely disagree on (0 at the right edge counting down in Chrome/Firefox, counting up elsewhere). `_syncActive()` compares each slide's `getBoundingClientRect()` centre against the strip's, which is identical in both directions; `_centerSlide()` likewise scrolls by a rect **delta** through `scrollBy`, not by assigning an absolute `scrollLeft`.
+- **Scroll handling is rAF-coalesced** (`_onStripScroll` sets `_rafId`), and `_syncStrip()` rebinds by element identity in `updated()` rather than once in `firstUpdated()` — the layout dropdown can swap the strip in and out at any time.
+- **The entrance transform and the focus transform must live on different elements**, or the second overwrites the first. `.uc-slide` carries the entrance `translateY`; the `.uc-frame` inside it carries the focus `scale`.
+
+`.uc-frame` is also shared with the stack layout's "copy over the photo" mode — the two are the same object (a photo, a scrim, a caption), differing only in what sets `--uc-frame-ar`.
+
+`text_position` decides whether the copy sits on the photo or clear of it, in **both** layouts (see conditional-field rule 4 below for why it has to be one shared field). The two arrangements need different DOM, not just different CSS: an overlaid caption has to be inside the element that clips to the frame's aspect ratio, and a caption underneath has to be outside it. Hence `_renderFrame`'s two branches and the `.uc-fig` wrapper, which exists only in the second so the photo and its caption move together under the focus transform.
+
+### One component, three jobs — and the name that had to stay
+
+`use-cases` is a photo + a line of copy, repeated. That shape answers three different merchant questions, and the panel copy names all three rather than letting the folder name narrow it: **أماكن أو لحظات الاستخدام**, **فوائد المنتج ومميزاته**, and **طريقة الاستخدام خطوة بخطوة**. So the merchant-facing title is «استخدامات وفوائد المنتج», the content note lists the three, `items.item_label` is the neutral «بطاقة», and every placeholder/description gives one example per job.
+
+Two rules that came out of this and generalise to the rest of the bundle:
+
+- **The code name and the merchant name are allowed to diverge, and after publication only one of them is still free.** `name` in `twilight-bundle.json` drives the tag, `dist/<name>.js`, the default anchor slug and the key that published merchant pages and templates resolve against — renaming it later breaks those. `title` is just a label. So broaden the title freely; leave `name` alone once anything ships. That is why this section reads «استخدامات وفوائد المنتج» in the panel while everything in the code still says `use-cases`.
+- **Don't widen a claim without the feature that backs it.** "Step by step" is not real without step numbers, so `show_numbers` exists (default **off** — numbering an unordered set of benefits invents a sequence the merchant didn't mean). Its two colour fields are gated on `[{ id: "show_numbers", operation: "=", value: true }]` — a boolean condition takes a real `true`, not `"true"`.
+
 ## Porting components from `tw-growth-kit`
 
 The landing components came from `~/Desktop/tw-growth-kit` (read that repo's `CLAUDE.md` for the fuller Salla field-schema notes). To bring over another one:
@@ -196,16 +230,20 @@ The landing components came from `~/Desktop/tw-growth-kit` (read that repo's `CL
 
 `style.ts` files are one big `` css`…` `` template. A backtick anywhere inside it — including in a CSS comment, e.g. explaining the `safe` keyword — **ends the template early**, and the file fails to parse with a misleading esbuild error like `Expected ";" but found "safe"`. The dev server then serves an HTML error page for the module and the component silently never registers, so the section renders blank.
 
-This has bitten twice. Use plain quotes in CSS comments. Backticks in the JSDoc block **above** `export const … = css\`` are fine — that text is outside the literal.
+This has bitten three times — most recently while rewriting the hero navbar, where two CSS comments quoted a property name and a keyword in backticks. Use plain quotes in CSS comments. Backticks in the JSDoc block **above** `export const … = css\`` are fine — that text is outside the literal.
 
 Note `npx tsc --noEmit` does catch it, so run the typecheck after editing any `style.ts`; a blank component in the browser is the slower way to find out.
 
 ## ⚠️ Conditional-field gotchas
 
-The ported components rely heavily on `conditions` (≈49 conditional fields across the four). Two hard rules:
+The ported components rely heavily on `conditions` (≈49 conditional fields across the four). Three hard rules:
 
 1. **Conditions are single-value `=` only.** No OR, no array values, no `!=`, no `in`. A field can be shown for exactly **one** value of the controlling field. To show it for several values, **duplicate the field once per value**, each with its own `conditions` entry. If it's relevant for all values, give it no condition at all.
 2. **Each duplicated copy MUST have a unique `id` — distinct `key`s are not enough.** Salla's admin form builder gates by `id`. When 2+ conditional fields share an `id`, gating silently breaks: the field renders zero times for one value and N times (stacked) for another. Name copies `bg_effect`, `bg_effect_floating`, `bg_effect_split`, … and resolve the active one in the component by reading the controlling value.
+3. **`conditions` is an array but only ONE entry is honoured — there is no AND.** Two entries do not combine: a field gated `[layout=circle, ring_dot=true]` rendered while `layout` was `columns`, and one gated `[layout=columns, desktop_custom_width=true]` stayed hidden while `layout` *was* `columns` — i.e. the earlier entries are ignored, not ORed. **Give every field exactly one condition** and pick the gate that matters most. To express "A and B", gate the *controlling switch* on A and the field on the switch (`ingredients.circle_desktop_custom` is gated on `layout=circle`, and its three sliders on the switch), so the pair is unreachable from the wrong branch anyway.
+4. **To express "A or B", stop asking two fields and add the one field that answers the question directly.** Duplicating per rule 1 is the fallback, not the first move — it multiplies the schema and, worse, **a hidden field keeps its stored value**, so a gate on a branch-local field fires from a branch the merchant has since left. `use-cases` hit this: copy sits on the photo when `layout=row` *or* when `layout=stack` and the stack's own text toggle says so. Gating on that stack-local toggle would have left the overlay settings showing in the row layout off a stale value. The fix was to delete the per-layout toggle and add `text_position` (`over` / `outside`) with **no** condition, shared by both layouts — one field, one honest `=` test, nothing stale. The price is that the shared field's other value has to mean the layout-appropriate thing in each branch (`outside` = beside the photo in the stack, under it in the row), which is real work in the component and a vaguer label in the panel. Worth it: the alternative leaks.
+
+⚠️ **The panel caches the schema in `localStorage` under `form-builder::<component>`** and prefers it over the freshly generated page, so edits to `twilight-bundle.json` appear not to take effect. Clear the `form-builder::*` keys when testing a schema change. Note also that the generated `node_modules/.salla-temp/*.html` is only rebuilt when the dev server starts on a missing directory — `rm -rf node_modules/.salla-temp` and restart to pick up a `twilight-bundle.json` edit.
 
 ## Sliders — great at top level, ignored inside a collection
 
@@ -221,6 +259,17 @@ The panel renders it as a track with a live «القيمة: N» readout, RTL-cor
 **But `format: "slider"` only works on a top-level field.** Inside a `collection`'s `fields` the form builder ignores it and falls back to a plain number box — no crash, just dead config. That is why `product-features.items[].top` and `interactive-product.hotspots[].x`/`y` stay `format: "integer"` even though they are exactly the same kind of value. Verified side by side in the local form builder.
 
 **A slider always carries a value**, so the "leave it blank to inherit mobile" trick stops working the moment a desktop field becomes one. Gate the desktop group behind a boolean switch instead and read that switch in the component — see `gallery.side_desktop_custom` and `resolveSideElement`.
+
+### ⚠️ A signed horizontal slider drags backwards in the RTL panel
+
+The merchant panel is RTL (`<html dir="rtl">`), and an RTL `<input type=range>` renders its **minimum at the RIGHT** end — verified in the local form builder: a `[-40, 40]` slider showing «القيمة: -30» puts its handle 86 % from the left. Meanwhile CSS `translateX(positive)` is *always* physically rightward, because `transform` is not direction-aware. The two axes therefore point opposite ways: **dragging the handle right lowers the number, which moves the element left.** Merchants read this as a bug.
+
+Two ways out, both used in this bundle:
+
+- **Preferred — make the value a direction-free magnitude.** `gallery.side_x` means "how far *outward* past its own edge", and `side-element.ts` applies `calc(-1 * var(--se-x))` for a left-anchored element and `var(--se-x)` for a right-anchored one. Positive always means "further out", so there is no left/right sign to get backwards.
+- **When the value really is a signed left/right nudge, negate it in CSS so positive means LEFT.** That makes the element follow the handle on an RTL track. `ingredients.product_offset_x` does this; the negation lives in `style.ts` on `.ing-product` and is commented at both sites. Do not "correct" the sign back to the Cartesian convention without re-testing the drag direction in the panel.
+
+Vertical sliders have no equivalent problem (the track is still horizontal, so neither end is inherently "up"); keep them on the existing `negative = up` convention, as `ingredients.items[].offset_y` and `product_offset_y` do.
 
 ## ⚠️ A dropdown value is ALWAYS an array of option objects
 
