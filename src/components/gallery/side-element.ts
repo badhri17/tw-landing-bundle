@@ -30,6 +30,8 @@ export type SideElementDepth = "behind" | "front";
 
 /** The merchant-facing fields, mixed into a component's own config. */
 export interface SideElementFields {
+  side_visual_count?: "off" | "one" | "two";
+  enable_side_visual?: boolean;
   side_image?: string;
   side_side?: SideElementSide;
   side_depth?: SideElementDepth;
@@ -53,6 +55,21 @@ export interface SideElementFields {
   side_vpos_desktop?: SideElementVPosDesktop;
   side_x_desktop?: number | string;
   side_y_desktop?: number | string;
+
+  enable_second_side_visual?: boolean;
+  side2_image?: string;
+  side2_side?: SideElementSide;
+  side2_depth?: SideElementDepth;
+  side2_opacity?: number | string;
+  side2_width?: number | string;
+  side2_vpos?: SideElementVPos;
+  side2_x?: number | string;
+  side2_y?: number | string;
+  side2_desktop_custom?: boolean;
+  side2_width_desktop?: number | string;
+  side2_vpos_desktop?: SideElementVPosDesktop;
+  side2_x_desktop?: number | string;
+  side2_y_desktop?: number | string;
 }
 
 /** `top` / translate pair that realises each vertical anchor. */
@@ -67,6 +84,7 @@ export interface SideElementResolved {
   image: string;
   side: SideElementSide;
   depth: SideElementDepth;
+  slot: 1 | 2;
   /** Custom-property declarations for the SECTION element. */
   vars: string[];
 }
@@ -80,34 +98,73 @@ export interface SideElementResolved {
 export function resolveSideElement(
   cfg: SideElementFields | undefined,
   pick: <T extends string>(v: unknown, fallback: T) => T,
-  num: (v: unknown, fallback: number) => number
+  num: (v: unknown, fallback: number) => number,
+  slot: 1 | 2 = 1,
 ): SideElementResolved | null {
-  const image = (cfg?.side_image || "").trim();
+  const rawMode = cfg?.side_visual_count;
+  const mode =
+    rawMode == null ? undefined : pick<"off" | "one" | "two">(rawMode, "off");
+  const legacyFirstImage = (cfg?.side_image || "").trim();
+  const firstEnabled = mode
+    ? mode !== "off"
+    : cfg?.enable_side_visual === true ||
+      (cfg?.enable_side_visual == null && !!legacyFirstImage);
+  const enabled =
+    slot === 1
+      ? firstEnabled
+      : mode
+        ? mode === "two"
+        : firstEnabled && cfg?.enable_second_side_visual === true;
+  if (!enabled) return null;
+
+  const image = (
+    slot === 1 ? cfg?.side_image || "" : cfg?.side2_image || ""
+  ).trim();
   if (!image) return null;
 
-  const side = pick<SideElementSide>(cfg?.side_side, "right");
-  const depth = pick<SideElementDepth>(cfg?.side_depth, "front");
+  const side = pick<SideElementSide>(
+    slot === 1 ? cfg?.side_side : cfg?.side2_side,
+    slot === 1 ? "right" : "left",
+  );
+  const depth = pick<SideElementDepth>(
+    slot === 1 ? cfg?.side_depth : cfg?.side2_depth,
+    "front",
+  );
 
-  /**
-   * The desktop placement is behind a switch rather than a set of blank-means-
-   * inherit fields. Sliders always carry a value, so "blank" stopped being
-   * expressible the moment these became sliders — the switch is what says
-   * "desktop differs" now.
-   */
-  const custom = cfg?.side_desktop_custom === true;
+  /** New count-based configs expose desktop values directly. Legacy saved
+   * configs still honour the previous desktop-custom switches. */
+  const custom = mode
+    ? true
+    : (slot === 1 ? cfg?.side_desktop_custom : cfg?.side2_desktop_custom) ===
+      true;
 
-  const vposM = pick<SideElementVPos>(cfg?.side_vpos, "top");
-  const vposDRaw = pick<SideElementVPosDesktop>(cfg?.side_vpos_desktop, "inherit");
+  const vposM = pick<SideElementVPos>(
+    slot === 1 ? cfg?.side_vpos : cfg?.side2_vpos,
+    slot === 1 ? "top" : "bottom",
+  );
+  const vposDRaw = pick<SideElementVPosDesktop>(
+    slot === 1 ? cfg?.side_vpos_desktop : cfg?.side2_vpos_desktop,
+    "inherit",
+  );
   const vposD = !custom || vposDRaw === "inherit" ? vposM : vposDRaw;
 
-  const widthM = num(cfg?.side_width, 45);
-  const widthD = custom ? num(cfg?.side_width_desktop, widthM) : widthM;
+  const widthM = num(slot === 1 ? cfg?.side_width : cfg?.side2_width, 45);
+  const widthD = custom
+    ? num(
+        slot === 1 ? cfg?.side_width_desktop : cfg?.side2_width_desktop,
+        widthM,
+      )
+    : widthM;
 
-  const xM = num(cfg?.side_x, 20);
-  const xD = custom ? num(cfg?.side_x_desktop, xM) : xM;
+  const xM = num(slot === 1 ? cfg?.side_x : cfg?.side2_x, 20);
+  const xD = custom
+    ? num(slot === 1 ? cfg?.side_x_desktop : cfg?.side2_x_desktop, xM)
+    : xM;
 
-  const yM = num(cfg?.side_y, 0);
-  const yD = custom ? num(cfg?.side_y_desktop, yM) : yM;
+  const yM = num(slot === 1 ? cfg?.side_y : cfg?.side2_y, 0);
+  const yD = custom
+    ? num(slot === 1 ? cfg?.side_y_desktop : cfg?.side2_y_desktop, yM)
+    : yM;
 
   const a = V_ANCHOR[vposM] ?? V_ANCHOR.top;
   const b = V_ANCHOR[vposD] ?? V_ANCHOR.top;
@@ -116,18 +173,27 @@ export function resolveSideElement(
     image,
     side,
     depth,
+    slot,
     vars: [
-      `--se-w-m:${widthM}%`,
-      `--se-w-d:${widthD}%`,
-      `--se-x-m:${xM}%`,
-      `--se-x-d:${xD}%`,
-      `--se-y-m:${yM}%`,
-      `--se-y-d:${yD}%`,
-      `--se-top-m:${a.top}`,
-      `--se-top-d:${b.top}`,
-      `--se-pull-m:${a.pull}`,
-      `--se-pull-d:${b.pull}`,
-      `--se-op:${Math.max(0, Math.min(100, num(cfg?.side_opacity, 100))) / 100}`,
+      `--se${slot}-w-m:${widthM}%`,
+      `--se${slot}-w-d:${widthD}%`,
+      `--se${slot}-x-m:${xM}%`,
+      `--se${slot}-x-d:${xD}%`,
+      `--se${slot}-y-m:${yM}%`,
+      `--se${slot}-y-d:${yD}%`,
+      `--se${slot}-top-m:${a.top}`,
+      `--se${slot}-top-d:${b.top}`,
+      `--se${slot}-pull-m:${a.pull}`,
+      `--se${slot}-pull-d:${b.pull}`,
+      `--se${slot}-op:${
+        Math.max(
+          0,
+          Math.min(
+            100,
+            num(slot === 1 ? cfg?.side_opacity : cfg?.side2_opacity, 100),
+          ),
+        ) / 100
+      }`,
     ],
   };
 }

@@ -518,8 +518,14 @@ export default class GrowthHero extends GrowthElement {
   }
 
   private _teardownNavScroll() {
-    if (this._onNavScroll)
+    if (this._onNavScroll) {
       window.removeEventListener("scroll", this._onNavScroll);
+      // Element scroll events do not bubble, but they do travel through the
+      // capture phase. The demo editor scrolls its <body> instead of window,
+      // so listening on document keeps the fixed-nav state working there and
+      // in storefront layouts that use their own scroll container.
+      document.removeEventListener("scroll", this._onNavScroll, true);
+    }
     this._onNavScroll = undefined;
     if (this._navRafId) {
       cancelAnimationFrame(this._navRafId);
@@ -557,6 +563,10 @@ export default class GrowthHero extends GrowthElement {
       });
     };
     window.addEventListener("scroll", this._onNavScroll, { passive: true });
+    document.addEventListener("scroll", this._onNavScroll, {
+      capture: true,
+      passive: true,
+    });
     this._onNavScroll();
   }
 
@@ -625,7 +635,7 @@ export default class GrowthHero extends GrowthElement {
   render() {
     const c: HeroConfig = this.config || {};
 
-    const heightMobile: HeroHeight = this._pickValue<HeroHeight>(c.height_mobile, "large");
+    const heightMobile: HeroHeight = this._pickValue<HeroHeight>(c.height_mobile, "medium");
     const heightDesktop: HeroHeightDesktop = this._pickValue<HeroHeightDesktop>(c.height_desktop, "inherit");
     const height: HeroHeight =
       this._isDesktop && heightDesktop !== "inherit" ? heightDesktop : heightMobile;

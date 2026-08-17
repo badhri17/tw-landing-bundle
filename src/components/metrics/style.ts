@@ -22,7 +22,7 @@ export const metricsStyles = css`
 
     --m-bg: #ffffff;
     --m-card-bg: #f4f3f1;
-    --m-number: #14181f;
+    --m-number: #3d230e;
     --m-label: #6b7280;
     --m-border: rgba(20, 24, 31, 0.1);
 

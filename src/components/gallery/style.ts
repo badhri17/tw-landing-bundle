@@ -35,8 +35,6 @@ export const galleryStyles = css`
     --gal-item-d: 22vw;
     --gal-gap-m: 12px;
     --gal-gap-d: 18px;
-    --gal-shrink-m: 0.82;
-    --gal-shrink-d: 0.78;
   }
 
   :host([hidden]) {
@@ -58,14 +56,13 @@ export const galleryStyles = css`
     max-width: 100%;
     min-width: 0;
     background: var(--gal-bg);
-    padding-block: clamp(2rem, 6vw, 4rem);
+    padding-block: clamp(2.5rem, 6vw, 4rem);
     /* Not overflow:hidden — the strip and the side element both need to bleed.
        overflow-x is clipped on the strip itself instead. */
     overflow: clip visible;
 
     --gal-item: var(--gal-item-m);
     --gal-gap: var(--gal-gap-m);
-    --gal-shrink: var(--gal-shrink-m);
   }
 
   .gal-header {
@@ -112,6 +109,7 @@ export const galleryStyles = css`
   .gal-item {
     flex: 0 0 var(--gal-item);
     scroll-snap-align: center;
+    scroll-margin-inline-start: calc(var(--gal-gap) * 2);
     margin: 0;
     padding: 0;
     border: 0;
@@ -127,11 +125,18 @@ export const galleryStyles = css`
   .gal-item[data-static="on"] {
     cursor: default;
   }
-  /* Alternating photos shrink so the row reads as an arrangement, not a
-     filmstrip. Odd children shrink, which puts the tall one in the middle of
-     any three — the reference layout. */
-  .gal-strip[data-row="staggered"] .gal-item:nth-child(odd) {
-    flex-basis: calc(var(--gal-item) * var(--gal-shrink));
+  .gal-strip[data-row="grid"] {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: stretch;
+    justify-content: initial;
+    overflow: visible;
+    overscroll-behavior-x: auto;
+    scroll-snap-type: none;
+  }
+  .gal-strip[data-row="grid"] .gal-item {
+    width: 100%;
+    min-width: 0;
   }
   .gal-item img {
     display: block;
@@ -153,15 +158,9 @@ export const galleryStyles = css`
   /* ============================================================
      SIDE DESIGN ELEMENT (عنصر بصري جانبي)
      ============================================================ */
-  .gal {
-    --se-w: var(--se-w-m);
-    --se-x: var(--se-x-m);
-    --se-y: var(--se-y-m);
-    --se-top: var(--se-top-m);
-    --se-pull: var(--se-pull-m);
-  }
   .gal-side {
     position: absolute;
+    z-index: 0;
     top: var(--se-top, 0%);
     width: var(--se-w, 45%);
     height: auto;
@@ -170,11 +169,21 @@ export const galleryStyles = css`
     user-select: none;
     max-width: none;
   }
-  .gal-side[data-depth="behind"] {
-    z-index: 0;
+  .gal-side[data-slot="1"] {
+    --se-w: var(--se1-w-m);
+    --se-x: var(--se1-x-m);
+    --se-y: var(--se1-y-m);
+    --se-top: var(--se1-top-m);
+    --se-pull: var(--se1-pull-m);
+    --se-op: var(--se1-op);
   }
-  .gal-side[data-depth="front"] {
-    z-index: 3;
+  .gal-side[data-slot="2"] {
+    --se-w: var(--se2-w-m);
+    --se-x: var(--se2-x-m);
+    --se-y: var(--se2-y-m);
+    --se-top: var(--se2-top-m);
+    --se-pull: var(--se2-pull-m);
+    --se-op: var(--se2-op);
   }
   /* A positive X pushes the element further OUT of the section on whichever
      edge it is parked, so the merchant's slider means the same thing on both
@@ -430,13 +439,23 @@ export const galleryStyles = css`
     .gal {
       --gal-item: var(--gal-item-d);
       --gal-gap: var(--gal-gap-d);
-      --gal-shrink: var(--gal-shrink-d);
-
-      --se-w: var(--se-w-d);
-      --se-x: var(--se-x-d);
-      --se-y: var(--se-y-d);
-      --se-top: var(--se-top-d);
-      --se-pull: var(--se-pull-d);
+    }
+    .gal-strip[data-row="grid"] {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+    .gal-side[data-slot="1"] {
+      --se-w: var(--se1-w-d);
+      --se-x: var(--se1-x-d);
+      --se-y: var(--se1-y-d);
+      --se-top: var(--se1-top-d);
+      --se-pull: var(--se1-pull-d);
+    }
+    .gal-side[data-slot="2"] {
+      --se-w: var(--se2-w-d);
+      --se-x: var(--se2-x-d);
+      --se-y: var(--se2-y-d);
+      --se-top: var(--se2-top-d);
+      --se-pull: var(--se2-pull-d);
     }
     .lb-thumbs {
       justify-content: center;

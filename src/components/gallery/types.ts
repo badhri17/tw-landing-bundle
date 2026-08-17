@@ -17,13 +17,8 @@ import type { SideElementFields } from "./side-element";
 /** Shape of each photo in the row. */
 export type GalleryAspect = "1/1" | "3/4" | "4/5" | "2/3" | "4/3" | "16/9";
 
-/**
- * Rhythm of the row:
- *   • equal     → every photo the same size
- *   • staggered → alternating photos shrink, so the row reads as an editorial
- *                 arrangement rather than a filmstrip (matches the reference)
- */
-export type GalleryRowStyle = "equal" | "staggered";
+/** Gallery presentation: an equal-width horizontal strip or a responsive grid. */
+export type GalleryRowStyle = "equal" | "grid";
 
 /** Photo width tiers, as a share of the viewport. */
 export type GalleryItemSize = "small" | "medium" | "large";
@@ -47,7 +42,8 @@ export interface GalleryConfig extends SideElementFields {
   images?: GalleryImageItem[];
 
   // --- Layout ---
-  row_style?: GalleryRowStyle;
+  /** `staggered` is accepted only to migrate previously saved settings. */
+  row_style?: GalleryRowStyle | "staggered";
   item_size?: GalleryItemSize;
   item_size_desktop?: GalleryItemSizeDesktop;
   aspect_ratio?: GalleryAspect;

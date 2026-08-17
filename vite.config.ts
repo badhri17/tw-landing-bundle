@@ -42,6 +42,24 @@ function duplicateSharedPerComponentPlugin() {
   };
 }
 
+/**
+ * Repair the demo plugin's malformed Windows file-system URLs.
+ *
+ * @salla.sa/twilight-bundles@0.1.62 emits `/@fsC:\\...`, while Vite's
+ * Windows URL format is `/@fs/C:\\...`. Applying the correction as an HTML
+ * transform keeps it local to the generated demo pages and survives installs.
+ */
+function fixSallaDemoWindowsFsUrlsPlugin() {
+  return {
+    name: 'fix-salla-demo-windows-fs-urls',
+    enforce: 'post',
+    transformIndexHtml(html: string) {
+      if (process.platform !== 'win32') return html;
+      return html.replace(/\/@fs(?=[A-Za-z]:[\\/])/g, '/@fs/');
+    },
+  };
+}
+
 export default defineConfig({
 /**
  * `public/assets/` is the bundle's media folder, and the path matters.
@@ -68,5 +86,6 @@ plugins: [
     // Uncomment to preview only specific components
     // components: ['hero', 'collection', 'interactive-product', 'testimonials']
   }),
+  fixSallaDemoWindowsFsUrlsPlugin(),
 ],
 });
