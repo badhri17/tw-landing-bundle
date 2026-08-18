@@ -10,7 +10,6 @@ import type {
   FlexibleBannerFit,
   FlexibleBannerHeight,
   FlexibleBannerLayout,
-  FlexibleBannerPadding,
   FlexibleBannerPosition,
   FlexibleBannerRadius,
   FlexibleBannerSpacing,
@@ -117,17 +116,19 @@ export default class FlexibleBannerContent extends GrowthElement {
       c.height_desktop,
       "medium"
     );
-    const padding = this._pickValue<FlexibleBannerPadding>(
-      c.section_padding,
-      "medium"
-    );
+    // Full-bleed unless the merchant turns it off. A dropdown fallback must
+    // match the `selected` value its field ships in twilight-bundle.json — that
+    // fallback is what an instance with no stored value renders (the dev demo
+    // page, and any template omitting the field), so a divergence shows styling
+    // the panel claims is off.
+    const imageFullWidth = c.image_full_width !== false;
     const spacing = this._pickValue<FlexibleBannerSpacing>(
       c.content_spacing,
       "comfortable"
     );
     const radius = this._pickValue<FlexibleBannerRadius>(
       c.corner_radius,
-      "rounded"
+      "none"
     );
     const ctaStyle = this._pickValue<FlexibleBannerButtonStyle>(
       c.cta_style,
@@ -181,7 +182,6 @@ export default class FlexibleBannerContent extends GrowthElement {
       <section
         class="section"
         style=${sectionStyle}
-        data-padding=${padding}
         data-spacing=${spacing}
         data-radius=${radius}
         aria-label=${values.title || imageAlt || "بنر ومحتوى مرن"}
@@ -189,6 +189,7 @@ export default class FlexibleBannerContent extends GrowthElement {
         <div
           class="frame"
           data-layout=${layout}
+          data-media=${imageFullWidth ? "full" : "narrow"}
           data-has-image=${image ? "on" : "off"}
           data-has-content=${hasContent ? "on" : "off"}
         >

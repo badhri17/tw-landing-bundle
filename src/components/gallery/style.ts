@@ -56,7 +56,9 @@ export const galleryStyles = css`
     max-width: 100%;
     min-width: 0;
     background: var(--gal-bg);
-    padding-block: clamp(2.5rem, 6vw, 4rem);
+    /* Vertical space is the merchant's, via shared tiers; the horizontal
+       padding stays the section's own. See src/shared/section-spacing.ts. */
+    padding-block: var(--sp-top-m) var(--sp-bot-m);
     /* Not overflow:hidden — the strip and the side element both need to bleed.
        overflow-x is clipped on the strip itself instead. */
     overflow: clip visible;
@@ -160,7 +162,7 @@ export const galleryStyles = css`
      ============================================================ */
   .gal-side {
     position: absolute;
-    z-index: 0;
+    z-index: 1;
     top: var(--se-top, 0%);
     width: var(--se-w, 45%);
     height: auto;
@@ -436,6 +438,9 @@ export const galleryStyles = css`
      DESKTOP
      ============================================================ */
   @media (min-width: 768px) {
+    .gal {
+      padding-block: var(--sp-top-d) var(--sp-bot-d);
+    }
     .gal {
       --gal-item: var(--gal-item-d);
       --gal-gap: var(--gal-gap-d);

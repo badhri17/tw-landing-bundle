@@ -1,6 +1,7 @@
 import { html, nothing } from "lit";
 import { property, state } from "lit/decorators.js";
 import { GrowthElement } from "../../shared/growth-element";
+import { resolveSectionSpacing } from "../../shared/section-spacing";
 import type {
   GalleryConfig,
   GalleryImageItem,
@@ -9,7 +10,10 @@ import type {
   GalleryItemSize,
   GalleryItemSizeDesktop,
 } from "./types";
-import { resolveSideElement, type SideElementResolved } from "./side-element";
+import {
+  resolveSideElement,
+  type SideElementResolved,
+} from "../../shared/side-element";
 import { galleryStyles } from "./style";
 
 /** Photo width per size tier, as a share of the viewport. */
@@ -35,7 +39,7 @@ const ITEM_W_DESKTOP: Record<GalleryItemSize, string> = {
  *
  * Also hosts the reusable side design element (عنصر بصري جانبي): a decorative
  * transparent PNG parked against one edge and allowed to hang outside the
- * section. See ./side-element.ts.
+ * section. See ../../shared/side-element.ts.
  *
  * RTL-first and mobile-first; honours prefers-reduced-motion.
  */
@@ -273,6 +277,10 @@ export default class GrowthGallery extends GrowthElement {
       `--gal-radius:${this._num(c.card_radius, 14)}px`,
       `--gal-aspect:${this._pickValue<GalleryAspect>(c.aspect_ratio, "3/4")}`,
       ...sideVars,
+      ...resolveSectionSpacing(
+        c,
+        (v, f) => this._pickValue(v, f),
+      ),
     ]
       .filter(Boolean)
       .join("; ");

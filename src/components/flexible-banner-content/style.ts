@@ -29,31 +29,15 @@ export const flexibleBannerContentStyles = css`
     --fbc-radius: 24px;
     --fbc-content-pad: clamp(1.8rem, 7vw, 3.75rem);
     --fbc-gap: 1rem;
-    --fbc-outer-y: clamp(1rem, 4vw, 2rem);
-    --fbc-outer-x: clamp(1rem, 4vw, 2rem);
+    --fbc-max: 1280px;
 
+    /* The band is the section itself: full-bleed, no outer gutter, and it owns
+       the background colour so the fill reaches both viewport edges. Anything
+       that needs to stay readable caps its own width instead (see .frame's
+       "narrow" variant and .content). */
     width: 100%;
-    padding: var(--fbc-outer-y) var(--fbc-outer-x);
-  }
-
-  .section[data-padding="none"] {
-    --fbc-outer-y: 0px;
-    --fbc-outer-x: 0px;
-  }
-
-  .section[data-padding="small"] {
-    --fbc-outer-y: clamp(0.6rem, 2vw, 1rem);
-    --fbc-outer-x: clamp(0.75rem, 2.5vw, 1.25rem);
-  }
-
-  .section[data-padding="medium"] {
-    --fbc-outer-y: clamp(1rem, 4vw, 2rem);
-    --fbc-outer-x: clamp(1rem, 4vw, 2rem);
-  }
-
-  .section[data-padding="large"] {
-    --fbc-outer-y: clamp(1.75rem, 6vw, 4rem);
-    --fbc-outer-x: clamp(1.25rem, 6vw, 4rem);
+    background: var(--fbc-bg);
+    color: var(--fbc-text);
   }
 
   .section[data-spacing="compact"] {
@@ -79,11 +63,27 @@ export const flexibleBannerContentStyles = css`
     position: relative;
     isolation: isolate;
     overflow: hidden;
-    width: min(100%, 1280px);
-    margin-inline: auto;
+    width: 100%;
     border-radius: var(--fbc-radius);
-    background: var(--fbc-bg);
-    color: var(--fbc-text);
+    color: inherit;
+  }
+
+  /* image_full_width off: the image is held to the copy's max-width and the
+     section's background fills the rest of the band. In the overlay layout the
+     whole frame narrows (the image IS the frame's backdrop there); in the
+     separate layout only .media does, so the copy below stays where it was. */
+  .frame[data-media="narrow"] {
+    width: min(100%, var(--fbc-max));
+    margin-inline: auto;
+  }
+
+  .frame[data-layout="separate"][data-media="narrow"] {
+    width: 100%;
+  }
+
+  .frame[data-layout="separate"][data-media="narrow"] .media {
+    width: min(100%, var(--fbc-max));
+    margin-inline: auto;
   }
 
   .media {
@@ -130,9 +130,23 @@ export const flexibleBannerContentStyles = css`
     pointer-events: none;
   }
 
+  /* The frame is edge to edge now, so the copy caps itself — otherwise a line of
+     text would run the full width of a wide monitor. */
   .content {
     min-width: 0;
+    width: min(100%, var(--fbc-max));
+    margin-inline: auto;
     padding: var(--fbc-content-pad);
+  }
+
+  /* Copy sitting UNDER an image reads as one unit with it, so it gets no top
+     padding — the tier only pads the sides and the bottom there. Gated on
+     data-has-image because without an image .content is the whole section, and
+     zero top padding would butt the title against the section's top edge.
+     The overlay layout keeps its padding on all four sides: there the copy sits
+     ON the image and the padding is what holds it off the frame's edges. */
+  .frame[data-layout="separate"][data-has-image="on"] .content {
+    padding-top: 0;
   }
 
   .overlay-content {

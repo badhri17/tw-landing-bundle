@@ -1,6 +1,7 @@
 import { html, nothing } from "lit";
 import { property, state } from "lit/decorators.js";
 import { GrowthElement } from "../../shared/growth-element";
+import { resolveSectionSpacing } from "../../shared/section-spacing";
 import type {
   ProductFeaturesConfig,
   ProductFeatureItem,
@@ -220,6 +221,10 @@ export default class GrowthProductFeatures extends GrowthElement {
       `--pf-radius:${this._num(c.card_radius, 16)}px`,
       `--pf-stage-max:${this._num(c.stage_max_width, 560)}px`,
       ratio === "auto" ? "" : `--pf-ratio:${ratio}`,
+      ...resolveSectionSpacing(
+        c,
+        (v, f) => this._pickValue(v, f),
+      ),
     ]
       .filter(Boolean)
       .join("; ");

@@ -9,7 +9,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - **Platform:** Salla Twilight Engine
 - **Language priority:** Arabic-first (RTL default), LTR as fallback
 - **Planned:** 4 prefilled templates organized around **store verticals**. The bundle owner fills the template content themselves — do not invent vertical themes or prefill `templates/` unless explicitly asked.
-- **Component source:** `hero`, `collection`, `interactive-product` and `testimonials` were ported from the sibling bundle `~/Desktop/tw-growth-kit` (see *Porting components* below); `metrics`, `product-features`, `gallery`, `ingredients` and `use-cases` were written here.
+- **Component source:** `hero`, `collection`, `interactive-product` and `testimonials` were ported from the sibling bundle `~/Desktop/tw-growth-kit` (see *Porting components* below); `metrics`, `product-features`, `gallery`, `ingredients`, `use-cases` and `faq` were written here.
 - **No storefront merchandising.** The ported components arrived with growth-kit features that only make sense on a storefront home or product page, and those have been stripped on purpose: `collection` lost its `use_case` mode switch (`home` vs `bundle`), its per-slide `variable-list` product link and its «تسوّق الآن» CTA; `testimonials` lost its shoppable product chip. A landing page drives one conversion, owned by the hero — sections must not sprout competing links or product cards. Re-porting either component wholesale from the growth kit will drag these back; diff against the current version instead of overwriting.
 
 ## Commands
@@ -55,8 +55,14 @@ Cross-component code has a single source of truth in `src/shared/`:
 
 - `growth-element.ts` — `GrowthElement` (extends `LitElement`), the base class every landing component extends: the registration bridge plus protected helpers `localizedString` (multilang), `_lang`, `_pickValue` (dropdowns), `_num` / `_toLatinDigits` (numbers, Arabic-Indic digit aware) and its inverse `_localeNum` (render a counter or a step badge in the store's own digits).
 - `types.ts` — `MaybeMultiLang`.
+- `section-spacing.ts` — **المسافات حول القسم**, the page's vertical rhythm. Two `items` fields per section (`space_top` / `space_bottom`) on a shared tier scale (`none / xs / sm / md / lg / xl`), resolved through **two** tables so one tier means more room on desktop — the documented relative-tier pattern, so no `inherit` desktop duplicates are needed. Returns four *plain* custom properties (`--sp-top-m`, `--sp-bot-m`, `--sp-top-d`, `--sp-bot-d`), deliberately un-prefixed because each component has its own shadow root and the CSS is then identical everywhere. Wired into all nine content sections; `hero` (its padding is the navbar's, height is its own field) and `flexible-banner-content` (deliberately flush) stay out.
+- `side-element.ts` — the reusable **عنصر بصري جانبي** (decorative transparent PNG parked against one edge, hanging partly outside the section), shared by `gallery` and `faq`. It takes `_pickValue`/`_num` as **arguments** rather than importing `GrowthElement`, so it stays free of any base-class dependency; each component owns the CSS that consumes the `--se*-…` properties it returns (`.gal-side`, `.faq-side`) and decides how many of the ~15 bundle fields per decoration to expose. Adopting it in a third section is a copy of those fields plus one block of CSS.
 
-`gallery` also carries `side-element.ts` — the reusable **عنصر بصري جانبي** (decorative transparent PNG parked against one edge, hanging partly outside the section). It is co-located rather than in `src/shared/` because only one component uses it so far; it takes `_pickValue`/`_num` as arguments instead of importing `GrowthElement`, so adopting it in the FAQ section later is a file move plus a copy of its ~14 bundle fields.
+**Both adopters use the same control, and a third should clone it rather than invent one:** a 3-way `side_visual_count` dropdown (`off` / `one` / `two`), with the slot-1 fields gated `!= "off"` and the slot-2 fields gated `= "two"`. Copy the block straight out of `gallery` (or `faq`) — the field ids, labels and conditions are identical between them on purpose, so a merchant configuring both sections reads the same words twice.
+
+`resolveSideElement` also accepts an older shape (`enable_side_visual` + `enable_second_side_visual` booleans, plus `side_desktop_custom` switches to reach the desktop values). **Don't build a new component on it.** The count path is the current one and needs no desktop-custom switch: it sets `custom = true` internally, so the desktop fields always apply.
+
+One deliberate difference: `resolveSideElement` returns `depth` (`behind` / `front`) and both components write it to `data-depth`, but only `faq` exposes a field for it and styles it (`z-index` 0 vs 3, against a header at 2 and a list at 1). In `gallery` the attribute is inert.
 
 There is deliberately **no product plumbing** here. `product.ts` (`sallaGlobal`, `pickerSelection`, `fetchProductDetails`, `parseMoney`, `formatMoney`) came over with `testimonials` from the growth kit and was deleted when that component's shoppable product chip was dropped: on a landing page a testimonial sells trust, not a SKU. Don't port it back for a landing component without a concrete reason — if a component genuinely needs to resolve a real product, copy it fresh from `~/Desktop/tw-growth-kit/src/shared/product.ts`.
 
@@ -96,7 +102,7 @@ Asset rules enforced by `tw-preview` (see `node_modules/@salla.sa/twilight-bundl
 
 Salla has no picker that enumerates the components on a page, so in-page nav links run on an anchor-id convention that every landing component takes part in:
 
-- Each component exposes an `anchor_id` text field (placeholder = its default slug: `hero`, `collection`, `interactive-product`, `testimonials`, `metrics`, `product-features`, `gallery`, `ingredients`, `use-cases`) and calls `this._syncAnchor(this.config?.anchor_id, "<slug>")` from `updated()` — every cycle, because Salla may inject `config` after the first render.
+- Each component exposes an `anchor_id` text field (placeholder = its default slug: `hero`, `collection`, `interactive-product`, `testimonials`, `metrics`, `product-features`, `gallery`, `ingredients`, `use-cases`, `faq`) and calls `this._syncAnchor(this.config?.anchor_id, "<slug>")` from `updated()` — every cycle, because Salla may inject `config` after the first render.
 - ⚠️ **`_syncAnchor` overwrites whatever `id` the host element already had.** It runs on the first `updated()`, which is a microtask after the element upgrades — so any page that tags instances with its own ids (a test harness, a hand-written preview page) loses them before its next script runs, and `getElementById("my-id")` comes back `null`. Address instances by `querySelectorAll("<tag>")` and index instead.
 - `_syncAnchor` (in `GrowthElement`) writes the id onto the **host element**, never inside the render root: every component renders into a shadow root, and neither `#hash` navigation nor `getElementById` can see an id inside someone else's shadow tree. It also de-duplicates (`collection`, `collection-2`, …), sets `scroll-margin-top`, and performs a one-shot self-scroll when the page was loaded with a matching `#hash` — the browser resolves the fragment long before the component upgrades.
 - The hero's `nav_items[].target` dropdown lists every landing component by slug, plus `custom` (free-text id) and `link` (the off-page `variable-list` picker). **A new landing component must be added to that dropdown's `options`** as well as to `HeroNavTargetKind` in `src/components/hero/types.ts`.
@@ -105,7 +111,7 @@ Salla has no picker that enumerates the components on a page, so in-page nav lin
 
 Every component needs an entry here: `name` (must match the folder in `src/components/`), a UUID `key`, and a `fields` array that drives what the merchant panel renders. Field `type`s include `string`, `number`, `boolean`, `items` (dropdown), `collection`, and `static` (UI-only dividers/titles). All merchant-facing `label`, `placeholder`, `title` and `description` values must be **Arabic**.
 
-The file currently holds two groups: the landing components (`hero`, `collection`, `interactive-product`, `testimonials`, `metrics`, `product-features`, `gallery`, `ingredients`, `use-cases`) at the top, and the starter-kit demo components below them (`getting-started-guide`, `basic-inputs`, `items-select-input`, `dropdown-list-source-input`, `advanced-inputs`, `product-card`) — kept as reference, to be cleaned up before publishing. `scroll-top` and `table-list` were the first two removed.
+The file currently holds two groups: the landing components (`hero`, `collection`, `interactive-product`, `testimonials`, `metrics`, `product-features`, `gallery`, `ingredients`, `use-cases`, `faq`, `footer`, `flexible-banner-content`) at the top, and the starter-kit demo components below them (`getting-started-guide`, `basic-inputs`, `items-select-input`, `dropdown-list-source-input`, `advanced-inputs`, `product-card`) — kept as reference, to be cleaned up before publishing. `scroll-top` and `table-list` were the first two removed.
 
 ⚠️ **`tw-delete-component` does not touch `templates/`.** It deletes `src/components/<name>/` and the `twilight-bundle.json` entry, and stops there — so a component that also appears in a template file leaves an orphan behind, and `tw-preview` hard-fails on it later. Both removals above were in `templates/starter-template.json` and had to be pulled out by hand. Delete the stale `dist/<name>.js` too; the build does not prune it.
 
@@ -196,6 +202,34 @@ Two rules that came out of this and generalise to the rest of the bundle:
 - **The code name and the merchant name are allowed to diverge, and after publication only one of them is still free.** `name` in `twilight-bundle.json` drives the tag, `dist/<name>.js`, the default anchor slug and the key that published merchant pages and templates resolve against — renaming it later breaks those. `title` is just a label. So broaden the title freely; leave `name` alone once anything ships. That is why this section reads «استخدامات وفوائد المنتج» in the panel while everything in the code still says `use-cases`.
 - **Don't widen a claim without the feature that backs it.** "Step by step" is not real without step numbers, so `show_numbers` exists (default **off** — numbering an unordered set of benefits invents a sequence the merchant didn't mean). Its two colour fields are gated on `[{ id: "show_numbers", operation: "=", value: true }]` — a boolean condition takes a real `true`, not `"true"`.
 
+### Section spacing is padding, never margin
+
+Three reasons, in order of how badly each bites:
+
+1. **Every section paints its own background.** A margin puts the gap *outside* the paint, so it shows the merchant's theme colour — which would put a stripe of foreign colour at every boundary and undo the shared `#f5f5f5` page base. Padding keeps the gap inside the section.
+2. **Vertical margins collapse.** 64px below + 40px above resolves to 64px, not 104px, so roughly half of any merchant's settings would silently do nothing and no field description could explain it. Padding never collapses.
+3. **Salla wraps components in its own page containers**, so a margin can land outside a wrapper with its own background or `overflow`. Padding is local to the section element the component already writes its inline style to.
+
+Plus a bundle-specific one: `gallery`'s bleeding strip, `faq`'s side element and `ingredients`' orbit all sit inside `overflow: clip visible`, where padding gives them room and a margin gives them none.
+
+⚠️ **The visible gap between two stacked sections is the first one's `space_bottom` plus the second one's `space_top`.** That is why each edge is its own field — a merchant zeroes one side to pull two sections flush. The doubling is not new; it existed with the hard-coded values (≈8rem between sections, not 4rem).
+
+Two traps when wiring a new section into it:
+
+- **Find the real section rule, not the first `padding:` in the file.** `metrics` was already variable-driven (`padding: var(--m-pad-y) var(--m-pad-x)`), so grepping for a literal `clamp()` landed on `.m-card` instead — which silently moved the *card's* padding onto the section tiers. Confirm the rule you edit is the element that receives the component's inline `style`.
+- **The desktop override must name the same selector as the base rule.** `collection`'s section is `.col-section`, not `.col`; a mismatched selector fails silently, leaving the mobile value at every width.
+
+### Opening an answer of unknown height without JS
+
+`faq` animates each answer by transitioning a one-row grid from `grid-template-rows: 0fr` to `1fr`, with `overflow: hidden` on the child. No JS measures anything, so an answer of any length animates, and a merchant editing the text in the panel needs no re-measure. Where the browser cannot interpolate `fr` (pre-2023 engines) the row snaps open instead — the panel still works, it just does not glide.
+
+The part that is easy to get wrong: **a collapsed row is still in the accessibility tree.** `0fr` + `overflow: hidden` hides the answer visually but a screen reader keeps reading it, so `.faq-a` also carries `visibility: hidden` with `transition: visibility 0s linear var(--faq-dur)` — delayed on the way out so the text stays painted while the panel closes, instant on the way in. `display: none` would remove it from the tree too but kills the transition outright.
+
+Two more notes:
+
+- `first_open` cannot be seeded from `firstUpdated()` — Salla may inject `config` after the first render, so the default open row is seeded from `updated()` on the first cycle that actually has items, behind a `_seeded` flag that also stops the seed from fighting the visitor's clicks.
+- The trigger's `aria-controls` and the panel's `id` only need to be unique **inside one shadow root**, so the item index is enough; a second instance on the page has its own root.
+
 ## Porting components from `tw-growth-kit`
 
 The landing components came from `~/Desktop/tw-growth-kit` (read that repo's `CLAUDE.md` for the fuller Salla field-schema notes). To bring over another one:
@@ -238,12 +272,41 @@ Note `npx tsc --noEmit` does catch it, so run the typecheck after editing any `s
 
 The ported components rely heavily on `conditions` (≈49 conditional fields across the four). Three hard rules:
 
-1. **Conditions are single-value `=` only.** No OR, no array values, no `!=`, no `in`. A field can be shown for exactly **one** value of the controlling field. To show it for several values, **duplicate the field once per value**, each with its own `conditions` entry. If it's relevant for all values, give it no condition at all.
+1. **Conditions are single-value, and the honoured operators are `=` and `!=`.** No OR, no array values, no `in`. A single `=` shows a field for exactly **one** value of the controlling field; `!=` shows it for every value *except* one, which is how a 3-way "off / one / two" control gates a whole group. To show a field for several values out of many, **duplicate it once per value**, each with its own `conditions` entry. If it's relevant for all values, give it no condition at all.
+
+   ✅ **`!=` is verified working**, in the local form builder against `gallery.side_visual_count` (`off` → 33 fields rendered, `one` → 44, `two` → 55; the slot-1 group is gated `!= "off"` and the slot-2 group `= "two"`). An earlier version of this file claimed `!=` was ignored; it is not. Reproduce with the recipe at the end of this section rather than trusting either claim.
 2. **Each duplicated copy MUST have a unique `id` — distinct `key`s are not enough.** Salla's admin form builder gates by `id`. When 2+ conditional fields share an `id`, gating silently breaks: the field renders zero times for one value and N times (stacked) for another. Name copies `bg_effect`, `bg_effect_floating`, `bg_effect_split`, … and resolve the active one in the component by reading the controlling value.
 3. **`conditions` is an array but only ONE entry is honoured — there is no AND.** Two entries do not combine: a field gated `[layout=circle, ring_dot=true]` rendered while `layout` was `columns`, and one gated `[layout=columns, desktop_custom_width=true]` stayed hidden while `layout` *was* `columns` — i.e. the earlier entries are ignored, not ORed. **Give every field exactly one condition** and pick the gate that matters most. To express "A and B", gate the *controlling switch* on A and the field on the switch (`ingredients.circle_desktop_custom` is gated on `layout=circle`, and its three sliders on the switch), so the pair is unreachable from the wrong branch anyway.
 4. **To express "A or B", stop asking two fields and add the one field that answers the question directly.** Duplicating per rule 1 is the fallback, not the first move — it multiplies the schema and, worse, **a hidden field keeps its stored value**, so a gate on a branch-local field fires from a branch the merchant has since left. `use-cases` hit this: copy sits on the photo when `layout=row` *or* when `layout=stack` and the stack's own text toggle says so. Gating on that stack-local toggle would have left the overlay settings showing in the row layout off a stale value. The fix was to delete the per-layout toggle and add `text_position` (`over` / `outside`) with **no** condition, shared by both layouts — one field, one honest `=` test, nothing stale. The price is that the shared field's other value has to mean the layout-appropriate thing in each branch (`outside` = beside the photo in the stack, under it in the row), which is real work in the component and a vaguer label in the panel. Worth it: the alternative leaks.
 
 ⚠️ **The panel caches the schema in `localStorage` under `form-builder::<component>`** and prefers it over the freshly generated page, so edits to `twilight-bundle.json` appear not to take effect. Clear the `form-builder::*` keys when testing a schema change. Note also that the generated `node_modules/.salla-temp/*.html` is only rebuilt when the dev server starts on a missing directory — `rm -rf node_modules/.salla-temp` and restart to pick up a `twilight-bundle.json` edit.
+
+### How to actually test a gating rule
+
+Every claim in this section is checkable in about a minute, and the claims here have been wrong before — check before you design around one:
+
+```bash
+rm -rf node_modules/.salla-temp && pnpm dev     # regenerate, note the port
+```
+
+Open `http://localhost:<port>/node_modules/.salla-temp/index.html`, then in the console:
+
+```js
+Object.keys(localStorage).filter(k => k.startsWith("form-builder"))
+  .forEach(k => localStorage.removeItem(k));   // else you test a cached schema
+openDrawer("gallery");                          // global on that page
+```
+
+The form renders inside a `<form-builder-N>` **shadow root**, so `document.querySelector` will not see it. Count the rendered fields through the shadow root and flip the controlling value:
+
+```js
+const root = document.querySelector("form-builder-3").shadowRoot;
+const ids = () => [...root.querySelectorAll("label[for]")].map(l => l.getAttribute("for"));
+ids().length;              // compare across values of the controlling field
+ids().includes("side_image");
+```
+
+A field is present or absent from `label[for]` — that is the ground truth for whether a condition fired.
 
 ## Sliders — great at top level, ignored inside a collection
 

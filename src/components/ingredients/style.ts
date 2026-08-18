@@ -26,7 +26,7 @@ export const ingredientsStyles = css`
     min-width: 0;
     max-width: 100%;
 
-    --ing-bg: #f3f1ef;
+    --ing-bg: #f5f5f5;
     --ing-title: #14181f;
     --ing-subtitle: #5b6573;
     --ing-label: #14181f;
@@ -77,7 +77,10 @@ export const ingredientsStyles = css`
     max-width: 100%;
     min-width: 0;
     background: var(--ing-bg);
-    padding: clamp(2rem, 6vw, 3.5rem) var(--ing-pad-x) clamp(2.5rem, 8vw, 4rem);
+    /* Vertical space is the merchant's, via shared tiers; the horizontal
+       padding stays the section's own. See src/shared/section-spacing.ts. */
+    padding-inline: var(--ing-pad-x);
+    padding-block: var(--sp-top-m) var(--sp-bot-m);
     overflow: hidden;
 
     /* These all DERIVE from --ing-scale-m / --ing-product-w, so they must be
@@ -501,6 +504,9 @@ export const ingredientsStyles = css`
      DESKTOP
      ============================================================ */
   @media (min-width: 768px) {
+    .ing {
+      padding-block: var(--sp-top-d) var(--sp-bot-d);
+    }
     :host {
       --ing-pad-x: clamp(1rem, 4vw, 2rem);
     }

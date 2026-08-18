@@ -1,6 +1,7 @@
 import { html, nothing } from "lit";
 import { property, state } from "lit/decorators.js";
 import { GrowthElement } from "../../shared/growth-element";
+import { resolveSectionSpacing } from "../../shared/section-spacing";
 import type {
   TestimonialsConfig,
   TestimonialItem,
@@ -9,11 +10,8 @@ import type {
   TestimonialsColumns,
   TestimonialsColumnsDesktop,
   TestimonialRatingStyle,
-  TestimonialMarqueeRows,
-  TestimonialMarqueeSpeed,
-  TestimonialMarqueeDirection,
   TestimonialPhotoAspect,
-  TestimonialOverlayTone,
+  TestimonialBgPosition,
 } from "./types";
 import { testimonialsStyles } from "./style";
 
@@ -34,13 +32,12 @@ interface CardOpts {
  * <growth-testimonials> — Testimonials (آراء العملاء)
  * Part of the Growth Kit bundle for Salla Twilight.
  *
- * A premium, social-proof wall with four arrangements and five card shapes:
- *   • Layouts: marquee (1–2 auto-scrolling rows), carousel (scroll-snap with
- *     arrows/dots/autoplay), grid, and masonry.
- *   • Card styles: modern (photo-led with overlaid name chip), overlay (full-bleed
- *     photo with a frosted-glass panel at the bottom), quote, bubble, minimal, glass.
+ * A premium, social-proof wall with two arrangements and six card shapes:
+ *   • Layouts: carousel (scroll-snap with arrows/dots/autoplay) and grid.
+ *   • Card styles: modern (photo-led with overlaid name chip) and quote
+ *     (text-forward, with a large quotation mark).
  *   • Fractional star ratings (e.g. 4.9).
- *   • Premium motion: marquee scroll, staggered entrance, hover-lift.
+ *   • Premium motion: staggered entrance, hover-lift.
  *
  * RTL-first and mobile-first throughout; respects prefers-reduced-motion.
  */
@@ -63,8 +60,8 @@ export default class GrowthTestimonials extends GrowthElement {
   private _autoplayTimer: number | null = null;
   private _scrollRaf: number | null = null;
   private _interactionPaused = false;
-  /** Whether the section is visible — carousel autoplay and the marquee
-      pause while off-screen (the CSS side keys off the host attribute). */
+  /** Whether the section is visible — carousel autoplay pauses while
+      off-screen (the CSS side keys off the host attribute). */
   private _inView = true;
   private _io: IntersectionObserver | null = null;
   /** Pointer-drag (desktop) state for the carousel track. */
@@ -196,24 +193,75 @@ export default class GrowthTestimonials extends GrowthElement {
   }
 
   // ------------------------------------------------------------
-  // Carousel: scroll-snap navigation (RTL-safe via abs(scrollLeft))
+  // Carousel: scroll-snap navigation (RTL-safe via rect deltas)
   // ------------------------------------------------------------
 
   private get _track(): HTMLElement | null {
     return this.renderRoot.querySelector(".t-carousel-track");
   }
 
+  private get _cells(): HTMLElement[] {
+    const track = this._track;
+    return track
+      ? Array.from(track.querySelectorAll<HTMLElement>(".t-carousel-cell"))
+      : [];
+  }
+
   private _pageCount(total: number): number {
     return Math.max(1, Math.ceil(total / this._cardsPerView()));
   }
 
+  /**
+   * Index of the cell sitting closest to the track's centre.
+   *
+   * Measured with getBoundingClientRect rather than scrollLeft: RTL engines
+   * genuinely disagree on scrollLeft's origin and sign (0 at the right edge
+   * counting down in Chrome/Firefox, counting up elsewhere), while rectangles
+   * read identically in both directions.
+   */
+  private _nearestCell(): number {
+    const track = this._track;
+    const cells = this._cells;
+    if (!track || !cells.length) return 0;
+    const tr = track.getBoundingClientRect();
+    const mid = tr.left + tr.width / 2;
+    let best = 0;
+    let bestDist = Infinity;
+    cells.forEach((cell, i) => {
+      const cr = cell.getBoundingClientRect();
+      const dist = Math.abs(cr.left + cr.width / 2 - mid);
+      if (dist < bestDist) {
+        bestDist = dist;
+        best = i;
+      }
+    });
+    return best;
+  }
+
   private _scrollToPage(page: number) {
     const track = this._track;
-    if (!track) return;
+    const cells = this._cells;
+    if (!track || !cells.length) return;
     const pages = this._pageCount(this._items().length);
     const clamped = Math.max(0, Math.min(pages - 1, page));
-    const left = (this._isRtl() ? -1 : 1) * clamped * track.clientWidth;
-    track.scrollTo({ left, behavior: "smooth" });
+    const perView = this._cardsPerView();
+    const target = cells[Math.min(cells.length - 1, clamped * perView)];
+    if (!target) return;
+    const tr = track.getBoundingClientRect();
+    const cr = target.getBoundingClientRect();
+    // One card in view (the centred mobile strip) centres it; several in view
+    // align its leading edge. Scrolling by a rect DELTA keeps both RTL-safe.
+    const delta =
+      perView === 1
+        ? cr.left + cr.width / 2 - (tr.left + tr.width / 2)
+        : this._isRtl()
+        ? cr.right - tr.right
+        : cr.left - tr.left;
+    // Assign scrollLeft rather than calling scrollBy/scrollTo: the CSSOM methods
+    // take an absolute `left` in a coordinate space RTL engines disagree about,
+    // whereas += on a rect delta is direction-agnostic. The smooth animation
+    // still comes from `scroll-behavior: smooth` on the track.
+    track.scrollLeft += delta;
     this._carouselPage = clamped;
   }
 
@@ -237,7 +285,7 @@ export default class GrowthTestimonials extends GrowthElement {
       this._scrollRaf = null;
       const track = this._track;
       if (!track || track.clientWidth === 0) return;
-      const page = Math.round(Math.abs(track.scrollLeft) / track.clientWidth);
+      const page = Math.floor(this._nearestCell() / this._cardsPerView());
       const pages = this._pageCount(this._items().length);
       const clamped = Math.max(0, Math.min(pages - 1, page));
       if (clamped !== this._carouselPage) this._carouselPage = clamped;
@@ -280,7 +328,7 @@ export default class GrowthTestimonials extends GrowthElement {
 
   private _setupAutoplay() {
     const c = this.config || {};
-    const layout = this._pickValue<TestimonialsLayout>(c.layout, "marquee");
+    const layout = this._pickValue<TestimonialsLayout>(c.layout, "grid");
     if (layout !== "carousel" || !c.carousel_autoplay) return;
     if (this._interactionPaused) return;
     if (!this._inView) return;
@@ -386,24 +434,23 @@ export default class GrowthTestimonials extends GrowthElement {
     const localizedMeta = this.localizedString(item.meta);
     const localizedQuote = this.localizedString(item.quote);
 
-    // Photo-led styles show the customer's own product photo (UGC); others use the
-    // round avatar. In "modern" the photo can be toggled off (text-only card); in
-    // "overlay" the photo IS the card, so it's always used when present.
+    // "modern" shows the customer's own product photo (UGC) and can toggle it off
+    // for a text-only card; "quote" always uses the small round avatar instead.
     const photo =
-      cardStyle === "overlay"
-        ? item.photo || ""
-        : cardStyle === "modern" && opts.showPhoto
-        ? item.photo || ""
-        : "";
+      cardStyle === "modern" && opts.showPhoto ? item.photo || "" : "";
     const avatar = opts.showAvatar ? item.avatar || DEFAULT_AVATAR : "";
 
     const ratingBlock = opts.showRating
       ? this._renderRating(item, opts.ratingStyle)
       : nothing;
 
-    const author = (withAvatar: boolean) =>
+    // `stacked` centres the block and puts the avatar above the name — the
+    // quote card leads with the author, the modern card trails with it.
+    const author = (withAvatar: boolean, stacked = false) =>
       localizedName || localizedMeta || (withAvatar && avatar)
-        ? html`<div class="t-author">
+        ? html`<div
+            class=${stacked ? "t-author t-author--stacked" : "t-author"}
+          >
             ${withAvatar && avatar
               ? html`<span class="t-avatar"
                   ><img src=${avatar} alt=${localizedName} loading="lazy"
@@ -462,72 +509,17 @@ export default class GrowthTestimonials extends GrowthElement {
       `;
     }
 
-    // --- overlay: full-bleed photo with a frosted-glass panel pinned to the bottom ---
-    if (cardStyle === "overlay") {
-      const tone = this._pickValue<TestimonialOverlayTone>(
-        this.config?.overlay_tone,
-        "dark"
-      );
-      return html`
-        <article
-          class="t-card"
-          data-style="overlay"
-          data-tone=${tone}
-          data-index=${index}
-        >
-          ${photo
-            ? html`<img
-                class="t-overlay-photo"
-                src=${photo}
-                alt=${localizedName
-                  ? `تصوير العميل: ${localizedName}`
-                  : "تصوير العميل"}
-                loading="lazy"
-              />`
-            : nothing}
-          <div class="t-overlay-panel">
-            ${opts.showQuoteMark
-              ? html`<span class="t-quote-mark">${this._icon("quote")}</span>`
-              : nothing}
-            ${ratingBlock}
-            ${localizedQuote
-              ? html`<p class="t-quote">${localizedQuote}</p>`
-              : nothing}
-            ${author(true)}
-          </div>
-        </article>
-      `;
-    }
-
-    // --- bubble: speech bubble holds the quote; author sits below the tail ---
-    if (cardStyle === "bubble") {
-      return html`
-        <article class="t-card" data-style="bubble" data-index=${index}>
-          <div class="t-bubble">
-            ${opts.showQuoteMark
-              ? html`<span class="t-quote-mark">${this._icon("quote")}</span>`
-              : nothing}
-            ${ratingBlock}
-            ${localizedQuote
-              ? html`<p class="t-quote">${localizedQuote}</p>`
-              : nothing}
-          </div>
-          ${author(true)}
-        </article>
-      `;
-    }
-
-    // --- quote / minimal / glass share a vertical anatomy ---
+    // --- quote: centred text card — avatar, name, stars, then the quote ---
     return html`
-      <article class="t-card" data-style=${cardStyle} data-index=${index}>
-        ${opts.showQuoteMark && cardStyle === "quote"
+      <article class="t-card" data-style="quote" data-index=${index}>
+        ${opts.showQuoteMark
           ? html`<span class="t-quote-mark">${this._icon("quote")}</span>`
           : nothing}
+        ${author(true, true)}
         ${ratingBlock}
         ${localizedQuote
           ? html`<p class="t-quote">${localizedQuote}</p>`
           : nothing}
-        ${author(true)}
       </article>
     `;
   }
@@ -535,84 +527,6 @@ export default class GrowthTestimonials extends GrowthElement {
   // ------------------------------------------------------------
   // Render: layouts
   // ------------------------------------------------------------
-
-  private _renderMarquee(
-    items: TestimonialItem[],
-    cardStyle: TestimonialCardStyle,
-    opts: CardOpts
-  ) {
-    const c = this.config || {};
-    const rows = this._num(
-      this._pickValue<TestimonialMarqueeRows>(c.marquee_rows, "1"),
-      1
-    );
-    const speed = this._pickValue<TestimonialMarqueeSpeed>(
-      c.marquee_speed,
-      "normal"
-    );
-    const baseDir = this._pickValue<TestimonialMarqueeDirection>(
-      c.marquee_direction,
-      "forward"
-    );
-    const pauseHover = c.marquee_pause_hover !== false;
-    // Seconds-per-card so every row scrolls at the same px/sec regardless of how
-    // many cards it holds (the repeat factor cancels out in the duration below).
-    const perCardMap: Record<TestimonialMarqueeSpeed, number> = {
-      slow: 5,
-      normal: 3,
-      fast: 1.8,
-    };
-    const perCard = perCardMap[speed];
-
-    // Repeat the set so the row is wide enough for a seamless −50% loop, then
-    // render that set twice (the two halves must be identical for a clean loop).
-    const buildOneSet = (source: TestimonialItem[]) => {
-      const minCards = 8;
-      const reps = Math.max(2, Math.ceil(minCards / Math.max(1, source.length)));
-      const oneSet: TestimonialItem[] = [];
-      for (let r = 0; r < reps; r++) oneSet.push(...source);
-      return oneSet;
-    };
-
-    const renderRow = (
-      source: TestimonialItem[],
-      dir: TestimonialMarqueeDirection
-    ) => {
-      const oneSet = buildOneSet(source);
-      const cards = (copy: number) =>
-        oneSet.map(
-          (item, i) =>
-            html`<div class="t-marquee-cell" aria-hidden=${copy === 1 ? "true" : "false"}>
-              ${this._renderCard(item, i, cardStyle, opts)}
-            </div>`
-        );
-      const dur = Math.max(12, oneSet.length * perCard);
-      return html`<div
-        class="t-marquee-row"
-        data-dir=${dir}
-        data-pause=${pauseHover ? "hover" : "off"}
-        style=${`--t-marquee-dur:${dur}s`}
-      >
-        <div class="t-marquee-track">${cards(0)}${cards(1)}</div>
-      </div>`;
-    };
-
-    if (rows >= 2 && items.length > 1) {
-      const half = Math.ceil(items.length / 2);
-      const rowA = items.slice(0, half);
-      const rowB = items.slice(half);
-      const altDir: TestimonialMarqueeDirection =
-        baseDir === "forward" ? "backward" : "forward";
-      return html`<div class="t-marquee" data-rows="2">
-        ${renderRow(rowA, baseDir)}
-        ${renderRow(rowB.length ? rowB : rowA, altDir)}
-      </div>`;
-    }
-
-    return html`<div class="t-marquee" data-rows="1">
-      ${renderRow(items, baseDir)}
-    </div>`;
-  }
 
   private _renderCarousel(
     items: TestimonialItem[],
@@ -685,13 +599,12 @@ export default class GrowthTestimonials extends GrowthElement {
     `;
   }
 
-  private _renderGridish(
+  private _renderGrid(
     items: TestimonialItem[],
-    layout: "grid" | "masonry",
     cardStyle: TestimonialCardStyle,
     opts: CardOpts
   ) {
-    return html`<div class="t-grid" data-layout=${layout}>
+    return html`<div class="t-grid">
       ${items.map(
         (item, i) =>
           html`<div class="t-grid-cell">
@@ -708,18 +621,30 @@ export default class GrowthTestimonials extends GrowthElement {
   private _buildHostStyle(c: TestimonialsConfig): string {
     const cols = this._resolveColumns();
     const cardRadius = this._num(c.card_radius, 20);
-    const cardStyle = this._pickValue<TestimonialCardStyle>(
-      c.card_style,
-      "modern"
+    const aspect: TestimonialPhotoAspect = this._pickValue<TestimonialPhotoAspect>(
+      c.photo_aspect,
+      "4/5"
     );
-    // Full-background cards stay uniformly 4:5 across marquee, carousel, and grid.
-    // The separate photo-led style keeps its merchant-configurable image ratio.
-    const aspect: TestimonialPhotoAspect =
-      cardStyle === "overlay"
-        ? "4/5"
-        : this._pickValue<TestimonialPhotoAspect>(c.photo_aspect, "4/5");
+    // Section background photo. The scrim is the section's own colour at the
+    // merchant's opacity, declared here on the same element as --t-bg so the
+    // color-mix resolves against the value being written beside it — a derived
+    // property declared on :host would resolve against the host's default and
+    // silently ignore a custom bg_color.
+    const bgImage =
+      c.enable_bg_image !== false ? (c.bg_image || "").trim() : "";
+    const scrim = Math.min(100, Math.max(0, this._num(c.bg_overlay, 62)));
+    const veil = `color-mix(in srgb, var(--t-bg) ${scrim}%, transparent)`;
+
     const parts = [
       c.bg_color ? `--t-bg:${c.bg_color}` : "",
+      bgImage ? `--t-bg-img:url("${encodeURI(bgImage)}")` : "",
+      bgImage ? `--t-bg-scrim:linear-gradient(${veil}, ${veil})` : "",
+      bgImage
+        ? `--t-bg-pos:${this._pickValue<TestimonialBgPosition>(
+            c.bg_position,
+            "center"
+          )}`
+        : "",
       c.title_color ? `--t-title:${c.title_color}` : "",
       c.subtitle_color ? `--t-subtitle:${c.subtitle_color}` : "",
       c.card_bg ? `--t-card-bg:${c.card_bg}` : "",
@@ -730,10 +655,16 @@ export default class GrowthTestimonials extends GrowthElement {
       c.star_color ? `--t-star:${c.star_color}` : "",
       c.star_empty_color ? `--t-star-empty:${c.star_empty_color}` : "",
       c.accent_color ? `--t-accent:${c.accent_color}` : "",
+      c.arrow_bg ? `--t-arrow-bg:${c.arrow_bg}` : "",
+      c.arrow_icon_color ? `--t-arrow-fg:${c.arrow_icon_color}` : "",
       `--t-radius:${cardRadius}px`,
       `--t-aspect:${aspect}`,
       `--t-cols-mobile:${cols.mobile}`,
       `--t-cols-desktop:${cols.desktop}`,
+      ...resolveSectionSpacing(
+        c,
+        (v, f) => this._pickValue(v, f),
+      ),
     ];
     return parts.filter(Boolean).join("; ");
   }
@@ -746,7 +677,7 @@ export default class GrowthTestimonials extends GrowthElement {
     const c: TestimonialsConfig = this.config || {};
     const items = this._items();
 
-    const layout = this._pickValue<TestimonialsLayout>(c.layout, "marquee");
+    const layout = this._pickValue<TestimonialsLayout>(c.layout, "grid");
     const cardStyle = this._pickValue<TestimonialCardStyle>(
       c.card_style,
       "modern"
@@ -821,16 +752,9 @@ export default class GrowthTestimonials extends GrowthElement {
         : nothing;
 
     const body =
-      layout === "marquee"
-        ? this._renderMarquee(items, cardStyle, opts)
-        : layout === "carousel"
+      layout === "carousel"
         ? this._renderCarousel(items, cardStyle, opts)
-        : this._renderGridish(
-            items,
-            layout as "grid" | "masonry",
-            cardStyle,
-            opts
-          );
+        : this._renderGrid(items, cardStyle, opts);
 
     return html`
       <section

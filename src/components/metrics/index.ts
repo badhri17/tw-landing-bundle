@@ -1,6 +1,7 @@
 import { html, nothing } from "lit";
 import { property, state } from "lit/decorators.js";
 import { GrowthElement } from "../../shared/growth-element";
+import { resolveSectionSpacing } from "../../shared/section-spacing";
 import type {
   MetricsConfig,
   MetricItem,
@@ -283,6 +284,12 @@ export default class GrowthMetrics extends GrowthElement {
       `--m-scale:${SIZE_SCALE[size] ?? 1}`,
       `--m-cols-mobile:${colsMobile}`,
       `--m-cols-desktop:${colsDesktop}`,
+      ...resolveSectionSpacing(
+        c,
+        (v, f) => this._pickValue(v, f),
+        "sm",
+        "sm",
+      ),
     ]
       .filter(Boolean)
       .join("; ");

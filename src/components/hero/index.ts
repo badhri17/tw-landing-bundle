@@ -17,6 +17,7 @@ import type {
   HeroGradientType,
   HeroBgFill,
   HeroNavItem,
+  HeroNavLayout,
   HeroNavTargetKind,
   RawLinkValue,
 } from "./types";
@@ -224,8 +225,30 @@ export default class GrowthHero extends GrowthElement {
     return slug ? { label, href: `#${slug}` } : null;
   }
 
-  /** All renderable nav links, capped to keep the bar from wrapping. */
+  /**
+   * Which of the three bar shapes the merchant picked.
+   *
+   * The fallback must stay in step with the `selected` value the field ships in
+   * twilight-bundle.json — it is what an instance with no stored value renders,
+   * so a divergence shows a bar the panel says is off.
+   */
+  private _navLayout(): HeroNavLayout {
+    return this._pickValue<HeroNavLayout>(
+      this.config?.nav_layout,
+      "logo_only_center"
+    );
+  }
+
+  /**
+   * All renderable nav links, capped to keep the bar from wrapping.
+   *
+   * Empty in both "logo only" layouts — the single gate for the bar links, the
+   * hamburger and the mobile drawer alike, since each is already conditional on
+   * this being non-empty. `nav_items` is deliberately NOT cleared: a hidden
+   * field keeps its value, which here is the point.
+   */
   private _navItems(): ResolvedNavItem[] {
+    if (this._navLayout() !== "logo_links") return [];
     const raw = this.config?.nav_items;
     if (!Array.isArray(raw)) return [];
     return raw
@@ -362,9 +385,10 @@ export default class GrowthHero extends GrowthElement {
     // Reflected onto the HOST, not .hero: a fixed bar has to out-paint the
     // sections that follow this component in the page, and only the host
     // participates in the page's own stacking order.
+    // Opt-in, matching the field's default: `=== true`, not `!== false`.
     this.toggleAttribute(
       "nav-fixed",
-      !!this.config?.enable_nav && this.config?.nav_fixed !== false
+      !!this.config?.enable_nav && this.config?.nav_fixed === true
     );
     // Same reason: publish the anchor once config is actually available.
     this._syncAnchor(this.config?.anchor_id, "hero");
@@ -511,7 +535,7 @@ export default class GrowthHero extends GrowthElement {
   /** Idempotent wiring, called from updated() like _syncParallax(). */
   private _syncNavScroll() {
     const c = this.config || {};
-    const wanted = !!c.enable_nav && c.nav_fixed !== false;
+    const wanted = !!c.enable_nav && c.nav_fixed === true;
     if (wanted === !!this._onNavScroll) return;
     if (wanted) this._setupNavScroll();
     else this._teardownNavScroll();
@@ -711,13 +735,14 @@ export default class GrowthHero extends GrowthElement {
       .join(" ");
 
     // --- Navbar ---------------------------------------------------------
+    const navLayout = this._navLayout();
     const navItems = c.enable_nav ? this._navItems() : [];
     const navLogo = (c.nav_logo || "").trim();
     const navStoreName = this.localizedString(c.nav_store_name);
     // A bar with nothing in it is worse than no bar at all.
     const hasNav =
       !!c.enable_nav && (navItems.length > 0 || !!navLogo || !!navStoreName);
-    const navFixed = hasNav && c.nav_fixed !== false;
+    const navFixed = hasNav && c.nav_fixed === true;
     const navCta =
       hasNav && c.nav_show_cta !== false && localizedPrimaryLabel
         ? { label: localizedPrimaryLabel, href: c.primary_url || "#" }
@@ -794,7 +819,12 @@ export default class GrowthHero extends GrowthElement {
                 data-scrolled=${navFixed && this._navPastHero ? "on" : "off"}
                 data-anim=${enableAnim ? this._animState : "in"}
               >
-                <div class="nav-inner">
+                <div
+                  class="nav-inner"
+                  data-logo=${navLayout === "logo_only_center"
+                    ? "center"
+                    : "start"}
+                >
                   <a class="nav-logo" href=${c.nav_home_url || "#"}>
                     ${navLogo
                       ? html`<img

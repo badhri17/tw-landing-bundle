@@ -16,6 +16,7 @@
  */
 
 import type { MaybeMultiLang } from "../../shared/types";
+import type { SectionSpacingFields } from "../../shared/section-spacing";
 
 /** Physical edge of the image a card hugs. */
 export type FeatureSide = "right" | "left";
@@ -68,7 +69,7 @@ export interface ProductFeatureItem {
   top?: number | string;
 }
 
-export interface ProductFeaturesConfig {
+export interface ProductFeaturesConfig extends SectionSpacingFields {
   /** This section's anchor id, so hero nav links can target it. */
   anchor_id?: string;
 

@@ -24,6 +24,7 @@
  */
 
 import type { MaybeMultiLang } from "../../shared/types";
+import type { SectionSpacingFields } from "../../shared/section-spacing";
 
 /** How the ingredients are arranged around the product. */
 export type IngredientLayout = "columns" | "circle";
@@ -88,7 +89,7 @@ export interface IngredientItem {
   angle_offset?: number | string;
 }
 
-export interface IngredientsConfig {
+export interface IngredientsConfig extends SectionSpacingFields {
   /** This section's anchor id, so hero nav links can target it. */
   anchor_id?: string;
 

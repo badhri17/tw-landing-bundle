@@ -31,7 +31,7 @@ export const useCasesStyles = css`
     min-width: 0;
     max-width: 100%;
 
-    --uc-bg: #f4f2ef;
+    --uc-bg: #f5f5f5;
     --uc-title: #14181f;
     --uc-subtitle: #5b6270;
     --uc-card-bg: #ffffff;
@@ -81,7 +81,9 @@ export const useCasesStyles = css`
     max-width: 100%;
     min-width: 0;
     background: var(--uc-bg);
-    padding-block: clamp(2rem, 6vw, 4rem);
+    /* Vertical space is the merchant's, via shared tiers; the horizontal
+       padding stays the section's own. See src/shared/section-spacing.ts. */
+    padding-block: var(--sp-top-m) var(--sp-bot-m);
     /* Not overflow:hidden — the row strip is meant to bleed off both edges.
        The horizontal clip lives on the strip itself instead. */
     overflow: clip visible;
@@ -490,6 +492,9 @@ export const useCasesStyles = css`
      DESKTOP
      ============================================================ */
   @media (min-width: 768px) {
+    .uc {
+      padding-block: var(--sp-top-d) var(--sp-bot-d);
+    }
     .uc {
       --uc-gap: var(--uc-gap-d);
       --uc-share: var(--uc-share-d);

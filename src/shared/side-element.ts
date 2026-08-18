@@ -5,10 +5,14 @@
  * swatch of fabric) parked against one edge of a section and allowed to hang
  * partly outside it, for an editorial layered look.
  *
- * Self-contained on purpose: the FAQ and other sections are expected to want the
- * same option later, so nothing here reaches into the gallery. Promoting it to
- * `src/shared/` when a second component adopts it is a file move, not a rewrite
- * — the only gallery-specific thing is the `--se-*` prefix.
+ * Shared by `gallery` and `faq`. It reaches into neither: `pick` / `num` arrive
+ * as arguments rather than through `GrowthElement`, so this module has no
+ * base-class dependency and each component owns the CSS that consumes the
+ * `--se*-…` properties it returns (`.gal-side`, `.faq-side`).
+ *
+ * ⚠️ It lives in `src/shared/`, so `duplicateSharedPerComponentPlugin` inlines a
+ * private copy per component. Never give it module-level state expecting it to
+ * be shared across components — at runtime there is no single instance.
  *
  * Placement is expressed entirely through custom properties so the mobile and
  * desktop arrangements can be swapped in a media query. Vertical placement in

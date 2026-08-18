@@ -8,6 +8,7 @@
  */
 
 import type { MaybeMultiLang } from "../../shared/types";
+import type { SectionSpacingFields } from "../../shared/section-spacing";
 
 /** Cards per row on mobile — mobile is the primary canvas. */
 export type MetricsColumns = "1" | "2" | "3";
@@ -45,7 +46,7 @@ export interface MetricItem {
   label?: MaybeMultiLang;
 }
 
-export interface MetricsConfig {
+export interface MetricsConfig extends SectionSpacingFields {
   /** This section's anchor id, so hero nav links can target it. */
   anchor_id?: string;
 

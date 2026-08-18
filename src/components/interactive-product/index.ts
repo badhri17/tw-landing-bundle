@@ -1,6 +1,7 @@
 import { html, nothing, type PropertyValues } from "lit";
 import { property, state } from "lit/decorators.js";
 import { GrowthElement } from "../../shared/growth-element";
+import { resolveSectionSpacing } from "../../shared/section-spacing";
 import type {
   InteractiveProductConfig,
   Hotspot,
@@ -242,6 +243,10 @@ export default class GrowthInteractiveProduct extends GrowthElement {
       c.card_text_color ? `--ip-card-text:${c.card_text_color}` : "",
       c.marker_bg ? `--ip-marker-bg:${c.marker_bg}` : "",
       `--ip-detail-aspect:${aspectVal}`,
+      ...resolveSectionSpacing(
+        c,
+        (v, f) => this._pickValue(v, f),
+      ),
     ];
     return parts.filter(Boolean).join("; ");
   }

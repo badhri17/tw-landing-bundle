@@ -12,7 +12,8 @@
  */
 
 import type { MaybeMultiLang } from "../../shared/types";
-import type { SideElementFields } from "./side-element";
+import type { SideElementFields } from "../../shared/side-element";
+import type { SectionSpacingFields } from "../../shared/section-spacing";
 
 /** Shape of each photo in the row. */
 export type GalleryAspect = "1/1" | "3/4" | "4/5" | "2/3" | "4/3" | "16/9";
@@ -31,7 +32,7 @@ export interface GalleryImageItem {
   alt?: MaybeMultiLang;
 }
 
-export interface GalleryConfig extends SideElementFields {
+export interface GalleryConfig extends SideElementFields, SectionSpacingFields {
   /** This section's anchor id, so hero nav links can target it. */
   anchor_id?: string;
 

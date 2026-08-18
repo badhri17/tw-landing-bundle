@@ -16,7 +16,7 @@ export const testimonialsStyles = css`
     font-family: inherit;
     direction: inherit;
     /* Size containment: the host's width is taken from its container, never from
-       its contents. This is what stops the marquee's max-content track (or any
+       its contents. This is what stops the carousel's wide track (or any other
        wide layout) from forcing an ancestor grid/flex item — e.g. Salla's
        component card — wider than the viewport and pushing other sections away.
        Width-only containment; height still grows with content. */
@@ -54,12 +54,23 @@ export const testimonialsStyles = css`
   /* ============================================================
      SECTION + HEADER
      ============================================================ */
+  /* The optional background photo and its scrim are two background LAYERS on
+     the section itself, not a pseudo-element: nothing new joins the stacking
+     order, so the cards and the carousel arrows keep the z-indexes
+     they already had. Both default to "none", which leaves just the colour. */
   .t-section {
     width: 100%;
     max-width: 100%;
     min-width: 0;
-    background: var(--t-bg);
-    padding: clamp(2.5rem, 6vw, 4.5rem) var(--t-pad-x);
+    background-color: var(--t-bg);
+    background-image: var(--t-bg-scrim, none), var(--t-bg-img, none);
+    background-size: cover;
+    background-position: var(--t-bg-pos, center);
+    background-repeat: no-repeat;
+    /* Vertical space is the merchant's, via shared tiers; the horizontal
+       padding stays the section's own. See src/shared/section-spacing.ts. */
+    padding-inline: var(--t-pad-x);
+    padding-block: var(--sp-top-m) var(--sp-bot-m);
     overflow: hidden;
   }
 
@@ -208,23 +219,17 @@ export const testimonialsStyles = css`
     overflow: hidden;
     text-align: start;
   }
-  .t-card[data-style="quote"],
-  .t-card[data-style="minimal"],
-  .t-card[data-style="glass"] {
+  .t-card[data-style="quote"] {
     padding: clamp(18px, 4vw, 26px);
     gap: 12px;
+    /* Centred anatomy: the author leads (avatar above the name), the quote
+       follows. align-items centres the flex children; text-align centres the
+       text inside each of them. */
+    align-items: center;
+    text-align: center;
   }
-  .t-card[data-style="minimal"] {
-    box-shadow: none;
-    border-color: var(--t-border);
-  }
-  .t-card[data-style="glass"] {
-    background: rgba(255, 255, 255, 0.55);
-    -webkit-backdrop-filter: blur(16px) saturate(1.3);
-    backdrop-filter: blur(16px) saturate(1.3);
-    border-color: rgba(255, 255, 255, 0.6);
-    box-shadow: 0 26px 60px -34px rgba(15, 23, 42, 0.5),
-      inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  .t-card[data-style="quote"] .t-rating {
+    justify-content: center;
   }
 
   /* Quote text */
@@ -234,8 +239,7 @@ export const testimonialsStyles = css`
     font-size: 0.98rem;
     line-height: 1.72;
   }
-  .t-card[data-style="quote"] .t-quote,
-  .t-card[data-style="bubble"] .t-quote {
+  .t-card[data-style="quote"] .t-quote {
     font-size: 1.06rem;
     line-height: 1.65;
   }
@@ -245,6 +249,16 @@ export const testimonialsStyles = css`
     line-height: 0;
     color: var(--t-accent);
     opacity: 0.9;
+  }
+  /* In the quote card the mark is decoration, not a row of content: take it out
+     of the flow so it adds nothing to the card's height (in flow it pushed the
+     avatar and everything under it down), and park it in the leading top corner.
+     inset-inline-start puts that on the right in RTL and the left in LTR. */
+  .t-card[data-style="quote"] .t-quote-mark {
+    position: absolute;
+    top: clamp(10px, 2.5vw, 16px);
+    inset-inline-start: clamp(12px, 3vw, 18px);
+    pointer-events: none;
   }
   .t-quote-mark svg {
     width: 34px;
@@ -277,6 +291,19 @@ export const testimonialsStyles = css`
     flex-direction: column;
     gap: 1px;
   }
+  /* Stacked: avatar sits above the name, whole block centred */
+  .t-author--stacked {
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+  .t-author--stacked .t-avatar {
+    width: 56px;
+    height: 56px;
+  }
+  .t-author--stacked .t-author-meta {
+    align-items: center;
+  }
   .t-name {
     display: inline-flex;
     align-items: center;
@@ -291,11 +318,9 @@ export const testimonialsStyles = css`
     font-size: 0.82rem;
   }
 
-  /* Author drops to the bottom for tidy equal-height cards */
-  .t-card[data-style="quote"] .t-author,
-  .t-card[data-style="minimal"] .t-author,
-  .t-card[data-style="glass"] .t-author {
-    margin-top: auto;
+  /* The quote's text is what stretches in an equal-height card, not the author */
+  .t-card[data-style="quote"] .t-quote {
+    margin-bottom: auto;
   }
 
   /* ============================================================
@@ -354,206 +379,6 @@ export const testimonialsStyles = css`
   }
 
   /* ============================================================
-     CARD — overlay (full-bleed photo + frosted-glass bottom panel)
-     ============================================================ */
-  .t-card[data-style="overlay"] {
-    padding: 0;
-    gap: 0;
-    position: relative;
-    aspect-ratio: var(--t-aspect);
-    justify-content: flex-end;
-    /* Solid fallback shows through when an item has no photo. */
-    background: #14181f;
-    border:none;
-  }
-  .t-card[data-style="overlay"][data-tone="light"] {
-    background: #e9e7e2;
-  }
-  .t-overlay-photo {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-    z-index: 0;
-  }
-  /* The frosted panel: blurs the photo behind it (backdrop-filter) and lays a
-     translucent veil on top, so the comment stays crisp while its backdrop softens.
-     Structure is shared; the veil + text colours are tone-driven below. */
-  .t-overlay-panel {
-    position: relative;
-    z-index: 1;
-    margin-top: auto;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    padding: clamp(15px, 5%, 22px);
-    border-radius: 0 0 var(--t-radius) var(--t-radius);
-    -webkit-backdrop-filter: blur(16px) saturate(1.25);
-    backdrop-filter: blur(16px) saturate(1.25);
-  }
-  /* Dark tone (default for any overlay that isn't explicitly light):
-     dark veil + light-on-dark text. */
-  .t-card[data-style="overlay"]:not([data-tone="light"]) .t-overlay-panel {
-    background: linear-gradient(
-      to top,
-      rgba(15, 18, 22, 0.76),
-      rgba(15, 18, 22, 0.46)
-    );
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
-    --t-text: rgba(255, 255, 255, 0.92);
-    --t-name: #ffffff;
-    --t-meta: rgba(255, 255, 255, 0.72);
-    --t-accent: rgba(255, 255, 255, 0.92);
-  }
-  .t-card[data-style="overlay"]:not([data-tone="light"]) .t-rating--num {
-    color: #fff;
-    background: rgba(255, 255, 255, 0.18);
-  }
-  /* Light tone: frosted white veil + dark text; quote mark keeps the brand accent. */
-  .t-card[data-style="overlay"][data-tone="light"] .t-overlay-panel {
-    background: linear-gradient(
-      to top,
-      rgba(255, 255, 255, 0.82),
-      rgba(255, 255, 255, 0.52)
-    );
-    --t-text: #2c333d;
-    --t-name: #14181f;
-    --t-meta: #6b7480;
-  }
-  .t-card[data-style="overlay"][data-tone="light"] .t-rating--num {
-    color: #14181f;
-    background: rgba(20, 24, 31, 0.07);
-  }
-  .t-card[data-style="overlay"] .t-quote-mark {
-    opacity: 0.85;
-    text-align:end;
-  }
-  .t-card[data-style="overlay"] .t-quote-mark svg {
-    width: 30px;
-    height: 30px;
-  }
-
-  /* ============================================================
-     CARD — bubble (speech bubble + tail, author below)
-     ============================================================ */
-  .t-card[data-style="bubble"] {
-    background: transparent;
-    border: none;
-    box-shadow: none;
-    overflow: visible;
-    gap: 14px;
-  }
-  .t-bubble {
-    position: relative;
-    background: var(--t-card-bg);
-    border: 1px solid var(--t-border);
-    border-radius: var(--t-radius);
-    padding: clamp(16px, 4vw, 22px);
-    box-shadow: 0 20px 44px -32px rgba(15, 23, 42, 0.45);
-    display: flex;
-    flex-direction: column;
-    gap: 11px;
-  }
-  .t-bubble::after {
-    content: "";
-    position: absolute;
-    bottom: -8px;
-    inset-inline-start: 28px;
-    width: 16px;
-    height: 16px;
-    background: var(--t-card-bg);
-    border-inline-end: 1px solid var(--t-border);
-    border-bottom: 1px solid var(--t-border);
-    transform: rotate(45deg);
-  }
-  .t-card[data-style="bubble"] .t-author {
-    padding-inline-start: 6px;
-  }
-
-  /* ============================================================
-     LAYOUT — marquee
-     ============================================================ */
-  /* NOTE: do NOT set max-width:none here. The marquee track is width:max-content,
-     so an uncapped body-wrap lets that ~6000px intrinsic width drive the min-content
-     of an ancestor grid/flex item (e.g. Salla's component card) and blow out the
-     whole page. The marquee stays inside the standard capped, centered body-wrap. */
-  .t-marquee {
-    display: flex;
-    flex-direction: column;
-    gap: clamp(14px, 2.5vw, 22px);
-    min-width: 0;
-    max-width: 100%;
-  }
-  .t-marquee-row {
-    /* min-width:0 lets overflow:hidden actually clip the max-content track in a
-       column-flex (cross-axis auto-min would otherwise expand to the track width). */
-    min-width: 0;
-    max-width: 100%;
-    overflow: hidden;
-    -webkit-mask-image: linear-gradient(
-      to right,
-      transparent,
-      #000 6%,
-      #000 94%,
-      transparent
-    );
-    mask-image: linear-gradient(
-      to right,
-      transparent,
-      #000 6%,
-      #000 94%,
-      transparent
-    );
-  }
-  .t-marquee-track {
-    display: flex;
-    width: max-content;
-    align-items: stretch;
-    will-change: transform;
-    /* LTR scrolls left (-50%); RTL scrolls right (+50%) so the row never empties.
-       Spacing lives on the cells (margin-inline-end), NOT as flex gap, so the two
-       identical halves tile to exactly 50% and the loop is seamless. */
-    animation: t-marquee-ltr var(--t-marquee-dur, 40s) linear infinite;
-  }
-  .t-marquee-track:dir(rtl) {
-    animation-name: t-marquee-rtl;
-  }
-  .t-marquee-row[data-dir="backward"] .t-marquee-track {
-    animation-direction: reverse;
-  }
-  .t-marquee-row[data-pause="hover"]:hover .t-marquee-track {
-    animation-play-state: paused;
-  }
-  /* Off-screen (host attribute set by IntersectionObserver): freeze the
-     marquee so it doesn't burn compositor time while invisible. */
-  :host([out-of-view]) .t-marquee-track {
-    animation-play-state: paused;
-  }
-  .t-marquee-cell {
-    flex: 0 0 auto;
-    width: clamp(258px, 80vw, 320px);
-    margin-inline-end: var(--t-gap);
-  }
-  @keyframes t-marquee-ltr {
-    from {
-      transform: translateX(0);
-    }
-    to {
-      transform: translateX(-50%);
-    }
-  }
-  @keyframes t-marquee-rtl {
-    from {
-      transform: translateX(0);
-    }
-    to {
-      transform: translateX(50%);
-    }
-  }
-
-  /* ============================================================
      LAYOUT — carousel (scroll-snap)
      ============================================================ */
   .t-carousel {
@@ -591,16 +416,25 @@ export const testimonialsStyles = css`
       );
     scroll-snap-align: start;
   }
-  /* Mobile peek: never let a single card fill the whole width — hint there's more */
+  /* Mobile: the strip bleeds past the section's inline padding and centres the
+     active card, so a slice of both neighbours stays visible.
+
+     The 12% inline padding does double duty. It shrinks the track's CONTENT box
+     to 76% of the strip, so a cell at flex-basis:100% is 76% wide and leaves a
+     12% gutter each side — no vw units, so a narrow Salla page container cannot
+     desync the two halves. And it is what lets the first and last card reach
+     the centre at all; without it they clamp against the scroll extremes. */
   @media (max-width: 767.98px) {
+    .t-carousel {
+      margin-inline: calc(-1 * var(--t-pad-x));
+    }
+    .t-carousel-track {
+      padding-inline: 12%;
+      scroll-padding-inline: 12%;
+    }
     .t-carousel-cell {
-      flex-basis: min(
-        86%,
-        calc(
-          (100% - (var(--t-cols-mobile) - 1) * var(--t-gap)) /
-            var(--t-cols-mobile)
-        )
-      );
+      flex-basis: 100%;
+      scroll-snap-align: center;
     }
   }
 
@@ -613,8 +447,8 @@ export const testimonialsStyles = css`
     height: 42px;
     border: none;
     border-radius: 50%;
-    background: var(--t-title);
-    color: #fff;
+    background: var(--t-arrow-bg, var(--t-title));
+    color: var(--t-arrow-fg, #fff);
     display: grid;
     place-items: center;
     cursor: pointer;
@@ -671,20 +505,12 @@ export const testimonialsStyles = css`
   }
 
   /* ============================================================
-     LAYOUT — grid + masonry
+     LAYOUT — grid
      ============================================================ */
-  .t-grid[data-layout="grid"] {
+  .t-grid {
     display: grid;
     grid-template-columns: repeat(var(--t-cols-mobile), minmax(0, 1fr));
     gap: var(--t-gap);
-  }
-  .t-grid[data-layout="masonry"] {
-    column-count: var(--t-cols-mobile);
-    column-gap: var(--t-gap);
-  }
-  .t-grid[data-layout="masonry"] .t-grid-cell {
-    break-inside: avoid;
-    margin-bottom: var(--t-gap);
   }
   .t-grid-cell {
     min-width: 0;
@@ -716,7 +542,7 @@ export const testimonialsStyles = css`
     transition-delay: 0.24s;
   }
 
-  /* Cards (grid / masonry / carousel) */
+  /* Cards (grid / carousel) */
   .t-section[data-anim="ready"] .t-grid-cell,
   .t-section[data-anim="ready"] .t-carousel-cell {
     opacity: 0;
@@ -753,15 +579,6 @@ export const testimonialsStyles = css`
     transition-delay: 0.4s;
   }
 
-  /* Marquee fades in as a whole (cards are already in motion) */
-  .t-section[data-anim="ready"] .t-marquee {
-    opacity: 0;
-  }
-  .t-section[data-anim="in"] .t-marquee {
-    opacity: 1;
-    transition: opacity 0.8s var(--t-ease);
-  }
-
   /* Star fill grows from 0 on entrance */
   .t-section[data-anim="ready"] .t-stars-fg-clip {
     width: 0;
@@ -778,17 +595,13 @@ export const testimonialsStyles = css`
       transform: translateY(-6px);
       box-shadow: 0 34px 64px -30px rgba(15, 23, 42, 0.5);
     }
-    .t-section[data-hover-lift="on"] .t-card[data-style="modern"] .t-photo > img,
-    .t-section[data-hover-lift="on"] .t-card[data-style="overlay"] .t-overlay-photo {
+    .t-section[data-hover-lift="on"] .t-card[data-style="modern"] .t-photo > img {
       transition: transform 0.7s var(--t-ease);
     }
     .t-section[data-hover-lift="on"]
       .t-card[data-style="modern"]:hover
       .t-photo
-      > img,
-    .t-section[data-hover-lift="on"]
-      .t-card[data-style="overlay"]:hover
-      .t-overlay-photo {
+      > img {
       transform: scale(1.05);
     }
   }
@@ -797,20 +610,17 @@ export const testimonialsStyles = css`
      DESKTOP ENHANCEMENTS (≥ 768px)
      ============================================================ */
   @media (min-width: 768px) {
-    .t-grid[data-layout="grid"] {
-      grid-template-columns: repeat(var(--t-cols-desktop), minmax(0, 1fr));
+    .t-section {
+      padding-block: var(--sp-top-d) var(--sp-bot-d);
     }
-    .t-grid[data-layout="masonry"] {
-      column-count: var(--t-cols-desktop);
+    .t-grid {
+      grid-template-columns: repeat(var(--t-cols-desktop), minmax(0, 1fr));
     }
     .t-carousel-cell {
       flex-basis: calc(
         (100% - (var(--t-cols-desktop) - 1) * var(--t-gap)) /
           var(--t-cols-desktop)
       );
-    }
-    .t-marquee-cell {
-      width: clamp(300px, 24vw, 360px);
     }
     .t-arrow {
       width: 46px;
@@ -822,12 +632,8 @@ export const testimonialsStyles = css`
      REDUCED MOTION
      ============================================================ */
   @media (prefers-reduced-motion: reduce) {
-    .t-marquee-track {
-      animation: none !important;
-    }
     .t-card,
     .t-photo > img,
-    .t-overlay-photo,
     .t-grid-cell,
     .t-carousel-cell,
     .t-header > *,
@@ -839,8 +645,7 @@ export const testimonialsStyles = css`
     }
     .t-section[data-anim] .t-grid-cell,
     .t-section[data-anim] .t-carousel-cell,
-    .t-section[data-anim] .t-header > *,
-    .t-section[data-anim] .t-marquee {
+    .t-section[data-anim] .t-header > * {
       opacity: 1 !important;
       transform: none !important;
       filter: none !important;

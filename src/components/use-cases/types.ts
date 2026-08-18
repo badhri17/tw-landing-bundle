@@ -36,6 +36,7 @@
  */
 
 import type { MaybeMultiLang } from "../../shared/types";
+import type { SectionSpacingFields } from "../../shared/section-spacing";
 
 /** How the cards are arranged. */
 export type UseCasesLayout = "stack" | "row";
@@ -102,7 +103,7 @@ export interface UseCaseItem {
   side?: UseCaseSideAuto | Array<{ value?: string }> | string;
 }
 
-export interface UseCasesConfig {
+export interface UseCasesConfig extends SectionSpacingFields {
   /** This section's anchor id, so hero nav links can target it. */
   anchor_id?: string;
 

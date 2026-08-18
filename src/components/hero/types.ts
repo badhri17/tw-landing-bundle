@@ -58,8 +58,17 @@ export type HeroNavTargetKind =
   | "gallery"
   | "ingredients"
   | "use-cases"
+  | "faq"
   | "custom"
   | "link";
+
+/**
+ * What the top bar holds, and where the logo sits when it holds nothing else.
+ * The two concerns share one field on purpose: logo placement only has a
+ * question to answer once the links are gone, so a second (conditional) field
+ * would buy nothing but another gate.
+ */
+export type HeroNavLayout = "logo_links" | "logo_only_start" | "logo_only_center";
 
 /** One entry in the `nav_items` collection — a single link in the top navbar. */
 export interface HeroNavItem {
@@ -78,6 +87,14 @@ export interface HeroConfig {
 
   // --- Top navbar ---
   enable_nav?: boolean;          // off by default; the hero renders bare
+  /**
+   * Dropdown; defaults to "logo_only_center" — a landing page drives one
+   * conversion, owned by the hero, so the bar ships as brand presence with no
+   * exits. The two "logo_only" values suppress the links (and with them the
+   * mobile drawer) without clearing `nav_items`: the rows stay stored, so
+   * choosing "logo_links" brings them back with nothing lost.
+   */
+  nav_layout?: HeroNavLayout | Array<{ value?: string }> | string;
   nav_logo?: string;             // image URL; falls back to nav_store_name
   nav_store_name?: MaybeMultiLang;
   nav_home_url?: string;         // where the logo points; default "#"
@@ -86,9 +103,10 @@ export interface HeroConfig {
   nav_border?: boolean;          // hairline under the bar
   /**
    * Pin the bar to the viewport so it follows the visitor down the whole page.
-   * Defaults to ON. While the hero is still behind the bar it stays transparent;
-   * once the hero scrolls past, the bar takes the two colours below so its links
-   * stay readable over whatever section is underneath.
+   * Defaults to OFF — read it as `=== true`, never `!== false`. While the hero is
+   * still behind the bar it stays transparent; once the hero scrolls past, the
+   * bar takes the two colours below so its contents stay readable over whatever
+   * section is underneath.
    */
   nav_fixed?: boolean;
   nav_scrolled_bg?: string;      // bar background once past the hero

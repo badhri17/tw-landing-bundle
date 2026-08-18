@@ -209,6 +209,13 @@ export const heroStyles = css`
     font-size: 1.0625rem;
     letter-spacing: -0.01em;
   }
+  /* Logo-only bar, centred variant: the middle track is empty once the links
+     are gone, so the logo just moves into it. Column 3 keeps whatever the
+     actions hold (the CTA, or nothing), and the empty first track balances it. */
+  .nav-inner[data-logo="center"] .nav-logo {
+    grid-column: 2;
+    justify-self: center;
+  }
   .nav-logo img {
     display: block;
     height: var(--gh-nav-logo-h, 32px);

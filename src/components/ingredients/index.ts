@@ -1,6 +1,7 @@
 import { html, nothing } from "lit";
 import { property, state } from "lit/decorators.js";
 import { GrowthElement } from "../../shared/growth-element";
+import { resolveSectionSpacing } from "../../shared/section-spacing";
 import type {
   IngredientsConfig,
   IngredientItem,
@@ -220,6 +221,10 @@ export default class GrowthIngredients extends GrowthElement {
       `--ing-orbit-d:${orbitD}%`,
       `--ing-ring-w:${clamp(this._num(c.ring_width, 1), 0.5, 6)}px`,
       `--ing-dot-size:${clamp(this._num(c.ring_dot_size, 10), 4, 20)}px`,
+      ...resolveSectionSpacing(
+        c,
+        (v, f) => this._pickValue(v, f),
+      ),
     ]
       .filter(Boolean)
       .join("; ");

@@ -7,6 +7,8 @@
  * landing page drives one conversion, so slides stay informational.
  */
 
+import type { SectionSpacingFields } from "../../shared/section-spacing";
+
 export type MaybeMultiLang =
   | string
   | { ar?: string; en?: string }
@@ -44,7 +46,7 @@ export interface CollectionSlideItem {
   description?: MaybeMultiLang;
 }
 
-export interface CollectionConfig {
+export interface CollectionConfig extends SectionSpacingFields {
   /** This section's anchor id, so hero nav links can target it. */
   anchor_id?: string;
 

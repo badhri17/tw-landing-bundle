@@ -48,7 +48,10 @@ export const metricsStyles = css`
     max-width: 100%;
     min-width: 0;
     background: var(--m-bg);
-    padding: var(--m-pad-y) var(--m-pad-x);
+    /* Vertical space is the merchant's, via shared tiers; the horizontal
+       padding stays the section's own. See src/shared/section-spacing.ts. */
+    padding-inline: var(--m-pad-x);
+    padding-block: var(--sp-top-m) var(--sp-bot-m);
   }
 
   /* ============================================================
@@ -199,6 +202,9 @@ export const metricsStyles = css`
      DESKTOP
      ============================================================ */
   @media (min-width: 768px) {
+    .m-section {
+      padding-block: var(--sp-top-d) var(--sp-bot-d);
+    }
     :host {
       --m-gap: clamp(14px, 1.6vw, 22px);
     }
