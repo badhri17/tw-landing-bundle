@@ -1,4 +1,4 @@
-import { html, nothing } from "lit";
+import { html, nothing, svg } from "lit";
 import { property, state } from "lit/decorators.js";
 import { GrowthElement } from "../../shared/growth-element";
 import { resolveSectionSpacing } from "../../shared/section-spacing";
@@ -127,7 +127,7 @@ export default class GrowthIngredients extends GrowthElement {
       (entries) => {
         if (entries[0]?.isIntersecting) this._reveal();
       },
-      { threshold: 0.15 }
+      { threshold: 0.15 },
     );
     this._io.observe(this);
 
@@ -167,7 +167,7 @@ export default class GrowthIngredients extends GrowthElement {
     const sizeMobile = this._pickValue<IngredientSize>(c.item_size, "md");
     const sizeDesktopRaw = this._pickValue<IngredientSizeDesktop>(
       c.item_size_desktop,
-      "inherit"
+      "inherit",
     );
     // "inherit" carries the mobile TIER over, not the mobile pixel size — it
     // still resolves through the larger desktop scale table.
@@ -221,10 +221,7 @@ export default class GrowthIngredients extends GrowthElement {
       `--ing-orbit-d:${orbitD}%`,
       `--ing-ring-w:${clamp(this._num(c.ring_width, 1), 0.5, 6)}px`,
       `--ing-dot-size:${clamp(this._num(c.ring_dot_size, 10), 4, 20)}px`,
-      ...resolveSectionSpacing(
-        c,
-        (v, f) => this._pickValue(v, f),
-      ),
+      ...resolveSectionSpacing(c, (v, f) => this._pickValue(v, f)),
     ]
       .filter(Boolean)
       .join("; ");
@@ -243,7 +240,7 @@ export default class GrowthIngredients extends GrowthElement {
   private _circleAngles(
     c: IngredientsConfig,
     items: IngredientItem[],
-    sides: IngredientSide[]
+    sides: IngredientSide[],
   ): number[] {
     const start = clamp(this._num(c.circle_start_angle, 55), 0, 180);
     const span = clamp(this._num(c.circle_arc_span, 85), 0, 179);
@@ -274,7 +271,9 @@ export default class GrowthIngredients extends GrowthElement {
       focusable="false"
     >
       <path d=${style === "straight" ? LINK_STRAIGHT : LINK_CURVED} />
-      ${dot ? html`<circle cx="33" cy="4" r="2.6" />` : nothing}
+      <!-- svg tag, not html: a child interpolated into an <svg> from an html
+           template lands in the XHTML namespace and never paints. -->
+      ${dot ? svg`<circle cx="33" cy="4" r="2.6" />` : nothing}
     </svg>`;
   }
 
@@ -315,15 +314,21 @@ export default class GrowthIngredients extends GrowthElement {
       data-align=${o.align}
       style=${style}
     >
-      ${name
-        ? html`<figcaption class="ing-label" dir=${o.dir}>${name}</figcaption>`
-        : nothing}
+      ${
+        name
+          ? html`<figcaption class="ing-label" dir=${o.dir}>
+              ${name}
+            </figcaption>`
+          : nothing
+      }
       ${name && src ? this._renderLink(o.link, o.dot) : nothing}
-      ${src
-        ? html`<span class="ing-media">
-            <img src=${src} alt="" loading="lazy" decoding="async" />
-          </span>`
-        : nothing}
+      ${
+        src
+          ? html`<span class="ing-media">
+              <img src=${src} alt="" loading="lazy" decoding="async" />
+            </span>`
+          : nothing
+      }
     </figure>`;
   }
 
@@ -336,9 +341,11 @@ export default class GrowthIngredients extends GrowthElement {
     if (!image && items.length === 0) {
       return html`<section class="ing" style=${hostStyle}>
         <p class="ing-empty">
-          ${this._lang() === "ar"
-            ? "أضف صورة المنتج ومكوّنًا واحدًا على الأقل لعرض هذا القسم."
-            : "Add a product image and at least one ingredient to display this section."}
+          ${
+            this._lang() === "ar"
+              ? "أضف صورة المنتج ومكوّنًا واحدًا على الأقل لعرض هذا القسم."
+              : "Add a product image and at least one ingredient to display this section."
+          }
         </p>
       </section>`;
     }
@@ -348,7 +355,7 @@ export default class GrowthIngredients extends GrowthElement {
     const layout = this._pickValue<IngredientLayout>(c.layout, "columns");
     const link = this._pickValue<IngredientConnector>(
       c.connector_style,
-      "curved"
+      "curved",
     );
     const dot = c.connector_dot !== false;
     const entrance = c.enable_entrance_anim !== false && !this._reduceMotion();
@@ -359,7 +366,7 @@ export default class GrowthIngredients extends GrowthElement {
     // Sides are physical, so an ingredient stays where the merchant put it in
     // either store language. Unset sides alternate left/right down the list.
     const sides = items.map((it, i) =>
-      this._pickValue<IngredientSide>(it.side, i % 2 === 0 ? "left" : "right")
+      this._pickValue<IngredientSide>(it.side, i % 2 === 0 ? "left" : "right"),
     );
 
     const header =
@@ -373,7 +380,17 @@ export default class GrowthIngredients extends GrowthElement {
     const body =
       layout === "circle"
         ? this._renderOrbit(c, items, sides, image, alt, anim, link, dot, dir)
-        : this._renderColumns(c, items, sides, image, alt, anim, link, dot, dir);
+        : this._renderColumns(
+            c,
+            items,
+            sides,
+            image,
+            alt,
+            anim,
+            link,
+            dot,
+            dir,
+          );
 
     return html`
       <section class="ing" style=${hostStyle}>${header}${body}</section>
@@ -390,13 +407,16 @@ export default class GrowthIngredients extends GrowthElement {
     anim: string,
     link: IngredientConnector,
     dot: boolean,
-    dir: "rtl" | "ltr"
+    dir: "rtl" | "ltr",
   ) {
     const labelPos = this._pickValue<IngredientLabelPosition>(
       c.label_position,
-      "above"
+      "above",
     );
-    const align = this._pickValue<IngredientLabelAlign>(c.label_align, "toward");
+    const align = this._pickValue<IngredientLabelAlign>(
+      c.label_align,
+      "toward",
+    );
 
     const column = (want: IngredientSide) =>
       items
@@ -412,7 +432,7 @@ export default class GrowthIngredients extends GrowthElement {
             link,
             dot,
             dir,
-          })
+          }),
         );
 
     return html`<div
@@ -421,11 +441,13 @@ export default class GrowthIngredients extends GrowthElement {
       data-anim=${anim}
     >
       <div class="ing-col" data-side="left">${column("left")}</div>
-      ${image
-        ? html`<div class="ing-product">
-            <img src=${image} alt=${alt} decoding="async" />
-          </div>`
-        : nothing}
+      ${
+        image
+          ? html`<div class="ing-product">
+              <img src=${image} alt=${alt} decoding="async" />
+            </div>`
+          : nothing
+      }
       <div class="ing-col" data-side="right">${column("right")}</div>
     </div>`;
   }
@@ -440,17 +462,17 @@ export default class GrowthIngredients extends GrowthElement {
     anim: string,
     link: IngredientConnector,
     dot: boolean,
-    dir: "rtl" | "ltr"
+    dir: "rtl" | "ltr",
   ) {
     const angles = this._circleAngles(c, items, sides);
     const ring = this._pickValue<IngredientRingStyle>(c.ring_style, "solid");
     const labelMode = this._pickValue<IngredientLabelPositionCircle>(
       c.circle_label_position,
-      "auto"
+      "auto",
     );
     const align = this._pickValue<IngredientLabelAlignCircle>(
       c.circle_label_align,
-      "outward"
+      "outward",
     );
     const showDots = c.ring_dot !== false && ring !== "none";
     const dotShift = clamp(this._num(c.ring_dot_offset, 20), 0, 60);
@@ -474,42 +496,50 @@ export default class GrowthIngredients extends GrowthElement {
       // Angles grow clockwise, so "toward 12 o'clock" flips sign per half, and
       // the left arc being mirrored makes that come out symmetrical for free.
       const towardTop = labelPos === "above" ? -1 : 1;
-      const dotAngle = a + dotShift * towardTop * (sides[i] === "left" ? -1 : 1);
+      const dotAngle =
+        a + dotShift * towardTop * (sides[i] === "left" ? -1 : 1);
       return { it, i, a, labelPos, out, dotAngle };
     });
 
     return html`<div class="ing-orbit" data-anim=${anim}>
-      ${ring === "none"
-        ? nothing
-        : html`<div class="ing-ring-line" data-ring=${ring}></div>`}
-      ${showDots
-        ? placed.map(
-            (p) =>
-              html`<div class="ing-arm" style=${`--a:${p.dotAngle}deg`}>
-                <span class="ing-dot"></span>
-              </div>`
-          )
-        : nothing}
-      ${image
-        ? html`<div class="ing-product">
-            <img src=${image} alt=${alt} decoding="async" />
-          </div>`
-        : nothing}
+      ${
+        ring === "none"
+          ? nothing
+          : html`<div class="ing-ring-line" data-ring=${ring}></div>`
+      }
+      ${
+        showDots
+          ? placed.map(
+              (p) =>
+                html`<div class="ing-arm" style=${`--a:${p.dotAngle}deg`}>
+                  <span class="ing-dot"></span>
+                </div>`,
+            )
+          : nothing
+      }
+      ${
+        image
+          ? html`<div class="ing-product">
+              <img src=${image} alt=${alt} decoding="async" />
+            </div>`
+          : nothing
+      }
       ${placed.map(
-        (p) => html`<div class="ing-arm" style=${`--a:${p.a}deg`}>
-          ${this._renderItem({
-            item: p.it,
-            i: p.i,
-            side: sides[p.i],
-            labelPos: p.labelPos,
-            align,
-            link,
-            dot,
-            dir,
-            angle: p.a,
-            out: p.out,
-          })}
-        </div>`
+        (p) =>
+          html`<div class="ing-arm" style=${`--a:${p.a}deg`}>
+            ${this._renderItem({
+              item: p.it,
+              i: p.i,
+              side: sides[p.i],
+              labelPos: p.labelPos,
+              align,
+              link,
+              dot,
+              dir,
+              angle: p.a,
+              out: p.out,
+            })}
+          </div>`,
       )}
     </div>`;
   }

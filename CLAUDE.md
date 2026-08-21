@@ -356,6 +356,46 @@ This has bitten three times — most recently while rewriting the hero navbar, w
 
 Note `npx tsc --noEmit` does catch it, so run the typecheck after editing any `style.ts`; a blank component in the browser is the slower way to find out.
 
+## ⚠️ Inside an `<svg>`, interpolate with `svg` — never `html`
+
+Lit parses a template by assigning it to a `<template>`'s `innerHTML`, and a
+nested template is parsed **on its own**, with no memory of where it will be
+inserted. So a child interpolated into an `<svg>` from an `html` template is
+parsed in the **HTML** namespace: the browser builds an `HTMLUnknownElement`
+named `PATH`, appends it happily, and paints **nothing**. No error, no warning —
+the glyph is simply invisible, and `tsc`, the build and the demo page all pass.
+
+```ts
+// WRONG — the check mark never appears
+html`<svg viewBox="0 0 24 24">${on ? html`<path d="M20 6 9 17l-5-5" />` : …}</svg>`
+// RIGHT — svg`` parses its content in the SVG namespace
+html`<svg viewBox="0 0 24 24">${on ? svg`<path d="M20 6 9 17l-5-5" />` : …}</svg>`
+```
+
+Only a **template boundary that opens inside the element** is affected. These
+are fine and need no change:
+
+- a complete `<svg>…</svg>` written literally in one `html` template — the HTML
+  parser's foreign-content rules put its children in the SVG namespace;
+- an **attribute** interpolated on a literal SVG child, `<path d=${d} />` — which
+  is what `collection`'s chevrons and `testimonials`' stars do.
+
+This shipped broken twice: `comparison`'s check/cross marks rendered as empty
+cells, and `ingredients`' connector dot (`connector_dot`, default **on**) never
+drew. Both were caught only by looking at the page.
+
+⚠️ **Asserting on `tagName` does not catch it** — the element is genuinely named
+`path`. `namespaceURI` is the ground truth (`http://www.w3.org/2000/svg` vs
+`http://www.w3.org/1999/xhtml`); `instanceof SVGElement` also works, and is the
+strongest class check jsdom can honour since it builds a generic `SVGElement`
+for every SVG tag rather than `SVGPathElement`.
+
+To sweep the bundle for the bug:
+
+```bash
+grep -rn 'html`[[:space:]]*<\(path\|circle\|rect\|line\|polyline\|polygon\|ellipse\|g \)' src/
+```
+
 ## ⚠️ Conditional-field gotchas
 
 The ported components rely heavily on `conditions` (≈49 conditional fields across the four). Three hard rules:
