@@ -9,7 +9,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - **Platform:** Salla Twilight Engine
 - **Language priority:** Arabic-first (RTL default), LTR as fallback
 - **Planned:** 4 prefilled templates organized around **store verticals**. The bundle owner fills the template content themselves — do not invent vertical themes or prefill `templates/` unless explicitly asked.
-- **Component source:** `hero`, `collection`, `interactive-product` and `testimonials` were ported from the sibling bundle `~/Desktop/tw-growth-kit` (see *Porting components* below); `metrics`, `product-features`, `gallery`, `ingredients`, `use-cases` and `faq` were written here.
+- **Component source:** `hero`, `collection`, `interactive-product` and `testimonials` were ported from the sibling bundle `~/Desktop/tw-growth-kit` (see *Porting components* below); `metrics`, `product-features`, `gallery`, `ingredients`, `use-cases`, `faq` and `comparison` were written here.
 - **No storefront merchandising.** The ported components arrived with growth-kit features that only make sense on a storefront home or product page, and those have been stripped on purpose: `collection` lost its `use_case` mode switch (`home` vs `bundle`), its per-slide `variable-list` product link and its «تسوّق الآن» CTA; `testimonials` lost its shoppable product chip. A landing page drives one conversion, owned by the hero — sections must not sprout competing links or product cards. Re-porting either component wholesale from the growth kit will drag these back; diff against the current version instead of overwriting.
 
 ## Commands
@@ -55,14 +55,14 @@ Cross-component code has a single source of truth in `src/shared/`:
 
 - `growth-element.ts` — `GrowthElement` (extends `LitElement`), the base class every landing component extends: the registration bridge plus protected helpers `localizedString` (multilang), `_lang`, `_pickValue` (dropdowns), `_num` / `_toLatinDigits` (numbers, Arabic-Indic digit aware) and its inverse `_localeNum` (render a counter or a step badge in the store's own digits).
 - `types.ts` — `MaybeMultiLang`.
-- `section-spacing.ts` — **المسافات حول القسم**, the page's vertical rhythm. Two `items` fields per section (`space_top` / `space_bottom`) on a shared tier scale (`none / xs / sm / md / lg / xl`), resolved through **two** tables so one tier means more room on desktop — the documented relative-tier pattern, so no `inherit` desktop duplicates are needed. Returns four *plain* custom properties (`--sp-top-m`, `--sp-bot-m`, `--sp-top-d`, `--sp-bot-d`), deliberately un-prefixed because each component has its own shadow root and the CSS is then identical everywhere. Wired into all nine content sections; `hero` (its padding is the navbar's, height is its own field) and `flexible-banner-content` (deliberately flush) stay out.
-- `side-element.ts` — the reusable **عنصر بصري جانبي** (decorative transparent PNG parked against one edge, hanging partly outside the section), shared by `gallery` and `faq`. It takes `_pickValue`/`_num` as **arguments** rather than importing `GrowthElement`, so it stays free of any base-class dependency; each component owns the CSS that consumes the `--se*-…` properties it returns (`.gal-side`, `.faq-side`) and decides how many of the ~15 bundle fields per decoration to expose. Adopting it in a third section is a copy of those fields plus one block of CSS.
+- `section-spacing.ts` — **المسافات حول القسم**, the page's vertical rhythm. Two `items` fields per section (`space_top` / `space_bottom`) on a shared tier scale (`none / xs / sm / md / lg / xl`), resolved through **two** tables so one tier means more room on desktop — the documented relative-tier pattern, so no `inherit` desktop duplicates are needed. Returns four *plain* custom properties (`--sp-top-m`, `--sp-bot-m`, `--sp-top-d`, `--sp-bot-d`), deliberately un-prefixed because each component has its own shadow root and the CSS is then identical everywhere. Wired into all ten content sections; `hero` (its padding is the navbar's, height is its own field) and `flexible-banner-content` (deliberately flush) stay out.
+- `side-element.ts` — the reusable **عنصر بصري جانبي** (decorative transparent PNG parked against one edge, hanging partly outside the section), shared by `gallery`, `faq` and `comparison`. It takes `_pickValue`/`_num` as **arguments** rather than importing `GrowthElement`, so it stays free of any base-class dependency; each component owns the CSS that consumes the `--se*-…` properties it returns (`.gal-side`, `.faq-side`, `.cmp-side`) and decides how many of the ~15 bundle fields per decoration to expose. Adopting it in a fourth section is a copy of those fields plus one block of CSS — `comparison` was the third and cost exactly that, with its bundle block cloned out of `faq` by script rather than retyped.
 
-**Both adopters use the same control, and a third should clone it rather than invent one:** a 3-way `side_visual_count` dropdown (`off` / `one` / `two`), with the slot-1 fields gated `!= "off"` and the slot-2 fields gated `= "two"`. Copy the block straight out of `gallery` (or `faq`) — the field ids, labels and conditions are identical between them on purpose, so a merchant configuring both sections reads the same words twice.
+**All three adopters use the same control, and a fourth should clone it rather than invent one:** a 3-way `side_visual_count` dropdown (`off` / `one` / `two`), with the slot-1 fields gated `!= "off"` and the slot-2 fields gated `= "two"`. Copy the block straight out of `gallery` (or `faq`, or `comparison`) — the field ids, labels and conditions are identical between them on purpose, so a merchant configuring two of these sections reads the same words twice. The one clause worth rewording per section is the side note's tail, which names what the decoration can sit behind (`faq` says «خلف الأسئلة», `comparison` says «خلف الجدول»).
 
 `resolveSideElement` also accepts an older shape (`enable_side_visual` + `enable_second_side_visual` booleans, plus `side_desktop_custom` switches to reach the desktop values). **Don't build a new component on it.** The count path is the current one and needs no desktop-custom switch: it sets `custom = true` internally, so the desktop fields always apply.
 
-One deliberate difference: `resolveSideElement` returns `depth` (`behind` / `front`) and both components write it to `data-depth`, but only `faq` exposes a field for it and styles it (`z-index` 0 vs 3, against a header at 2 and a list at 1). In `gallery` the attribute is inert.
+One deliberate difference: `resolveSideElement` returns `depth` (`behind` / `front`) and both components write it to `data-depth`, but only `faq` and `comparison` expose a field for it and style it (`z-index` 0 vs 3, against a header at 2 and the list or card at 1). In `gallery` the attribute is inert.
 
 There is deliberately **no product plumbing** here. `product.ts` (`sallaGlobal`, `pickerSelection`, `fetchProductDetails`, `parseMoney`, `formatMoney`) came over with `testimonials` from the growth kit and was deleted when that component's shoppable product chip was dropped: on a landing page a testimonial sells trust, not a SKU. Don't port it back for a landing component without a concrete reason — if a component genuinely needs to resolve a real product, copy it fresh from `~/Desktop/tw-growth-kit/src/shared/product.ts`.
 
@@ -94,7 +94,7 @@ Asset rules enforced by `tw-preview` (see `node_modules/@salla.sa/twilight-bundl
 `pnpm exec tw-preview` uploads `twilight-bundle.json`, `templates/*.json`, every `dist/*.js` and `dist/assets/**` as a snapshot and prints a shareable URL. Re-running updates the same URL in place (state in `.salla-preview.json`). Auth comes from the Salla CLI login (`~/.salla/config.json`); no env vars needed interactively.
 
 - **Run `pnpm build` first** — it hard-fails if a template references a component whose `dist/<name>.js` is missing.
-- **Template count**: minimum 1. Setting `features: ["landing-page-templates"]` in `twilight-bundle.json` raises it to **min 2, max 4** — which is the intended shape for the 4 vertical templates, but do not set that flag until at least two exist or every run fails.
+- **Template count**: minimum 1. Setting `features: ["landing-page-templates"]` in `twilight-bundle.json` raises it to **min 2, max 4** — which is the intended shape for the 4 vertical templates, but do not set that flag until at least two exist or every run fails. It was set once with `starter-template` + `perfumes` in place; deleting the starter template left one real template, so the flag came back out and `perfumes` was promoted to `is_default`. Re-add it when the second vertical template lands.
 - **Template thumbnails are the one asset that does NOT go in `public/assets/`.** They live at the bundle root as `templates-thumbs/<template-name>.<png|jpg|jpeg|webp>`. After a successful publish `tw-preview` writes the resolved permanent CDN URL back into that template's `thumbnail` field in `twilight-bundle.json`, and writes `public_preview_url` for each template. This is a way to get a real CDN URL without touching the admin image picker.
 - Content images referenced as `/assets/…` are rewritten **in the served snapshot only** — the on-disk JSON keeps the `/assets/…` path. Only thumbnails get promoted to a permanent URL on disk. Whether `/assets/…` survives marketplace publication is unverified; test with one template before building all four on that assumption.
 
@@ -102,7 +102,7 @@ Asset rules enforced by `tw-preview` (see `node_modules/@salla.sa/twilight-bundl
 
 Salla has no picker that enumerates the components on a page, so in-page nav links run on an anchor-id convention that every landing component takes part in:
 
-- Each component exposes an `anchor_id` text field (placeholder = its default slug: `hero`, `collection`, `interactive-product`, `testimonials`, `metrics`, `product-features`, `gallery`, `ingredients`, `use-cases`, `faq`) and calls `this._syncAnchor(this.config?.anchor_id, "<slug>")` from `updated()` — every cycle, because Salla may inject `config` after the first render.
+- Each component exposes an `anchor_id` text field (placeholder = its default slug: `hero`, `collection`, `interactive-product`, `testimonials`, `metrics`, `product-features`, `gallery`, `ingredients`, `use-cases`, `faq`, `comparison`) and calls `this._syncAnchor(this.config?.anchor_id, "<slug>")` from `updated()` — every cycle, because Salla may inject `config` after the first render.
 - ⚠️ **`_syncAnchor` overwrites whatever `id` the host element already had.** It runs on the first `updated()`, which is a microtask after the element upgrades — so any page that tags instances with its own ids (a test harness, a hand-written preview page) loses them before its next script runs, and `getElementById("my-id")` comes back `null`. Address instances by `querySelectorAll("<tag>")` and index instead.
 - `_syncAnchor` (in `GrowthElement`) writes the id onto the **host element**, never inside the render root: every component renders into a shadow root, and neither `#hash` navigation nor `getElementById` can see an id inside someone else's shadow tree. It also de-duplicates (`collection`, `collection-2`, …), sets `scroll-margin-top`, and performs a one-shot self-scroll when the page was loaded with a matching `#hash` — the browser resolves the fragment long before the component upgrades.
 - The hero's `nav_items[].target` dropdown lists every landing component by slug, plus `custom` (free-text id) and `link` (the off-page `variable-list` picker). **A new landing component must be added to that dropdown's `options`** as well as to `HeroNavTargetKind` in `src/components/hero/types.ts`.
@@ -111,9 +111,9 @@ Salla has no picker that enumerates the components on a page, so in-page nav lin
 
 Every component needs an entry here: `name` (must match the folder in `src/components/`), a UUID `key`, and a `fields` array that drives what the merchant panel renders. Field `type`s include `string`, `number`, `boolean`, `items` (dropdown), `collection`, and `static` (UI-only dividers/titles). All merchant-facing `label`, `placeholder`, `title` and `description` values must be **Arabic**.
 
-The file currently holds two groups: the landing components (`hero`, `collection`, `interactive-product`, `testimonials`, `metrics`, `product-features`, `gallery`, `ingredients`, `use-cases`, `faq`, `footer`, `flexible-banner-content`) at the top, and the starter-kit demo components below them (`getting-started-guide`, `basic-inputs`, `items-select-input`, `dropdown-list-source-input`, `advanced-inputs`, `product-card`) — kept as reference, to be cleaned up before publishing. `scroll-top` and `table-list` were the first two removed.
+The file holds exactly the thirteen landing components (`hero`, `collection`, `interactive-product`, `testimonials`, `metrics`, `product-features`, `gallery`, `ingredients`, `use-cases`, `faq`, `comparison`, `footer`, `flexible-banner-content`) and nothing else. The starter-kit demo components it shipped with — `scroll-top`, `table-list`, then `getting-started-guide`, `basic-inputs`, `items-select-input`, `dropdown-list-source-input`, `advanced-inputs`, `product-card` — have all been removed. Don't re-add one as a reference; read the field schemas off the landing components or off theme-raed's `twilight.json` (linked below) instead.
 
-⚠️ **`tw-delete-component` does not touch `templates/`.** It deletes `src/components/<name>/` and the `twilight-bundle.json` entry, and stops there — so a component that also appears in a template file leaves an orphan behind, and `tw-preview` hard-fails on it later. Both removals above were in `templates/starter-template.json` and had to be pulled out by hand. Delete the stale `dist/<name>.js` too; the build does not prune it.
+⚠️ **`tw-delete-component` does not touch `templates/`.** It deletes `src/components/<name>/` and the `twilight-bundle.json` entry, and stops there — so a component that also appears in a template file leaves an orphan behind, and `tw-preview` hard-fails on it later. Every removal so far hit this: `scroll-top` and `table-list` were in `templates/starter-template.json` and had to be pulled out by hand, and when the last six demo components went, that template — which held nothing else — was deleted outright along with its `templates[]` entry. Delete the stale `dist/<name>.js` too; the build does not prune it.
 
 ### Templates (`templates/`)
 
@@ -219,6 +219,94 @@ Two traps when wiring a new section into it:
 - **Find the real section rule, not the first `padding:` in the file.** `metrics` was already variable-driven (`padding: var(--m-pad-y) var(--m-pad-x)`), so grepping for a literal `clamp()` landed on `.m-card` instead — which silently moved the *card's* padding onto the section tiers. Confirm the rule you edit is the element that receives the component's inline `style`.
 - **The desktop override must name the same selector as the base rule.** `collection`'s section is `.col-section`, not `.col`; a mismatched selector fails silently, leaving the mobile value at every width.
 
+### A comparison table that is an actual `<table>`
+
+`comparison` is a feature column plus two compared columns — ours and everyone
+else's — with a check or a cross in each cell. Four decisions are worth keeping:
+
+- **It is a real `<table>`, not a grid.** The alternative needed row/column
+  semantics bolted back on through ARIA and column widths negotiated by hand;
+  a table gives both for free and mirrors itself in RTL with no work. The
+  feature cell is a `<th scope="row">`, the column heads are `<th scope="col">`,
+  and every rule that could take a side uses a logical property, so nothing is
+  flipped by hand. Width negotiation is the classic trick: `width: 100%` on the
+  feature column, `min-width` on the other two.
+- **The highlighted column is painted with inset box-shadows, never borders.**
+  A border on a table cell is arbitrated against its neighbour's and loses half
+  the time, which leaves gaps in the column outline; an inset shadow is drawn
+  inside the cell's own box, so the outline runs unbroken from the header down
+  to the last row. Only the first and last cells add the rounded corners.
+- **The entrance transform rides an inner `<span>`, never the row or the cell.**
+  A transform on a `<tr>` or `<td>` is the one place engines still disagree, and
+  the column tint and stripes painted underneath must not fade with the text.
+  Every cell therefore wraps its content in `.cmp-in`, which carries both the
+  opacity and the `--i`-staggered delay.
+- **A written value beats the glyph, with no mode switch to reach it.** Each row
+  has optional `us_text` / `others_text`; non-empty, they replace the check or
+  cross, so a mostly yes/no table can carry the occasional measured row
+  («سنتان» vs «٣ أشهر») without a dropdown deciding which kind of table this is.
+  Empty, the mark comes back. Same reasoning as `use-cases`' `text_position`: add
+  the field that answers the question directly rather than gating one branch on
+  another branch's stale value.
+
+⚠️ **The feature column is the only one with `width: 100%`, so it absorbs
+whatever the other two leave — which makes the compared columns' `min-width` the
+number that decides how hard the Arabic feature text wraps on a phone.** That
+floor is `--cmp-colw`: **58 px mobile, 108 px desktop**, declared on `.cmp` and
+swapped in the media query.
+
+**It is deliberately NOT a merchant field, and should not become one.** It was
+one briefly — a `columns_width_mobile` / `columns_width_desktop` tier pair — and
+the field was cut on the bundle owner's instruction: it asked the merchant to
+solve a layout problem that has one right answer, which is the component's job,
+not theirs. `table_max_width` («أقصى عرض للجدول») was cut for the same reason and
+is now the fixed `--cmp-max: 880px` on `:host`, which the header, the card and
+the footnote all measure against.
+
+The lesson generalises past this section: *"every visual decision a merchant
+might want to change becomes a field"* means decisions of **taste** — colours,
+copy, which glyph, how much air — not consequences of the layout. A field whose
+right answer is determined by the component's own geometry is a defect the
+merchant is being asked to work around. When a default is wrong, fix the
+default. The two guards in the render suite (`no column-width variable is
+emitted`, `no table max-width variable is emitted`) exist so neither creeps back
+in as an inline override.
+
+Three things got the phone from a three-line row to a one-line row, measured in
+Chrome via CDP at 393 px (feature text **133 px → 227 px, +71 %**; table
+**28 % shorter**; every row now a single line):
+
+1. **The logo reservation is gated on `data-logo="on"`.** The floor was
+   `calc(var(--cmp-logo) + 1.5rem)` applied unconditionally, so ~116 px was held
+   for a logo even when `us_logo` was empty and the column showed a text label.
+   The general rule: **never reserve space for an optional element unless it is
+   actually there** — emit an attribute for its presence and gate the
+   reservation on it. The floor is now
+   `calc(var(--cmp-logo) + var(--cmp-cell-x) * 2)`, tied to the real padding
+   rather than a fixed guess that drifted out of sync.
+2. **Mobile type is a tier smaller** — `DENSITY_MOBILE` fs is 0.78/0.84/0.90 rem
+   (desktop untouched), `LOGO_MOBILE` is 56/72/92 px, and `.cmp-col-label` is
+   sized off `--cmp-fs` so the whole table shrinks together instead of one part
+   drifting.
+3. **`--cmp-cell-x` is 0.5 rem on a phone.** It is worth more than it looks:
+   every cell pays it twice, three times across the row, so it is six times its
+   own value per row.
+
+`title_position` (`in_table` / `above` / `hidden`) decides whether the headline
+sits in the feature column's header cell — the arrangement the section is built
+around, where the question and its answers share one frame — or above the table
+as an ordinary section header. It carries no condition, and the subtitle always
+renders above the table, so there is no gate to go stale.
+
+⚠️ **A `boolean` inside a `collection` works.** Nothing in this bundle had used
+one before `comparison`'s per-row `us` / `others` switches, and the rule about
+dropdowns inside collections made it look risky. It is not the same case:
+theme-raed ships `slides.without_overlay` as `type: "boolean"`, `format: "switch"`
+inside its slider collection, with a plain `false` in the default row. Follow its
+shape and carry **both** `selected` and `value` on the field. The dropdown crash
+(`n.some is not a function`) is specific to a *dropdown* default row holding a
+bare string, and does not generalise to booleans.
+
 ### Opening an answer of unknown height without JS
 
 `faq` animates each answer by transitioning a one-row grid from `grid-template-rows: 0fr` to `1fr`, with `overflow: hidden` on the child. No JS measures anything, so an answer of any length animates, and a merchant editing the text in the panel needs no re-measure. Where the browser cannot interpolate `fr` (pre-2023 engines) the row snaps open instead — the panel still works, it just does not glide.
@@ -307,6 +395,36 @@ ids().includes("side_image");
 ```
 
 A field is present or absent from `label[for]` — that is the ground truth for whether a condition fired.
+
+### How to measure a layout at a real phone viewport
+
+jsdom has no layout engine, so it cannot answer "is this column too narrow" — it
+will happily report widths of 0. And on Windows **Chrome clamps a headless
+window to ~512 px**, so `--window-size=393,1400` silently gives you a 512 px
+viewport and a layout that looks fine while the phone one does not.
+
+The way through is CDP's `Emulation.setDeviceMetricsOverride`, which is not
+clamped. Node 24 ships a `WebSocket` client, so this needs no dependencies and
+no puppeteer:
+
+```bash
+chrome.exe --headless=new --disable-gpu --remote-debugging-port=9222 \
+  --user-data-dir=<scratch>/cdp-profile about:blank &
+# then: fetch http://127.0.0.1:9222/json/list -> page.webSocketDebuggerUrl
+#       new WebSocket(...) -> Emulation.setDeviceMetricsOverride {width:393,...}
+#       Page.navigate -> Runtime.evaluate (measure) -> Page.captureScreenshot
+```
+
+Serve the probe page **through the vite dev server**, not `file://`: `dist/*.js`
+imports `lit` as a bare specifier (it is external in the build) and only vite
+rewrites it. Importing `/src/components/<name>/index.ts` also tests the source
+rather than the last build. Have the page stamp a done-marker
+(`document.title = "probe-done"`) so the driver knows when to measure instead of
+guessing at a timeout.
+
+To compare against a previous geometry in the same run, push a `CSSStyleSheet`
+with the old rules onto the component's `shadowRoot.adoptedStyleSheets`, measure,
+then pop it — same engine, same fonts, same viewport, so the delta is real.
 
 ## Sliders — great at top level, ignored inside a collection
 

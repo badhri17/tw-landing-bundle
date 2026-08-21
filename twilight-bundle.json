@@ -257,6 +257,11 @@
                                     "key": "target-faq"
                                 },
                                 {
+                                    "label": "جدول المقارنة",
+                                    "value": "comparison",
+                                    "key": "target-comparison"
+                                },
+                                {
                                     "label": "معرّف مخصص",
                                     "value": "custom",
                                     "key": "nt-cst"
@@ -10670,6 +10675,1560 @@
             ]
         },
         {
+            "title": "جدول المقارنة",
+            "icon": "sicon-table",
+            "name": "comparison",
+            "key": "6178895e-c61f-4a77-8e40-53ce1b761fcb",
+            "image": "https://cdn.salla.network/images/themes/default/placeholder.jpg",
+            "fields": [
+                {
+                    "type": "static",
+                    "format": "title",
+                    "id": "section-comparison-content",
+                    "value": "<style>@keyframes gkDraw{0%{stroke-dashoffset:1;opacity:0}8%{opacity:1}55%{stroke-dashoffset:0;opacity:1}78%{stroke-dashoffset:0;opacity:1}100%{stroke-dashoffset:0;opacity:0}}.gk-line{stroke-dasharray:1;stroke-dashoffset:1;animation:gkDraw 5s ease-in-out infinite}@keyframes gkDotPop{0%,50%{opacity:0;transform:scale(.4)}58%,78%{opacity:1;transform:scale(1)}100%{opacity:0;transform:scale(.6)}}.gk-dot{transform-origin:center;transform-box:fill-box;animation:gkDotPop 5s ease-in-out infinite}</style><div style='position:relative;overflow:hidden;display:flex;align-items:center;gap:10px;padding:13px 16px;border-radius:12px;background:radial-gradient(circle at left center,#6241d9 0%,#3b2878 35%,#160f2a 62%,#020204 100%);border:1px solid rgba(139,109,255,.28);direction:rtl;margin-bottom:18px;font-weight:bold;'><svg aria-hidden='true' style='position:absolute;inset:0;width:100%;height:100%;pointer-events:none;' viewBox='0 0 320 52' preserveAspectRatio='none'><polyline class='gk-line' pathLength='1' points='320,46 268,40 236,43 196,32 164,35 124,22 96,26 58,13 20,16' fill='none' stroke='rgba(160,133,255,.55)' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/><circle class='gk-dot' cx='20' cy='16' r='3' fill='#cabcff'/></svg><span style='position:relative;flex:0 0 auto;display:inline-flex;color:#cabcff;'><svg width='1.2em' height='1.2em' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><rect x='3' y='3' width='18' height='18' rx='2'/><path d='M3 9h18'/><path d='M13 9v12'/></svg></span><span style='position:relative;font-size:17px;font-weight:700;color:#fff;'>المحتوى</span></div>"
+                },
+                {
+                    "type": "static",
+                    "format": "description",
+                    "id": "comparison-content-note",
+                    "value": "<div style='display:flex;gap:10px;background-color:#6036c11f;color:#6036C1;padding:12px 16px;border-radius:8px;margin-bottom:14px;font-size:13px;line-height:1.7;direction:rtl;'><span>جدول يوضّح الفرق بينك وبين غيرك في سطور قصيرة. نفس الجدول يخدم ثلاث حالات: <strong>متجرنا مقابل متاجر أخرى</strong>، أو <strong>مقارنة بين باقتين أو إصدارين</strong>، أو <strong>قبل وبعد</strong>. خلّ كل سطر فايدة واحدة يهتم لها الزائر — من ٤ إلى ٧ سطور تكفي.</span></div>"
+                },
+                {
+                    "type": "string",
+                    "icon": "sicon-format-text-alt",
+                    "id": "section_title",
+                    "label": "عنوان القسم",
+                    "format": "text",
+                    "multilanguage": true,
+                    "required": false,
+                    "placeholder": "ليه تختارنا؟",
+                    "maxLength": 60,
+                    "value": {
+                        "ar": "ليه تختارنا؟",
+                        "en": "Why choose us?"
+                    }
+                },
+                {
+                    "type": "items",
+                    "icon": "sicon-format-text-alt",
+                    "id": "title_position",
+                    "label": "مكان العنوان",
+                    "format": "dropdown-list",
+                    "source": "Manual",
+                    "required": false,
+                    "selected": [
+                        {
+                            "label": "داخل الجدول (فوق عمود المميزات)",
+                            "value": "in_table",
+                            "key": "title_position-in_table"
+                        }
+                    ],
+                    "options": [
+                        {
+                            "label": "داخل الجدول (فوق عمود المميزات)",
+                            "value": "in_table",
+                            "key": "title_position-in_table"
+                        },
+                        {
+                            "label": "فوق الجدول كعنوان قسم",
+                            "value": "above",
+                            "key": "title_position-above"
+                        },
+                        {
+                            "label": "إخفاء العنوان",
+                            "value": "hidden",
+                            "key": "title_position-hidden"
+                        }
+                    ],
+                    "description": "«داخل الجدول» يخلي السؤال والإجابات في إطار واحد، وهو الشكل اللي انبنى عليه القسم."
+                },
+                {
+                    "type": "string",
+                    "icon": "sicon-paragraph",
+                    "id": "section_subtitle",
+                    "label": "نص تعريفي",
+                    "format": "textarea",
+                    "multilanguage": true,
+                    "required": false,
+                    "placeholder": "الفرق اللي تحسّه من أول استخدام.",
+                    "description": "سطر واحد فوق الجدول. اتركه فارغًا إذا ما تحتاجه."
+                },
+                {
+                    "id": "items",
+                    "type": "collection",
+                    "format": "collection",
+                    "required": false,
+                    "minLength": 1,
+                    "maxLength": 12,
+                    "item_label": "سطر",
+                    "description": "أضف حتى ١٢ سطرًا. الترتيب هنا هو نفس ترتيب ظهورها في الجدول.",
+                    "value": [
+                        {
+                            "text": {
+                                "ar": "زيوت عطرية مركّزة بنسبة أعلى",
+                                "en": "A higher concentration of essential oils"
+                            },
+                            "us": true,
+                            "others": false
+                        },
+                        {
+                            "text": {
+                                "ar": "ثبات من ٦ إلى ٨ ساعات على البشرة",
+                                "en": "6 to 8 hours of hold on skin"
+                            },
+                            "us": true,
+                            "others": false
+                        },
+                        {
+                            "text": {
+                                "ar": "عيّنة تجربة قبل ما تشتري الحجم الكامل",
+                                "en": "A tester before you commit to the full size"
+                            },
+                            "us": true,
+                            "others": false
+                        },
+                        {
+                            "text": {
+                                "ar": "شحن مجاني واسترجاع خلال ١٤ يوم",
+                                "en": "Free shipping and 14-day returns"
+                            },
+                            "us": true,
+                            "others": false
+                        },
+                        {
+                            "text": {
+                                "ar": "فريق يرد على استفسارك في نفس اليوم",
+                                "en": "A team that answers you the same day"
+                            },
+                            "us": true,
+                            "others": false
+                        }
+                    ],
+                    "fields": [
+                        {
+                            "type": "string",
+                            "icon": "sicon-format-text-alt",
+                            "id": "text",
+                            "label": "الميزة",
+                            "format": "text",
+                            "multilanguage": true,
+                            "required": true,
+                            "placeholder": "مثل: ثبات من ٦ إلى ٨ ساعات",
+                            "maxLength": 120
+                        },
+                        {
+                            "type": "boolean",
+                            "icon": "sicon-check-circle",
+                            "id": "us",
+                            "label": "متوفرة عندنا",
+                            "format": "switch",
+                            "selected": true,
+                            "required": false,
+                            "value": true,
+                            "description": null
+                        },
+                        {
+                            "type": "boolean",
+                            "icon": "sicon-close",
+                            "id": "others",
+                            "label": "متوفرة عند غيرنا",
+                            "format": "switch",
+                            "selected": false,
+                            "required": false,
+                            "value": false,
+                            "description": null
+                        },
+                        {
+                            "type": "string",
+                            "icon": "sicon-format-text-alt",
+                            "id": "us_text",
+                            "label": "نص بدل العلامة — عندنا (اختياري)",
+                            "format": "text",
+                            "multilanguage": true,
+                            "required": false,
+                            "placeholder": "مثل: سنتان",
+                            "maxLength": 24,
+                            "description": "إذا كان السطر رقمًا أو مدة بدل نعم/لا، اكتبه هنا وبيحل محل العلامة. اتركه فارغًا وترجع العلامة."
+                        },
+                        {
+                            "type": "string",
+                            "icon": "sicon-format-text-alt",
+                            "id": "others_text",
+                            "label": "نص بدل العلامة — عند غيرنا (اختياري)",
+                            "format": "text",
+                            "multilanguage": true,
+                            "required": false,
+                            "placeholder": "مثل: ٣ أشهر",
+                            "maxLength": 24
+                        }
+                    ]
+                },
+                {
+                    "type": "string",
+                    "icon": "sicon-image",
+                    "id": "us_logo",
+                    "label": "شعار متجرك",
+                    "format": "image",
+                    "required": false,
+                    "value": "/assets/demo/hero/perfume-logo.png",
+                    "description": "يظهر أعلى عمودك. يفضّل PNG بخلفية شفافة. اتركه فارغًا وبيظهر الاسم النصي بدلًا عنه."
+                },
+                {
+                    "type": "string",
+                    "icon": "sicon-format-text-alt",
+                    "id": "us_label",
+                    "label": "اسم عمودك",
+                    "format": "text",
+                    "multilanguage": true,
+                    "required": false,
+                    "placeholder": "متجرنا",
+                    "maxLength": 30,
+                    "value": {
+                        "ar": "متجرنا",
+                        "en": "Our store"
+                    },
+                    "description": "يُستخدم كنص بديل للشعار، ويظهر مكانه إذا ما رفعت شعارًا."
+                },
+                {
+                    "type": "string",
+                    "icon": "sicon-format-text-alt",
+                    "id": "others_label",
+                    "label": "اسم عمود المقارنة",
+                    "format": "text",
+                    "multilanguage": true,
+                    "required": false,
+                    "placeholder": "متاجر أخرى",
+                    "maxLength": 30,
+                    "value": {
+                        "ar": "متاجر أخرى",
+                        "en": "Other stores"
+                    },
+                    "description": "لا تذكر اسم منافس بعينه — «متاجر أخرى» أو «الباقة العادية» أوضح وأأمن."
+                },
+                {
+                    "type": "string",
+                    "icon": "sicon-paragraph",
+                    "id": "footnote",
+                    "label": "ملاحظة أسفل الجدول",
+                    "format": "textarea",
+                    "multilanguage": true,
+                    "required": false,
+                    "placeholder": "المقارنة بناءً على المواصفات المعلنة وقت النشر.",
+                    "description": "سطر صغير تحت الجدول. مفيد لتوضيح مصدر المقارنة. اتركه فارغًا إذا ما تحتاجه."
+                },
+                {
+                    "type": "static",
+                    "format": "title",
+                    "id": "section-comparison-display",
+                    "value": "<div style='position:relative;overflow:hidden;display:flex;align-items:center;gap:10px;padding:13px 16px;border-radius:12px;background:radial-gradient(circle at left center,#6241d9 0%,#3b2878 35%,#160f2a 62%,#020204 100%);border:1px solid rgba(139,109,255,.28);direction:rtl;margin-bottom:18px;font-weight:bold;'><svg aria-hidden='true' style='position:absolute;inset:0;width:100%;height:100%;pointer-events:none;' viewBox='0 0 320 52' preserveAspectRatio='none'><polyline class='gk-line' pathLength='1' points='320,46 268,40 236,43 196,32 164,35 124,22 96,26 58,13 20,16' fill='none' stroke='rgba(160,133,255,.55)' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/><circle class='gk-dot' cx='20' cy='16' r='3' fill='#cabcff'/></svg><span style='position:relative;flex:0 0 auto;display:inline-flex;color:#cabcff;'><svg width='1.2em' height='1.2em' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M4 21v-7M4 10V3M12 21v-9M12 8V3M20 21v-5M20 12V3M1 14h6M9 8h6M17 16h6'/></svg></span><span style='position:relative;font-size:17px;font-weight:700;color:#fff;'>طريقة العرض</span></div>"
+                },
+                {
+                    "type": "items",
+                    "icon": "sicon-layout-grid",
+                    "id": "column_order",
+                    "label": "ترتيب الأعمدة",
+                    "format": "dropdown-list",
+                    "source": "Manual",
+                    "required": false,
+                    "selected": [
+                        {
+                            "label": "عمودك أولًا، ثم غيرك",
+                            "value": "us_first",
+                            "key": "column_order-us_first"
+                        }
+                    ],
+                    "options": [
+                        {
+                            "label": "عمودك أولًا، ثم غيرك",
+                            "value": "us_first",
+                            "key": "column_order-us_first"
+                        },
+                        {
+                            "label": "غيرك أولًا، ثم عمودك",
+                            "value": "others_first",
+                            "key": "column_order-others_first"
+                        }
+                    ],
+                    "description": "عمود المميزات يبقى في المقدمة دائمًا؛ هذا الترتيب للعمودين اللي بعده."
+                },
+                {
+                    "type": "items",
+                    "icon": "sicon-check-circle",
+                    "id": "mark_style",
+                    "label": "شكل علامة نعم/لا",
+                    "format": "dropdown-list",
+                    "source": "Manual",
+                    "required": false,
+                    "selected": [
+                        {
+                            "label": "علامة بسيطة",
+                            "value": "plain",
+                            "key": "mark_style-plain"
+                        }
+                    ],
+                    "options": [
+                        {
+                            "label": "علامة بسيطة",
+                            "value": "plain",
+                            "key": "mark_style-plain"
+                        },
+                        {
+                            "label": "علامة داخل دائرة خفيفة",
+                            "value": "circle",
+                            "key": "mark_style-circle"
+                        },
+                        {
+                            "label": "علامة داخل دائرة ملوّنة",
+                            "value": "solid",
+                            "key": "mark_style-solid"
+                        }
+                    ],
+                    "description": "«بسيطة» أهدأ وأقرب للطابع الفاخر."
+                },
+                {
+                    "type": "boolean",
+                    "icon": "sicon-toggle-off",
+                    "id": "highlight_us",
+                    "label": "إبراز عمودك",
+                    "format": "switch",
+                    "selected": true,
+                    "required": false,
+                    "description": "خلفية خفيفة وإطار حول عمودك عشان عين الزائر تروح له أول شي."
+                },
+                {
+                    "type": "boolean",
+                    "icon": "sicon-toggle-off",
+                    "id": "row_stripes",
+                    "label": "تظليل السطور بالتناوب",
+                    "format": "switch",
+                    "selected": false,
+                    "required": false,
+                    "description": "يساعد على تتبع السطور في الجداول الطويلة."
+                },
+                {
+                    "type": "boolean",
+                    "icon": "sicon-toggle-off",
+                    "id": "grid_lines",
+                    "label": "إظهار خطوط الجدول",
+                    "format": "switch",
+                    "selected": true,
+                    "required": false,
+                    "description": "خطوط فاصلة بين السطور والأعمدة."
+                },
+                {
+                    "type": "number",
+                    "icon": "sicon-layout-grid",
+                    "id": "table_radius",
+                    "label": "استدارة زوايا الجدول (px)",
+                    "format": "slider",
+                    "required": false,
+                    "minimum": 0,
+                    "maximum": 32,
+                    "value": 18,
+                    "inputType": "range",
+                    "step": 1
+                },
+                {
+                    "type": "static",
+                    "format": "title",
+                    "id": "section-comparison-mobile",
+                    "value": "<div style='position:relative;overflow:hidden;display:flex;align-items:center;gap:10px;padding:13px 16px;border-radius:12px;background:radial-gradient(circle at left center,#6241d9 0%,#3b2878 35%,#160f2a 62%,#020204 100%);border:1px solid rgba(139,109,255,.28);direction:rtl;margin-bottom:18px;font-weight:bold;'><svg aria-hidden='true' style='position:absolute;inset:0;width:100%;height:100%;pointer-events:none;' viewBox='0 0 320 52' preserveAspectRatio='none'><polyline class='gk-line' pathLength='1' points='320,46 268,40 236,43 196,32 164,35 124,22 96,26 58,13 20,16' fill='none' stroke='rgba(160,133,255,.55)' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/><circle class='gk-dot' cx='20' cy='16' r='3' fill='#cabcff'/></svg><span style='position:relative;flex:0 0 auto;display:inline-flex;color:#cabcff;'><svg width='1.2em' height='1.2em' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><rect x='5' y='2' width='14' height='20' rx='2'/><path d='M12 18h.01'/></svg></span><span style='position:relative;font-size:17px;font-weight:700;color:#fff;'>المقاسات — الجوال</span></div>"
+                },
+                {
+                    "type": "items",
+                    "icon": "sicon-layout-grid",
+                    "id": "density_mobile",
+                    "label": "كثافة السطور",
+                    "format": "dropdown-list",
+                    "source": "Manual",
+                    "required": false,
+                    "selected": [
+                        {
+                            "label": "عادية",
+                            "value": "normal",
+                            "key": "density_mobile-normal"
+                        }
+                    ],
+                    "options": [
+                        {
+                            "label": "مضغوطة",
+                            "value": "compact",
+                            "key": "density_mobile-compact"
+                        },
+                        {
+                            "label": "عادية",
+                            "value": "normal",
+                            "key": "density_mobile-normal"
+                        },
+                        {
+                            "label": "مريحة",
+                            "value": "spacious",
+                            "key": "density_mobile-spacious"
+                        }
+                    ],
+                    "description": "ارتفاع السطر وحجم نصه. الدرجة نفسها تكبر تلقائيًا على سطح المكتب."
+                },
+                {
+                    "type": "items",
+                    "icon": "sicon-image",
+                    "id": "logo_size_mobile",
+                    "label": "حجم الشعار",
+                    "format": "dropdown-list",
+                    "source": "Manual",
+                    "required": false,
+                    "selected": [
+                        {
+                            "label": "متوسط",
+                            "value": "md",
+                            "key": "logo_size_mobile-md"
+                        }
+                    ],
+                    "options": [
+                        {
+                            "label": "صغير",
+                            "value": "sm",
+                            "key": "logo_size_mobile-sm"
+                        },
+                        {
+                            "label": "متوسط",
+                            "value": "md",
+                            "key": "logo_size_mobile-md"
+                        },
+                        {
+                            "label": "كبير",
+                            "value": "lg",
+                            "key": "logo_size_mobile-lg"
+                        }
+                    ]
+                },
+                {
+                    "type": "static",
+                    "format": "title",
+                    "id": "section-comparison-desktop",
+                    "value": "<div style='position:relative;overflow:hidden;display:flex;align-items:center;gap:10px;padding:13px 16px;border-radius:12px;background:radial-gradient(circle at left center,#6241d9 0%,#3b2878 35%,#160f2a 62%,#020204 100%);border:1px solid rgba(139,109,255,.28);direction:rtl;margin-bottom:18px;font-weight:bold;'><svg aria-hidden='true' style='position:absolute;inset:0;width:100%;height:100%;pointer-events:none;' viewBox='0 0 320 52' preserveAspectRatio='none'><polyline class='gk-line' pathLength='1' points='320,46 268,40 236,43 196,32 164,35 124,22 96,26 58,13 20,16' fill='none' stroke='rgba(160,133,255,.55)' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/><circle class='gk-dot' cx='20' cy='16' r='3' fill='#cabcff'/></svg><span style='position:relative;flex:0 0 auto;display:inline-flex;color:#cabcff;'><svg width='1.2em' height='1.2em' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><rect x='2' y='3' width='20' height='14' rx='2'/><path d='M8 21h8M12 17v4'/></svg></span><span style='position:relative;font-size:17px;font-weight:700;color:#fff;'>سطح المكتب — تخصيص اختياري</span></div>"
+                },
+                {
+                    "type": "static",
+                    "format": "description",
+                    "id": "comparison-desktop-note",
+                    "value": "<div style='display:flex;gap:10px;background-color:#6036c11f;color:#6036C1;padding:12px 16px;border-radius:8px;margin-bottom:14px;font-size:13px;line-height:1.7;direction:rtl;'><span>اتركها على «نفس مستوى الجوال» وبتكبر تلقائيًا على الشاشات الكبيرة. غيّرها فقط إذا تبي درجة مختلفة تمامًا.</span></div>"
+                },
+                {
+                    "type": "items",
+                    "icon": "sicon-layout-grid",
+                    "id": "density_desktop",
+                    "label": "كثافة السطور (اختياري)",
+                    "format": "dropdown-list",
+                    "source": "Manual",
+                    "required": false,
+                    "selected": [
+                        {
+                            "label": "نفس مستوى الجوال",
+                            "value": "inherit",
+                            "key": "density_desktop-inherit"
+                        }
+                    ],
+                    "options": [
+                        {
+                            "label": "نفس مستوى الجوال",
+                            "value": "inherit",
+                            "key": "density_desktop-inherit"
+                        },
+                        {
+                            "label": "مضغوطة",
+                            "value": "compact",
+                            "key": "density_desktop-compact"
+                        },
+                        {
+                            "label": "عادية",
+                            "value": "normal",
+                            "key": "density_desktop-normal"
+                        },
+                        {
+                            "label": "مريحة",
+                            "value": "spacious",
+                            "key": "density_desktop-spacious"
+                        }
+                    ]
+                },
+                {
+                    "type": "items",
+                    "icon": "sicon-image",
+                    "id": "logo_size_desktop",
+                    "label": "حجم الشعار (اختياري)",
+                    "format": "dropdown-list",
+                    "source": "Manual",
+                    "required": false,
+                    "selected": [
+                        {
+                            "label": "نفس مستوى الجوال",
+                            "value": "inherit",
+                            "key": "logo_size_desktop-inherit"
+                        }
+                    ],
+                    "options": [
+                        {
+                            "label": "نفس مستوى الجوال",
+                            "value": "inherit",
+                            "key": "logo_size_desktop-inherit"
+                        },
+                        {
+                            "label": "صغير",
+                            "value": "sm",
+                            "key": "logo_size_desktop-sm"
+                        },
+                        {
+                            "label": "متوسط",
+                            "value": "md",
+                            "key": "logo_size_desktop-md"
+                        },
+                        {
+                            "label": "كبير",
+                            "value": "lg",
+                            "key": "logo_size_desktop-lg"
+                        }
+                    ]
+                },
+                {
+                    "type": "static",
+                    "format": "title",
+                    "id": "section-comparison-colors",
+                    "value": "<div style='position:relative;overflow:hidden;display:flex;align-items:center;gap:10px;padding:13px 16px;border-radius:12px;background:radial-gradient(circle at left center,#6241d9 0%,#3b2878 35%,#160f2a 62%,#020204 100%);border:1px solid rgba(139,109,255,.28);direction:rtl;margin-bottom:18px;font-weight:bold;'><svg aria-hidden='true' style='position:absolute;inset:0;width:100%;height:100%;pointer-events:none;' viewBox='0 0 320 52' preserveAspectRatio='none'><polyline class='gk-line' pathLength='1' points='320,46 268,40 236,43 196,32 164,35 124,22 96,26 58,13 20,16' fill='none' stroke='rgba(160,133,255,.55)' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/><circle class='gk-dot' cx='20' cy='16' r='3' fill='#cabcff'/></svg><span style='position:relative;flex:0 0 auto;display:inline-flex;color:#cabcff;'><svg width='1.2em' height='1.2em' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><circle cx='13.5' cy='6.5' r='.5'/><circle cx='17.5' cy='10.5' r='.5'/><circle cx='8.5' cy='7.5' r='.5'/><circle cx='6.5' cy='12.5' r='.5'/><path d='M12 2a10 10 0 0 0 0 20 2 2 0 0 0 2-2v-1a2 2 0 0 1 2-2h1a4 4 0 0 0 4-4 10 10 0 0 0-9-11z'/></svg></span><span style='position:relative;font-size:17px;font-weight:700;color:#fff;'>الألوان</span></div>"
+                },
+                {
+                    "type": "string",
+                    "format": "color",
+                    "inputType": "color",
+                    "id": "bg_color",
+                    "label": "لون خلفية القسم",
+                    "icon": "sicon-format-fill",
+                    "required": false,
+                    "value": "#f5f5f5"
+                },
+                {
+                    "type": "string",
+                    "format": "color",
+                    "inputType": "color",
+                    "id": "title_color",
+                    "label": "لون العنوان",
+                    "icon": "sicon-format-fill",
+                    "required": false,
+                    "value": "#14181f"
+                },
+                {
+                    "type": "string",
+                    "format": "color",
+                    "inputType": "color",
+                    "id": "subtitle_color",
+                    "label": "لون النص التعريفي",
+                    "icon": "sicon-format-fill",
+                    "required": false,
+                    "value": "#5b6472"
+                },
+                {
+                    "type": "string",
+                    "format": "color",
+                    "inputType": "color",
+                    "id": "card_bg",
+                    "label": "لون خلفية الجدول",
+                    "icon": "sicon-format-fill",
+                    "required": false,
+                    "value": "#ffffff"
+                },
+                {
+                    "type": "string",
+                    "format": "color",
+                    "inputType": "color",
+                    "id": "text_color",
+                    "label": "لون نص الميزة",
+                    "icon": "sicon-format-fill",
+                    "required": false,
+                    "value": "#14181f"
+                },
+                {
+                    "type": "string",
+                    "format": "color",
+                    "inputType": "color",
+                    "id": "border_color",
+                    "label": "لون خطوط الجدول",
+                    "icon": "sicon-format-fill",
+                    "required": false,
+                    "value": "#e6e8ec"
+                },
+                {
+                    "type": "string",
+                    "format": "color",
+                    "inputType": "color",
+                    "id": "us_col_bg",
+                    "label": "لون خلفية عمودك",
+                    "icon": "sicon-format-fill",
+                    "required": false,
+                    "value": "#f7fbf9",
+                    "description": "يظهر فقط عند تفعيل «إبراز عمودك»."
+                },
+                {
+                    "type": "string",
+                    "format": "color",
+                    "inputType": "color",
+                    "id": "us_col_border",
+                    "label": "لون إطار عمودك",
+                    "icon": "sicon-format-fill",
+                    "required": false,
+                    "value": "#cfe7dc"
+                },
+                {
+                    "type": "string",
+                    "format": "color",
+                    "inputType": "color",
+                    "id": "others_color",
+                    "label": "لون عمود المقارنة",
+                    "icon": "sicon-format-fill",
+                    "required": false,
+                    "value": "#8b95a3"
+                },
+                {
+                    "type": "string",
+                    "format": "color",
+                    "inputType": "color",
+                    "id": "check_color",
+                    "label": "لون علامة «متوفر»",
+                    "icon": "sicon-format-fill",
+                    "required": false,
+                    "value": "#1f9d63"
+                },
+                {
+                    "type": "string",
+                    "format": "color",
+                    "inputType": "color",
+                    "id": "cross_color",
+                    "label": "لون علامة «غير متوفر»",
+                    "icon": "sicon-format-fill",
+                    "required": false,
+                    "value": "#e0555a"
+                },
+                {
+                    "type": "string",
+                    "format": "color",
+                    "inputType": "color",
+                    "id": "footnote_color",
+                    "label": "لون الملاحظة",
+                    "icon": "sicon-format-fill",
+                    "required": false,
+                    "value": "#8b95a3"
+                },
+                {
+                    "type": "static",
+                    "format": "title",
+                    "id": "section-comparison-motion",
+                    "value": "<div style='position:relative;overflow:hidden;display:flex;align-items:center;gap:10px;padding:13px 16px;border-radius:12px;background:radial-gradient(circle at left center,#6241d9 0%,#3b2878 35%,#160f2a 62%,#020204 100%);border:1px solid rgba(139,109,255,.28);direction:rtl;margin-bottom:18px;font-weight:bold;'><svg aria-hidden='true' style='position:absolute;inset:0;width:100%;height:100%;pointer-events:none;' viewBox='0 0 320 52' preserveAspectRatio='none'><polyline class='gk-line' pathLength='1' points='320,46 268,40 236,43 196,32 164,35 124,22 96,26 58,13 20,16' fill='none' stroke='rgba(160,133,255,.55)' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/><circle class='gk-dot' cx='20' cy='16' r='3' fill='#cabcff'/></svg><span style='position:relative;flex:0 0 auto;display:inline-flex;color:#cabcff;'><svg width='1.2em' height='1.2em' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M13 2 3 14h9l-1 8 10-12h-9l1-8z'/></svg></span><span style='position:relative;font-size:17px;font-weight:700;color:#fff;'>الحركة</span></div>"
+                },
+                {
+                    "type": "boolean",
+                    "icon": "sicon-toggle-off",
+                    "id": "enable_entrance_anim",
+                    "label": "ظهور السطور عند التمرير",
+                    "format": "switch",
+                    "selected": true,
+                    "required": false,
+                    "description": "تظهر السطور واحدًا بعد الآخر أول ما يوصل الزائر للقسم. يتوقف تلقائيًا لمن يفضّل تقليل الحركة."
+                },
+                {
+                    "type": "static",
+                    "format": "title",
+                    "id": "section-comparison-side",
+                    "value": "<div style='position:relative;overflow:hidden;display:flex;align-items:center;gap:10px;padding:13px 16px;border-radius:12px;background:radial-gradient(circle at left center,#6241d9 0%,#3b2878 35%,#160f2a 62%,#020204 100%);border:1px solid rgba(139,109,255,.28);direction:rtl;margin-bottom:18px;font-weight:bold;'><svg aria-hidden='true' style='position:absolute;inset:0;width:100%;height:100%;pointer-events:none;' viewBox='0 0 320 52' preserveAspectRatio='none'><polyline class='gk-line' pathLength='1' points='320,46 268,40 236,43 196,32 164,35 124,22 96,26 58,13 20,16' fill='none' stroke='rgba(160,133,255,.55)' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/><circle class='gk-dot' cx='20' cy='16' r='3' fill='#cabcff'/></svg><span style='position:relative;flex:0 0 auto;display:inline-flex;color:#cabcff;'><svg width='1.2em' height='1.2em' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><rect x='3' y='3' width='18' height='18' rx='2'/><circle cx='8.5' cy='8.5' r='1.5'/><path d='m21 15-5-5L5 21'/></svg></span><span style='position:relative;font-size:17px;font-weight:700;color:#fff;'>عنصر بصري جانبي</span></div>"
+                },
+                {
+                    "type": "static",
+                    "format": "description",
+                    "id": "comparison-side-note",
+                    "value": "<div style='display:flex;gap:10px;background-color:#fff5e6;color:#8a5200;border:1px solid #ffd899;padding:12px 16px;border-radius:8px;margin-bottom:14px;font-size:13px;line-height:1.7;direction:rtl;'><span><strong>زخرفة اختيارية على طرف القسم</strong> — صورة بخلفية شفافة (PNG) مثل زجاجة المنتج، غصن ورد، أو ورقة. تطلع طرف القسم ويجوز جزء منها يكون خارج حدوده، وتقدر تخليها خلف الجدول أو أمامه.</span></div>"
+                },
+                {
+                    "type": "items",
+                    "icon": "sicon-layout-grid",
+                    "id": "side_visual_count",
+                    "label": "عدد العناصر البصرية الجانبية",
+                    "format": "dropdown-list",
+                    "source": "Manual",
+                    "required": false,
+                    "selected": [
+                        {
+                            "label": "عنصر واحد",
+                            "value": "one",
+                            "key": "side-count-one"
+                        }
+                    ],
+                    "options": [
+                        {
+                            "label": "إيقاف",
+                            "value": "off",
+                            "key": "side-count-off"
+                        },
+                        {
+                            "label": "عنصر واحد",
+                            "value": "one",
+                            "key": "side-count-one"
+                        },
+                        {
+                            "label": "عنصران",
+                            "value": "two",
+                            "key": "side-count-two"
+                        }
+                    ],
+                    "description": "اختر عدد الزخارف التي تريدها؛ الإعدادات لا تظهر إلا عند الحاجة."
+                },
+                {
+                    "type": "static",
+                    "format": "title",
+                    "id": "section-comparison-side-first",
+                    "value": "<div style='position:relative;overflow:hidden;display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:12px;background:radial-gradient(circle at left center,#6241d9 0%,#3b2878 35%,#160f2a 62%,#020204 100%);border:1px solid rgba(139,109,255,.28);direction:rtl;margin:14px 0;font-weight:bold;'><svg aria-hidden='true' style='position:absolute;inset:0;width:100%;height:100%;pointer-events:none;' viewBox='0 0 320 52' preserveAspectRatio='none'><polyline class='gk-line' pathLength='1' points='320,46 268,40 236,43 196,32 164,35 124,22 96,26 58,13 20,16' fill='none' stroke='rgba(160,133,255,.55)' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/><circle class='gk-dot' cx='20' cy='16' r='3' fill='#cabcff'/></svg><span style='position:relative;flex:0 0 auto;display:inline-flex;color:#cabcff;'><svg width='1.05em' height='1.05em' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><rect x='3' y='5' width='14' height='14' rx='2'/><path d='M7 5V3h14v14h-4'/></svg></span><span style='position:relative;font-size:.9em;font-weight:700;color:#fff;'>العنصر الأول</span></div>",
+                    "variant": "h6",
+                    "conditions": [
+                        {
+                            "id": "side_visual_count",
+                            "operation": "!=",
+                            "value": "off"
+                        }
+                    ]
+                },
+                {
+                    "type": "string",
+                    "icon": "sicon-image",
+                    "id": "side_image",
+                    "label": "صورة العنصر",
+                    "format": "image",
+                    "required": false,
+                    "value": "/assets/demo/faq/side-element.png",
+                    "description": "يفضّل PNG بخلفية شفافة.",
+                    "conditions": [
+                        {
+                            "id": "side_visual_count",
+                            "operation": "!=",
+                            "value": "off"
+                        }
+                    ]
+                },
+                {
+                    "type": "items",
+                    "icon": "sicon-layout-grid",
+                    "id": "side_side",
+                    "label": "جهة العنصر",
+                    "format": "dropdown-list",
+                    "source": "Manual",
+                    "required": false,
+                    "selected": [
+                        {
+                            "label": "يمين القسم",
+                            "value": "right",
+                            "key": "side_side-0"
+                        }
+                    ],
+                    "options": [
+                        {
+                            "label": "يمين القسم",
+                            "value": "right",
+                            "key": "side_side-0"
+                        },
+                        {
+                            "label": "يسار القسم",
+                            "value": "left",
+                            "key": "side_side-1"
+                        }
+                    ],
+                    "description": "الجهة ثابتة بالنسبة للقسم وما تنقلب مع تغيّر لغة المتجر.",
+                    "conditions": [
+                        {
+                            "id": "side_visual_count",
+                            "operation": "!=",
+                            "value": "off"
+                        }
+                    ]
+                },
+                {
+                    "type": "items",
+                    "icon": "sicon-layout-grid",
+                    "id": "side_depth",
+                    "label": "طبقة العنصر",
+                    "format": "dropdown-list",
+                    "source": "Manual",
+                    "required": false,
+                    "selected": [
+                        {
+                            "label": "خلف الأسئلة",
+                            "value": "behind",
+                            "key": "side_depth-behind"
+                        }
+                    ],
+                    "options": [
+                        {
+                            "label": "خلف الأسئلة",
+                            "value": "behind",
+                            "key": "side_depth-behind"
+                        },
+                        {
+                            "label": "أمام الأسئلة",
+                            "value": "front",
+                            "key": "side_depth-front"
+                        }
+                    ],
+                    "description": "«خلف الأسئلة» أضمن للقراءة، و«أمام الأسئلة» يعطي إحساس تراكب أقوى.",
+                    "conditions": [
+                        {
+                            "id": "side_visual_count",
+                            "operation": "!=",
+                            "value": "off"
+                        }
+                    ]
+                },
+                {
+                    "type": "number",
+                    "icon": "sicon-format-fill",
+                    "id": "side_opacity",
+                    "label": "شفافية العنصر (٪)",
+                    "format": "slider",
+                    "required": false,
+                    "inputType": "range",
+                    "minimum": 10,
+                    "maximum": 100,
+                    "step": 5,
+                    "value": 100,
+                    "conditions": [
+                        {
+                            "id": "side_visual_count",
+                            "operation": "!=",
+                            "value": "off"
+                        }
+                    ]
+                },
+                {
+                    "type": "number",
+                    "icon": "sicon-columns",
+                    "id": "side_width",
+                    "label": "عرض العنصر على الجوال (٪)",
+                    "format": "slider",
+                    "required": false,
+                    "minimum": 5,
+                    "maximum": 120,
+                    "value": 30,
+                    "description": "نسبة من عرض القسم. أكثر من ١٠٠٪ يعني أعرض من القسم نفسه.",
+                    "inputType": "range",
+                    "step": 1,
+                    "conditions": [
+                        {
+                            "id": "side_visual_count",
+                            "operation": "!=",
+                            "value": "off"
+                        }
+                    ]
+                },
+                {
+                    "type": "items",
+                    "icon": "sicon-layout-grid",
+                    "id": "side_vpos",
+                    "label": "الموضع العمودي على الجوال",
+                    "format": "dropdown-list",
+                    "source": "Manual",
+                    "required": false,
+                    "selected": [
+                        {
+                            "label": "أعلى القسم",
+                            "value": "top",
+                            "key": "side_vpos-0"
+                        }
+                    ],
+                    "options": [
+                        {
+                            "label": "أعلى القسم",
+                            "value": "top",
+                            "key": "side_vpos-0"
+                        },
+                        {
+                            "label": "منتصف القسم",
+                            "value": "center",
+                            "key": "side_vpos-1"
+                        },
+                        {
+                            "label": "أسفل القسم",
+                            "value": "bottom",
+                            "key": "side_vpos-2"
+                        }
+                    ],
+                    "conditions": [
+                        {
+                            "id": "side_visual_count",
+                            "operation": "!=",
+                            "value": "off"
+                        }
+                    ]
+                },
+                {
+                    "type": "number",
+                    "icon": "sicon-move",
+                    "id": "side_x",
+                    "label": "الإزاحة الأفقية على الجوال (٪)",
+                    "format": "slider",
+                    "required": false,
+                    "minimum": -100,
+                    "maximum": 100,
+                    "value": 16,
+                    "description": "نسبة من عرض العنصر. الرقم الموجب يطلّعه برا القسم أكثر، والسالب يدخّله جوّه.",
+                    "inputType": "range",
+                    "step": 1,
+                    "conditions": [
+                        {
+                            "id": "side_visual_count",
+                            "operation": "!=",
+                            "value": "off"
+                        }
+                    ]
+                },
+                {
+                    "type": "number",
+                    "icon": "sicon-move",
+                    "id": "side_y",
+                    "label": "الإزاحة الرأسية على الجوال (٪)",
+                    "format": "slider",
+                    "required": false,
+                    "minimum": -200,
+                    "maximum": 200,
+                    "value": -4,
+                    "description": "نسبة من ارتفاع العنصر. الموجب ينزّله تحت والسالب يطلّعه فوق.",
+                    "inputType": "range",
+                    "step": 1,
+                    "conditions": [
+                        {
+                            "id": "side_visual_count",
+                            "operation": "!=",
+                            "value": "off"
+                        }
+                    ]
+                },
+                {
+                    "type": "static",
+                    "format": "title",
+                    "id": "section-comparison-side-first-desktop",
+                    "value": "<div style='position:relative;overflow:hidden;display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:12px;background:radial-gradient(circle at left center,#6241d9 0%,#3b2878 35%,#160f2a 62%,#020204 100%);border:1px solid rgba(139,109,255,.28);direction:rtl;margin:14px 0;font-weight:bold;'><svg aria-hidden='true' style='position:absolute;inset:0;width:100%;height:100%;pointer-events:none;' viewBox='0 0 320 52' preserveAspectRatio='none'><polyline class='gk-line' pathLength='1' points='320,46 268,40 236,43 196,32 164,35 124,22 96,26 58,13 20,16' fill='none' stroke='rgba(160,133,255,.55)' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/><circle class='gk-dot' cx='20' cy='16' r='3' fill='#cabcff'/></svg><span style='position:relative;flex:0 0 auto;display:inline-flex;color:#cabcff;'><svg width='1.05em' height='1.05em' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><rect x='2' y='3' width='20' height='14' rx='2'/><path d='M8 21h8M12 17v4'/></svg></span><span style='position:relative;font-size:.9em;font-weight:700;color:#fff;'>العنصر الأول — سطح المكتب</span></div>",
+                    "variant": "h6",
+                    "conditions": [
+                        {
+                            "id": "side_visual_count",
+                            "operation": "!=",
+                            "value": "off"
+                        }
+                    ]
+                },
+                {
+                    "type": "static",
+                    "format": "description",
+                    "id": "comparison-side-desktop-note",
+                    "value": "<div style='background-color:#6036c11f;color:#6036C1;padding:12px 16px;border-radius:8px;margin-bottom:14px;font-size:13px;line-height:1.7;direction:rtl;'>اضبط مقاس ومكان العنصر الأول على الشاشات الكبيرة بشكل مستقل عن الجوال.</div>",
+                    "conditions": [
+                        {
+                            "id": "side_visual_count",
+                            "operation": "!=",
+                            "value": "off"
+                        }
+                    ]
+                },
+                {
+                    "type": "number",
+                    "icon": "sicon-columns",
+                    "id": "side_width_desktop",
+                    "label": "عرض العنصر على سطح المكتب (٪)",
+                    "format": "slider",
+                    "required": false,
+                    "minimum": 5,
+                    "maximum": 120,
+                    "value": 13,
+                    "inputType": "range",
+                    "step": 1,
+                    "conditions": [
+                        {
+                            "id": "side_visual_count",
+                            "operation": "!=",
+                            "value": "off"
+                        }
+                    ]
+                },
+                {
+                    "type": "items",
+                    "icon": "sicon-layout-grid",
+                    "id": "side_vpos_desktop",
+                    "label": "الموضع العمودي على سطح المكتب",
+                    "format": "dropdown-list",
+                    "source": "Manual",
+                    "required": false,
+                    "selected": [
+                        {
+                            "label": "نفس الجوال",
+                            "value": "inherit",
+                            "key": "side_vpos_desktop-0"
+                        }
+                    ],
+                    "options": [
+                        {
+                            "label": "نفس الجوال",
+                            "value": "inherit",
+                            "key": "side_vpos_desktop-0"
+                        },
+                        {
+                            "label": "أعلى القسم",
+                            "value": "top",
+                            "key": "side_vpos_desktop-1"
+                        },
+                        {
+                            "label": "منتصف القسم",
+                            "value": "center",
+                            "key": "side_vpos_desktop-2"
+                        },
+                        {
+                            "label": "أسفل القسم",
+                            "value": "bottom",
+                            "key": "side_vpos_desktop-3"
+                        }
+                    ],
+                    "conditions": [
+                        {
+                            "id": "side_visual_count",
+                            "operation": "!=",
+                            "value": "off"
+                        }
+                    ]
+                },
+                {
+                    "type": "number",
+                    "icon": "sicon-move",
+                    "id": "side_x_desktop",
+                    "label": "الإزاحة الأفقية على سطح المكتب (٪)",
+                    "format": "slider",
+                    "required": false,
+                    "minimum": -100,
+                    "maximum": 100,
+                    "inputType": "range",
+                    "step": 1,
+                    "value": 7,
+                    "conditions": [
+                        {
+                            "id": "side_visual_count",
+                            "operation": "!=",
+                            "value": "off"
+                        }
+                    ]
+                },
+                {
+                    "type": "number",
+                    "icon": "sicon-move",
+                    "id": "side_y_desktop",
+                    "label": "الإزاحة الرأسية على سطح المكتب (٪)",
+                    "format": "slider",
+                    "required": false,
+                    "minimum": -200,
+                    "maximum": 200,
+                    "inputType": "range",
+                    "step": 1,
+                    "value": 2,
+                    "conditions": [
+                        {
+                            "id": "side_visual_count",
+                            "operation": "!=",
+                            "value": "off"
+                        }
+                    ]
+                },
+                {
+                    "type": "static",
+                    "format": "title",
+                    "id": "section-comparison-side-second",
+                    "value": "<div style='position:relative;overflow:hidden;display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:12px;background:radial-gradient(circle at left center,#6241d9 0%,#3b2878 35%,#160f2a 62%,#020204 100%);border:1px solid rgba(139,109,255,.28);direction:rtl;margin:14px 0;font-weight:bold;'><svg aria-hidden='true' style='position:absolute;inset:0;width:100%;height:100%;pointer-events:none;' viewBox='0 0 320 52' preserveAspectRatio='none'><polyline class='gk-line' pathLength='1' points='320,46 268,40 236,43 196,32 164,35 124,22 96,26 58,13 20,16' fill='none' stroke='rgba(160,133,255,.55)' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/><circle class='gk-dot' cx='20' cy='16' r='3' fill='#cabcff'/></svg><span style='position:relative;flex:0 0 auto;display:inline-flex;color:#cabcff;'><svg width='1.05em' height='1.05em' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><rect x='3' y='5' width='14' height='14' rx='2'/><path d='M7 5V3h14v14h-4'/></svg></span><span style='position:relative;font-size:.9em;font-weight:700;color:#fff;'>العنصر الثاني</span></div>",
+                    "variant": "h6",
+                    "conditions": [
+                        {
+                            "id": "side_visual_count",
+                            "operation": "=",
+                            "value": "two"
+                        }
+                    ]
+                },
+                {
+                    "type": "string",
+                    "icon": "sicon-image",
+                    "id": "side2_image",
+                    "label": "صورة العنصر الثاني",
+                    "format": "image",
+                    "required": false,
+                    "value": "",
+                    "description": "يفضّل PNG بخلفية شفافة.",
+                    "conditions": [
+                        {
+                            "id": "side_visual_count",
+                            "operation": "=",
+                            "value": "two"
+                        }
+                    ]
+                },
+                {
+                    "type": "items",
+                    "icon": "sicon-layout-grid",
+                    "id": "side2_side",
+                    "label": "جهة العنصر الثاني",
+                    "format": "dropdown-list",
+                    "source": "Manual",
+                    "required": false,
+                    "selected": [
+                        {
+                            "label": "يسار القسم",
+                            "value": "left",
+                            "key": "side2_side-1"
+                        }
+                    ],
+                    "options": [
+                        {
+                            "label": "يمين القسم",
+                            "value": "right",
+                            "key": "side2_side-0"
+                        },
+                        {
+                            "label": "يسار القسم",
+                            "value": "left",
+                            "key": "side2_side-1"
+                        }
+                    ],
+                    "description": "الجهة ثابتة بالنسبة للقسم وما تنقلب مع تغيّر لغة المتجر.",
+                    "conditions": [
+                        {
+                            "id": "side_visual_count",
+                            "operation": "=",
+                            "value": "two"
+                        }
+                    ]
+                },
+                {
+                    "type": "items",
+                    "icon": "sicon-layout-grid",
+                    "id": "side2_depth",
+                    "label": "طبقة العنصر الثاني",
+                    "format": "dropdown-list",
+                    "source": "Manual",
+                    "required": false,
+                    "selected": [
+                        {
+                            "label": "خلف الأسئلة",
+                            "value": "behind",
+                            "key": "side2_depth-behind"
+                        }
+                    ],
+                    "options": [
+                        {
+                            "label": "خلف الأسئلة",
+                            "value": "behind",
+                            "key": "side2_depth-behind"
+                        },
+                        {
+                            "label": "أمام الأسئلة",
+                            "value": "front",
+                            "key": "side2_depth-front"
+                        }
+                    ],
+                    "description": "«خلف الأسئلة» أضمن للقراءة، و«أمام الأسئلة» يعطي إحساس تراكب أقوى.",
+                    "conditions": [
+                        {
+                            "id": "side_visual_count",
+                            "operation": "=",
+                            "value": "two"
+                        }
+                    ]
+                },
+                {
+                    "type": "number",
+                    "icon": "sicon-format-fill",
+                    "id": "side2_opacity",
+                    "label": "شفافية العنصر الثاني (٪)",
+                    "format": "slider",
+                    "required": false,
+                    "inputType": "range",
+                    "minimum": 10,
+                    "maximum": 100,
+                    "step": 5,
+                    "value": 100,
+                    "conditions": [
+                        {
+                            "id": "side_visual_count",
+                            "operation": "=",
+                            "value": "two"
+                        }
+                    ]
+                },
+                {
+                    "type": "number",
+                    "icon": "sicon-columns",
+                    "id": "side2_width",
+                    "label": "عرض العنصر الثاني على الجوال (٪)",
+                    "format": "slider",
+                    "required": false,
+                    "minimum": 5,
+                    "maximum": 120,
+                    "value": 28,
+                    "description": "نسبة من عرض القسم. أكثر من ١٠٠٪ يعني أعرض من القسم نفسه.",
+                    "inputType": "range",
+                    "step": 1,
+                    "conditions": [
+                        {
+                            "id": "side_visual_count",
+                            "operation": "=",
+                            "value": "two"
+                        }
+                    ]
+                },
+                {
+                    "type": "items",
+                    "icon": "sicon-layout-grid",
+                    "id": "side2_vpos",
+                    "label": "الموضع العمودي للعنصر الثاني على الجوال",
+                    "format": "dropdown-list",
+                    "source": "Manual",
+                    "required": false,
+                    "selected": [
+                        {
+                            "label": "أسفل القسم",
+                            "value": "bottom",
+                            "key": "side2_vpos-2"
+                        }
+                    ],
+                    "options": [
+                        {
+                            "label": "أعلى القسم",
+                            "value": "top",
+                            "key": "side2_vpos-0"
+                        },
+                        {
+                            "label": "منتصف القسم",
+                            "value": "center",
+                            "key": "side2_vpos-1"
+                        },
+                        {
+                            "label": "أسفل القسم",
+                            "value": "bottom",
+                            "key": "side2_vpos-2"
+                        }
+                    ],
+                    "conditions": [
+                        {
+                            "id": "side_visual_count",
+                            "operation": "=",
+                            "value": "two"
+                        }
+                    ]
+                },
+                {
+                    "type": "number",
+                    "icon": "sicon-move",
+                    "id": "side2_x",
+                    "label": "الإزاحة الأفقية للعنصر الثاني على الجوال (٪)",
+                    "format": "slider",
+                    "required": false,
+                    "minimum": -100,
+                    "maximum": 100,
+                    "value": 14,
+                    "description": "الرقم الموجب يطلّعه برا القسم أكثر، والسالب يدخّله جوّه.",
+                    "inputType": "range",
+                    "step": 1,
+                    "conditions": [
+                        {
+                            "id": "side_visual_count",
+                            "operation": "=",
+                            "value": "two"
+                        }
+                    ]
+                },
+                {
+                    "type": "number",
+                    "icon": "sicon-move",
+                    "id": "side2_y",
+                    "label": "الإزاحة الرأسية للعنصر الثاني على الجوال (٪)",
+                    "format": "slider",
+                    "required": false,
+                    "minimum": -200,
+                    "maximum": 200,
+                    "value": 18,
+                    "description": "الموجب ينزّله تحت والسالب يطلّعه فوق.",
+                    "inputType": "range",
+                    "step": 1,
+                    "conditions": [
+                        {
+                            "id": "side_visual_count",
+                            "operation": "=",
+                            "value": "two"
+                        }
+                    ]
+                },
+                {
+                    "type": "static",
+                    "format": "title",
+                    "id": "section-comparison-side-second-desktop",
+                    "value": "<div style='position:relative;overflow:hidden;display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:12px;background:radial-gradient(circle at left center,#6241d9 0%,#3b2878 35%,#160f2a 62%,#020204 100%);border:1px solid rgba(139,109,255,.28);direction:rtl;margin:14px 0;font-weight:bold;'><svg aria-hidden='true' style='position:absolute;inset:0;width:100%;height:100%;pointer-events:none;' viewBox='0 0 320 52' preserveAspectRatio='none'><polyline class='gk-line' pathLength='1' points='320,46 268,40 236,43 196,32 164,35 124,22 96,26 58,13 20,16' fill='none' stroke='rgba(160,133,255,.55)' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/><circle class='gk-dot' cx='20' cy='16' r='3' fill='#cabcff'/></svg><span style='position:relative;flex:0 0 auto;display:inline-flex;color:#cabcff;'><svg width='1.05em' height='1.05em' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><rect x='2' y='3' width='20' height='14' rx='2'/><path d='M8 21h8M12 17v4'/></svg></span><span style='position:relative;font-size:.9em;font-weight:700;color:#fff;'>العنصر الثاني — سطح المكتب</span></div>",
+                    "variant": "h6",
+                    "conditions": [
+                        {
+                            "id": "side_visual_count",
+                            "operation": "=",
+                            "value": "two"
+                        }
+                    ]
+                },
+                {
+                    "type": "static",
+                    "format": "description",
+                    "id": "comparison-side2-desktop-note",
+                    "value": "<div style='background-color:#6036c11f;color:#6036C1;padding:12px 16px;border-radius:8px;margin-bottom:14px;font-size:13px;line-height:1.7;direction:rtl;'>اضبط مقاس ومكان العنصر الثاني على الشاشات الكبيرة بشكل مستقل عن الجوال.</div>",
+                    "conditions": [
+                        {
+                            "id": "side_visual_count",
+                            "operation": "=",
+                            "value": "two"
+                        }
+                    ]
+                },
+                {
+                    "type": "number",
+                    "icon": "sicon-columns",
+                    "id": "side2_width_desktop",
+                    "label": "عرض العنصر الثاني على سطح المكتب (٪)",
+                    "format": "slider",
+                    "required": false,
+                    "minimum": 5,
+                    "maximum": 120,
+                    "value": 11,
+                    "inputType": "range",
+                    "step": 1,
+                    "conditions": [
+                        {
+                            "id": "side_visual_count",
+                            "operation": "=",
+                            "value": "two"
+                        }
+                    ]
+                },
+                {
+                    "type": "items",
+                    "icon": "sicon-layout-grid",
+                    "id": "side2_vpos_desktop",
+                    "label": "الموضع العمودي للعنصر الثاني على سطح المكتب",
+                    "format": "dropdown-list",
+                    "source": "Manual",
+                    "required": false,
+                    "selected": [
+                        {
+                            "label": "نفس الجوال",
+                            "value": "inherit",
+                            "key": "side2_vpos_desktop-0"
+                        }
+                    ],
+                    "options": [
+                        {
+                            "label": "نفس الجوال",
+                            "value": "inherit",
+                            "key": "side2_vpos_desktop-0"
+                        },
+                        {
+                            "label": "أعلى القسم",
+                            "value": "top",
+                            "key": "side2_vpos_desktop-1"
+                        },
+                        {
+                            "label": "منتصف القسم",
+                            "value": "center",
+                            "key": "side2_vpos_desktop-2"
+                        },
+                        {
+                            "label": "أسفل القسم",
+                            "value": "bottom",
+                            "key": "side2_vpos_desktop-3"
+                        }
+                    ],
+                    "conditions": [
+                        {
+                            "id": "side_visual_count",
+                            "operation": "=",
+                            "value": "two"
+                        }
+                    ]
+                },
+                {
+                    "type": "number",
+                    "icon": "sicon-move",
+                    "id": "side2_x_desktop",
+                    "label": "الإزاحة الأفقية للعنصر الثاني على سطح المكتب (٪)",
+                    "format": "slider",
+                    "required": false,
+                    "minimum": -100,
+                    "maximum": 100,
+                    "inputType": "range",
+                    "step": 1,
+                    "value": 6,
+                    "conditions": [
+                        {
+                            "id": "side_visual_count",
+                            "operation": "=",
+                            "value": "two"
+                        }
+                    ]
+                },
+                {
+                    "type": "number",
+                    "icon": "sicon-move",
+                    "id": "side2_y_desktop",
+                    "label": "الإزاحة الرأسية للعنصر الثاني على سطح المكتب (٪)",
+                    "format": "slider",
+                    "required": false,
+                    "minimum": -200,
+                    "maximum": 200,
+                    "inputType": "range",
+                    "step": 1,
+                    "value": 6,
+                    "conditions": [
+                        {
+                            "id": "side_visual_count",
+                            "operation": "=",
+                            "value": "two"
+                        }
+                    ]
+                },
+                {
+                    "type": "static",
+                    "format": "title",
+                    "id": "section-comparison-space",
+                    "value": "<div style='position:relative;overflow:hidden;display:flex;align-items:center;gap:10px;padding:13px 16px;border-radius:12px;background:radial-gradient(circle at left center,#6241d9 0%,#3b2878 35%,#160f2a 62%,#020204 100%);border:1px solid rgba(139,109,255,.28);direction:rtl;margin-bottom:18px;font-weight:bold;'><svg aria-hidden='true' style='position:absolute;inset:0;width:100%;height:100%;pointer-events:none;' viewBox='0 0 320 52' preserveAspectRatio='none'><polyline class='gk-line' pathLength='1' points='320,46 268,40 236,43 196,32 164,35 124,22 96,26 58,13 20,16' fill='none' stroke='rgba(160,133,255,.55)' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/><circle class='gk-dot' cx='20' cy='16' r='3' fill='#cabcff'/></svg><span style='position:relative;flex:0 0 auto;display:inline-flex;color:#cabcff;'><svg width='1.2em' height='1.2em' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M12 3v18M8 6l4-3 4 3M8 18l4 3 4-3'/></svg></span><span style='position:relative;font-size:17px;font-weight:700;color:#fff;'>المسافات حول القسم</span></div>"
+                },
+                {
+                    "type": "static",
+                    "format": "description",
+                    "id": "comparison-space-note",
+                    "value": "<div style='display:flex;gap:10px;background-color:#6036c11f;color:#6036C1;padding:12px 16px;border-radius:8px;margin-bottom:14px;font-size:13px;line-height:1.7;direction:rtl;'><span>المسافة الفاضية فوق القسم وتحته. الدرجة نفسها تكبر تلقائيًا على سطح المكتب، فما تحتاج تظبطها مرتين. <strong>لاحظ:</strong> المسافة الظاهرة بين قسمين = «تحت» الأول + «فوق» الثاني، فإذا تبي قسمين ملتصقين خلّ واحدة منهم «بدون».</span></div>"
+                },
+                {
+                    "type": "items",
+                    "icon": "sicon-keyboard_arrow_down",
+                    "id": "space_top",
+                    "label": "المسافة فوق القسم",
+                    "format": "dropdown-list",
+                    "source": "Manual",
+                    "required": false,
+                    "selected": [
+                        {
+                            "label": "متوسطة",
+                            "value": "md",
+                            "key": "space_top-md"
+                        }
+                    ],
+                    "options": [
+                        {
+                            "label": "بدون",
+                            "value": "none",
+                            "key": "space_top-none"
+                        },
+                        {
+                            "label": "ضيقة",
+                            "value": "xs",
+                            "key": "space_top-xs"
+                        },
+                        {
+                            "label": "صغيرة",
+                            "value": "sm",
+                            "key": "space_top-sm"
+                        },
+                        {
+                            "label": "متوسطة",
+                            "value": "md",
+                            "key": "space_top-md"
+                        },
+                        {
+                            "label": "كبيرة",
+                            "value": "lg",
+                            "key": "space_top-lg"
+                        },
+                        {
+                            "label": "كبيرة جدًا",
+                            "value": "xl",
+                            "key": "space_top-xl"
+                        }
+                    ],
+                    "description": "المسافة الفاضية فوق محتوى القسم."
+                },
+                {
+                    "type": "items",
+                    "icon": "sicon-keyboard_arrow_down",
+                    "id": "space_bottom",
+                    "label": "المسافة تحت القسم",
+                    "format": "dropdown-list",
+                    "source": "Manual",
+                    "required": false,
+                    "selected": [
+                        {
+                            "label": "متوسطة",
+                            "value": "md",
+                            "key": "space_bottom-md"
+                        }
+                    ],
+                    "options": [
+                        {
+                            "label": "بدون",
+                            "value": "none",
+                            "key": "space_bottom-none"
+                        },
+                        {
+                            "label": "ضيقة",
+                            "value": "xs",
+                            "key": "space_bottom-xs"
+                        },
+                        {
+                            "label": "صغيرة",
+                            "value": "sm",
+                            "key": "space_bottom-sm"
+                        },
+                        {
+                            "label": "متوسطة",
+                            "value": "md",
+                            "key": "space_bottom-md"
+                        },
+                        {
+                            "label": "كبيرة",
+                            "value": "lg",
+                            "key": "space_bottom-lg"
+                        },
+                        {
+                            "label": "كبيرة جدًا",
+                            "value": "xl",
+                            "key": "space_bottom-xl"
+                        }
+                    ],
+                    "description": "المسافة الفاضية تحت محتوى القسم."
+                },
+                {
+                    "type": "static",
+                    "format": "title",
+                    "id": "section-comparison-anchor",
+                    "value": "<div style='position:relative;overflow:hidden;display:flex;align-items:center;gap:10px;padding:13px 16px;border-radius:12px;background:radial-gradient(circle at left center,#6241d9 0%,#3b2878 35%,#160f2a 62%,#020204 100%);border:1px solid rgba(139,109,255,.28);direction:rtl;margin-bottom:18px;font-weight:bold;'><svg aria-hidden='true' style='position:absolute;inset:0;width:100%;height:100%;pointer-events:none;' viewBox='0 0 320 52' preserveAspectRatio='none'><polyline class='gk-line' pathLength='1' points='320,46 268,40 236,43 196,32 164,35 124,22 96,26 58,13 20,16' fill='none' stroke='rgba(160,133,255,.55)' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/><circle class='gk-dot' cx='20' cy='16' r='3' fill='#cabcff'/></svg><span style='position:relative;flex:0 0 auto;display:inline-flex;color:#cabcff;'><svg width='1.2em' height='1.2em' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><circle cx='12' cy='5' r='3'/><path d='M12 22V8M5 12H2a10 10 0 0 0 20 0h-3'/></svg></span><span style='position:relative;font-size:17px;font-weight:700;color:#fff;'>الربط من القائمة</span></div>"
+                },
+                {
+                    "type": "static",
+                    "format": "description",
+                    "id": "comparison-anchor-note",
+                    "value": "<div style='display:flex;gap:10px;background-color:#6036c11f;color:#6036C1;padding:12px 16px;border-radius:8px;margin-bottom:14px;font-size:13px;line-height:1.7;direction:rtl;'><span>هذا <strong>معرّف</strong> القسم، تستخدمه قائمة الهيرو عشان تنزّل الزائر لهنا. اتركه فارغ وبياخذ المعرّف الافتراضي <code>comparison</code>. غيّره بس إذا عندك أكثر من نسخة من هذا القسم في نفس الصفحة.</span></div>"
+                },
+                {
+                    "type": "string",
+                    "icon": "sicon-link",
+                    "id": "anchor_id",
+                    "label": "معرّف القسم",
+                    "format": "text",
+                    "required": false,
+                    "placeholder": "comparison",
+                    "maxLength": 40
+                }
+            ]
+        },
+        {
             "title": "تذييل الصفحة",
             "icon": "sicon-window-layout",
             "name": "footer",
@@ -11588,546 +13147,17 @@
                     "maxLength": 40
                 }
             ]
-        },
-        {
-            "title": "Getting Started Guide",
-            "icon": "sicon-rocket",
-            "name": "getting-started-guide",
-            "key": "0a1b2c3d-4e5f-6g7h-8i9j-0k1l2m3n4o5p",
-            "image": "https://cdn.salla.network/images/themes/raed/preview-images/getting-started.png"
-        },
-        {
-            "title": "Basic Inputs",
-            "icon": "sicon-format-text-alt",
-            "name": "basic-inputs",
-            "key": "1a2b3c4d-5e6f-7g8h-9i0j-1k2l3m4n5o6p",
-            "image": "https://cdn.salla.network/images/themes/raed/preview-images/text-input.png",
-            "fields": [
-                {
-                    "id": "text",
-                    "icon": "sicon-format-text-alt",
-                    "type": "string",
-                    "label": "Text",
-                    "placeholder": "Enter text here...",
-                    "format": "text",
-                    "required": true,
-                    "minLength": 1,
-                    "maxLength": 100,
-                    "value": "Sample text value"
-                },
-                {
-                    "id": "email",
-                    "icon": "sicon-mail",
-                    "type": "string",
-                    "label": "Email Input",
-                    "placeholder": "Enter email address...",
-                    "format": "email",
-                    "required": true,
-                    "description": "An email input field with validation",
-                    "value": "example@salla.sa"
-                },
-                {
-                    "id": "url",
-                    "icon": "sicon-link",
-                    "type": "string",
-                    "label": "URL Input",
-                    "placeholder": "Enter website URL...",
-                    "format": "url",
-                    "required": false,
-                    "description": "A URL input field with validation",
-                    "value": "https://salla.dev"
-                },
-                {
-                    "id": "password",
-                    "icon": "sicon-lock",
-                    "type": "string",
-                    "label": "Password Input",
-                    "placeholder": "Enter password...",
-                    "format": "password",
-                    "hide": true,
-                    "required": false
-                },
-                {
-                    "id": "textarea",
-                    "icon": "sicon-paragraph",
-                    "type": "string",
-                    "label": "Textarea",
-                    "placeholder": "Enter multi-line text here...",
-                    "format": "textarea",
-                    "required": true,
-                    "minLength": 1,
-                    "maxLength": 500,
-                    "rows": 4,
-                    "value": "This is a sample text\nwith multiple lines\nto demonstrate the textarea."
-                },
-                {
-                    "id": "number",
-                    "icon": "sicon-calculator",
-                    "type": "number",
-                    "label": "Basic Number",
-                    "placeholder": "Enter a number...",
-                    "format": "number",
-                    "inputType": "number",
-                    "required": true,
-                    "value": 42
-                },
-                {
-                    "id": "float",
-                    "icon": "sicon-calculator",
-                    "type": "number",
-                    "label": "Float Number",
-                    "placeholder": "Enter a decimal number...",
-                    "format": "float",
-                    "inputType": "number",
-                    "required": false,
-                    "step": 0.1,
-                    "value": 3.14
-                },
-                {
-                    "id": "units",
-                    "icon": "sicon-tag",
-                    "type": "number",
-                    "label": "Units",
-                    "placeholder": "Enter units...",
-                    "format": "units",
-                    "required": true,
-                    "step": 0.5,
-                    "unit": "kg",
-                    "value": 1
-                },
-                {
-                    "id": "slider",
-                    "type": "number",
-                    "label": "Slider",
-                    "format": "slider",
-                    "inputType": "range",
-                    "required": false,
-                    "minimum": 0,
-                    "maximum": 100,
-                    "step": 1,
-                    "value": 75
-                },
-                {
-                    "id": "checkbox",
-                    "icon": "sicon-check-circle",
-                    "type": "boolean",
-                    "label": "Checkbox",
-                    "format": "checkbox",
-                    "required": true,
-                    "description": "Enable or disable this feature",
-                    "value": true
-                },
-                {
-                    "id": "switch",
-                    "icon": "sicon-bell",
-                    "type": "boolean",
-                    "label": "Switch",
-                    "format": "switch",
-                    "required": false,
-                    "description": "Enable notifications",
-                    "value": false
-                }
-            ]
-        },
-        {
-            "title": "Items Select Input",
-            "icon": "sicon-list",
-            "name": "items-select-input",
-            "key": "5e6f7g8h-9i0j-1k2l-3m4n-5o6p7q8r9s0t",
-            "image": "https://cdn.salla.network/images/themes/raed/preview-images/items-select-input.png",
-            "fields": [
-                {
-                    "id": "dropdown-list",
-                    "icon": "sicon-folder",
-                    "type": "items",
-                    "source": "Manual",
-                    "label": "Dropdown List",
-                    "format": "dropdown-list",
-                    "required": true,
-                    "options": [
-                        {
-                            "label": "Clothing",
-                            "value": "clothing",
-                            "key": "clothing"
-                        },
-                        {
-                            "label": "Electronics",
-                            "value": "electronics",
-                            "key": "electronics"
-                        },
-                        {
-                            "label": "Home & Garden",
-                            "value": "home",
-                            "key": "home"
-                        }
-                    ],
-                    "selected": [
-                        {
-                            "label": "Electronics",
-                            "value": "electronics",
-                            "key": "electronics"
-                        }
-                    ]
-                },
-                {
-                    "id": "checkbox-list",
-                    "icon": "sicon-tag",
-                    "type": "items",
-                    "label": "Checkbox List",
-                    "format": "checkbox-list",
-                    "required": false,
-                    "multichoice": true,
-                    "description": "Select multiple tags",
-                    "options": [
-                        {
-                            "label": "New",
-                            "value": "new",
-                            "key": "new"
-                        },
-                        {
-                            "label": "Featured",
-                            "value": "featured",
-                            "key": "featured"
-                        },
-                        {
-                            "label": "Offer",
-                            "value": "offer",
-                            "key": "offer"
-                        }
-                    ],
-                    "selected": [
-                        {
-                            "label": "New",
-                            "value": "new",
-                            "key": "new"
-                        },
-                        {
-                            "label": "Offer",
-                            "value": "offer",
-                            "key": "offer"
-                        }
-                    ]
-                },
-                {
-                    "id": "radio-list",
-                    "icon": "sicon-truck",
-                    "type": "items",
-                    "label": "Radio List",
-                    "format": "radio-list",
-                    "required": true,
-                    "options": [
-                        {
-                            "label": "Standard",
-                            "value": "standard",
-                            "key": "standard"
-                        },
-                        {
-                            "label": "Express",
-                            "value": "express",
-                            "key": "express"
-                        },
-                        {
-                            "label": "Priority",
-                            "value": "priority",
-                            "key": "priority"
-                        }
-                    ],
-                    "selected": [
-                        {
-                            "label": "Standard",
-                            "value": "standard",
-                            "key": "standard"
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "title": "Dropdown List Source Input",
-            "icon": "sicon-database",
-            "name": "dropdown-list-source-input",
-            "key": "9i0j1k2l-3m4n-5o6p-7q8r-9s0t1u2v3w4x",
-            "image": "https://cdn.salla.network/images/themes/raed/preview-images/dropdown-list-source-input.png",
-            "fields": [
-                {
-                    "id": "product",
-                    "icon": "sicon-box",
-                    "type": "items",
-                    "label": "Product",
-                    "format": "dropdown-list",
-                    "multichoice": true,
-                    "required": true,
-                    "description": "Select multiple products",
-                    "source": "products"
-                },
-                {
-                    "id": "category",
-                    "icon": "sicon-folder",
-                    "type": "items",
-                    "label": "Category",
-                    "format": "dropdown-list",
-                    "required": false,
-                    "source": "categories"
-                },
-                {
-                    "id": "brand",
-                    "icon": "sicon-brand",
-                    "type": "items",
-                    "label": "Brand",
-                    "format": "dropdown-list",
-                    "required": true,
-                    "source": "brands"
-                },
-                {
-                    "id": "blog_article",
-                    "icon": "sicon-article",
-                    "type": "items",
-                    "label": "Blog Article",
-                    "format": "dropdown-list",
-                    "required": false,
-                    "source": "blog_articles"
-                },
-                {
-                    "id": "blog_category",
-                    "icon": "sicon-folder-article",
-                    "type": "items",
-                    "label": "Blog Category",
-                    "format": "dropdown-list",
-                    "required": false,
-                    "source": "blog_categories"
-                },
-                {
-                    "id": "page",
-                    "icon": "sicon-page",
-                    "type": "items",
-                    "label": "Page",
-                    "format": "dropdown-list",
-                    "required": false,
-                    "source": "pages"
-                },
-                {
-                    "id": "special_offer",
-                    "icon": "sicon-discount",
-                    "type": "items",
-                    "label": "Special Offer",
-                    "format": "dropdown-list",
-                    "required": false,
-                    "source": "special_offers"
-                },
-                {
-                    "id": "branch",
-                    "icon": "sicon-store",
-                    "type": "items",
-                    "label": "Branch",
-                    "format": "dropdown-list",
-                    "required": false,
-                    "source": "branches"
-                },
-                {
-                    "id": "product_tag",
-                    "icon": "sicon-tag",
-                    "type": "items",
-                    "label": "Product Tag",
-                    "format": "dropdown-list",
-                    "required": false,
-                    "source": "products_tags"
-                },
-                {
-                    "id": "source_url",
-                    "icon": "sicon-shopping-bag",
-                    "type": "items",
-                    "label": "Multi Conditional Sources",
-                    "format": "variable-list",
-                    "required": true,
-                    "source": "custom",
-                    "selected": [
-                        {
-                            "label": "Article",
-                            "key": "blog_articles",
-                            "value": "blog_articles"
-                        }
-                    ],
-                    "sources": [
-                        {
-                            "label": "Product",
-                            "key": "products",
-                            "value": "products"
-                        },
-                        {
-                            "label": "Category",
-                            "key": "categories",
-                            "value": "categories"
-                        },
-                        {
-                            "label": "Brand",
-                            "key": "brands",
-                            "value": "brands"
-                        },
-                        {
-                            "label": "Page",
-                            "key": "pages",
-                            "value": "pages"
-                        },
-                        {
-                            "label": "Article",
-                            "key": "blog_articles",
-                            "value": "blog_articles"
-                        },
-                        {
-                            "label": "Blog Category",
-                            "key": "blog_categories",
-                            "value": "blog_categories"
-                        },
-                        {
-                            "label": "Offer",
-                            "key": "offers_link",
-                            "value": "offers_link"
-                        },
-                        {
-                            "label": "Brand Link",
-                            "key": "brands_link",
-                            "value": "brands_link"
-                        },
-                        {
-                            "label": "Blog Link",
-                            "key": "blog_link",
-                            "value": "blog_link"
-                        },
-                        {
-                            "label": "Custom",
-                            "key": "custom",
-                            "value": "custom"
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "title": "Advanced Inputs",
-            "icon": "sicon-star",
-            "name": "advanced-inputs",
-            "key": "2l3m4n5o-6p7q-8r9s-0t1u-2v3w4x5y6z7a",
-            "image": "https://cdn.salla.network/images/themes/raed/preview-images/advanced-inputs.png",
-            "fields": [
-                {
-                    "id": "icon",
-                    "type": "string",
-                    "format": "icon",
-                    "label": "Icon",
-                    "class": "inline form--inline",
-                    "required": false,
-                    "value": "sicon-star"
-                },
-                {
-                    "type": "string",
-                    "icon": "sicon-format-text-alt",
-                    "multilanguage": true,
-                    "id": "lingual_text",
-                    "value": null,
-                    "required": false,
-                    "format": "text",
-                    "description": null,
-                    "placeholder": "Enter icon title here...",
-                    "minLength": 2,
-                    "maxLength": 80
-                },
-                {
-                    "id": "color",
-                    "icon": "sicon-color-palette",
-                    "format": "color",
-                    "type": "string",
-                    "inputType": "color",
-                    "label": "Color",
-                    "required": true,
-                    "value": "#2377CD",
-                    "class": "mt-4"
-                },
-                {
-                    "id": "image",
-                    "icon": "sicon-image-landscape",
-                    "type": "string",
-                    "format": "image",
-                    "label": "Image",
-                    "required": false,
-                    "value": "https://cdn.salla.sa/form-builder/EMl1Ae8o35qzaG0HvVqz0IpeqcK9uyHliKksscja.jpg"
-                },
-                {
-                    "id": "date",
-                    "icon": "sicon-calendar",
-                    "type": "string",
-                    "format": "date",
-                    "inputType": "date",
-                    "label": "Date",
-                    "required": true,
-                    "value": "2025-07-15"
-                },
-                {
-                    "id": "time",
-                    "icon": "sicon-clock",
-                    "type": "string",
-                    "format": "time",
-                    "inputType": "date",
-                    "label": "Time",
-                    "required": false,
-                    "value": "09:00"
-                },
-                {
-                    "id": "datetime",
-                    "icon": "sicon-calendar-time",
-                    "type": "string",
-                    "format": "datetime",
-                    "inputType": "date",
-                    "label": "Date & Time",
-                    "required": false,
-                    "value": "2025-07-20T14:30:00"
-                }
-            ]
-        },
-        {
-            "title": "بطاقة منتج",
-            "icon": "sicon-album-photo",
-            "name": "product-card",
-            "key": "0d1f3b8e-6a2c-4f5d-9e7b-8c1a2b3d4e5f",
-            "image": "https://cdn.salla.network/images/themes/raed/preview-images/images-slider-enhancement.png",
-            "fields": [
-                {
-                    "id": "product",
-                    "icon": "sicon-keyboard_arrow_down",
-                    "type": "items",
-                    "label": "اختر المنتج",
-                    "placeholder": "البحث في قائمة المنتجات...",
-                    "format": "dropdown-list",
-                    "source": "products",
-                    "options": [],
-                    "required": true,
-                    "selected": [],
-                    "searchable": true,
-                    "multichoice": false
-                }
-            ]
         }
     ],
     "templates": [
-        {
-            "id": "9af106ef-6bc9-4ae4-8bbd-c0a635b87045",
-            "path": "templates.starter-template",
-            "category_id": "",
-            "primary_color": "",
-            "thumbnail": "",
-            "is_default": true,
-            "public_preview_url": "https://salla.design/preview/s/o36uzxxmxi5a/starter-template"
-        },
         {
             "id": "540e6fba-0920-43b5-b476-07ca23515ebc",
             "path": "templates.perfumes",
             "category_id": "665151403",
             "primary_color": "",
             "thumbnail": "https://cdn.assets.salla.network/previews/o36uzxxmxi5a/assets/8603a76e5288354250abbe0851e195c1c304b6fa5b327798830b65b5f52acae6/templates-thumbs/perfumes.png",
-            "is_default": false,
+            "is_default": true,
             "public_preview_url": "https://salla.design/preview/s/o36uzxxmxi5a/perfumes"
         }
-    ],
-    "features": [
-        "landing-page-templates"
     ]
 }

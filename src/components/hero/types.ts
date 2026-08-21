@@ -59,6 +59,7 @@ export type HeroNavTargetKind =
   | "ingredients"
   | "use-cases"
   | "faq"
+  | "comparison"
   | "custom"
   | "link";
 
