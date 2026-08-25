@@ -2,6 +2,8 @@ import { html, nothing } from "lit";
 import { property, state } from "lit/decorators.js";
 import { GrowthElement } from "../../shared/growth-element";
 import { resolveSectionSpacing } from "../../shared/section-spacing";
+import { resolveWaveEdges } from "../../shared/wave-edges";
+import type { WaveEdgesResolved } from "../../shared/wave-edges";
 import type {
   GalleryConfig,
   GalleryImageItem,
@@ -257,7 +259,11 @@ export default class GrowthGallery extends GrowthElement {
   // Render
   // ------------------------------------------------------------
 
-  private _hostStyle(c: GalleryConfig, sideVars: string[]): string {
+  private _hostStyle(
+    c: GalleryConfig,
+    sideVars: string[],
+    wave: WaveEdgesResolved,
+  ): string {
     const sizeM = this._pickValue<GalleryItemSize>(c.item_size, "medium");
     const sizeDRaw = this._pickValue<GalleryItemSizeDesktop>(
       c.item_size_desktop,
@@ -277,6 +283,7 @@ export default class GrowthGallery extends GrowthElement {
       `--gal-radius:${this._num(c.card_radius, 14)}px`,
       `--gal-aspect:${this._pickValue<GalleryAspect>(c.aspect_ratio, "3/4")}`,
       ...sideVars,
+      ...wave.vars,
       ...resolveSectionSpacing(
         c,
         (v, f) => this._pickValue(v, f),
@@ -407,9 +414,11 @@ export default class GrowthGallery extends GrowthElement {
     const sides = [resolveSide(1), resolveSide(2)].filter(
       (side): side is SideElementResolved => !!side,
     );
+    const wave = resolveWaveEdges(c, (v, f) => this._pickValue(v, f));
     const hostStyle = this._hostStyle(
       c,
       sides.flatMap((side) => side.vars),
+      wave,
     );
 
     if (images.length === 0) {
@@ -436,7 +445,11 @@ export default class GrowthGallery extends GrowthElement {
     const clickable = this._lightboxEnabled();
 
     return html`
-      <section class="gal" style=${hostStyle}>
+      <section
+        class="gal"
+        style=${hostStyle}
+        data-wave=${wave.on ? "on" : "off"}
+      >
         ${sides.map(
           (side) =>
             html`<img

@@ -352,7 +352,7 @@ export default class GrowthIngredients extends GrowthElement {
 
     const title = this.localizedString(c.section_title);
     const subtitle = this.localizedString(c.section_subtitle);
-    const layout = this._pickValue<IngredientLayout>(c.layout, "columns");
+    const layout = this._pickValue<IngredientLayout>(c.layout, "circle");
     const link = this._pickValue<IngredientConnector>(
       c.connector_style,
       "curved",

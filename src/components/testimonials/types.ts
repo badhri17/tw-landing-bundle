@@ -12,6 +12,7 @@
  */
 
 import type { SectionSpacingFields } from "../../shared/section-spacing";
+import type { WaveEdgeFields } from "../../shared/wave-edges";
 
 /** Value coming back from a Salla `multilanguage: true` field. */
 export type MaybeMultiLang =
@@ -65,7 +66,9 @@ export interface TestimonialItem {
   quote?: MaybeMultiLang; // the testimonial body
 }
 
-export interface TestimonialsConfig extends SectionSpacingFields {
+export interface TestimonialsConfig
+  extends SectionSpacingFields,
+    WaveEdgeFields {
   /** This section's anchor id, so hero nav links can target it. */
   anchor_id?: string;
 
@@ -120,6 +123,10 @@ export interface TestimonialsConfig extends SectionSpacingFields {
   /** 0–100; 0 shows the bare photo, 100 hides it behind a solid `bg_color`. */
   bg_overlay?: number | string;
   bg_position?: TestimonialBgPosition | Array<{ value?: string }> | string;
+
+  // --- Wavy edges (تموج الحواف) ---
+  // wave_edges / wave_shape / wave_height_* / wave_behind_color come from
+  // WaveEdgeFields, shared verbatim with every other section that adopts it.
 
   // --- Colors ---
   bg_color?: string;

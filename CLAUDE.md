@@ -58,6 +58,8 @@ Cross-component code has a single source of truth in `src/shared/`:
 - `section-spacing.ts` — **المسافات حول القسم**, the page's vertical rhythm. Two `items` fields per section (`space_top` / `space_bottom`) on a shared tier scale (`none / xs / sm / md / lg / xl`), resolved through **two** tables so one tier means more room on desktop — the documented relative-tier pattern, so no `inherit` desktop duplicates are needed. Returns four *plain* custom properties (`--sp-top-m`, `--sp-bot-m`, `--sp-top-d`, `--sp-bot-d`), deliberately un-prefixed because each component has its own shadow root and the CSS is then identical everywhere. Wired into all ten content sections; `hero` (its padding is the navbar's, height is its own field) and `flexible-banner-content` (deliberately flush) stay out.
 - `side-element.ts` — the reusable **عنصر بصري جانبي** (decorative transparent PNG parked against one edge, hanging partly outside the section), shared by `gallery`, `faq` and `comparison`. It takes `_pickValue`/`_num` as **arguments** rather than importing `GrowthElement`, so it stays free of any base-class dependency; each component owns the CSS that consumes the `--se*-…` properties it returns (`.gal-side`, `.faq-side`, `.cmp-side`) and decides how many of the ~15 bundle fields per decoration to expose. Adopting it in a fourth section is a copy of those fields plus one block of CSS — `comparison` was the third and cost exactly that, with its bundle block cloned out of `faq` by script rather than retyped.
 
+- `wave-edges.ts` — **تموج الحواف**, the wavy top/bottom section edge, shared by `testimonials` and `gallery`. Same shape as `side-element.ts`: `_pickValue` as an argument, un-prefixed `--wv-*` properties, the CSS owned by each adopter. See the section on it below for why the mask rides a `::before` layer rather than the section.
+
 **All three adopters use the same control, and a fourth should clone it rather than invent one:** a 3-way `side_visual_count` dropdown (`off` / `one` / `two`), with the slot-1 fields gated `!= "off"` and the slot-2 fields gated `= "two"`. Copy the block straight out of `gallery` (or `faq`, or `comparison`) — the field ids, labels and conditions are identical between them on purpose, so a merchant configuring two of these sections reads the same words twice. The one clause worth rewording per section is the side note's tail, which names what the decoration can sit behind (`faq` says «خلف الأسئلة», `comparison` says «خلف الجدول»).
 
 `resolveSideElement` also accepts an older shape (`enable_side_visual` + `enable_second_side_visual` booleans, plus `side_desktop_custom` switches to reach the desktop values). **Don't build a new component on it.** The count path is the current one and needs no desktop-custom switch: it sets `custom = true` internally, so the desktop fields always apply.
@@ -317,6 +319,57 @@ Two more notes:
 
 - `first_open` cannot be seeded from `firstUpdated()` — Salla may inject `config` after the first render, so the default open row is seeded from `updated()` on the first cycle that actually has items, behind a `_seeded` flag that also stops the seed from fighting the visitor's clicks.
 - The trigger's `aria-controls` and the panel's `id` only need to be unique **inside one shadow root**, so the item index is enough; a second instance on the page has its own root.
+
+### تموج الحواف — a wavy section edge is a mask, not a shape laid on top
+
+`src/shared/wave-edges.ts` cuts a section's top and/or bottom edge into a curve
+(`wave_edges`: off / top / bottom / both). Adopted by `testimonials` and
+`gallery`; a third section is a copy of the bundle block plus one block of CSS,
+exactly like `side-element.ts`. The usual recipe for this look is an SVG divider
+absolutely positioned over the edge, filled with the colour of whatever is next
+to the section. This one is a **CSS mask over the section's background layer**,
+and the three differences are the reason to keep it that way:
+
+- The cut is genuinely transparent, so the wave works over any page background
+  without the merchant naming a second colour, and a background photo on the
+  same layer is cut by the same curve for free. A painted divider needs a colour
+  before it can show anything — a field that goes wrong the moment the page
+  behind it changes.
+- **The mask rides a `::before` layer, never the section itself.** Masking the
+  section erases everything outside its box, which would kill `gallery`'s side
+  element and its edge-to-edge strip — both of which deliberately bleed out of
+  `overflow: clip visible`. This was the whole reason the first cut (a mask on
+  `.t-section`) had to be reworked when `gallery` adopted it.
+- Because the section's own background is then free, `wave_behind_color` is
+  simply that background and shows through the cut with no extra element. The
+  layer is `z-index: -1` with `isolation: isolate` on the section, which puts it
+  above the section's background and below every child, inside the section's own
+  stacking context.
+
+Three mask layers are unioned on the layer: the top curve, a solid
+`linear-gradient(#000,#000)` filling the middle, and the bottom curve. The middle
+is sized `calc(100% - top - bottom)` and offset by the top depth, so an edge that
+is off contributes a zero-height layer and the middle simply covers what it
+would have taken — no second rule, no `:not()` gymnastics.
+
+One path per shape serves every viewport: it is drawn in a 1440x100 box with
+`preserveAspectRatio="none"`, and the bottom edge is the same path turned 180
+degrees (`rotate(180 720 50)`) rather than a second drawing to keep in sync.
+
+⚠️ **The wave's depth is added to the section's padding, not taken out of it**
+(`calc(var(--sp-top-m) + var(--wv-top))`). The curve eats into the section, so
+without that the merchant's spacing tier would silently shrink by however deep
+they made the wave. Both depths are `0px` on `:host`, so an un-waved section's
+padding is byte-identical to what it was. Depth is a relative tier
+(`HEIGHT_MOBILE` 22/34/50 px, `HEIGHT_DESKTOP` 44/68/100 px), so `inherit`
+carries the mobile *tier* to the larger desktop table.
+
+**Both adopters expose the same five fields — same ids, same labels, same
+`wave_edges != "off"` gate — and a third should clone them rather than reword
+them**, so a merchant configuring two of these sections reads the same words
+twice. Only the `static` wrappers are namespaced per component
+(`section-tst-wave` / `section-gal-wave`), and each clones its own component's
+title and desktop-divider markup so it matches its neighbours' sizing.
 
 ## Porting components from `tw-growth-kit`
 

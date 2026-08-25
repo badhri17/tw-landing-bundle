@@ -2,6 +2,8 @@ import { html, nothing } from "lit";
 import { property, state } from "lit/decorators.js";
 import { GrowthElement } from "../../shared/growth-element";
 import { resolveSectionSpacing } from "../../shared/section-spacing";
+import { resolveWaveEdges } from "../../shared/wave-edges";
+import type { WaveEdgesResolved } from "../../shared/wave-edges";
 import type {
   TestimonialsConfig,
   TestimonialItem,
@@ -618,7 +620,10 @@ export default class GrowthTestimonials extends GrowthElement {
   // Render: host style (CSS custom properties)
   // ------------------------------------------------------------
 
-  private _buildHostStyle(c: TestimonialsConfig): string {
+  private _buildHostStyle(
+    c: TestimonialsConfig,
+    wave: WaveEdgesResolved
+  ): string {
     const cols = this._resolveColumns();
     const cardRadius = this._num(c.card_radius, 20);
     const aspect: TestimonialPhotoAspect = this._pickValue<TestimonialPhotoAspect>(
@@ -665,6 +670,7 @@ export default class GrowthTestimonials extends GrowthElement {
         c,
         (v, f) => this._pickValue(v, f),
       ),
+      ...wave.vars,
     ];
     return parts.filter(Boolean).join("; ");
   }
@@ -697,7 +703,8 @@ export default class GrowthTestimonials extends GrowthElement {
       showQuoteMark: c.show_quote_mark !== false,
     };
 
-    const hostStyle = this._buildHostStyle(c);
+    const wave = resolveWaveEdges(c, (v, f) => this._pickValue(v, f));
+    const hostStyle = this._buildHostStyle(c, wave);
 
     const localizedEyebrow = this.localizedString(c.eyebrow);
     const localizedSectionTitle = this.localizedString(c.section_title);
@@ -760,6 +767,7 @@ export default class GrowthTestimonials extends GrowthElement {
       <section
         class="t-section"
         style=${hostStyle}
+        data-wave=${wave.on ? "on" : "off"}
         data-layout=${layout}
         data-card=${cardStyle}
         data-anim=${enableAnim ? this._animState : "in"}

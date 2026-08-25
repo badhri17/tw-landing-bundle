@@ -3989,7 +3989,7 @@
                     "label": "اللون المميّز (النص العلوي/النقاط)",
                     "icon": "sicon-color-palette",
                     "required": false,
-                    "value": "#e07a3e"
+                    "value": "#000000"
                 },
                 {
                     "type": "string",
@@ -4096,6 +4096,222 @@
                     "icon": "sicon-color-palette",
                     "required": false,
                     "value": "#dcdcd6"
+                },
+                {
+                    "type": "static",
+                    "format": "line",
+                    "id": "divider-tst-wave"
+                },
+                {
+                    "type": "static",
+                    "format": "title",
+                    "id": "section-tst-wave",
+                    "value": "<div style='position:relative;overflow:hidden;display:flex;align-items:center;gap:10px;padding:13px 16px;border-radius:12px;background:radial-gradient(circle at left center,#6241d9 0%,#3b2878 35%,#160f2a 62%,#020204 100%);border:1px solid rgba(139,109,255,.28);direction:rtl;margin-bottom:18px;font-weight:bold;'><svg aria-hidden='true' style='position:absolute;inset:0;width:100%;height:100%;pointer-events:none;' viewBox='0 0 320 52' preserveAspectRatio='none'><polyline class='gk-line' pathLength='1' points='320,46 268,40 236,43 196,32 164,35 124,22 96,26 58,13 20,16' fill='none' stroke='rgba(160,133,255,.55)' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/><circle class='gk-dot' cx='20' cy='16' r='3' fill='#cabcff'/></svg><span style='position:relative;flex:0 0 auto;display:inline-flex;color:#cabcff;'><svg width='1.2em' height='1.2em' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M2 7c2-4 4-4 6 0s4 4 6 0 4-4 6 0'/><path d='M2 12c2-4 4-4 6 0s4 4 6 0 4-4 6 0'/><path d='M2 17c2-4 4-4 6 0s4 4 6 0 4-4 6 0'/></svg></span><span style='position:relative;font-size:17px;font-weight:700;color:#fff;'>تموج الحواف</span></div>",
+                    "variant": "h5"
+                },
+                {
+                    "type": "static",
+                    "format": "description",
+                    "id": "tst-wave-note",
+                    "value": "<div style='display:flex;gap:10px;background-color:#6036c11f;color:#6036C1;padding:12px 16px;border-radius:8px;margin-bottom:14px;font-size:13px;line-height:1.7;direction:rtl;'><span>تقص حافة القسم على شكل <strong>موجة</strong> بدل الخط المستقيم، فيبان من خلفها لون الصفحة. تطلع أوضح لما يكون <strong>«لون خلفية القسم»</strong> غامق أو مختلف عن اللي فوقه وتحته. وإذا كان القسم المجاور بلون ثاني، حطّ نفس لونه في <strong>«لون خلف الموجة»</strong> عشان القص يطلع بلونه.</span></div>"
+                },
+                {
+                    "type": "items",
+                    "icon": "sicon-window-layout",
+                    "id": "wave_edges",
+                    "label": "تموج حواف القسم",
+                    "format": "dropdown-list",
+                    "source": "Manual",
+                    "required": false,
+                    "description": "اختر «أعلى وأسفل» لقسم ملوّن تبيه يطفو بين قسمين بلون ثاني.",
+                    "selected": [
+                        {
+                            "label": "بدون",
+                            "value": "off",
+                            "key": "wave_edges-off"
+                        }
+                    ],
+                    "options": [
+                        {
+                            "label": "بدون",
+                            "value": "off",
+                            "key": "wave_edges-off"
+                        },
+                        {
+                            "label": "أعلى القسم",
+                            "value": "top",
+                            "key": "wave_edges-top"
+                        },
+                        {
+                            "label": "أسفل القسم",
+                            "value": "bottom",
+                            "key": "wave_edges-bottom"
+                        },
+                        {
+                            "label": "أعلى وأسفل القسم",
+                            "value": "both",
+                            "key": "wave_edges-both"
+                        }
+                    ]
+                },
+                {
+                    "type": "items",
+                    "icon": "sicon-apps",
+                    "id": "wave_shape",
+                    "label": "شكل الموجة",
+                    "format": "dropdown-list",
+                    "source": "Manual",
+                    "required": false,
+                    "description": "الموجة الناعمة انحناءة واحدة هادئة، والمزدوجة تموّج متكرر، والقوس انحناءة عريضة واحدة. الحافة السفلية تنقلب تلقائيًا فما تطلع نسخة من العلوية.",
+                    "selected": [
+                        {
+                            "label": "موجة ناعمة",
+                            "value": "wave",
+                            "key": "wave_shape-wave"
+                        }
+                    ],
+                    "options": [
+                        {
+                            "label": "موجة ناعمة",
+                            "value": "wave",
+                            "key": "wave_shape-wave"
+                        },
+                        {
+                            "label": "موجة مزدوجة",
+                            "value": "double",
+                            "key": "wave_shape-double"
+                        },
+                        {
+                            "label": "قوس",
+                            "value": "arc",
+                            "key": "wave_shape-arc"
+                        }
+                    ],
+                    "conditions": [
+                        {
+                            "id": "wave_edges",
+                            "operation": "!=",
+                            "value": "off"
+                        }
+                    ]
+                },
+                {
+                    "type": "string",
+                    "format": "color",
+                    "inputType": "color",
+                    "id": "wave_behind_color",
+                    "label": "لون خلف الموجة (اختياري)",
+                    "icon": "sicon-format-fill",
+                    "required": false,
+                    "description": "اللي يظهر داخل قص الموجة. اتركه فارغًا عشان تبان خلفية الصفحة، أو حطّ لون القسم المجاور إذا كان ملوّنًا.",
+                    "conditions": [
+                        {
+                            "id": "wave_edges",
+                            "operation": "!=",
+                            "value": "off"
+                        }
+                    ]
+                },
+                {
+                    "type": "items",
+                    "icon": "sicon-move",
+                    "id": "wave_height_mobile",
+                    "label": "عمق الموجة على الجوال",
+                    "format": "dropdown-list",
+                    "source": "Manual",
+                    "required": false,
+                    "description": "كم تغوص الموجة داخل القسم. تُضاف تلقائيًا فوق المسافة المحددة للقسم فما تقص النص.",
+                    "selected": [
+                        {
+                            "label": "متوسط",
+                            "value": "md",
+                            "key": "wave_height_mobile-md"
+                        }
+                    ],
+                    "options": [
+                        {
+                            "label": "خفيف",
+                            "value": "sm",
+                            "key": "wave_height_mobile-sm"
+                        },
+                        {
+                            "label": "متوسط",
+                            "value": "md",
+                            "key": "wave_height_mobile-md"
+                        },
+                        {
+                            "label": "عميق",
+                            "value": "lg",
+                            "key": "wave_height_mobile-lg"
+                        }
+                    ],
+                    "conditions": [
+                        {
+                            "id": "wave_edges",
+                            "operation": "!=",
+                            "value": "off"
+                        }
+                    ]
+                },
+                {
+                    "type": "static",
+                    "format": "title",
+                    "id": "section-tst-wave-desktop",
+                    "value": "<div style='position:relative;overflow:hidden;display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:12px;background:radial-gradient(circle at left center,#6241d9 0%,#3b2878 35%,#160f2a 62%,#020204 100%);border:1px solid rgba(139,109,255,.28);direction:rtl;margin-bottom:14px;font-weight:bold;'><svg aria-hidden='true' style='position:absolute;inset:0;width:100%;height:100%;pointer-events:none;' viewBox='0 0 320 52' preserveAspectRatio='none'><polyline class='gk-line' pathLength='1' points='320,46 268,40 236,43 196,32 164,35 124,22 96,26 58,13 20,16' fill='none' stroke='rgba(160,133,255,.55)' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/><circle class='gk-dot' cx='20' cy='16' r='3' fill='#cabcff'/></svg><span style='position:relative;flex:0 0 auto;display:inline-flex;color:#cabcff;'><svg width='1.05em' height='1.05em' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><rect x='2' y='3' width='20' height='14' rx='2'/><path d='M8 21h8M12 17v4'/></svg></span><span style='position:relative;font-size:0.9em;font-weight:700;color:#fff;'>سطح المكتب — تخصيص اختياري</span></div>",
+                    "variant": "h6",
+                    "conditions": [
+                        {
+                            "id": "wave_edges",
+                            "operation": "!=",
+                            "value": "off"
+                        }
+                    ]
+                },
+                {
+                    "type": "items",
+                    "icon": "sicon-move",
+                    "id": "wave_height_desktop",
+                    "label": "عمق الموجة على سطح المكتب (اختياري)",
+                    "format": "dropdown-list",
+                    "source": "Manual",
+                    "required": false,
+                    "description": "«نفس مستوى الجوال» يستخدم نفس الدرجة لكن بمقياس أكبر يناسب عرض الشاشة.",
+                    "selected": [
+                        {
+                            "label": "نفس مستوى الجوال",
+                            "value": "inherit",
+                            "key": "wave_height_desktop-inherit"
+                        }
+                    ],
+                    "options": [
+                        {
+                            "label": "نفس مستوى الجوال",
+                            "value": "inherit",
+                            "key": "wave_height_desktop-inherit"
+                        },
+                        {
+                            "label": "خفيف",
+                            "value": "sm",
+                            "key": "wave_height_desktop-sm"
+                        },
+                        {
+                            "label": "متوسط",
+                            "value": "md",
+                            "key": "wave_height_desktop-md"
+                        },
+                        {
+                            "label": "عميق",
+                            "value": "lg",
+                            "key": "wave_height_desktop-lg"
+                        }
+                    ],
+                    "conditions": [
+                        {
+                            "id": "wave_edges",
+                            "operation": "!=",
+                            "value": "off"
+                        }
+                    ]
                 },
                 {
                     "type": "static",
@@ -6785,6 +7001,217 @@
                 {
                     "type": "static",
                     "format": "title",
+                    "id": "section-gal-wave",
+                    "value": "<div style='position:relative;overflow:hidden;display:flex;align-items:center;gap:10px;padding:13px 16px;border-radius:12px;background:radial-gradient(circle at left center,#6241d9 0%,#3b2878 35%,#160f2a 62%,#020204 100%);border:1px solid rgba(139,109,255,.28);direction:rtl;margin-bottom:18px;font-weight:bold;'><svg aria-hidden='true' style='position:absolute;inset:0;width:100%;height:100%;pointer-events:none;' viewBox='0 0 320 52' preserveAspectRatio='none'><polyline class='gk-line' pathLength='1' points='320,46 268,40 236,43 196,32 164,35 124,22 96,26 58,13 20,16' fill='none' stroke='rgba(160,133,255,.55)' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/><circle class='gk-dot' cx='20' cy='16' r='3' fill='#cabcff'/></svg><span style='position:relative;flex:0 0 auto;display:inline-flex;color:#cabcff;'><svg width='1.2em' height='1.2em' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M2 7c2-4 4-4 6 0s4 4 6 0 4-4 6 0'/><path d='M2 12c2-4 4-4 6 0s4 4 6 0 4-4 6 0'/><path d='M2 17c2-4 4-4 6 0s4 4 6 0 4-4 6 0'/></svg></span><span style='position:relative;font-size:17px;font-weight:700;color:#fff;'>تموج الحواف</span></div>",
+                    "variant": "h6"
+                },
+                {
+                    "type": "static",
+                    "format": "description",
+                    "id": "gal-wave-note",
+                    "value": "<div style='display:flex;gap:10px;background-color:#6036c11f;color:#6036C1;padding:12px 16px;border-radius:8px;margin-bottom:14px;font-size:13px;line-height:1.7;direction:rtl;'><span>تقص حافة القسم على شكل <strong>موجة</strong> بدل الخط المستقيم، فيبان من خلفها لون الصفحة. تطلع أوضح لما يكون <strong>«لون خلفية القسم»</strong> غامق أو مختلف عن اللي فوقه وتحته. وإذا كان القسم المجاور بلون ثاني، حطّ نفس لونه في <strong>«لون خلف الموجة»</strong> عشان القص يطلع بلونه.</span></div>"
+                },
+                {
+                    "type": "items",
+                    "icon": "sicon-window-layout",
+                    "id": "wave_edges",
+                    "label": "تموج حواف القسم",
+                    "format": "dropdown-list",
+                    "source": "Manual",
+                    "required": false,
+                    "description": "اختر «أعلى وأسفل» لقسم ملوّن تبيه يطفو بين قسمين بلون ثاني.",
+                    "selected": [
+                        {
+                            "label": "بدون",
+                            "value": "off",
+                            "key": "wave_edges-off"
+                        }
+                    ],
+                    "options": [
+                        {
+                            "label": "بدون",
+                            "value": "off",
+                            "key": "wave_edges-off"
+                        },
+                        {
+                            "label": "أعلى القسم",
+                            "value": "top",
+                            "key": "wave_edges-top"
+                        },
+                        {
+                            "label": "أسفل القسم",
+                            "value": "bottom",
+                            "key": "wave_edges-bottom"
+                        },
+                        {
+                            "label": "أعلى وأسفل القسم",
+                            "value": "both",
+                            "key": "wave_edges-both"
+                        }
+                    ]
+                },
+                {
+                    "type": "items",
+                    "icon": "sicon-apps",
+                    "id": "wave_shape",
+                    "label": "شكل الموجة",
+                    "format": "dropdown-list",
+                    "source": "Manual",
+                    "required": false,
+                    "description": "الموجة الناعمة انحناءة واحدة هادئة، والمزدوجة تموّج متكرر، والقوس انحناءة عريضة واحدة. الحافة السفلية تنقلب تلقائيًا فما تطلع نسخة من العلوية.",
+                    "selected": [
+                        {
+                            "label": "موجة ناعمة",
+                            "value": "wave",
+                            "key": "wave_shape-wave"
+                        }
+                    ],
+                    "options": [
+                        {
+                            "label": "موجة ناعمة",
+                            "value": "wave",
+                            "key": "wave_shape-wave"
+                        },
+                        {
+                            "label": "موجة مزدوجة",
+                            "value": "double",
+                            "key": "wave_shape-double"
+                        },
+                        {
+                            "label": "قوس",
+                            "value": "arc",
+                            "key": "wave_shape-arc"
+                        }
+                    ],
+                    "conditions": [
+                        {
+                            "id": "wave_edges",
+                            "operation": "!=",
+                            "value": "off"
+                        }
+                    ]
+                },
+                {
+                    "type": "string",
+                    "format": "color",
+                    "inputType": "color",
+                    "id": "wave_behind_color",
+                    "label": "لون خلف الموجة (اختياري)",
+                    "icon": "sicon-format-fill",
+                    "required": false,
+                    "description": "اللي يظهر داخل قص الموجة. اتركه فارغًا عشان تبان خلفية الصفحة، أو حطّ لون القسم المجاور إذا كان ملوّنًا.",
+                    "conditions": [
+                        {
+                            "id": "wave_edges",
+                            "operation": "!=",
+                            "value": "off"
+                        }
+                    ]
+                },
+                {
+                    "type": "items",
+                    "icon": "sicon-move",
+                    "id": "wave_height_mobile",
+                    "label": "عمق الموجة على الجوال",
+                    "format": "dropdown-list",
+                    "source": "Manual",
+                    "required": false,
+                    "description": "كم تغوص الموجة داخل القسم. تُضاف تلقائيًا فوق المسافة المحددة للقسم فما تقص النص.",
+                    "selected": [
+                        {
+                            "label": "متوسط",
+                            "value": "md",
+                            "key": "wave_height_mobile-md"
+                        }
+                    ],
+                    "options": [
+                        {
+                            "label": "خفيف",
+                            "value": "sm",
+                            "key": "wave_height_mobile-sm"
+                        },
+                        {
+                            "label": "متوسط",
+                            "value": "md",
+                            "key": "wave_height_mobile-md"
+                        },
+                        {
+                            "label": "عميق",
+                            "value": "lg",
+                            "key": "wave_height_mobile-lg"
+                        }
+                    ],
+                    "conditions": [
+                        {
+                            "id": "wave_edges",
+                            "operation": "!=",
+                            "value": "off"
+                        }
+                    ]
+                },
+                {
+                    "type": "static",
+                    "format": "title",
+                    "id": "section-gal-wave-desktop",
+                    "value": "<div style='position:relative;overflow:hidden;display:flex;align-items:center;gap:10px;padding:13px 16px;border-radius:12px;background:radial-gradient(circle at left center,#6241d9 0%,#3b2878 35%,#160f2a 62%,#020204 100%);border:1px solid rgba(139,109,255,.28);direction:rtl;margin-bottom:18px;font-weight:bold;'><svg aria-hidden='true' style='position:absolute;inset:0;width:100%;height:100%;pointer-events:none;' viewBox='0 0 320 52' preserveAspectRatio='none'><polyline class='gk-line' pathLength='1' points='320,46 268,40 236,43 196,32 164,35 124,22 96,26 58,13 20,16' fill='none' stroke='rgba(160,133,255,.55)' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/><circle class='gk-dot' cx='20' cy='16' r='3' fill='#cabcff'/></svg><span style='position:relative;flex:0 0 auto;display:inline-flex;color:#cabcff;'><svg width='1.2em' height='1.2em' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><rect x='2' y='3' width='20' height='14' rx='2'/><path d='M8 21h8M12 17v4'/></svg></span><span style='position:relative;font-size:17px;font-weight:700;color:#fff;'>سطح المكتب — تخصيص اختياري</span></div>",
+                    "variant": "h6",
+                    "conditions": [
+                        {
+                            "id": "wave_edges",
+                            "operation": "!=",
+                            "value": "off"
+                        }
+                    ]
+                },
+                {
+                    "type": "items",
+                    "icon": "sicon-move",
+                    "id": "wave_height_desktop",
+                    "label": "عمق الموجة على سطح المكتب (اختياري)",
+                    "format": "dropdown-list",
+                    "source": "Manual",
+                    "required": false,
+                    "description": "«نفس مستوى الجوال» يستخدم نفس الدرجة لكن بمقياس أكبر يناسب عرض الشاشة.",
+                    "selected": [
+                        {
+                            "label": "نفس مستوى الجوال",
+                            "value": "inherit",
+                            "key": "wave_height_desktop-inherit"
+                        }
+                    ],
+                    "options": [
+                        {
+                            "label": "نفس مستوى الجوال",
+                            "value": "inherit",
+                            "key": "wave_height_desktop-inherit"
+                        },
+                        {
+                            "label": "خفيف",
+                            "value": "sm",
+                            "key": "wave_height_desktop-sm"
+                        },
+                        {
+                            "label": "متوسط",
+                            "value": "md",
+                            "key": "wave_height_desktop-md"
+                        },
+                        {
+                            "label": "عميق",
+                            "value": "lg",
+                            "key": "wave_height_desktop-lg"
+                        }
+                    ],
+                    "conditions": [
+                        {
+                            "id": "wave_edges",
+                            "operation": "!=",
+                            "value": "off"
+                        }
+                    ]
+                },
+                {
+                    "type": "static",
+                    "format": "title",
                     "id": "section-gallery-space",
                     "value": "<div style='position:relative;overflow:hidden;display:flex;align-items:center;gap:10px;padding:13px 16px;border-radius:12px;background:radial-gradient(circle at left center,#6241d9 0%,#3b2878 35%,#160f2a 62%,#020204 100%);border:1px solid rgba(139,109,255,.28);direction:rtl;margin-bottom:18px;font-weight:bold;'><svg aria-hidden='true' style='position:absolute;inset:0;width:100%;height:100%;pointer-events:none;' viewBox='0 0 320 52' preserveAspectRatio='none'><polyline class='gk-line' pathLength='1' points='320,46 268,40 236,43 196,32 164,35 124,22 96,26 58,13 20,16' fill='none' stroke='rgba(160,133,255,.55)' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/><circle class='gk-dot' cx='20' cy='16' r='3' fill='#cabcff'/></svg><span style='position:relative;flex:0 0 auto;display:inline-flex;color:#cabcff;'><svg width='1.2em' height='1.2em' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M12 3v18M8 6l4-3 4 3M8 18l4 3 4-3'/></svg></span><span style='position:relative;font-size:17px;font-weight:700;color:#fff;'>المسافات حول القسم</span></div>"
                 },
@@ -7178,9 +7605,9 @@
                     "required": false,
                     "selected": [
                         {
-                            "label": "عمودان على جنبَي المنتج",
-                            "value": "columns",
-                            "key": "ing-lay-columns"
+                            "label": "دائرة حول المنتج",
+                            "value": "circle",
+                            "key": "ing-lay-circle"
                         }
                     ],
                     "options": [
@@ -13151,13 +13578,15 @@
     ],
     "templates": [
         {
-            "id": "540e6fba-0920-43b5-b476-07ca23515ebc",
+            "id": "c57486d7-cfac-4f12-b1e7-96743fc12407",
             "path": "templates.perfumes",
             "category_id": "665151403",
             "primary_color": "",
-            "thumbnail": "https://cdn.assets.salla.network/previews/o36uzxxmxi5a/assets/8603a76e5288354250abbe0851e195c1c304b6fa5b327798830b65b5f52acae6/templates-thumbs/perfumes.png",
-            "is_default": true,
-            "public_preview_url": "https://salla.design/preview/s/o36uzxxmxi5a/perfumes"
+            "thumbnail": "templates-thumbs/perfumes.png",
+            "is_default": true
         }
+    ],
+    "features": [
+        "landing-page-templates"
     ]
 }

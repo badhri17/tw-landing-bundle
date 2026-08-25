@@ -35,6 +35,14 @@ export const galleryStyles = css`
     --gal-item-d: 22vw;
     --gal-gap-m: 12px;
     --gal-gap-d: 18px;
+
+    /* تموج الحواف — nothing until the component writes a depth on the section.
+       Plain values, so the inline declaration there shadows them.
+       See src/shared/wave-edges.ts. */
+    --wv-top-m: 0px;
+    --wv-top-d: 0px;
+    --wv-bot-m: 0px;
+    --wv-bot-d: 0px;
   }
 
   :host([hidden]) {
@@ -57,14 +65,63 @@ export const galleryStyles = css`
     min-width: 0;
     background: var(--gal-bg);
     /* Vertical space is the merchant's, via shared tiers; the horizontal
-       padding stays the section's own. See src/shared/section-spacing.ts. */
-    padding-block: var(--sp-top-m) var(--sp-bot-m);
+       padding stays the section's own. See src/shared/section-spacing.ts.
+       The wave's depth is added on top of the tier rather than taken out of it:
+       the curve eats into the section, so without this the merchant's spacing
+       would shrink by however deep they made the wave. Both depths are 0px
+       unless an edge is waved, so an ordinary section is untouched. */
+    padding-block: calc(var(--sp-top-m) + var(--wv-top))
+      calc(var(--sp-bot-m) + var(--wv-bot));
     /* Not overflow:hidden — the strip and the side element both need to bleed.
        overflow-x is clipped on the strip itself instead. */
     overflow: clip visible;
 
     --gal-item: var(--gal-item-m);
     --gal-gap: var(--gal-gap-m);
+    /* Derived from the two tiers, so they are declared HERE — on the element
+       the component writes its inline style to — and not on :host, where they
+       would resolve against the host's own 0px and ignore it. */
+    --wv-top: var(--wv-top-m);
+    --wv-bot: var(--wv-bot-m);
+  }
+
+  /* تموج الحواف — the wave is a MASK over a background LAYER, never over the
+     section itself: this section deliberately bleeds (the strip past both
+     inline edges, the side element past the block edges) and masking .gal would
+     erase all of it.
+
+     Three mask layers, unioned: the top curve, a solid middle filling the rest,
+     the bottom curve. The middle is sized and offset from the same two depths,
+     so an edge that is off contributes a zero-height layer and the middle just
+     covers what it would have taken.
+
+     "isolation" keeps the z-index:-1 layer inside .gal's own stacking context,
+     where it paints above .gal's background — which is now the colour showing
+     through the cut — and below the header (z-index 2), the strip and the side
+     element (both 1). See src/shared/wave-edges.ts. */
+  .gal[data-wave="on"] {
+    isolation: isolate;
+    background: var(--wv-behind, transparent);
+  }
+  .gal[data-wave="on"]::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background: var(--gal-bg);
+    -webkit-mask-image: var(--wv-top-img, none), linear-gradient(#000, #000),
+      var(--wv-bot-img, none);
+    mask-image: var(--wv-top-img, none), linear-gradient(#000, #000),
+      var(--wv-bot-img, none);
+    -webkit-mask-size: 100% var(--wv-top),
+      100% calc(100% - var(--wv-top) - var(--wv-bot)), 100% var(--wv-bot);
+    mask-size: 100% var(--wv-top),
+      100% calc(100% - var(--wv-top) - var(--wv-bot)), 100% var(--wv-bot);
+    -webkit-mask-position: 0 0, 0 var(--wv-top), 0 100%;
+    mask-position: 0 0, 0 var(--wv-top), 0 100%;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
   }
 
   .gal-header {
@@ -439,7 +496,10 @@ export const galleryStyles = css`
      ============================================================ */
   @media (min-width: 768px) {
     .gal {
-      padding-block: var(--sp-top-d) var(--sp-bot-d);
+      padding-block: calc(var(--sp-top-d) + var(--wv-top))
+        calc(var(--sp-bot-d) + var(--wv-bot));
+      --wv-top: var(--wv-top-d);
+      --wv-bot: var(--wv-bot-d);
     }
     .gal {
       --gal-item: var(--gal-item-d);

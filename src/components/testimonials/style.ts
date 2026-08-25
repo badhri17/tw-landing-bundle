@@ -34,7 +34,7 @@ export const testimonialsStyles = css`
     --t-text: #3f4754;
     --t-star: #ff9f1c;
     --t-star-empty: rgba(20, 24, 31, 0.14);
-    --t-accent: #e07a3e;
+    --t-accent: #000000;
 
     --t-gap: clamp(12px, 2.6vw, 20px);
     --t-pad-x: clamp(1rem, 4vw, 2rem);
@@ -42,6 +42,13 @@ export const testimonialsStyles = css`
     --t-aspect: 4 / 5;
     --t-cols-mobile: 1;
     --t-cols-desktop: 3;
+    /* تموج الحواف — nothing until the component writes a depth on the section.
+       Plain values, so the inline declaration there shadows them.
+       See src/shared/wave-edges.ts. */
+    --wv-top-m: 0px;
+    --wv-top-d: 0px;
+    --wv-bot-m: 0px;
+    --wv-bot-d: 0px;
     --t-ease: cubic-bezier(0.22, 1, 0.36, 1);
   }
 
@@ -67,11 +74,66 @@ export const testimonialsStyles = css`
     background-size: cover;
     background-position: var(--t-bg-pos, center);
     background-repeat: no-repeat;
+    /* Derived from the two tiers above, so they are declared HERE — on the
+       element the component writes its inline style to — and not on :host,
+       where they would resolve against the host's own 0px and ignore it. */
+    --wv-top: var(--wv-top-m);
+    --wv-bot: var(--wv-bot-m);
     /* Vertical space is the merchant's, via shared tiers; the horizontal
-       padding stays the section's own. See src/shared/section-spacing.ts. */
+       padding stays the section's own. See src/shared/section-spacing.ts.
+       The wave's depth is added on top of the tier rather than taken out of it:
+       the curve eats into the section, so without this the merchant's spacing
+       would shrink by however deep they made the wave. Both depths are 0px
+       unless an edge is waved, so an ordinary section is untouched. */
     padding-inline: var(--t-pad-x);
-    padding-block: var(--sp-top-m) var(--sp-bot-m);
+    padding-block: calc(var(--sp-top-m) + var(--wv-top))
+      calc(var(--sp-bot-m) + var(--wv-bot));
     overflow: hidden;
+  }
+
+  /* تموج الحواف — the wave is a MASK over a background LAYER, never over the
+     section itself: masking the section would erase anything that deliberately
+     bleeds outside its box. The layer carries the whole background stack the
+     section normally paints (colour, photo, scrim), so the photo is cut by the
+     same curve for free.
+
+     Three mask layers, unioned: the top curve, a solid middle filling the rest,
+     the bottom curve. The middle is sized and offset from the same two depths,
+     so an edge that is off contributes a zero-height layer and the middle just
+     covers what it would have taken.
+
+     "isolation" keeps the z-index:-1 layer inside the section's own stacking
+     context, where it paints above the section's background — which is now the
+     colour showing through the cut — and below every child. */
+  .t-section[data-wave="on"] {
+    position: relative;
+    isolation: isolate;
+    background-color: var(--wv-behind, transparent);
+    background-image: none;
+  }
+  .t-section[data-wave="on"]::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background-color: var(--t-bg);
+    background-image: var(--t-bg-scrim, none), var(--t-bg-img, none);
+    background-size: cover;
+    background-position: var(--t-bg-pos, center);
+    background-repeat: no-repeat;
+    -webkit-mask-image: var(--wv-top-img, none), linear-gradient(#000, #000),
+      var(--wv-bot-img, none);
+    mask-image: var(--wv-top-img, none), linear-gradient(#000, #000),
+      var(--wv-bot-img, none);
+    -webkit-mask-size: 100% var(--wv-top),
+      100% calc(100% - var(--wv-top) - var(--wv-bot)), 100% var(--wv-bot);
+    mask-size: 100% var(--wv-top),
+      100% calc(100% - var(--wv-top) - var(--wv-bot)), 100% var(--wv-bot);
+    -webkit-mask-position: 0 0, 0 var(--wv-top), 0 100%;
+    mask-position: 0 0, 0 var(--wv-top), 0 100%;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
   }
 
   .t-header {
@@ -611,7 +673,10 @@ export const testimonialsStyles = css`
      ============================================================ */
   @media (min-width: 768px) {
     .t-section {
-      padding-block: var(--sp-top-d) var(--sp-bot-d);
+      --wv-top: var(--wv-top-d);
+      --wv-bot: var(--wv-bot-d);
+      padding-block: calc(var(--sp-top-d) + var(--wv-top))
+        calc(var(--sp-bot-d) + var(--wv-bot));
     }
     .t-grid {
       grid-template-columns: repeat(var(--t-cols-desktop), minmax(0, 1fr));
