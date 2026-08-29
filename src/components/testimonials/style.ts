@@ -152,7 +152,7 @@ export const testimonialsStyles = css`
   .t-title {
     margin: 0;
     color: var(--t-title);
-    font-size: clamp(1.5rem, 4vw, 2.3rem);
+    font-size: clamp(1.7rem, 5vw, 2.3rem);
     font-weight: 800;
     line-height: 1.18;
     letter-spacing: -0.01em;

@@ -275,9 +275,16 @@ export default class GrowthComparison extends GrowthElement {
 
   render() {
     const c: ComparisonConfig = this.config || {};
+    // Keep decorative images behind the comparison table when a preview or
+    // older saved template omits untouched dropdown defaults.
+    const sideConfig: ComparisonConfig = {
+      ...c,
+      side_depth: c.side_depth ?? "behind",
+      side2_depth: c.side2_depth ?? "behind",
+    };
     const resolveSide = (slot: 1 | 2) =>
       resolveSideElement(
-        c,
+        sideConfig,
         (v, f) => this._pickValue(v, f),
         (v, f) => this._num(v, f),
         slot,

@@ -2,6 +2,8 @@ import { css } from "lit";
 
 export const footerStyles = css`
   :host {
+    --fcta-footer-overlap: clamp(34px, 6vw, 64px);
+
     display: block;
     width: 100%;
     min-width: 0;
@@ -14,6 +16,244 @@ export const footerStyles = css`
   *::before,
   *::after {
     box-sizing: border-box;
+  }
+
+  .final-cta {
+    --fcta-bg: #6b4024;
+    --fcta-text: #ffffff;
+    --fcta-button-bg: #ffffff;
+    --fcta-button-text: #4b2a16;
+    --fcta-padding-x: clamp(1.25rem, 5vw, 4rem);
+    --fcta-overlay-alpha: 0.35;
+    --fcta-overlay-soft-alpha: 0.2;
+    --fcta-overlay-strong-alpha: 0.55;
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    width: 100%;
+    min-height: clamp(360px, 72vw, 680px);
+    display: flex;
+    align-items: stretch;
+    justify-content: center;
+    padding: clamp(2.4rem, 7vw, 5rem) var(--fcta-padding-x)
+      calc(clamp(2.4rem, 7vw, 5rem) + var(--fcta-footer-overlap));
+    background: var(--fcta-bg);
+    color: var(--fcta-text);
+    text-align: center;
+  }
+
+  .final-cta[data-has-image="false"] {
+    min-height: 0;
+    padding-block: clamp(3.5rem, 10vw, 7rem)
+      calc(clamp(3.5rem, 10vw, 7rem) + var(--fcta-footer-overlap));
+  }
+
+  .final-cta::before,
+  .final-cta::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  .final-cta::before {
+    z-index: -2;
+    background:
+      radial-gradient(circle at 50% 10%, color-mix(in srgb, var(--fcta-text) 14%, transparent), transparent 48%),
+      linear-gradient(135deg, transparent, color-mix(in srgb, var(--fcta-text) 6%, transparent));
+  }
+
+  .final-cta[data-has-image="true"][data-overlay-style="dark-gradient"]::after {
+    z-index: -1;
+    background: linear-gradient(
+      180deg,
+      rgb(0 0 0 / var(--fcta-overlay-alpha)) 0%,
+      rgb(0 0 0 / var(--fcta-overlay-soft-alpha)) 55%,
+      rgb(0 0 0 / var(--fcta-overlay-strong-alpha)) 100%
+    );
+  }
+
+  .final-cta[data-has-image="true"][data-overlay-style="light-gradient"]::after {
+    z-index: -1;
+    background: linear-gradient(
+      180deg,
+      rgb(255 255 255 / var(--fcta-overlay-alpha)) 0%,
+      rgb(255 255 255 / var(--fcta-overlay-soft-alpha)) 52%,
+      rgb(255 255 255 / var(--fcta-overlay-strong-alpha)) 100%
+    );
+  }
+
+  .final-cta[data-has-image="true"][data-overlay-style="light-gradient"] {
+    color: #211c18;
+  }
+
+  .final-cta-image {
+    position: absolute;
+    z-index: -3;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .final-cta-content {
+    width: min(100%, 780px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+  }
+
+  .final-cta-panel {
+    width: fit-content;
+    max-width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: clamp(1.1rem, 3vw, 1.75rem);
+  }
+
+  .final-cta[data-has-image="true"][data-overlay-style^="glass"]
+    .final-cta-content {
+    max-width: none;
+  }
+
+  .final-cta[data-has-image="true"][data-overlay-style^="glass"]
+    .final-cta-panel {
+    width: calc(100% + (var(--fcta-padding-x) * 2));
+    max-width: none;
+    margin-inline: calc(-1 * var(--fcta-padding-x));
+    padding: clamp(1.45rem, 4.5vw, 2.6rem) var(--fcta-padding-x);
+    border: 0;
+    border-block: 1px solid rgb(255 255 255 / 0.16);
+    border-radius: 0;
+    background: linear-gradient(
+      90deg,
+      rgb(0 0 0 / var(--fcta-overlay-soft-alpha)) 0%,
+      rgb(0 0 0 / var(--fcta-overlay-strong-alpha)) 50%,
+      rgb(0 0 0 / var(--fcta-overlay-soft-alpha)) 100%
+    );
+    box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.1);
+    backdrop-filter: blur(18px) saturate(145%);
+    -webkit-backdrop-filter: blur(18px) saturate(145%);
+  }
+
+  .final-cta[data-has-image="true"][data-overlay-style="glass-light"] {
+    color: #211c18;
+  }
+
+  .final-cta[data-has-image="true"][data-overlay-style="glass-light"]
+    .final-cta-panel {
+    border-block-color: rgb(255 255 255 / 0.42);
+    background: linear-gradient(
+      90deg,
+      rgb(255 255 255 / var(--fcta-overlay-soft-alpha)) 0%,
+      rgb(255 255 255 / var(--fcta-overlay-strong-alpha)) 50%,
+      rgb(255 255 255 / var(--fcta-overlay-soft-alpha)) 100%
+    );
+    box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.34);
+  }
+
+  .final-cta[data-content-position="center"] .final-cta-content {
+    justify-content: center;
+  }
+
+  .final-cta[data-content-position="bottom"] .final-cta-content {
+    justify-content: flex-end;
+  }
+
+  .final-cta[data-has-image="false"] .final-cta-content {
+    justify-content: center;
+  }
+
+  .final-cta-message {
+    max-width: 18ch;
+    margin: 0;
+    color: inherit;
+    font-size: clamp(2.05rem, 6.5vw, 4.25rem);
+    font-weight: 800;
+    line-height: 1.08;
+    letter-spacing: -0.035em;
+    white-space: pre-line;
+    text-wrap: balance;
+    text-shadow: 0 2px 20px rgb(0 0 0 / 0.24);
+  }
+
+  .final-cta-button {
+    min-height: 42px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.72rem 1.65rem;
+    border: 1px solid color-mix(in srgb, var(--fcta-button-bg) 82%, transparent);
+    border-radius: 999px;
+    background: var(--fcta-button-bg);
+    color: var(--fcta-button-text);
+    box-shadow: 0 10px 30px rgb(0 0 0 / 0.18);
+    font-size: 0.95rem;
+    font-weight: 800;
+    line-height: 1;
+    text-decoration: none;
+    transition:
+      transform 0.25s cubic-bezier(0.22, 1, 0.36, 1),
+      box-shadow 0.25s ease;
+  }
+
+  .final-cta-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 14px 34px rgb(0 0 0 / 0.24);
+  }
+
+  .final-cta-button:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 4px;
+  }
+
+  .final-cta[data-button-style="outline"] .final-cta-button {
+    border-color: var(--fcta-button-bg);
+    background: color-mix(in srgb, var(--fcta-button-bg) 8%, transparent);
+    color: var(--fcta-button-bg);
+    box-shadow: none;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+
+  .final-cta[data-button-style="outline"] .final-cta-button:hover {
+    background: color-mix(in srgb, var(--fcta-button-bg) 16%, transparent);
+    box-shadow: 0 12px 30px rgb(0 0 0 / 0.16);
+  }
+
+  .final-cta[data-has-image="true"][data-overlay-style="light-gradient"]
+    .final-cta-message {
+    text-shadow: 0 2px 18px rgb(255 255 255 / 0.38);
+  }
+
+  .final-cta[data-has-image="true"][data-overlay-style="glass-light"]
+    .final-cta-message {
+    text-shadow: 0 2px 18px rgb(255 255 255 / 0.38);
+  }
+
+  .final-cta[data-has-image="true"][data-overlay-style="glass-light"]
+    .final-cta-button {
+    border-color: #211c18;
+    background: #211c18;
+    color: #ffffff;
+  }
+
+  .final-cta[data-has-image="true"][data-overlay-style="glass-light"][data-button-style="outline"]
+    .final-cta-button {
+    border-color: currentColor;
+    background: color-mix(in srgb, currentColor 8%, transparent);
+    color: currentColor;
+  }
+
+  .final-cta[data-has-image="true"][data-overlay-style="light-gradient"][data-button-style="outline"]
+    .final-cta-button {
+    border-color: currentColor;
+    background: color-mix(in srgb, currentColor 8%, transparent);
+    color: currentColor;
   }
 
   .footer {
@@ -32,6 +272,12 @@ export const footerStyles = css`
     background: var(--f-bg);
     color: var(--f-text);
     text-align: center;
+  }
+
+  .final-cta + .footer {
+    z-index: 2;
+    margin-top: calc(-1 * var(--fcta-footer-overlap));
+    box-shadow: 0 -16px 38px rgb(0 0 0 / 0.1);
   }
 
   .footer::before {
@@ -83,7 +329,7 @@ export const footerStyles = css`
     padding-inline-start: 0.34em;
     color: inherit;
     font-family: Georgia, "Times New Roman", serif;
-    font-size: clamp(1.75rem, 6vw, 3.15rem);
+    font-size: clamp(1.9rem, 6.25vw, 3.15rem);
     font-weight: 400;
     line-height: 1;
     letter-spacing: 0.34em;
@@ -161,6 +407,16 @@ export const footerStyles = css`
   }
 
   @media (max-width: 480px) {
+    .final-cta {
+      min-height: 430px;
+      padding-top: 2.75rem;
+    }
+
+    .final-cta[data-has-image="false"] {
+      min-height: 0;
+      padding-block: 4rem calc(4rem + var(--fcta-footer-overlap));
+    }
+
     .social-link {
       width: 32px;
       height: 32px;
@@ -168,6 +424,7 @@ export const footerStyles = css`
   }
 
   @media (prefers-reduced-motion: reduce) {
+    .final-cta-button,
     .social-link { transition: none; }
   }
 `;

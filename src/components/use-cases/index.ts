@@ -478,7 +478,15 @@ export default class GrowthUseCases extends GrowthElement {
     const title = this.localizedString(item.title);
     const text = this.localizedString(item.text);
 
-    return html`<article class="uc-card" data-side=${o.side}>
+    const cardStyle = item.background_color
+      ? `--uc-card-bg:${item.background_color}`
+      : "";
+
+    return html`<article
+      class="uc-card"
+      data-side=${o.side}
+      style=${cardStyle}
+    >
       <div class="uc-media">
         <img
           src=${item.image || ""}
@@ -546,7 +554,7 @@ export default class GrowthUseCases extends GrowthElement {
     const overlay = this._isOverlay();
     const first = this._pickValue<UseCaseSide>(c.first_image_side, "right");
     const alternate = c.alternate_sides !== false;
-    const align = this._pickValue<UseCasesTextAlign>(c.text_align, "start");
+    const align = this._pickValue<UseCasesTextAlign>(c.text_align, "center");
     const pos = this._pickValue<UseCasesOverlayPosition>(
       c.overlay_position,
       "bottom"

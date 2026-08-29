@@ -95,6 +95,8 @@ export interface UseCaseItem {
   text?: MaybeMultiLang;
   /** Alt text, when the visible title is not a good description of the photo. */
   alt?: MaybeMultiLang;
+  /** Optional card background; falls back to the section-wide card color. */
+  background_color?: string;
   /**
    * Stack layout: force this card's photo to a physical side instead of taking
    * its turn in the alternating rhythm. Dropdowns arrive from the panel as

@@ -17,7 +17,7 @@ export const heroStyles = css`
     --gh-inline-pad: clamp(1.25rem, 4vw, 3.5rem);
     --gh-block-pad: clamp(2rem, 6vw, 5rem);
 
-    --gh-headline-size: clamp(2rem, 5.5vw, 4.5rem);
+    --gh-headline-size: clamp(2.25rem, 6vw, 4.5rem);
     --gh-subtitle-size: clamp(1rem, 1.6vw, 1.25rem);
     --gh-eyebrow-size: clamp(0.75rem, 1vw, 0.875rem);
 

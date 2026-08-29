@@ -86,7 +86,7 @@ export const faqStyles = css`
   .faq-title {
     margin: 0;
     color: var(--faq-title);
-    font-size: clamp(1.5rem, 4.6vw, 2.25rem);
+    font-size: clamp(1.7rem, 5vw, 2.25rem);
     font-weight: 800;
     line-height: 1.25;
     letter-spacing: -0.02em;

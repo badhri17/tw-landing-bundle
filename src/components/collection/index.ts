@@ -271,7 +271,7 @@ export default class GrowthCollection extends GrowthElement {
   private _goPrev = () => {
     const n = this._slides().length;
     if (n <= 1) return;
-    const loop = this.config?.loop !== false;
+    const loop = this.config?.loop === true;
     let next = this._activeIndex - 1;
     if (next < 0) next = loop ? n - 1 : 0;
     this._changeActive(next);
@@ -280,7 +280,7 @@ export default class GrowthCollection extends GrowthElement {
   private _goNext = () => {
     const n = this._slides().length;
     if (n <= 1) return;
-    const loop = this.config?.loop !== false;
+    const loop = this.config?.loop === true;
     let next = this._activeIndex + 1;
     if (next >= n) next = loop ? 0 : n - 1;
     this._changeActive(next);
@@ -298,7 +298,7 @@ export default class GrowthCollection extends GrowthElement {
     const n = this._slides().length;
     if (n === 0) return 0;
     let diff = i - this._activeIndex;
-    if (this.config?.loop !== false) {
+    if (this.config?.loop === true) {
       if (diff > n / 2) diff -= n;
       if (diff < -n / 2) diff += n;
     }
@@ -319,11 +319,11 @@ export default class GrowthCollection extends GrowthElement {
   }
 
   private _isPrevDisabled(): boolean {
-    if (this.config?.loop !== false) return false;
+    if (this.config?.loop === true) return false;
     return this._activeIndex === 0 || this._slides().length <= 1;
   }
   private _isNextDisabled(): boolean {
-    if (this.config?.loop !== false) return false;
+    if (this.config?.loop === true) return false;
     return (
       this._activeIndex === this._slides().length - 1 ||
       this._slides().length <= 1
@@ -420,7 +420,7 @@ export default class GrowthCollection extends GrowthElement {
     const displayMode = this._displayMode();
     const animation = this._pickValue<CollectionAnimation>(
       c.slide_animation,
-      "simple"
+      "reveal"
     );
     const aspect = this._pickValue<CollectionAspect>(c.aspect_ratio, "1/1");
     const layout = this._pickValue<CollectionDesktopLayout>(
@@ -432,7 +432,7 @@ export default class GrowthCollection extends GrowthElement {
       c.section_title ?? c.title
     );
     const showCaption = c.show_caption !== false;
-    const showNav = c.show_nav_buttons !== false;
+    const showNav = c.show_nav_buttons === true;
     const showDots = !!c.show_pagination;
     const enableAnim = c.enable_entrance_anim !== false;
     const cardRadius = this._num(c.card_radius, 20);

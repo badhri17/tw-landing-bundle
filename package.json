@@ -4,8 +4,13 @@
   "description": "",
   "type": "module",
   "scripts": {
+    "predev": "pnpm run audit:defaults && pnpm run audit:runtime-defaults",
     "dev": "vite",
+    "prebuild": "pnpm run audit:defaults && pnpm run audit:runtime-defaults",
     "build": "vite build",
+    "audit:defaults": "node scripts/audit-default-values.mjs",
+    "audit:runtime-defaults": "node scripts/audit-runtime-defaults.mjs",
+    "fix:defaults": "node scripts/audit-default-values.mjs --fix",
     "format": "prettier --write \"src/**/*.{ts,html,css}\"",
     "preview": "vite preview"
   },

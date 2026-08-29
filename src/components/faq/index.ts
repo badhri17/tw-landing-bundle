@@ -180,9 +180,17 @@ export default class GrowthFaq extends GrowthElement {
 
   render() {
     const c: FaqConfig = this.config || {};
+    // The local template preview may omit unsaved dropdown defaults. FAQ
+    // decorations are intentionally behind the cards, so preserve that safe
+    // default instead of letting an omitted value place the image over text.
+    const sideConfig: FaqConfig = {
+      ...c,
+      side_depth: c.side_depth ?? "behind",
+      side2_depth: c.side2_depth ?? "behind",
+    };
     const resolveSide = (slot: 1 | 2) =>
       resolveSideElement(
-        c,
+        sideConfig,
         (v, f) => this._pickValue(v, f),
         (v, f) => this._num(v, f),
         slot,

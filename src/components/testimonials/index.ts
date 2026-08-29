@@ -111,7 +111,7 @@ export default class GrowthTestimonials extends GrowthElement {
     );
     const dRaw = this._pickValue<TestimonialsColumnsDesktop>(
       c.columns_desktop,
-      "inherit"
+      "3"
     );
     const d = dRaw === "inherit" ? m : this._num(dRaw, 3);
     return {
@@ -330,7 +330,7 @@ export default class GrowthTestimonials extends GrowthElement {
 
   private _setupAutoplay() {
     const c = this.config || {};
-    const layout = this._pickValue<TestimonialsLayout>(c.layout, "grid");
+    const layout = this._pickValue<TestimonialsLayout>(c.layout, "carousel");
     if (layout !== "carousel" || !c.carousel_autoplay) return;
     if (this._interactionPaused) return;
     if (!this._inView) return;
@@ -683,14 +683,14 @@ export default class GrowthTestimonials extends GrowthElement {
     const c: TestimonialsConfig = this.config || {};
     const items = this._items();
 
-    const layout = this._pickValue<TestimonialsLayout>(c.layout, "grid");
+    const layout = this._pickValue<TestimonialsLayout>(c.layout, "carousel");
     const cardStyle = this._pickValue<TestimonialCardStyle>(
       c.card_style,
-      "modern"
+      "quote"
     );
     const ratingStyle = this._pickValue<TestimonialRatingStyle>(
       c.rating_style,
-      "stars-number"
+      "stars"
     );
     const enableAnim = c.enable_entrance_anim !== false;
     const hoverLift = c.enable_hover_lift !== false;
@@ -700,7 +700,7 @@ export default class GrowthTestimonials extends GrowthElement {
       ratingStyle,
       showAvatar: c.show_avatar !== false,
       showPhoto: c.show_photo !== false,
-      showQuoteMark: c.show_quote_mark !== false,
+      showQuoteMark: c.show_quote_mark === true,
     };
 
     const wave = resolveWaveEdges(c, (v, f) => this._pickValue(v, f));

@@ -3,6 +3,9 @@ import { property } from "lit/decorators.js";
 import { ifDefined } from "lit/directives/if-defined.js";
 import { GrowthElement } from "../../shared/growth-element";
 import type {
+  FinalCtaButtonStyle,
+  FinalCtaOverlayStyle,
+  FinalCtaVerticalAlignment,
   FooterConfig,
   FooterRadius,
   FooterSocialStyle,
@@ -74,6 +77,54 @@ export default class GrowthFooter extends GrowthElement {
 
   render() {
     const c = this.config || {};
+    const finalCtaEnabled = c.final_cta_enabled !== false;
+    const finalCtaText = this.localizedString(c.final_cta_text);
+    const finalCtaButtonLabel = this.localizedString(
+      c.final_cta_button_label
+    );
+    const finalCtaButtonUrl = (c.final_cta_button_url || "").trim();
+    const finalCtaButtonStyle = this._pickValue<FinalCtaButtonStyle>(
+      c.final_cta_button_style,
+      "outline"
+    );
+    const finalCtaImage = (c.final_cta_image || "").trim();
+    const finalCtaVerticalAlignment =
+      this._pickValue<FinalCtaVerticalAlignment>(
+        c.final_cta_vertical_alignment,
+        "top"
+      );
+    const finalCtaOverlayStyle = this._pickValue<FinalCtaOverlayStyle>(
+      c.final_cta_overlay_style,
+      "dark-gradient"
+    );
+    const finalCtaOverlayDarkness = Math.min(
+      90,
+      Math.max(
+        0,
+        typeof c.final_cta_overlay_darkness === "number"
+          ? c.final_cta_overlay_darkness
+          : 35
+      )
+    );
+    const finalCtaStyle = [
+      c.final_cta_background_color
+        ? `--fcta-bg: ${c.final_cta_background_color}`
+        : "",
+      c.final_cta_text_color
+        ? `--fcta-text: ${c.final_cta_text_color}`
+        : "",
+      c.final_cta_button_background
+        ? `--fcta-button-bg: ${c.final_cta_button_background}`
+        : "",
+      c.final_cta_button_text_color
+        ? `--fcta-button-text: ${c.final_cta_button_text_color}`
+        : "",
+      `--fcta-overlay-alpha: ${finalCtaOverlayDarkness / 100}`,
+      `--fcta-overlay-soft-alpha: ${Math.max(0, finalCtaOverlayDarkness - 15) / 100}`,
+      `--fcta-overlay-strong-alpha: ${Math.min(100, finalCtaOverlayDarkness + 20) / 100}`,
+    ]
+      .filter(Boolean)
+      .join("; ");
     const logo = (c.logo || "").trim();
     const brandName = this.localizedString(c.brand_name) || "AUREN";
     const description = this.localizedString(c.description);
@@ -96,6 +147,44 @@ export default class GrowthFooter extends GrowthElement {
       .join("; ");
 
     return html`
+      ${finalCtaEnabled
+        ? html`
+            <section
+              class="final-cta"
+              style=${finalCtaStyle}
+              data-has-image=${finalCtaImage ? "true" : "false"}
+              data-content-position=${finalCtaVerticalAlignment}
+              data-overlay-style=${finalCtaOverlayStyle}
+              data-button-style=${finalCtaButtonStyle}
+              aria-label=${finalCtaText || "الدعوة الختامية"}
+            >
+              ${finalCtaImage
+                ? html`
+                    <img
+                      class="final-cta-image"
+                      src=${finalCtaImage}
+                      alt=""
+                      aria-hidden="true"
+                    />
+                  `
+                : nothing}
+              <div class="final-cta-content">
+                <div class="final-cta-panel">
+                  ${finalCtaText
+                    ? html`<p class="final-cta-message">${finalCtaText}</p>`
+                    : nothing}
+                  ${finalCtaButtonLabel && finalCtaButtonUrl
+                    ? html`
+                        <a class="final-cta-button" href=${finalCtaButtonUrl}>
+                          ${finalCtaButtonLabel}
+                        </a>
+                      `
+                    : nothing}
+                </div>
+              </div>
+            </section>
+          `
+        : nothing}
       <footer
         class="footer"
         style=${sectionStyle}
@@ -144,4 +233,3 @@ export default class GrowthFooter extends GrowthElement {
     `;
   }
 }
-

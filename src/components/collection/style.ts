@@ -47,7 +47,7 @@ export const collectionStyles = css`
     margin-bottom: clamp(1.5rem, 4vw, 2.5rem);
   }
   .col-title {
-    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    font-size: clamp(1.9rem, 4.5vw, 2.5rem);
     font-weight: 500;
     letter-spacing: 1.5px;
     color: var(--col-title-color);

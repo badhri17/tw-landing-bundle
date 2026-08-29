@@ -135,7 +135,7 @@ export const galleryStyles = css`
   .gal-h2 {
     margin: 0;
     color: var(--gal-title);
-    font-size: clamp(1.35rem, 5vw, 2.1rem);
+    font-size: clamp(1.6rem, 5.5vw, 2.1rem);
     font-weight: 800;
     line-height: 1.25;
     letter-spacing: -0.01em;

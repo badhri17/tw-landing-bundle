@@ -239,6 +239,12 @@ export default class GrowthHero extends GrowthElement {
     );
   }
 
+  /** Keep the rendered default aligned with the switch shown in the builder.
+   * Some template-preview paths omit an untouched boolean `selected` value. */
+  private _navEnabled(): boolean {
+    return this.config?.enable_nav !== false;
+  }
+
   /**
    * All renderable nav links, capped to keep the bar from wrapping.
    *
@@ -385,10 +391,9 @@ export default class GrowthHero extends GrowthElement {
     // Reflected onto the HOST, not .hero: a fixed bar has to out-paint the
     // sections that follow this component in the page, and only the host
     // participates in the page's own stacking order.
-    // Opt-in, matching the field's default: `=== true`, not `!== false`.
     this.toggleAttribute(
       "nav-fixed",
-      !!this.config?.enable_nav && this.config?.nav_fixed === true
+      this._navEnabled() && this.config?.nav_fixed === true
     );
     // Same reason: publish the anchor once config is actually available.
     this._syncAnchor(this.config?.anchor_id, "hero");
@@ -535,7 +540,7 @@ export default class GrowthHero extends GrowthElement {
   /** Idempotent wiring, called from updated() like _syncParallax(). */
   private _syncNavScroll() {
     const c = this.config || {};
-    const wanted = !!c.enable_nav && c.nav_fixed === true;
+    const wanted = this._navEnabled() && c.nav_fixed === true;
     if (wanted === !!this._onNavScroll) return;
     if (wanted) this._setupNavScroll();
     else this._teardownNavScroll();
@@ -663,8 +668,8 @@ export default class GrowthHero extends GrowthElement {
     const heightDesktop: HeroHeightDesktop = this._pickValue<HeroHeightDesktop>(c.height_desktop, "inherit");
     const height: HeroHeight =
       this._isDesktop && heightDesktop !== "inherit" ? heightDesktop : heightMobile;
-    const alignH: HeroAlignH = this._pickValue<HeroAlignH>(c.align_h, "start");
-    const alignV: HeroAlignV = this._pickValue<HeroAlignV>(c.align_v, "middle");
+    const alignH: HeroAlignH = this._pickValue<HeroAlignH>(c.align_h, "center");
+    const alignV: HeroAlignV = this._pickValue<HeroAlignV>(c.align_v, "bottom");
     const textTheme: HeroTextTheme = this._pickValue<HeroTextTheme>(c.text_theme, "light");
     const overlayStyle: HeroOverlayStyle = this._pickValue<HeroOverlayStyle>(c.overlay_style, "dark-bottom");
     const overlayIntensity = this._pickValue<HeroOverlayIntensity>(c.overlay_intensity, "medium");
@@ -735,13 +740,14 @@ export default class GrowthHero extends GrowthElement {
       .join(" ");
 
     // --- Navbar ---------------------------------------------------------
+    const navEnabled = this._navEnabled();
     const navLayout = this._navLayout();
-    const navItems = c.enable_nav ? this._navItems() : [];
+    const navItems = navEnabled ? this._navItems() : [];
     const navLogo = (c.nav_logo || "").trim();
     const navStoreName = this.localizedString(c.nav_store_name);
     // A bar with nothing in it is worse than no bar at all.
     const hasNav =
-      !!c.enable_nav && (navItems.length > 0 || !!navLogo || !!navStoreName);
+      navEnabled && (navItems.length > 0 || !!navLogo || !!navStoreName);
     const navFixed = hasNav && c.nav_fixed === true;
     const navCta =
       hasNav && c.nav_show_cta !== false && localizedPrimaryLabel

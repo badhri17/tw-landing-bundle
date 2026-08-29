@@ -163,9 +163,9 @@ export default class GrowthGallery extends GrowthElement {
     );
     const signature = [
       rowStyle,
-      this._pickValue(c.item_size, "medium"),
-      this._pickValue(c.aspect_ratio, "3/4"),
-      this._num(c.gap, 12),
+      this._pickValue(c.item_size, "small"),
+      this._pickValue(c.aspect_ratio, "4/5"),
+      this._num(c.gap, 18),
       ...images.map((image) => image.image || ""),
     ].join("|");
 
@@ -264,13 +264,13 @@ export default class GrowthGallery extends GrowthElement {
     sideVars: string[],
     wave: WaveEdgesResolved,
   ): string {
-    const sizeM = this._pickValue<GalleryItemSize>(c.item_size, "medium");
+    const sizeM = this._pickValue<GalleryItemSize>(c.item_size, "small");
     const sizeDRaw = this._pickValue<GalleryItemSizeDesktop>(
       c.item_size_desktop,
       "inherit",
     );
     const sizeD = sizeDRaw === "inherit" ? sizeM : sizeDRaw;
-    const gap = this._num(c.gap, 12);
+    const gap = this._num(c.gap, 18);
 
     return [
       c.bg_color ? `--gal-bg:${c.bg_color}` : "",
@@ -280,8 +280,8 @@ export default class GrowthGallery extends GrowthElement {
       `--gal-item-d:${ITEM_W_DESKTOP[sizeD] ?? "22vw"}`,
       `--gal-gap-m:${gap}px`,
       `--gal-gap-d:${Math.round(gap * 1.5)}px`,
-      `--gal-radius:${this._num(c.card_radius, 14)}px`,
-      `--gal-aspect:${this._pickValue<GalleryAspect>(c.aspect_ratio, "3/4")}`,
+      `--gal-radius:${this._num(c.card_radius, 20)}px`,
+      `--gal-aspect:${this._pickValue<GalleryAspect>(c.aspect_ratio, "4/5")}`,
       ...sideVars,
       ...wave.vars,
       ...resolveSectionSpacing(
@@ -404,9 +404,22 @@ export default class GrowthGallery extends GrowthElement {
   render() {
     const c: GalleryConfig = this.config || {};
     const images = this._images();
+    // Untouched dropdown defaults can be omitted by the template preview.
+    // Keep the rendered fallback identical to the default example so updating
+    // a template cannot enlarge the cards or drop/reposition decorations.
+    const sideConfig: GalleryConfig = {
+      ...c,
+      side_visual_count: c.side_visual_count ?? "two",
+      side_side: c.side_side ?? "left",
+      side_vpos: c.side_vpos ?? "top",
+      side_vpos_desktop: c.side_vpos_desktop ?? "inherit",
+      side2_side: c.side2_side ?? "right",
+      side2_vpos: c.side2_vpos ?? "bottom",
+      side2_vpos_desktop: c.side2_vpos_desktop ?? "inherit",
+    };
     const resolveSide = (slot: 1 | 2) =>
       resolveSideElement(
-        c,
+        sideConfig,
         (v, f) => this._pickValue(v, f),
         (v, f) => this._num(v, f),
         slot,

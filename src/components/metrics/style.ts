@@ -65,7 +65,7 @@ export const metricsStyles = css`
   .m-title {
     margin: 0;
     color: var(--m-number);
-    font-size: clamp(1.3rem, 3.6vw, 2rem);
+    font-size: clamp(1.55rem, 4.5vw, 2rem);
     font-weight: 800;
     line-height: 1.2;
     letter-spacing: -0.01em;

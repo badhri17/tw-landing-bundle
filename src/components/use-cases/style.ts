@@ -102,7 +102,7 @@ export const useCasesStyles = css`
   .uc-h2 {
     margin: 0;
     color: var(--uc-title);
-    font-size: clamp(1.35rem, 5.4vw, 2.2rem);
+    font-size: clamp(1.6rem, 5.8vw, 2.2rem);
     font-weight: 800;
     line-height: 1.25;
     letter-spacing: -0.01em;

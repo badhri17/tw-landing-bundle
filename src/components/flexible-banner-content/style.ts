@@ -187,7 +187,7 @@ export const flexibleBannerContentStyles = css`
   .title {
     margin: 0;
     color: inherit;
-    font-size: clamp(1.65rem, 5vw, 3.15rem);
+    font-size: clamp(1.85rem, 5.5vw, 3.15rem);
     font-weight: 850;
     line-height: 1.18;
     letter-spacing: -0.025em;

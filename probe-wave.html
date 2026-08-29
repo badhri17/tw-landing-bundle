@@ -1,0 +1,89 @@
+<!doctype html>
+<html dir="rtl" lang="ar">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>probe</title>
+    <style>
+      body { margin: 0; background: #fdf0dc; font-family: system-ui, sans-serif; }
+      .neighbour { background: #fdf0dc; height: 90px; display: grid; place-items: center; color: #7a5a3a; }
+    </style>
+  </head>
+  <body>
+    <div class="neighbour">قسم قبل</div>
+    <salla-testimonials></salla-testimonials>
+    <div class="neighbour">بين القسمين</div>
+    <salla-gallery></salla-gallery>
+    <div class="neighbour">قسم بعد</div>
+    <script type="module">
+      import Testimonials from "/src/components/testimonials/index.ts";
+      import Gallery from "/src/components/gallery/index.ts";
+      if (!customElements.get("salla-testimonials")) customElements.define("salla-testimonials", Testimonials);
+      if (!customElements.get("salla-gallery")) customElements.define("salla-gallery", Gallery);
+
+      const WAVE = {
+        wave_edges: "both",
+        wave_shape: "wave",
+        wave_height_mobile: "md",
+        wave_height_desktop: "inherit",
+      };
+
+      const T_CONFIG = {
+        section_title: "اراء صديقات سولارا",
+        layout: "carousel",
+        card_style: "quote",
+        columns_mobile: "1",
+        columns_desktop: "3",
+        items: [
+          { name: "هاله العتيبي", quote: "حابه اكتب تجربتي مع سكراب العكر الفاسي و زبدة العكر الفاسي خيااال اول شي السكراب ولا مره صار للان معاي كذا قطعه وحده واستخدمت السكراب قبل الثاني وبعده يجنن يجنن ويرطب مره ويخلي الجسم قطعه وحده", rating: 5 },
+          { name: "هند", quote: "الزبده والزيت ترطيبهم يجنن، وريحتهم تبقى على الجسم طول اليوم بدون ما تكون ثقيلة.", rating: 5 },
+          { name: "نوره", quote: "طلبت مرتين خلال شهر، والتغليف والتوصيل ممتاز والمنتج يستاهل كل ريال.", rating: 4.5 },
+        ],
+        enable_bg_image: false,
+        bg_color: "#5d1421",
+        title_color: "#ffffff",
+        accent_color: "#e8b04b",
+        space_top: "lg",
+        space_bottom: "lg",
+        carousel_autoplay: false,
+        enable_entrance_anim: false,
+        ...WAVE,
+      };
+
+      const G_CONFIG = {
+        section_title: "من صور عميلاتنا",
+        bg_color: "#1d3b34",
+        title_color: "#ffffff",
+        row_style: "equal",
+        item_size: "medium",
+        space_top: "lg",
+        space_bottom: "lg",
+        enable_entrance_anim: false,
+        images: [1, 2, 3, 4, 5, 6].map((n) => ({ image: `/assets/demo/gallery/gallery-${n}.png` })),
+        // Side decorations bleed OUTSIDE the section — they must survive the wave.
+        side_visual_count: "two",
+        side_image: "/assets/demo/gallery/side-element-top.png",
+        side2_image: "/assets/demo/gallery/side-element-bottom.png",
+        ...WAVE,
+      };
+
+      Promise.all([
+        customElements.whenDefined("salla-testimonials"),
+        customElements.whenDefined("salla-gallery"),
+      ]).then(async () => {
+        const q = new URLSearchParams(location.search);
+        const t = q.get("t") ? JSON.parse(q.get("t")) : {};
+        const g = q.get("g") ? JSON.parse(q.get("g")) : {};
+        const tEl = document.querySelector("salla-testimonials");
+        const gEl = document.querySelector("salla-gallery");
+        tEl.config = { ...T_CONFIG, ...t };
+        gEl.config = { ...G_CONFIG, ...g };
+        await tEl.updateComplete;
+        await gEl.updateComplete;
+        await new Promise((r) => setTimeout(r, 600));
+        await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
+        document.title = "probe-done";
+      });
+    </script>
+  </body>
+</html>

@@ -135,12 +135,31 @@ export function resolveSideElement(
     "front",
   );
 
-  /** New count-based configs expose desktop values directly. Legacy saved
-   * configs still honour the previous desktop-custom switches. */
+  /** New count-based configs expose desktop values directly. Some preview
+   * environments omit dropdown defaults until the editor is saved, while still
+   * passing the desktop numeric values. Treat those explicit values as an
+   * enabled desktop override so the preview matches the configured example. */
+  const desktopValues =
+    slot === 1
+      ? [
+          cfg?.side_width_desktop,
+          cfg?.side_vpos_desktop,
+          cfg?.side_x_desktop,
+          cfg?.side_y_desktop,
+        ]
+      : [
+          cfg?.side2_width_desktop,
+          cfg?.side2_vpos_desktop,
+          cfg?.side2_x_desktop,
+          cfg?.side2_y_desktop,
+        ];
+  const hasDesktopValues = desktopValues.some(
+    (value) => value !== undefined && value !== null && value !== "",
+  );
   const custom = mode
     ? true
     : (slot === 1 ? cfg?.side_desktop_custom : cfg?.side2_desktop_custom) ===
-      true;
+        true || hasDesktopValues;
 
   const vposM = pick<SideElementVPos>(
     slot === 1 ? cfg?.side_vpos : cfg?.side2_vpos,

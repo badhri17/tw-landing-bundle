@@ -3,6 +3,7 @@ declare global {
   const Salla: any;
 }
 import { resolve } from 'path';
+import { readFile, writeFile } from 'node:fs/promises';
 import { defineConfig } from 'vite';
 import {
 sallaBuildPlugin,
@@ -60,6 +61,95 @@ function fixSallaDemoWindowsFsUrlsPlugin() {
   };
 }
 
+/**
+ * Keep the template JSON's persisted value aligned with the builder selection.
+ *
+ * The demo builder writes the current choice to `selected`, but can leave a
+ * stale `value` behind when "Update template" is used. Salla may later read
+ * that stale value, which makes saved options appear to reset. Treating the
+ * builder's `selected` entry as canonical removes that ambiguity immediately.
+ */
+function persistSallaTemplateSelectionsPlugin() {
+  const templatesDir = resolve(process.cwd(), 'templates');
+  const pending = new Map<string, ReturnType<typeof setTimeout>>();
+
+  const selectedValue = (selected: unknown) => {
+    if (!Array.isArray(selected)) return selected;
+    const first = selected[0];
+    return first && typeof first === 'object' && 'value' in first
+      ? first.value
+      : undefined;
+  };
+
+  const syncSelections = (value: unknown): boolean => {
+    if (!value || typeof value !== 'object') return false;
+    let changed = false;
+    const record = value as Record<string, unknown>;
+
+    if (Object.prototype.hasOwnProperty.call(record, 'selected')) {
+      const selected = selectedValue(record.selected);
+      if (selected !== undefined && record.value !== selected) {
+        record.value = selected;
+        changed = true;
+      }
+    }
+
+    for (const child of Object.values(record)) {
+      if (syncSelections(child)) changed = true;
+    }
+    return changed;
+  };
+
+  const normalizeTemplate = async (file: string) => {
+    try {
+      const source = await readFile(file, 'utf8');
+      const json = JSON.parse(source);
+      if (!syncSelections(json)) return;
+
+      const indent = source.match(/\n([ \t]+)\S/)?.[1]?.length ?? 2;
+      const eol = source.includes('\r\n') ? '\r\n' : '\n';
+      const output = `${JSON.stringify(json, null, indent)}${eol}`.replaceAll(
+        '\n',
+        eol,
+      );
+      await writeFile(file, output, 'utf8');
+    } catch (error) {
+      // A builder write can briefly expose a partial file; the next change
+      // event will retry, while a real error remains visible in the terminal.
+      console.warn(`[template defaults] Could not normalize ${file}`, error);
+    }
+  };
+
+  return {
+    name: 'persist-salla-template-selections',
+    apply: 'serve',
+    configureServer(server: any) {
+      server.watcher.add(`${templatesDir.replaceAll('\\', '/')}/**/*.json`);
+      server.watcher.on('change', (file: string) => {
+        const normalized = resolve(file);
+        const relative = normalized.slice(templatesDir.length + 1);
+        if (
+          normalized === templatesDir ||
+          relative.startsWith('..') ||
+          !normalized.toLowerCase().endsWith('.json')
+        ) {
+          return;
+        }
+
+        const current = pending.get(normalized);
+        if (current) clearTimeout(current);
+        pending.set(
+          normalized,
+          setTimeout(() => {
+            pending.delete(normalized);
+            void normalizeTemplate(normalized);
+          }, 100),
+        );
+      });
+    },
+  };
+}
+
 export default defineConfig({
 /**
  * `public/assets/` is the bundle's media folder, and the path matters.
@@ -82,6 +172,7 @@ plugins: [
   sallaTransformPlugin(),
   sallaBuildPlugin(),
   duplicateSharedPerComponentPlugin(),
+  persistSallaTemplateSelectionsPlugin(),
   sallaDemoPlugin({
     // Uncomment to preview only specific components
     // components: ['hero', 'collection', 'interactive-product', 'testimonials']
