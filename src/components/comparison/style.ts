@@ -61,6 +61,8 @@ export const comparisonStyles = css`
     --cmp-fs-d: 1.02rem;
     --cmp-logo-m: 92px;
     --cmp-logo-d: 124px;
+    --cmp-side-clearance-m: 0px;
+    --cmp-side-clearance-d: 0px;
 
     --cmp-pad-x: clamp(1rem, 4vw, 2.5rem);
     --cmp-ease: cubic-bezier(0.22, 1, 0.36, 1);
@@ -87,7 +89,8 @@ export const comparisonStyles = css`
     background: var(--cmp-bg);
     /* Vertical space is the merchant's, via the shared tiers; the horizontal
        padding stays the section's own. See src/shared/section-spacing.ts. */
-    padding-block: var(--sp-top-m) var(--sp-bot-m);
+    padding-block: max(var(--sp-top-m), var(--cmp-side-clearance-m))
+      var(--sp-bot-m);
     padding-inline: var(--cmp-pad-x);
     overflow: clip visible;
 
@@ -175,6 +178,11 @@ export const comparisonStyles = css`
     border-spacing: 0;
     /* Below this the Arabic feature text wraps to about a word per line. */
     min-width: 19rem;
+  }
+
+  /* Let the card bleed to both mobile viewport edges when requested. */
+  .cmp[data-full-mobile="on"] {
+    padding-inline: 0;
   }
 
   /* ============================================================
@@ -514,8 +522,13 @@ export const comparisonStyles = css`
      DESKTOP
      ============================================================ */
   @media (min-width: 768px) {
+    .cmp[data-full-mobile="on"] {
+      padding-inline: var(--cmp-pad-x);
+    }
+
     .cmp {
-      padding-block: var(--sp-top-d) var(--sp-bot-d);
+      padding-block: max(var(--sp-top-d), var(--cmp-side-clearance-d))
+        var(--sp-bot-d);
       --cmp-pad: var(--cmp-pad-d);
       --cmp-fs: var(--cmp-fs-d);
       --cmp-logo: var(--cmp-logo-d);

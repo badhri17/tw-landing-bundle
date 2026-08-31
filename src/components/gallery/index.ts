@@ -474,7 +474,7 @@ export default class GrowthGallery extends GrowthElement {
               data-side=${side.side}
               data-depth=${side.depth}
               decoding="async"
-              loading="lazy"
+              loading="eager"
             />`,
         )}
         ${

@@ -59,8 +59,16 @@ export const footerStyles = css`
   .final-cta::before {
     z-index: -2;
     background:
-      radial-gradient(circle at 50% 10%, color-mix(in srgb, var(--fcta-text) 14%, transparent), transparent 48%),
-      linear-gradient(135deg, transparent, color-mix(in srgb, var(--fcta-text) 6%, transparent));
+      radial-gradient(
+        circle at 50% 10%,
+        color-mix(in srgb, var(--fcta-text) 14%, transparent),
+        transparent 48%
+      ),
+      linear-gradient(
+        135deg,
+        transparent,
+        color-mix(in srgb, var(--fcta-text) 6%, transparent)
+      );
   }
 
   .final-cta[data-has-image="true"][data-overlay-style="dark-gradient"]::after {
@@ -84,7 +92,7 @@ export const footerStyles = css`
   }
 
   .final-cta[data-has-image="true"][data-overlay-style="light-gradient"] {
-    color: #211c18;
+    color: var(--fcta-text);
   }
 
   .final-cta-image {
@@ -112,7 +120,7 @@ export const footerStyles = css`
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: clamp(1.1rem, 3vw, 1.75rem);
+    gap: clamp(0.8rem, 2.4vw, 1.4rem);
   }
 
   .final-cta[data-has-image="true"][data-overlay-style^="glass"]
@@ -125,7 +133,7 @@ export const footerStyles = css`
     width: calc(100% + (var(--fcta-padding-x) * 2));
     max-width: none;
     margin-inline: calc(-1 * var(--fcta-padding-x));
-    padding: clamp(1.45rem, 4.5vw, 2.6rem) var(--fcta-padding-x);
+    padding: clamp(1.1rem, 3.6vw, 2.2rem) var(--fcta-padding-x);
     border: 0;
     border-block: 1px solid rgb(255 255 255 / 0.16);
     border-radius: 0;
@@ -141,7 +149,7 @@ export const footerStyles = css`
   }
 
   .final-cta[data-has-image="true"][data-overlay-style="glass-light"] {
-    color: #211c18;
+    color: var(--fcta-text);
   }
 
   .final-cta[data-has-image="true"][data-overlay-style="glass-light"]
@@ -169,10 +177,10 @@ export const footerStyles = css`
   }
 
   .final-cta-message {
-    max-width: 18ch;
+    max-width: 20ch;
     margin: 0;
     color: inherit;
-    font-size: clamp(2.05rem, 6.5vw, 4.25rem);
+    font-size: clamp(1.65rem, 6.5vw, 4.25rem);
     font-weight: 800;
     line-height: 1.08;
     letter-spacing: -0.035em;
@@ -182,17 +190,17 @@ export const footerStyles = css`
   }
 
   .final-cta-button {
-    min-height: 42px;
+    min-height: 38px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 0.72rem 1.65rem;
+    padding: 0.62rem 1.35rem;
     border: 1px solid color-mix(in srgb, var(--fcta-button-bg) 82%, transparent);
     border-radius: 999px;
     background: var(--fcta-button-bg);
     color: var(--fcta-button-text);
     box-shadow: 0 10px 30px rgb(0 0 0 / 0.18);
-    font-size: 0.95rem;
+    font-size: 0.9rem;
     font-weight: 800;
     line-height: 1;
     text-decoration: none;
@@ -237,9 +245,9 @@ export const footerStyles = css`
 
   .final-cta[data-has-image="true"][data-overlay-style="glass-light"]
     .final-cta-button {
-    border-color: #211c18;
-    background: #211c18;
-    color: #ffffff;
+    border-color: var(--fcta-button-bg);
+    background: var(--fcta-button-bg);
+    color: var(--fcta-button-text);
   }
 
   .final-cta[data-has-image="true"][data-overlay-style="glass-light"][data-button-style="outline"]
@@ -287,17 +295,38 @@ export const footerStyles = css`
     inset: 0;
     pointer-events: none;
     background:
-      radial-gradient(circle at 50% -35%, color-mix(in srgb, var(--f-text) 9%, transparent), transparent 43%),
-      linear-gradient(90deg, transparent, color-mix(in srgb, var(--f-text) 5%, transparent), transparent);
+      radial-gradient(
+        circle at 50% -35%,
+        color-mix(in srgb, var(--f-text) 9%, transparent),
+        transparent 43%
+      ),
+      linear-gradient(
+        90deg,
+        transparent,
+        color-mix(in srgb, var(--f-text) 5%, transparent),
+        transparent
+      );
   }
 
-  .footer[data-radius="none"] { --f-radius: 0px; }
-  .footer[data-radius="soft"] { --f-radius: clamp(14px, 3vw, 22px); }
-  .footer[data-radius="rounded"] { --f-radius: clamp(24px, 5vw, 42px); }
+  .footer[data-radius="none"] {
+    --f-radius: 0px;
+  }
+  .footer[data-radius="soft"] {
+    --f-radius: clamp(14px, 3vw, 22px);
+  }
+  .footer[data-radius="rounded"] {
+    --f-radius: clamp(24px, 5vw, 42px);
+  }
 
-  .footer[data-spacing="compact"] { --f-pad-y: clamp(2.5rem, 6vw, 4rem); }
-  .footer[data-spacing="comfortable"] { --f-pad-y: clamp(3.5rem, 9vw, 6.5rem); }
-  .footer[data-spacing="airy"] { --f-pad-y: clamp(4.75rem, 12vw, 8rem); }
+  .footer[data-spacing="compact"] {
+    --f-pad-y: clamp(2rem, 5vw, 3rem);
+  }
+  .footer[data-spacing="comfortable"] {
+    --f-pad-y: clamp(3.5rem, 9vw, 6.5rem);
+  }
+  .footer[data-spacing="airy"] {
+    --f-pad-y: clamp(4.75rem, 12vw, 8rem);
+  }
 
   .inner {
     width: min(100%, 760px);
@@ -324,6 +353,15 @@ export const footerStyles = css`
     object-fit: contain;
   }
 
+  .footer[data-logo-tone="light"] .logo {
+    filter: brightness(0) invert(1);
+  }
+
+  .footer[data-spacing="compact"] .logo {
+    width: min(30%, 150px);
+    max-height: 70px;
+  }
+
   .brand-name {
     margin: 0;
     padding-inline-start: 0.34em;
@@ -347,6 +385,12 @@ export const footerStyles = css`
     text-wrap: balance;
   }
 
+  .footer[data-spacing="compact"] .description {
+    margin-top: clamp(1rem, 3vw, 1.5rem);
+    font-size: clamp(0.88rem, 2.3vw, 1rem);
+    line-height: 1.65;
+  }
+
   .socials {
     display: flex;
     direction: ltr;
@@ -355,6 +399,10 @@ export const footerStyles = css`
     justify-content: center;
     gap: clamp(0.75rem, 2.4vw, 1rem);
     margin-top: clamp(2rem, 6vw, 3.35rem);
+  }
+
+  .footer[data-spacing="compact"] .socials {
+    margin-top: clamp(1.25rem, 4vw, 2rem);
   }
 
   .social-link {
@@ -425,6 +473,8 @@ export const footerStyles = css`
 
   @media (prefers-reduced-motion: reduce) {
     .final-cta-button,
-    .social-link { transition: none; }
+    .social-link {
+      transition: none;
+    }
   }
 `;

@@ -67,6 +67,7 @@ export interface ComparisonConfig
   grid_lines?: boolean;
 
   density_mobile?: ComparisonDensity | Array<{ value?: string }> | string;
+  full_width_mobile?: boolean;
   density_desktop?:
     ComparisonDensityDesktop | Array<{ value?: string }> | string;
   logo_size_mobile?: ComparisonLogoSize | Array<{ value?: string }> | string;
@@ -89,6 +90,10 @@ export interface ComparisonConfig
   footnote_color?: string;
 
   enable_entrance_anim?: boolean;
+
+  /** Clear space above the table when a decorative image sits at the top. */
+  side_top_clearance_mobile?: number | string;
+  side_top_clearance_desktop?: number | string;
 
   anchor_id?: string;
 }

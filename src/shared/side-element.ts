@@ -21,8 +21,8 @@
  * at a breakpoint but a variable can.
  */
 
-/** Physical edge of the section the element hugs. Never flipped by RTL. */
-export type SideElementSide = "left" | "right";
+/** Physical horizontal placement within the section. Never flipped by RTL. */
+export type SideElementSide = "left" | "center" | "right";
 
 /** Vertical anchor within the section. */
 export type SideElementVPos = "top" | "center" | "bottom";

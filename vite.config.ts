@@ -175,7 +175,7 @@ plugins: [
   persistSallaTemplateSelectionsPlugin(),
   sallaDemoPlugin({
     // Uncomment to preview only specific components
-    // components: ['hero', 'collection', 'interactive-product', 'testimonials']
+    // components: ['hero', 'collection', 'testimonials']
   }),
   fixSallaDemoWindowsFsUrlsPlugin(),
 ],

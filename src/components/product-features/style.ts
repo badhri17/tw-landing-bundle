@@ -7,8 +7,7 @@ import { css } from "lit";
  * absolutely positioned inside .pf-stage, which hugs the product image's
  * natural box (the img is display:block; width:100%; height:auto). Card
  * placement uses the PHYSICAL left/top properties so a card stays on the edge
- * the merchant picked regardless of page direction — same convention as the
- * hotspots in interactive-product.
+ * the merchant picked regardless of page direction.
  *
  * The little feature image, in contrast, sits on the inline-start edge of its
  * card (right in Arabic, left in English) and overhangs it, so the composition

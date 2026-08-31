@@ -66,6 +66,7 @@ export const testimonialsStyles = css`
      order, so the cards and the carousel arrows keep the z-indexes
      they already had. Both default to "none", which leaves just the colour. */
   .t-section {
+    position: relative;
     width: 100%;
     max-width: 100%;
     min-width: 0;
@@ -89,6 +90,67 @@ export const testimonialsStyles = css`
     padding-block: calc(var(--sp-top-m) + var(--wv-top))
       calc(var(--sp-bot-m) + var(--wv-bot));
     overflow: hidden;
+  }
+
+  .t-section[data-sides="on"] {
+    overflow: visible;
+    isolation: isolate;
+  }
+  .t-header,
+  .t-body-wrap {
+    position: relative;
+    z-index: 2;
+  }
+
+  /* ============================================================
+     SIDE DESIGN ELEMENTS
+     ============================================================ */
+  .t-side {
+    position: absolute;
+    z-index: 1;
+    top: var(--se-top, 0%);
+    width: var(--se-w, 45%);
+    max-width: none;
+    height: auto;
+    opacity: var(--se-op, 1);
+    pointer-events: none;
+    user-select: none;
+  }
+  .t-side[data-depth="behind"] {
+    z-index: 0;
+  }
+  .t-side[data-depth="front"] {
+    z-index: 3;
+  }
+  .t-side[data-slot="1"] {
+    --se-w: var(--se1-w-m);
+    --se-x: var(--se1-x-m);
+    --se-y: var(--se1-y-m);
+    --se-top: var(--se1-top-m);
+    --se-pull: var(--se1-pull-m);
+    --se-op: var(--se1-op);
+  }
+  .t-side[data-slot="2"] {
+    --se-w: var(--se2-w-m);
+    --se-x: var(--se2-x-m);
+    --se-y: var(--se2-y-m);
+    --se-top: var(--se2-top-m);
+    --se-pull: var(--se2-pull-m);
+    --se-op: var(--se2-op);
+  }
+  .t-side[data-side="left"] {
+    left: 0;
+    transform: translate(
+      calc(-1 * var(--se-x, 0%)),
+      calc(var(--se-pull, 0%) + var(--se-y, 0%))
+    );
+  }
+  .t-side[data-side="right"] {
+    right: 0;
+    transform: translate(
+      var(--se-x, 0%),
+      calc(var(--se-pull, 0%) + var(--se-y, 0%))
+    );
   }
 
   /* تموج الحواف — the wave is a MASK over a background LAYER, never over the
@@ -677,6 +739,20 @@ export const testimonialsStyles = css`
       --wv-bot: var(--wv-bot-d);
       padding-block: calc(var(--sp-top-d) + var(--wv-top))
         calc(var(--sp-bot-d) + var(--wv-bot));
+    }
+    .t-side[data-slot="1"] {
+      --se-w: var(--se1-w-d);
+      --se-x: var(--se1-x-d);
+      --se-y: var(--se1-y-d);
+      --se-top: var(--se1-top-d);
+      --se-pull: var(--se1-pull-d);
+    }
+    .t-side[data-slot="2"] {
+      --se-w: var(--se2-w-d);
+      --se-x: var(--se2-x-d);
+      --se-y: var(--se2-y-d);
+      --se-top: var(--se2-top-d);
+      --se-pull: var(--se2-pull-d);
     }
     .t-grid {
       grid-template-columns: repeat(var(--t-cols-desktop), minmax(0, 1fr));

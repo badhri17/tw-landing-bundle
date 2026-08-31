@@ -13,11 +13,11 @@
  *   so the per-ingredient hairline is not drawn.
  *
  * Placement is PHYSICAL (left/right of the product, never flipped by RTL), the
- * same convention `product-features` uses for its cards and
- * `interactive-product` uses for its hotspots: an ingredient stays on the side
- * the merchant put it on whatever the store language is. `side` carries over
- * into the circle layout as the HALF of the ring an ingredient orbits in, so
- * switching layouts preserves the arrangement instead of reshuffling it.
+ * same convention `product-features` uses for its cards: an ingredient stays
+ * on the side the merchant put it on whatever the store language is. `side`
+ * carries over into the circle layout as the HALF of the ring an ingredient
+ * orbits in, so switching layouts preserves the arrangement instead of
+ * reshuffling it.
  *
  * With no product image the two columns collapse into a plain responsive grid,
  * so a half-configured section still renders something sensible.

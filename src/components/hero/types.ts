@@ -14,7 +14,8 @@ export type HeroSplitSide = "left" | "right";
 export type HeroSplitRatio = "equal" | "media" | "content";
 export type HeroAlignH = "start" | "center" | "end";
 export type HeroAlignV = "top" | "middle" | "bottom";
-export type HeroOverlayStyle = "none" | "dark-bottom" | "dark-full" | "light-full" | "vignette";
+export type HeroOverlayStyle =
+  "none" | "dark-bottom" | "dark-full" | "light-full" | "vignette";
 export type HeroOverlayIntensity = "subtle" | "medium" | "strong";
 export type HeroTextTheme = "light" | "dark";
 export type HeroGradientType = "linear" | "radial" | "radial-corner" | "conic";
@@ -22,7 +23,8 @@ export type HeroGradientType = "linear" | "radial" | "radial-corner" | "conic";
 export type HeroBgFill = "solid" | "gradient";
 
 /** Value coming back from a Salla `multilanguage: true` field. */
-export type MaybeMultiLang = string | { ar?: string; en?: string } | null | undefined;
+export type MaybeMultiLang =
+  string | { ar?: string; en?: string } | null | undefined;
 
 /** One entry in the `trust_points` collection — a short reassurance line with a check icon. */
 export interface TrustPoint {
@@ -51,7 +53,6 @@ export type RawLinkValue =
 export type HeroNavTargetKind =
   | "hero"
   | "collection"
-  | "interactive-product"
   | "testimonials"
   | "metrics"
   | "product-features"
@@ -60,6 +61,8 @@ export type HeroNavTargetKind =
   | "use-cases"
   | "faq"
   | "comparison"
+  | "image-badges"
+  | "footer"
   | "custom"
   | "link";
 
@@ -69,7 +72,8 @@ export type HeroNavTargetKind =
  * question to answer once the links are gone, so a second (conditional) field
  * would buy nothing but another gate.
  */
-export type HeroNavLayout = "logo_links" | "logo_only_start" | "logo_only_center";
+export type HeroNavLayout =
+  "logo_links" | "logo_only_start" | "logo_only_center";
 
 /** One entry in the `nav_items` collection — a single link in the top navbar. */
 export interface HeroNavItem {
@@ -87,7 +91,7 @@ export interface HeroConfig {
   anchor_id?: string;
 
   // --- Top navbar ---
-  enable_nav?: boolean;          // off by default; the hero renders bare
+  enable_nav?: boolean; // off by default; the hero renders bare
   /**
    * Dropdown; defaults to "logo_only_center" — a landing page drives one
    * conversion, owned by the hero, so the bar ships as brand presence with no
@@ -96,12 +100,12 @@ export interface HeroConfig {
    * choosing "logo_links" brings them back with nothing lost.
    */
   nav_layout?: HeroNavLayout | Array<{ value?: string }> | string;
-  nav_logo?: string;             // image URL; falls back to nav_store_name
+  nav_logo?: string; // image URL; falls back to nav_store_name
   nav_store_name?: MaybeMultiLang;
-  nav_home_url?: string;         // where the logo points; default "#"
-  nav_items?: HeroNavItem[];     // up to 6 links
-  nav_show_cta?: boolean;        // mirror the hero's primary CTA into the bar
-  nav_border?: boolean;          // hairline under the bar
+  nav_home_url?: string; // where the logo points; default "#"
+  nav_items?: HeroNavItem[]; // up to 6 links
+  nav_show_cta?: boolean; // mirror the hero's primary CTA into the bar
+  nav_border?: boolean; // hairline under the bar
   /**
    * Pin the bar to the viewport so it follows the visitor down the whole page.
    * Defaults to OFF — read it as `=== true`, never `!== false`. While the hero is
@@ -110,8 +114,8 @@ export interface HeroConfig {
    * section is underneath.
    */
   nav_fixed?: boolean;
-  nav_scrolled_bg?: string;      // bar background once past the hero
-  nav_scrolled_color?: string;   // bar text/icons once past the hero
+  nav_scrolled_bg?: string; // bar background once past the hero
+  nav_scrolled_color?: string; // bar text/icons once past the hero
 
   // --- Background media (mobile / default) ---
   video_url?: string;
@@ -122,10 +126,10 @@ export interface HeroConfig {
   background_image_desktop?: string;
 
   // --- Background colour (fallback when no image/video) ---
-  bg_fill_type?: HeroBgFill;    // "solid" (default) | "gradient"
-  gradient_from?: string;       // the colour (solid) / the start stop (gradient)
-  gradient_to?: string;         // the end stop, only used in gradient mode
-  gradient_angle?: number;      // 0–360, default 135
+  bg_fill_type?: HeroBgFill; // "solid" (default) | "gradient"
+  gradient_from?: string; // the colour (solid) / the start stop (gradient)
+  gradient_to?: string; // the end stop, only used in gradient mode
+  gradient_angle?: number; // 0–360, default 135
   gradient_type?: HeroGradientType;
 
   // --- Overlay ---
@@ -133,41 +137,41 @@ export interface HeroConfig {
   overlay_intensity?: HeroOverlayIntensity;
 
   // --- Content ---
-  eyebrow?: MaybeMultiLang;      // small text above headline
-  headline?: MaybeMultiLang;     // required in practice
-  subtitle?: MaybeMultiLang;     // paragraph below headline
+  eyebrow?: MaybeMultiLang; // small text above headline
+  headline?: MaybeMultiLang; // required in practice
+  subtitle?: MaybeMultiLang; // paragraph below headline
 
   // --- Custom content colours (when enabled, override text_theme per element) ---
-  enable_custom_colors?: boolean;  // off → follow text_theme; on → use the colours below
-  title_color?: string;            // headline
-  eyebrow_color?: string;          // eyebrow
-  subtitle_color?: string;         // subtitle + trust points
-  button_bg_color?: string;        // filled CTA background
-  button_text_color?: string;      // CTA text/border
+  enable_custom_colors?: boolean; // off → follow text_theme; on → use the colours below
+  title_color?: string; // headline
+  eyebrow_color?: string; // eyebrow
+  subtitle_color?: string; // subtitle + trust points
+  button_bg_color?: string; // filled CTA background
+  button_text_color?: string; // CTA text/border
 
   // --- CTA ---
   primary_label?: MaybeMultiLang;
   primary_url?: string;
-  primary_outline?: boolean;     // default false → filled
+  primary_outline?: boolean; // default false → filled
 
   // --- Trust points (up to 3 short reassurance lines under the CTA) ---
   trust_points?: TrustPoint[];
 
   // --- Layout ---
   height_mobile?: HeroHeight;
-  height_desktop?: HeroHeightDesktop;  // "inherit" → use height_mobile on desktop too
+  height_desktop?: HeroHeightDesktop; // "inherit" → use height_mobile on desktop too
 
   // --- Desktop layout (≥768 px only; mobile always stays full background) ---
-  desktop_layout?: HeroDesktopLayout;  // "background" (default) | "split"
-  split_media_side?: HeroSplitSide;    // which side the media sits on in split mode
-  split_ratio?: HeroSplitRatio;        // column width distribution in split mode
-  split_content_bg?: string;           // optional bg colour of the content panel
-  split_text_theme?: HeroTextTheme;    // desktop split panel only; mobile uses text_theme
+  desktop_layout?: HeroDesktopLayout; // "background" (default) | "split"
+  split_media_side?: HeroSplitSide; // which side the media sits on in split mode
+  split_ratio?: HeroSplitRatio; // column width distribution in split mode
+  split_content_bg?: string; // optional bg colour of the content panel
+  split_text_theme?: HeroTextTheme; // desktop split panel only; mobile uses text_theme
 
   align_h?: HeroAlignH;
   align_v?: HeroAlignV;
   text_theme?: HeroTextTheme;
-  content_max_width?: number;    // px cap for the inner content block
+  content_max_width?: number; // px cap for the inner content block
 
   // --- Video behaviour ---
   video_autoplay?: boolean;
@@ -182,6 +186,6 @@ export interface HeroConfig {
 
   // --- Motion ---
   enable_entrance_anim?: boolean;
-  enable_ken_burns?: boolean;    // slow zoom on image
-  enable_parallax?: boolean;     // subtle scroll parallax
+  enable_ken_burns?: boolean; // slow zoom on image
+  enable_parallax?: boolean; // subtle scroll parallax
 }

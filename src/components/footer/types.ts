@@ -3,6 +3,7 @@ import type { MaybeMultiLang } from "../../shared/types";
 export type FooterSocialStyle = "filled" | "outline";
 export type FooterRadius = "none" | "soft" | "rounded";
 export type FooterSpacing = "compact" | "comfortable" | "airy";
+export type FooterLogoTone = "original" | "light";
 export type FinalCtaVerticalAlignment = "top" | "center" | "bottom";
 export type FinalCtaButtonStyle = "filled" | "outline";
 export type FinalCtaOverlayStyle =
@@ -29,6 +30,7 @@ export interface FooterConfig {
   final_cta_overlay_darkness?: number;
 
   logo?: string;
+  logo_tone?: FooterLogoTone;
   brand_name?: MaybeMultiLang;
   description?: MaybeMultiLang;
   copyright?: MaybeMultiLang;

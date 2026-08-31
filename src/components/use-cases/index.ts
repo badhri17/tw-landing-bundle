@@ -2,6 +2,10 @@ import { html, nothing } from "lit";
 import { property, state } from "lit/decorators.js";
 import { GrowthElement } from "../../shared/growth-element";
 import { resolveSectionSpacing } from "../../shared/section-spacing";
+import {
+  resolveSideElement,
+  type SideElementResolved,
+} from "../../shared/side-element";
 import type {
   UseCasesConfig,
   UseCaseItem,
@@ -314,7 +318,7 @@ export default class GrowthUseCases extends GrowthElement {
   // Render
   // ------------------------------------------------------------
 
-  private _hostStyle(c: UseCasesConfig): string {
+  private _hostStyle(c: UseCasesConfig, sideVars: string[]): string {
     const shareMobile = this._pickValue<UseCasesImageShare>(
       c.image_share,
       "md"
@@ -369,6 +373,7 @@ export default class GrowthUseCases extends GrowthElement {
       `--uc-stack-max:${clamp(this._num(c.stack_max_width, 860), 480, 1400)}px`,
       `--uc-scrim:${scrim}`,
       `--uc-dim:${dim}`,
+      ...sideVars,
       ...resolveSectionSpacing(
         c,
         (v, f) => this._pickValue(v, f),
@@ -506,10 +511,51 @@ export default class GrowthUseCases extends GrowthElement {
   render() {
     const c: UseCasesConfig = this.config || {};
     const items = this._items();
-    const hostStyle = this._hostStyle(c);
+    const sideConfig: UseCasesConfig = {
+      ...c,
+      side_visual_count: c.side_visual_count ?? "off",
+      side_depth: c.side_depth ?? "front",
+      side2_depth: c.side2_depth ?? "front",
+    };
+    const resolveSide = (slot: 1 | 2) =>
+      resolveSideElement(
+        sideConfig,
+        (v, f) => this._pickValue(v, f),
+        (v, f) => this._num(v, f),
+        slot,
+      );
+    const sides = [resolveSide(1), resolveSide(2)].filter(
+      (side): side is SideElementResolved => !!side,
+    );
+    const hostStyle = this._hostStyle(
+      c,
+      sides.flatMap((side) => side.vars),
+    );
+    const renderSide = (side: SideElementResolved, flow = false) => html`<img
+        class="uc-side"
+        src=${side.image}
+        alt=""
+        aria-hidden="true"
+        data-slot=${side.slot}
+        data-side=${side.side}
+        data-depth=${side.depth}
+        data-flow=${flow ? "true" : "false"}
+        decoding="async"
+        loading="lazy"
+      />`;
+    // A centred decoration is a deliberate between-sections composition (as
+    // in Solara), so it stays in document flow and cannot cover the last card.
+    // Edge decorations keep the usual absolute, overlapping treatment.
+    const floatingSideEls = sides
+      .filter((side) => side.side !== "center")
+      .map((side) => renderSide(side));
+    const centeredSideEls = sides
+      .filter((side) => side.side === "center")
+      .map((side) => renderSide(side, true));
 
     if (items.length === 0) {
       return html`<section class="uc" style=${hostStyle}>
+        ${floatingSideEls}
         <p class="uc-empty">
           ${
             this._lang() === "ar"
@@ -517,6 +563,7 @@ export default class GrowthUseCases extends GrowthElement {
               : "Add at least one card with a photo to display this section."
           }
         </p>
+        ${centeredSideEls}
       </section>`;
     }
 
@@ -540,7 +587,7 @@ export default class GrowthUseCases extends GrowthElement {
         : this._renderStack(c, items, anim, dir);
 
     return html`<section class="uc" style=${hostStyle}>
-      ${header}${body}
+      ${floatingSideEls}${header}${body}${centeredSideEls}
     </section>`;
   }
 

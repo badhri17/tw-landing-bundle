@@ -4,6 +4,10 @@ import { GrowthElement } from "../../shared/growth-element";
 import { resolveSectionSpacing } from "../../shared/section-spacing";
 import { resolveWaveEdges } from "../../shared/wave-edges";
 import type { WaveEdgesResolved } from "../../shared/wave-edges";
+import {
+  resolveSideElement,
+  type SideElementResolved,
+} from "../../shared/side-element";
 import type {
   TestimonialsConfig,
   TestimonialItem,
@@ -61,6 +65,8 @@ export default class GrowthTestimonials extends GrowthElement {
   private _onMqlChange?: () => void;
   private _autoplayTimer: number | null = null;
   private _scrollRaf: number | null = null;
+  private _initialCarouselRaf: number | null = null;
+  private _initialCarouselSeeded = false;
   private _interactionPaused = false;
   /** Whether the section is visible — carousel autoplay pauses while
       off-screen (the CSS side keys off the host attribute). */
@@ -151,8 +157,9 @@ export default class GrowthTestimonials extends GrowthElement {
     this._isDesktop = this._mql.matches;
     this._onMqlChange = () => {
       this._isDesktop = this._mql!.matches;
-      // Cards-per-view changed → re-clamp the active page.
-      this._carouselPage = 0;
+      // Reapply the intended opening composition after the cards-per-view
+      // changes: second card centred on mobile, first three visible on desktop.
+      this._initialCarouselSeeded = false;
     };
     this._mql.addEventListener("change", this._onMqlChange);
 
@@ -182,6 +189,8 @@ export default class GrowthTestimonials extends GrowthElement {
     this._io?.disconnect();
     this._io = null;
     if (this._scrollRaf) cancelAnimationFrame(this._scrollRaf);
+    if (this._initialCarouselRaf)
+      cancelAnimationFrame(this._initialCarouselRaf);
   }
 
   updated() {
@@ -191,6 +200,7 @@ export default class GrowthTestimonials extends GrowthElement {
 
     // (Re)wire autoplay whenever the render settles — config or state may change.
     this._teardownAutoplay();
+    this._scheduleInitialCarouselPosition();
     this._setupAutoplay();
   }
 
@@ -207,6 +217,49 @@ export default class GrowthTestimonials extends GrowthElement {
     return track
       ? Array.from(track.querySelectorAll<HTMLElement>(".t-carousel-cell"))
       : [];
+  }
+
+  /**
+   * Open the mobile carousel on its second card so both neighbours peek in.
+   * Desktop already shows three cards, making the second card the visual
+   * centre without scrolling. This is an internal composition choice rather
+   * than a merchant setting.
+   */
+  private _scheduleInitialCarouselPosition() {
+    if (this._initialCarouselSeeded || this._initialCarouselRaf) return;
+    const layout = this._pickValue<TestimonialsLayout>(
+      this.config?.layout,
+      "carousel"
+    );
+    if (layout !== "carousel" || this._items().length < 2) return;
+
+    this._initialCarouselRaf = requestAnimationFrame(() => {
+      this._initialCarouselRaf = null;
+      if (this._initialCarouselSeeded) return;
+
+      const track = this._track;
+      const cells = this._cells;
+      if (!track || track.clientWidth === 0 || cells.length < 2) return;
+
+      this._initialCarouselSeeded = true;
+      const page = this._isDesktop ? 0 : 1;
+      const target = cells[page];
+      const tr = track.getBoundingClientRect();
+      const cr = target.getBoundingClientRect();
+      const delta = this._isDesktop
+        ? this._isRtl()
+          ? cells[0].getBoundingClientRect().right - tr.right
+          : cells[0].getBoundingClientRect().left - tr.left
+        : cr.left + cr.width / 2 - (tr.left + tr.width / 2);
+
+      // The opening position should be present immediately, not animate in
+      // after the visitor has already seen the first card.
+      const previousBehavior = track.style.scrollBehavior;
+      track.style.scrollBehavior = "auto";
+      track.scrollLeft += delta;
+      track.style.scrollBehavior = previousBehavior;
+      this._carouselPage = page;
+    });
   }
 
   private _pageCount(total: number): number {
@@ -622,7 +675,8 @@ export default class GrowthTestimonials extends GrowthElement {
 
   private _buildHostStyle(
     c: TestimonialsConfig,
-    wave: WaveEdgesResolved
+    wave: WaveEdgesResolved,
+    sideVars: string[] = []
   ): string {
     const cols = this._resolveColumns();
     const cardRadius = this._num(c.card_radius, 20);
@@ -671,6 +725,7 @@ export default class GrowthTestimonials extends GrowthElement {
         (v, f) => this._pickValue(v, f),
       ),
       ...wave.vars,
+      ...sideVars,
     ];
     return parts.filter(Boolean).join("; ");
   }
@@ -704,7 +759,28 @@ export default class GrowthTestimonials extends GrowthElement {
     };
 
     const wave = resolveWaveEdges(c, (v, f) => this._pickValue(v, f));
-    const hostStyle = this._buildHostStyle(c, wave);
+    const sideConfig: TestimonialsConfig = {
+      ...c,
+      side_visual_count: c.side_visual_count ?? "off",
+      side_side: c.side_side ?? "right",
+      side_vpos: c.side_vpos ?? "top",
+      side_vpos_desktop: c.side_vpos_desktop ?? "inherit",
+    };
+    const resolveSide = (slot: 1 | 2) =>
+      resolveSideElement(
+        sideConfig,
+        (v, f) => this._pickValue(v, f),
+        (v, f) => this._num(v, f),
+        slot,
+      );
+    const sides = [resolveSide(1), resolveSide(2)].filter(
+      (side): side is SideElementResolved => !!side,
+    );
+    const hostStyle = this._buildHostStyle(
+      c,
+      wave,
+      sides.flatMap((side) => side.vars),
+    );
 
     const localizedEyebrow = this.localizedString(c.eyebrow);
     const localizedSectionTitle = this.localizedString(c.section_title);
@@ -772,7 +848,21 @@ export default class GrowthTestimonials extends GrowthElement {
         data-card=${cardStyle}
         data-anim=${enableAnim ? this._animState : "in"}
         data-hover-lift=${hoverLift ? "on" : "off"}
+        data-sides=${sides.length ? "on" : "off"}
       >
+        ${sides.map(
+          (side) => html`<img
+            class="t-side"
+            src=${side.image}
+            alt=""
+            aria-hidden="true"
+            data-slot=${side.slot}
+            data-side=${side.side}
+            data-depth=${side.depth}
+            decoding="async"
+            loading="lazy"
+          />`,
+        )}
         ${header}
         <div class="t-body-wrap">${body}</div>
       </section>

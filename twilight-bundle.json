@@ -219,11 +219,6 @@
                                     "key": "nt-col"
                                 },
                                 {
-                                    "label": "المنتج التفاعلي",
-                                    "value": "interactive-product",
-                                    "key": "nt-ip"
-                                },
-                                {
                                     "label": "آراء العملاء",
                                     "value": "testimonials",
                                     "key": "nt-tst"
@@ -262,6 +257,16 @@
                                     "label": "جدول المقارنة",
                                     "value": "comparison",
                                     "key": "target-comparison"
+                                },
+                                {
+                                    "label": "الشارات المصوّرة",
+                                    "value": "image-badges",
+                                    "key": "target-image-badges"
+                                },
+                                {
+                                    "label": "تذييل الصفحة",
+                                    "value": "footer",
+                                    "key": "target-footer"
                                 },
                                 {
                                     "label": "معرّف مخصص",
@@ -2363,751 +2368,6 @@
             ]
         },
         {
-            "title": "المنتج التفاعلي",
-            "icon": "sicon-touch-type",
-            "name": "interactive-product",
-            "key": "7d79f4d5-e8fe-40fe-bfc1-de16c4d002a7",
-            "image": "https://radaar.b-cdn.net/growth%20bundle/explore-product.gif",
-            "fields": [
-                {
-                    "type": "static",
-                    "format": "title",
-                    "id": "brand-header",
-                    "value": "<style>@keyframes gkDraw{0%{stroke-dashoffset:1;opacity:0}8%{opacity:1}55%{stroke-dashoffset:0;opacity:1}78%{stroke-dashoffset:0;opacity:1}100%{stroke-dashoffset:0;opacity:0}}.gk-line{stroke-dasharray:1;stroke-dashoffset:1;animation:gkDraw 5s ease-in-out infinite}@keyframes gkDotPop{0%,50%{opacity:0;transform:scale(.4)}58%,78%{opacity:1;transform:scale(1)}100%{opacity:0;transform:scale(.6)}}.gk-dot{transform-origin:center;transform-box:fill-box;animation:gkDotPop 5s ease-in-out infinite}</style><div style='position:relative;overflow:hidden;border-radius:16px;background:linear-gradient(180deg,#ffffff 0%,#f8f6ff 100%);border:1px solid rgba(98,65,217,.18);box-shadow:0 10px 28px rgba(34,20,80,.08);direction:rtl;font-weight:normal;margin-bottom:16px;'><div aria-hidden='true' style='position:absolute;top:-42px;left:50%;transform:translateX(-50%);width:300px;height:165px;background:radial-gradient(60% 70% at 50% 0%,rgba(98,65,217,.16),transparent 70%);pointer-events:none;'></div><div style='position:relative;display:flex;align-items:center;justify-content:center;padding:23px 20px 18px;border-bottom:1px solid rgba(98,65,217,.10);'><img src='/assets/brand/landing-logo.png' alt='صفحات النمو' style='display:block;width:210px;max-width:82%;height:auto;'></div><div style='position:relative;padding:15px 16px 16px;text-align:center;'><div style='font-size:13px;font-weight:700;line-height:1.8;color:#342663;'>حزمة عناصر مصمّمة خصيصًا لبناء صفحات هبوط سريعة وفعّالة.</div><a href='https://growthkit.growthstack-sa.com/' target='_blank' rel='noopener noreferrer' aria-label='اكتشف عناصر النمو' style='margin-top:13px;display:flex;align-items:center;justify-content:space-between;gap:14px;padding:12px 13px;border-radius:12px;background:#ffffff;border:1px solid rgba(98,65,217,.20);box-shadow:0 6px 18px rgba(51,35,108,.08);text-decoration:none;text-align:right;'><span style='min-width:0;display:flex;flex-direction:column;align-items:flex-start;gap:6px;'><span style='font-size:11.5px;font-weight:700;line-height:1.6;color:#6b7280;'>للمزيد من العناصر والتخصيصات المتقدمة</span><img src='https://growthkit.growthstack-sa.com/logo.png' alt='عناصر النمو' style='display:block;width:118px;max-width:100%;height:auto;'></span><span style='flex:0 0 auto;width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,#6b4de0,#4c2fb8);display:grid;place-items:center;color:#ffffff;box-shadow:0 6px 14px rgba(98,65,217,.24);'><svg width='15' height='15' viewBox='0 0 24 24' fill='none' aria-hidden='true'><path d='M19 12H5M11 18l-6-6 6-6' stroke='currentColor' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'></path></svg></span></a></div></div>",
-                    "variant": "h5"
-                },
-                {
-                    "type": "static",
-                    "format": "title",
-                    "id": "section-content",
-                    "value": "<div style='position:relative;overflow:hidden;display:flex;align-items:center;gap:10px;padding:13px 16px;border-radius:12px;background:radial-gradient(circle at left center,#6241d9 0%,#3b2878 35%,#160f2a 62%,#020204 100%);border:1px solid rgba(139,109,255,.28);direction:rtl;margin-bottom:18px;font-weight:bold;'><svg aria-hidden='true' style='position:absolute;inset:0;width:100%;height:100%;pointer-events:none;' viewBox='0 0 320 52' preserveAspectRatio='none'><polyline class='gk-line' pathLength='1' points='320,46 268,40 236,43 196,32 164,35 124,22 96,26 58,13 20,16' fill='none' stroke='rgba(160,133,255,.55)' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/><circle class='gk-dot' cx='20' cy='16' r='3' fill='#cabcff'/></svg><span style='position:relative;flex:0 0 auto;display:inline-flex;color:#cabcff;'><svg width='1.2em' height='1.2em' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M4 7V5h16v2M9 20h6M12 5v15'/></svg></span><span style='position:relative;font-size:17px;font-weight:700;color:#fff;'>المحتوى</span></div>",
-                    "variant": "h5"
-                },
-                {
-                    "type": "string",
-                    "icon": "sicon-typography",
-                    "id": "eyebrow",
-                    "label": "نص علوي",
-                    "format": "text",
-                    "multilanguage": true,
-                    "required": false,
-                    "placeholder": "مثل: هندسة مدروسة",
-                    "description": "نص صغير يظهر فوق العنوان الرئيسي.",
-                    "maxLength": 80
-                },
-                {
-                    "type": "string",
-                    "icon": "sicon-format-text-alt",
-                    "id": "section_title",
-                    "label": "العنوان الرئيسي",
-                    "format": "text",
-                    "multilanguage": true,
-                    "required": false,
-                    "value": "استكشف مميزات المنتج",
-                    "placeholder": "مثل: استكشف مميزات المنتج",
-                    "description": "يظهر فوق القسم. اتركه فارغًا لإخفائه.",
-                    "maxLength": 80
-                },
-                {
-                    "type": "string",
-                    "icon": "sicon-paragraph",
-                    "id": "section_subtitle",
-                    "label": "النص الوصفي",
-                    "format": "textarea",
-                    "multilanguage": true,
-                    "required": false,
-                    "value": "اضغط على المؤشرات على الصورة للتعرف على كل ميزة.",
-                    "placeholder": "جملة قصيرة تشرح للزائر كيف يتفاعل مع الصورة.",
-                    "maxLength": 200
-                },
-                {
-                    "type": "static",
-                    "format": "line",
-                    "id": "divider-1"
-                },
-                {
-                    "type": "static",
-                    "format": "title",
-                    "id": "section-image",
-                    "value": "<div style='position:relative;overflow:hidden;display:flex;align-items:center;gap:10px;padding:13px 16px;border-radius:12px;background:radial-gradient(circle at left center,#6241d9 0%,#3b2878 35%,#160f2a 62%,#020204 100%);border:1px solid rgba(139,109,255,.28);direction:rtl;margin-bottom:18px;font-weight:bold;'><svg aria-hidden='true' style='position:absolute;inset:0;width:100%;height:100%;pointer-events:none;' viewBox='0 0 320 52' preserveAspectRatio='none'><polyline class='gk-line' pathLength='1' points='320,46 268,40 236,43 196,32 164,35 124,22 96,26 58,13 20,16' fill='none' stroke='rgba(160,133,255,.55)' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/><circle class='gk-dot' cx='20' cy='16' r='3' fill='#cabcff'/></svg><span style='position:relative;flex:0 0 auto;display:inline-flex;color:#cabcff;'><svg width='1.2em' height='1.2em' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><rect x='3' y='3' width='18' height='18' rx='2.5'/><circle cx='9' cy='9' r='2'/><path d='M21 15l-4.5-4.5L6 21'/></svg></span><span style='position:relative;font-size:17px;font-weight:700;color:#fff;'>الصورة والمؤشرات</span></div>",
-                    "variant": "h5"
-                },
-                {
-                    "type": "static",
-                    "format": "description",
-                    "id": "image-note",
-                    "value": "<div style='background-color:#6036c11f;color:#6036C1;padding:12px 16px;border-radius:8px;margin-bottom:14px;font-size:13px;line-height:1.7;'>ارفع صورة المنتج، ثم أضف <strong>مؤشرات</strong> فوقها. يُحدَّد موضع كل مؤشر بنسبة مئوية بالنسبة للصورة:<br/>• <strong>الموضع الأفقي</strong>: ٠٪ = أقصى اليسار، ١٠٠٪ = أقصى اليمين.<br/>• <strong>الموضع العمودي</strong>: ٠٪ = الأعلى، ١٠٠٪ = الأسفل.<br/>المواضع تتبع الصورة نفسها ولا تتأثر باتجاه الصفحة. جرّب القيم وعاين النتيجة مباشرة.</div>"
-                },
-                {
-                    "type": "string",
-                    "icon": "sicon-image",
-                    "id": "product_image",
-                    "label": "صورة المنتج",
-                    "format": "image",
-                    "required": false,
-                    "description": "الصورة الكبيرة التي توضع عليها المؤشرات. يُفضّل صورة عالية الدقة بخلفية واضحة. تتبع الصورة أبعادها الطبيعية لضمان دقة مواضع المؤشرات.",
-                    "value": "https://cdn.files.salla.network/homepage/1333909099/9a7a2e49-46e5-412d-88ef-951e341bc2c4.webp"
-                },
-                {
-                    "id": "hotspots",
-                    "type": "collection",
-                    "format": "collection",
-                    "required": true,
-                    "minLength": 1,
-                    "maxLength": 12,
-                    "item_label": "مؤشر",
-                    "description": "كل مؤشر يظهر كرقم على الصورة، وعند الضغط عليه تتحدّث بطاقة التفاصيل بصورته وعنوانه ووصفه.",
-                    "value": [
-                        {
-                            "image": "https://cdn.files.salla.network/homepage/1333909099/0cac11ab-f189-4ea3-841f-d629a7b42e43.webp",
-                            "title": "تحكم كامل في حرارة الفحم بـ ٥ مستويات",
-                            "description": "ارفع أو خفّض سلة الفحم بسهولة من خلال ذراع التعديل الجانبي، عشان تضبط حرارة الشوي حسب نوع اللحم والوقت المتاح بدون ما تفتح الغطاء بالكامل.",
-                            "x": 77,
-                            "y": 40
-                        },
-                        {
-                            "image": "https://cdn.files.salla.network/homepage/1333909099/16114e9b-cda3-43a9-b6da-c47e438b75df.webp",
-                            "title": "باب أمامي لإدارة الفحم أثناء الشواء",
-                            "description": "باب أمامي يتيح لك زيادة الفحم أو تقليله أثناء الشواء بدون ما ترفع الشبك — تحكم أسرع وحرارة أدق.",
-                            "x": 50,
-                            "y": 45
-                        },
-                        {
-                            "image": "https://cdn.files.salla.network/homepage/1333909099/d9bd1e50-634f-4499-92c0-56e31fecc526.webp",
-                            "title": "شبك واسع ومساحة شواء أكبر",
-                            "description": "شبك واسع يساعدك تشوي كميات أكثر بشكل متوازن مع توزيع حرارة أفضل داخل الشواية.",
-                            "x": 55,
-                            "y": 22
-                        },
-                        {
-                            "image": "https://cdn.files.salla.network/homepage/1333909099/532ca894-58ea-42a4-8718-70991a744dbb.webp",
-                            "title": "رف جانبي عملي للتحضير والتقديم",
-                            "description": "رف جانبي ثابت لوضع الأدوات، التتبيلة، الصحون — يخليك مرتّب وسريع أثناء الشواء.",
-                            "x": 20,
-                            "y": 40
-                        },
-                        {
-                            "image": "https://cdn.files.salla.network/homepage/1333909099/fe952c11-7f54-4f43-833f-a26069ec37b5.webp",
-                            "title": "عجلات قوية وتخزين سفلي",
-                            "description": "سهولة نقل الشواية + مساحة تخزين سفلية لأكياس الفحم والأدوات.",
-                            "x": 78,
-                            "y": 82
-                        }
-                    ],
-                    "fields": [
-                        {
-                            "type": "string",
-                            "icon": "sicon-image",
-                            "id": "image",
-                            "label": "صورة الميزة",
-                            "format": "image",
-                            "required": false,
-                            "description": "تظهر في بطاقة التفاصيل عند تحديد هذا المؤشر."
-                        },
-                        {
-                            "type": "string",
-                            "icon": "sicon-format-text-alt",
-                            "id": "title",
-                            "label": "عنوان الميزة",
-                            "format": "text",
-                            "multilanguage": true,
-                            "required": false,
-                            "placeholder": "مثل: تحكم في الحرارة",
-                            "maxLength": 80
-                        },
-                        {
-                            "type": "string",
-                            "icon": "sicon-paragraph",
-                            "id": "description",
-                            "label": "وصف الميزة",
-                            "format": "textarea",
-                            "multilanguage": true,
-                            "required": false,
-                            "placeholder": "شرح مختصر يظهر في بطاقة التفاصيل.",
-                            "maxLength": 320
-                        },
-                        {
-                            "type": "number",
-                            "format": "integer",
-                            "id": "x",
-                            "label": "الموضع الأفقي (٪)",
-                            "required": false,
-                            "minimum": 0,
-                            "maximum": 100,
-                            "value": 50,
-                            "description": "٠٪ = أقصى اليسار، ١٠٠٪ = أقصى اليمين."
-                        },
-                        {
-                            "type": "number",
-                            "format": "integer",
-                            "id": "y",
-                            "label": "الموضع العمودي (٪)",
-                            "required": false,
-                            "minimum": 0,
-                            "maximum": 100,
-                            "value": 50,
-                            "description": "٠٪ = الأعلى، ١٠٠٪ = الأسفل."
-                        }
-                    ]
-                },
-                {
-                    "type": "static",
-                    "format": "line",
-                    "id": "divider-2"
-                },
-                {
-                    "type": "static",
-                    "format": "title",
-                    "id": "section-display",
-                    "value": "<div style='position:relative;overflow:hidden;display:flex;align-items:center;gap:10px;padding:13px 16px;border-radius:12px;background:radial-gradient(circle at left center,#6241d9 0%,#3b2878 35%,#160f2a 62%,#020204 100%);border:1px solid rgba(139,109,255,.28);direction:rtl;margin-bottom:18px;font-weight:bold;'><svg aria-hidden='true' style='position:absolute;inset:0;width:100%;height:100%;pointer-events:none;' viewBox='0 0 320 52' preserveAspectRatio='none'><polyline class='gk-line' pathLength='1' points='320,46 268,40 236,43 196,32 164,35 124,22 96,26 58,13 20,16' fill='none' stroke='rgba(160,133,255,.55)' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/><circle class='gk-dot' cx='20' cy='16' r='3' fill='#cabcff'/></svg><span style='position:relative;flex:0 0 auto;display:inline-flex;color:#cabcff;'><svg width='1.2em' height='1.2em' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><rect x='3' y='3' width='18' height='18' rx='2'/><path d='M3 9h18M9 21V9'/></svg></span><span style='position:relative;font-size:17px;font-weight:700;color:#fff;'>طريقة العرض</span></div>",
-                    "variant": "h5"
-                },
-                {
-                    "type": "boolean",
-                    "icon": "sicon-toggle-off",
-                    "id": "reverse_layout",
-                    "label": "عكس الترتيب (التفاصيل قبل الصورة)",
-                    "description": "على الشاشات الكبيرة فقط. افتراضيًا تظهر الصورة في جهة البداية والتفاصيل في جهة النهاية.",
-                    "format": "switch",
-                    "selected": false,
-                    "required": false,
-                    "value": false
-                },
-                {
-                    "type": "items",
-                    "icon": "sicon-keyboard_arrow_down",
-                    "id": "hotspot_size",
-                    "label": "حجم المؤشرات",
-                    "format": "dropdown-list",
-                    "source": "Manual",
-                    "required": false,
-                    "selected": [
-                        {
-                            "label": "متوسط",
-                            "value": "medium",
-                            "key": "hs-m"
-                        }
-                    ],
-                    "options": [
-                        {
-                            "label": "صغير",
-                            "value": "small",
-                            "key": "hs-s"
-                        },
-                        {
-                            "label": "متوسط",
-                            "value": "medium",
-                            "key": "hs-m"
-                        },
-                        {
-                            "label": "كبير",
-                            "value": "large",
-                            "key": "hs-l"
-                        }
-                    ],
-                    "value": "medium"
-                },
-                {
-                    "type": "items",
-                    "icon": "sicon-keyboard_arrow_down",
-                    "id": "detail_image_aspect",
-                    "label": "مقاس صورة البطاقة",
-                    "format": "dropdown-list",
-                    "source": "Manual",
-                    "required": false,
-                    "description": "نسبة أبعاد الصورة داخل بطاقة التفاصيل.",
-                    "selected": [
-                        {
-                            "label": "أفقي 4:3",
-                            "value": "4/3",
-                            "key": "da-43"
-                        }
-                    ],
-                    "options": [
-                        {
-                            "label": "أفقي 16:9",
-                            "value": "16/9",
-                            "key": "da-169"
-                        },
-                        {
-                            "label": "أفقي 4:3",
-                            "value": "4/3",
-                            "key": "da-43"
-                        },
-                        {
-                            "label": "مربع 1:1",
-                            "value": "1/1",
-                            "key": "da-11"
-                        },
-                        {
-                            "label": "عمودي 3:4",
-                            "value": "3/4",
-                            "key": "da-34"
-                        },
-                        {
-                            "label": "حسب الصورة (بدون قص)",
-                            "value": "natural",
-                            "key": "da-nat"
-                        }
-                    ],
-                    "value": "4/3"
-                },
-                {
-                    "type": "items",
-                    "icon": "sicon-keyboard_arrow_down",
-                    "id": "card_size",
-                    "label": "حجم بطاقة التفاصيل",
-                    "format": "dropdown-list",
-                    "source": "Manual",
-                    "required": false,
-                    "description": "في الجوال حجم البطاقة ثابت لكن حجم المحتوى داخلها يتغير",
-                    "selected": [
-                        {
-                            "label": "متوسطة",
-                            "value": "medium",
-                            "key": "cs-md"
-                        }
-                    ],
-                    "options": [
-                        {
-                            "label": "صغيرة",
-                            "value": "small",
-                            "key": "cs-sm"
-                        },
-                        {
-                            "label": "متوسطة",
-                            "value": "medium",
-                            "key": "cs-md"
-                        },
-                        {
-                            "label": "كبيرة",
-                            "value": "large",
-                            "key": "cs-lg"
-                        }
-                    ],
-                    "value": "medium"
-                },
-                {
-                    "type": "items",
-                    "icon": "sicon-keyboard_arrow_down",
-                    "id": "detail_media_width",
-                    "label": "عرض صورة الميزة",
-                    "format": "dropdown-list",
-                    "source": "Manual",
-                    "required": false,
-                    "description": "تحكّم بعرض صورة الميزة داخل البطاقة. «كبير» يعرض الصورة بعرض واسع لكن مع هامش بسيط على الجانبين، وتصغر تدريجيًا مع «متوسط» و«صغير». تُحاذى الصورة في المنتصف دائمًا.",
-                    "selected": [
-                        {
-                            "label": "متوسط",
-                            "value": "medium",
-                            "key": "mw-md"
-                        }
-                    ],
-                    "options": [
-                        {
-                            "label": "كبير",
-                            "value": "large",
-                            "key": "mw-lg"
-                        },
-                        {
-                            "label": "متوسط",
-                            "value": "medium",
-                            "key": "mw-md"
-                        },
-                        {
-                            "label": "صغير",
-                            "value": "small",
-                            "key": "mw-sm"
-                        }
-                    ],
-                    "value": "medium"
-                },
-                {
-                    "type": "items",
-                    "icon": "sicon-keyboard_arrow_down",
-                    "id": "content_align",
-                    "label": "محاذاة محتوى البطاقة",
-                    "format": "dropdown-list",
-                    "source": "Manual",
-                    "required": false,
-                    "description": "محاذاة العنوان والوصف وأرقام التنقل داخل البطاقة (الصورة تبقى في المنتصف دائمًا). «بداية» تعني جهة بداية الكتابة (يمين في العربية).",
-                    "selected": [
-                        {
-                            "label": "بداية",
-                            "value": "start",
-                            "key": "ca-start"
-                        }
-                    ],
-                    "options": [
-                        {
-                            "label": "بداية",
-                            "value": "start",
-                            "key": "ca-start"
-                        },
-                        {
-                            "label": "توسيط",
-                            "value": "center",
-                            "key": "ca-ctr"
-                        },
-                        {
-                            "label": "نهاية",
-                            "value": "end",
-                            "key": "ca-end"
-                        }
-                    ],
-                    "value": "start"
-                },
-                {
-                    "type": "boolean",
-                    "icon": "sicon-toggle-off",
-                    "id": "enable_pulse",
-                    "label": "نبض حول المؤشرات",
-                    "description": "حلقة متموّجة تلفت الانتباه للمؤشرات غير المحددة.",
-                    "format": "switch",
-                    "selected": true,
-                    "required": false,
-                    "value": true
-                },
-                {
-                    "type": "boolean",
-                    "icon": "sicon-toggle-off",
-                    "id": "show_pills",
-                    "label": "إظهار أرقام التنقل في البطاقة",
-                    "description": "أزرار مرقّمة أسفل البطاقة للتنقل بين المميزات.",
-                    "format": "switch",
-                    "selected": true,
-                    "required": false,
-                    "value": true
-                },
-                {
-                    "type": "boolean",
-                    "icon": "sicon-toggle-off",
-                    "id": "autoplay",
-                    "label": "تشغيل تلقائي للمؤشرات",
-                    "description": "ينتقل تلقائيًا بين المميزات، ويتوقف عند تفاعل الزائر.",
-                    "format": "switch",
-                    "selected": false,
-                    "required": false,
-                    "value": false
-                },
-                {
-                    "type": "items",
-                    "icon": "sicon-keyboard_arrow_down",
-                    "id": "autoplay_delay",
-                    "label": "مدة كل ميزة (بالثواني)",
-                    "format": "dropdown-list",
-                    "source": "Manual",
-                    "required": false,
-                    "description": "تُستخدم فقط عند تفعيل التشغيل التلقائي.",
-                    "selected": [
-                        {
-                            "label": "٥ ثوانٍ",
-                            "value": "5",
-                            "key": "ad-5"
-                        }
-                    ],
-                    "options": [
-                        {
-                            "label": "٣ ثوانٍ",
-                            "value": "3",
-                            "key": "ad-3"
-                        },
-                        {
-                            "label": "٥ ثوانٍ",
-                            "value": "5",
-                            "key": "ad-5"
-                        },
-                        {
-                            "label": "٧ ثوانٍ",
-                            "value": "7",
-                            "key": "ad-7"
-                        }
-                    ],
-                    "conditions": [
-                        {
-                            "id": "autoplay",
-                            "operation": "=",
-                            "value": true
-                        }
-                    ],
-                    "value": "5"
-                },
-                {
-                    "type": "static",
-                    "format": "line",
-                    "id": "divider-3"
-                },
-                {
-                    "type": "static",
-                    "format": "title",
-                    "id": "section-motion",
-                    "value": "<div style='position:relative;overflow:hidden;display:flex;align-items:center;gap:10px;padding:13px 16px;border-radius:12px;background:radial-gradient(circle at left center,#6241d9 0%,#3b2878 35%,#160f2a 62%,#020204 100%);border:1px solid rgba(139,109,255,.28);direction:rtl;margin-bottom:18px;font-weight:bold;'><svg aria-hidden='true' style='position:absolute;inset:0;width:100%;height:100%;pointer-events:none;' viewBox='0 0 320 52' preserveAspectRatio='none'><polyline class='gk-line' pathLength='1' points='320,46 268,40 236,43 196,32 164,35 124,22 96,26 58,13 20,16' fill='none' stroke='rgba(160,133,255,.55)' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/><circle class='gk-dot' cx='20' cy='16' r='3' fill='#cabcff'/></svg><span style='position:relative;flex:0 0 auto;display:inline-flex;color:#cabcff;'><svg width='1.2em' height='1.2em' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><circle cx='12' cy='12' r='10'/><path d='M10 8l6 4-6 4V8z'/></svg></span><span style='position:relative;font-size:17px;font-weight:700;color:#fff;'>الحركة</span></div>",
-                    "variant": "h5"
-                },
-                {
-                    "type": "boolean",
-                    "icon": "sicon-toggle-off",
-                    "id": "enable_entrance_anim",
-                    "label": "تفعيل حركة الظهور",
-                    "description": "ظهور متدرّج للعنوان والصورة والبطاقة مع بروز المؤشرات. عند الإيقاف يظهر القسم مباشرة.",
-                    "format": "switch",
-                    "selected": true,
-                    "required": false,
-                    "value": true
-                },
-                {
-                    "type": "static",
-                    "format": "line",
-                    "id": "divider-4"
-                },
-                {
-                    "type": "static",
-                    "format": "title",
-                    "id": "section-colors",
-                    "value": "<div style='position:relative;overflow:hidden;display:flex;align-items:center;gap:10px;padding:13px 16px;border-radius:12px;background:radial-gradient(circle at left center,#6241d9 0%,#3b2878 35%,#160f2a 62%,#020204 100%);border:1px solid rgba(139,109,255,.28);direction:rtl;margin-bottom:18px;font-weight:bold;'><svg aria-hidden='true' style='position:absolute;inset:0;width:100%;height:100%;pointer-events:none;' viewBox='0 0 320 52' preserveAspectRatio='none'><polyline class='gk-line' pathLength='1' points='320,46 268,40 236,43 196,32 164,35 124,22 96,26 58,13 20,16' fill='none' stroke='rgba(160,133,255,.55)' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/><circle class='gk-dot' cx='20' cy='16' r='3' fill='#cabcff'/></svg><span style='position:relative;flex:0 0 auto;display:inline-flex;color:#cabcff;'><svg width='1.2em' height='1.2em' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><circle cx='13.5' cy='6.5' r='.7' fill='currentColor' stroke='none'/><circle cx='17' cy='10.5' r='.7' fill='currentColor' stroke='none'/><circle cx='8' cy='7.5' r='.7' fill='currentColor' stroke='none'/><circle cx='6.5' cy='12.5' r='.7' fill='currentColor' stroke='none'/><path d='M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.93 0 1.65-.75 1.65-1.69 0-.44-.18-.83-.44-1.12-.29-.29-.44-.65-.44-1.13a1.64 1.64 0 0 1 1.67-1.67h2c3.05 0 5.55-2.5 5.55-5.55C21.97 6.01 17.46 2 12 2z'/></svg></span><span style='position:relative;font-size:17px;font-weight:700;color:#fff;'>الألوان</span></div>",
-                    "variant": "h5"
-                },
-                {
-                    "type": "items",
-                    "icon": "sicon-keyboard_arrow_down",
-                    "id": "theme",
-                    "label": "نمط الألوان",
-                    "format": "dropdown-list",
-                    "source": "Manual",
-                    "required": false,
-                    "description": "يحدد لوحة الألوان الأساسية. أي لون تختاره أدناه يتجاوز هذا النمط.",
-                    "selected": [
-                        {
-                            "label": "فاتح",
-                            "value": "light",
-                            "key": "th-l"
-                        }
-                    ],
-                    "options": [
-                        {
-                            "label": "فاتح",
-                            "value": "light",
-                            "key": "th-l"
-                        },
-                        {
-                            "label": "داكن",
-                            "value": "dark",
-                            "key": "th-d"
-                        }
-                    ],
-                    "value": "light"
-                },
-                {
-                    "type": "string",
-                    "format": "color",
-                    "inputType": "color",
-                    "id": "bg_color",
-                    "label": "لون خلفية القسم",
-                    "icon": "sicon-format-fill",
-                    "required": false
-                },
-                {
-                    "type": "string",
-                    "format": "color",
-                    "inputType": "color",
-                    "id": "title_color",
-                    "label": "لون العنوان",
-                    "icon": "sicon-color-palette",
-                    "required": false
-                },
-                {
-                    "type": "string",
-                    "format": "color",
-                    "inputType": "color",
-                    "id": "subtitle_color",
-                    "label": "لون النص الوصفي",
-                    "icon": "sicon-color-palette",
-                    "required": false
-                },
-                {
-                    "type": "string",
-                    "format": "color",
-                    "inputType": "color",
-                    "id": "accent_color",
-                    "label": "اللون المميز (المؤشرات والأزرار)",
-                    "icon": "sicon-color-palette",
-                    "required": false,
-                    "value": "#d95e16"
-                },
-                {
-                    "type": "string",
-                    "format": "color",
-                    "inputType": "color",
-                    "id": "card_bg",
-                    "label": "لون خلفية البطاقة",
-                    "icon": "sicon-format-fill",
-                    "required": false
-                },
-                {
-                    "type": "string",
-                    "format": "color",
-                    "inputType": "color",
-                    "id": "card_title_color",
-                    "label": "لون عنوان البطاقة",
-                    "icon": "sicon-color-palette",
-                    "required": false
-                },
-                {
-                    "type": "string",
-                    "format": "color",
-                    "inputType": "color",
-                    "id": "card_text_color",
-                    "label": "لون نص البطاقة",
-                    "icon": "sicon-color-palette",
-                    "required": false
-                },
-                {
-                    "type": "string",
-                    "format": "color",
-                    "inputType": "color",
-                    "id": "marker_bg",
-                    "label": "لون خلفية المؤشر",
-                    "icon": "sicon-format-fill",
-                    "required": false
-                },
-                {
-                    "type": "static",
-                    "format": "title",
-                    "id": "section-interactive-product-space",
-                    "value": "<div style='position:relative;overflow:hidden;display:flex;align-items:center;gap:10px;padding:13px 16px;border-radius:12px;background:radial-gradient(circle at left center,#6241d9 0%,#3b2878 35%,#160f2a 62%,#020204 100%);border:1px solid rgba(139,109,255,.28);direction:rtl;margin-bottom:18px;font-weight:bold;'><svg aria-hidden='true' style='position:absolute;inset:0;width:100%;height:100%;pointer-events:none;' viewBox='0 0 320 52' preserveAspectRatio='none'><polyline class='gk-line' pathLength='1' points='320,46 268,40 236,43 196,32 164,35 124,22 96,26 58,13 20,16' fill='none' stroke='rgba(160,133,255,.55)' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/><circle class='gk-dot' cx='20' cy='16' r='3' fill='#cabcff'/></svg><span style='position:relative;flex:0 0 auto;display:inline-flex;color:#cabcff;'><svg width='1.2em' height='1.2em' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M12 3v18M8 6l4-3 4 3M8 18l4 3 4-3'/></svg></span><span style='position:relative;font-size:17px;font-weight:700;color:#fff;'>المسافات حول القسم</span></div>"
-                },
-                {
-                    "type": "static",
-                    "format": "description",
-                    "id": "interactive-product-space-note",
-                    "value": "<div style='display:flex;gap:10px;background-color:#6036c11f;color:#6036C1;padding:12px 16px;border-radius:8px;margin-bottom:14px;font-size:13px;line-height:1.7;direction:rtl;'><span>المسافة الفاضية فوق القسم وتحته. الدرجة نفسها تكبر تلقائيًا على سطح المكتب، فما تحتاج تظبطها مرتين. <strong>لاحظ:</strong> المسافة الظاهرة بين قسمين = «تحت» الأول + «فوق» الثاني، فإذا تبي قسمين ملتصقين خلّ واحدة منهم «بدون».</span></div>"
-                },
-                {
-                    "type": "items",
-                    "icon": "sicon-keyboard_arrow_down",
-                    "id": "space_top",
-                    "label": "المسافة فوق القسم",
-                    "format": "dropdown-list",
-                    "source": "Manual",
-                    "required": false,
-                    "selected": [
-                        {
-                            "label": "متوسطة",
-                            "value": "md",
-                            "key": "space_top-md"
-                        }
-                    ],
-                    "options": [
-                        {
-                            "label": "بدون",
-                            "value": "none",
-                            "key": "space_top-none"
-                        },
-                        {
-                            "label": "ضيقة",
-                            "value": "xs",
-                            "key": "space_top-xs"
-                        },
-                        {
-                            "label": "صغيرة",
-                            "value": "sm",
-                            "key": "space_top-sm"
-                        },
-                        {
-                            "label": "متوسطة",
-                            "value": "md",
-                            "key": "space_top-md"
-                        },
-                        {
-                            "label": "كبيرة",
-                            "value": "lg",
-                            "key": "space_top-lg"
-                        },
-                        {
-                            "label": "كبيرة جدًا",
-                            "value": "xl",
-                            "key": "space_top-xl"
-                        }
-                    ],
-                    "description": "المسافة الفاضية فوق محتوى القسم.",
-                    "value": "md"
-                },
-                {
-                    "type": "items",
-                    "icon": "sicon-keyboard_arrow_down",
-                    "id": "space_bottom",
-                    "label": "المسافة تحت القسم",
-                    "format": "dropdown-list",
-                    "source": "Manual",
-                    "required": false,
-                    "selected": [
-                        {
-                            "label": "متوسطة",
-                            "value": "md",
-                            "key": "space_bottom-md"
-                        }
-                    ],
-                    "options": [
-                        {
-                            "label": "بدون",
-                            "value": "none",
-                            "key": "space_bottom-none"
-                        },
-                        {
-                            "label": "ضيقة",
-                            "value": "xs",
-                            "key": "space_bottom-xs"
-                        },
-                        {
-                            "label": "صغيرة",
-                            "value": "sm",
-                            "key": "space_bottom-sm"
-                        },
-                        {
-                            "label": "متوسطة",
-                            "value": "md",
-                            "key": "space_bottom-md"
-                        },
-                        {
-                            "label": "كبيرة",
-                            "value": "lg",
-                            "key": "space_bottom-lg"
-                        },
-                        {
-                            "label": "كبيرة جدًا",
-                            "value": "xl",
-                            "key": "space_bottom-xl"
-                        }
-                    ],
-                    "description": "المسافة الفاضية تحت محتوى القسم.",
-                    "value": "md"
-                },
-                {
-                    "type": "static",
-                    "format": "title",
-                    "id": "section-anchor-interactive-product",
-                    "value": "<div style='position:relative;overflow:hidden;display:flex;align-items:center;gap:10px;padding:13px 16px;border-radius:12px;background:radial-gradient(circle at left center,#6241d9 0%,#3b2878 35%,#160f2a 62%,#020204 100%);border:1px solid rgba(139,109,255,.28);direction:rtl;margin-bottom:18px;font-weight:bold;'><svg aria-hidden='true' style='position:absolute;inset:0;width:100%;height:100%;pointer-events:none;' viewBox='0 0 320 52' preserveAspectRatio='none'><polyline class='gk-line' pathLength='1' points='320,46 268,40 236,43 196,32 164,35 124,22 96,26 58,13 20,16' fill='none' stroke='rgba(160,133,255,.55)' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/><circle class='gk-dot' cx='20' cy='16' r='3' fill='#cabcff'/></svg><span style='position:relative;flex:0 0 auto;display:inline-flex;color:#cabcff;'><svg width='1.2em' height='1.2em' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><circle cx='12' cy='5' r='3'/><path d='M12 22V8M5 12H2a10 10 0 0 0 20 0h-3'/></svg></span><span style='position:relative;font-size:17px;font-weight:700;color:#fff;'>الربط من القائمة</span></div>",
-                    "variant": "h6"
-                },
-                {
-                    "type": "static",
-                    "format": "description",
-                    "id": "anchor-note-interactive-product",
-                    "value": "<div style='background-color:#6036c11f;color:#6036C1;padding:12px 16px;border-radius:8px;margin-bottom:14px;font-size:13px;line-height:1.7;'>يمنح هذا القسم <strong>معرّفًا</strong> تستطيع قائمة الهيرو العلوية الانتقال إليه. اتركه فارغًا لاستخدام المعرّف الافتراضي <code>interactive-product</code>. غيّره فقط إذا كان لديك أكثر من نسخة من هذا القسم في نفس الصفحة.</div>"
-                },
-                {
-                    "type": "string",
-                    "icon": "sicon-link",
-                    "id": "anchor_id",
-                    "label": "معرّف القسم",
-                    "format": "text",
-                    "required": false,
-                    "placeholder": "interactive-product",
-                    "maxLength": 40
-                }
-            ]
-        },
-        {
             "title": "آراء العملاء",
             "icon": "sicon-quote",
             "name": "testimonials",
@@ -3872,6 +3132,704 @@
                             "id": "layout",
                             "operation": "=",
                             "value": "carousel"
+                        }
+                    ]
+                },
+                {
+                    "type": "static",
+                    "format": "title",
+                    "id": "section-tst-side",
+                    "value": "<div style='position:relative;overflow:hidden;display:flex;align-items:center;gap:10px;padding:13px 16px;border-radius:12px;background:radial-gradient(circle at left center,#6241d9 0%,#3b2878 35%,#160f2a 62%,#020204 100%);border:1px solid rgba(139,109,255,.28);direction:rtl;margin-bottom:18px;font-weight:bold;'><svg aria-hidden='true' style='position:absolute;inset:0;width:100%;height:100%;pointer-events:none;' viewBox='0 0 320 52' preserveAspectRatio='none'><polyline class='gk-line' pathLength='1' points='320,46 268,40 236,43 196,32 164,35 124,22 96,26 58,13 20,16' fill='none' stroke='rgba(160,133,255,.55)' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/><circle class='gk-dot' cx='20' cy='16' r='3' fill='#cabcff'/></svg><span style='position:relative;flex:0 0 auto;display:inline-flex;color:#cabcff;'><svg width='1.2em' height='1.2em' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><rect x='3' y='3' width='18' height='18' rx='2'/><circle cx='8.5' cy='8.5' r='1.5'/><path d='m21 15-5-5L5 21'/></svg></span><span style='position:relative;font-size:17px;font-weight:700;color:#fff;'>عنصر بصري جانبي</span></div>",
+                    "variant": "h6"
+                },
+                {
+                    "type": "static",
+                    "format": "description",
+                    "id": "tst-side-note",
+                    "value": "<div style='display:flex;gap:10px;background-color:#fff5e6;color:#8a5200;border:1px solid #ffd899;padding:12px 16px;border-radius:8px;margin-bottom:14px;font-size:13px;line-height:1.7;direction:rtl;'><span><strong>زخرفة اختيارية على طرف القسم</strong> — صورة بخلفية شفافة (PNG) مثل غصن ورد، ورقة، قطعة قماش، أو زجاجة المنتج. تظهر دائمًا خلف صور المعرض وفوق الخلفية فقط. اتركها فاضية إذا ما تبيها.</span></div>"
+                },
+                {
+                    "type": "items",
+                    "icon": "sicon-layout-grid",
+                    "id": "side_visual_count",
+                    "label": "عدد العناصر البصرية الجانبية",
+                    "format": "dropdown-list",
+                    "source": "Manual",
+                    "required": false,
+                    "selected": [
+                        {
+                            "label": "إيقاف",
+                            "value": "off",
+                            "key": "side-count-off"
+                        }
+                    ],
+                    "value": "off",
+                    "options": [
+                        {
+                            "label": "إيقاف",
+                            "value": "off",
+                            "key": "side-count-off"
+                        },
+                        {
+                            "label": "عنصر واحد",
+                            "value": "one",
+                            "key": "side-count-one"
+                        },
+                        {
+                            "label": "عنصران",
+                            "value": "two",
+                            "key": "side-count-two"
+                        }
+                    ],
+                    "description": "اختر عدد الزخارف التي تريدها؛ الإعدادات لا تظهر إلا عند الحاجة."
+                },
+                {
+                    "type": "static",
+                    "format": "title",
+                    "id": "section-tst-side-first",
+                    "value": "<div style='position:relative;overflow:hidden;display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:12px;background:radial-gradient(circle at left center,#6241d9 0%,#3b2878 35%,#160f2a 62%,#020204 100%);border:1px solid rgba(139,109,255,.28);direction:rtl;margin:14px 0;font-weight:bold;'><svg aria-hidden='true' style='position:absolute;inset:0;width:100%;height:100%;pointer-events:none;' viewBox='0 0 320 52' preserveAspectRatio='none'><polyline class='gk-line' pathLength='1' points='320,46 268,40 236,43 196,32 164,35 124,22 96,26 58,13 20,16' fill='none' stroke='rgba(160,133,255,.55)' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/><circle class='gk-dot' cx='20' cy='16' r='3' fill='#cabcff'/></svg><span style='position:relative;flex:0 0 auto;display:inline-flex;color:#cabcff;'><svg width='1.05em' height='1.05em' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><rect x='3' y='5' width='14' height='14' rx='2'/><path d='M7 5V3h14v14h-4'/></svg></span><span style='position:relative;font-size:.9em;font-weight:700;color:#fff;'>العنصر الأول</span></div>",
+                    "variant": "h6",
+                    "conditions": [
+                        {
+                            "id": "side_visual_count",
+                            "operation": "!=",
+                            "value": "off"
+                        }
+                    ]
+                },
+                {
+                    "type": "string",
+                    "icon": "sicon-image",
+                    "id": "side_image",
+                    "label": "صورة العنصر",
+                    "format": "image",
+                    "required": false,
+                    "value": "",
+                    "description": "يفضّل PNG بخلفية شفافة.",
+                    "conditions": [
+                        {
+                            "id": "side_visual_count",
+                            "operation": "!=",
+                            "value": "off"
+                        }
+                    ]
+                },
+                {
+                    "type": "items",
+                    "icon": "sicon-layout-grid",
+                    "id": "side_side",
+                    "label": "جهة العنصر",
+                    "format": "dropdown-list",
+                    "source": "Manual",
+                    "required": false,
+                    "selected": [
+                        {
+                            "label": "يمين القسم",
+                            "value": "right",
+                            "key": "side_side-0"
+                        }
+                    ],
+                    "value": "right",
+                    "options": [
+                        {
+                            "label": "يمين القسم",
+                            "value": "right",
+                            "key": "side_side-0"
+                        },
+                        {
+                            "label": "يسار القسم",
+                            "value": "left",
+                            "key": "side_side-1"
+                        }
+                    ],
+                    "description": "الجهة ثابتة بالنسبة للقسم وما تنقلب مع تغيّر لغة المتجر.",
+                    "conditions": [
+                        {
+                            "id": "side_visual_count",
+                            "operation": "!=",
+                            "value": "off"
+                        }
+                    ]
+                },
+                {
+                    "type": "number",
+                    "icon": "sicon-format-fill",
+                    "id": "side_opacity",
+                    "label": "شفافية العنصر (٪)",
+                    "format": "slider",
+                    "required": false,
+                    "inputType": "range",
+                    "minimum": 10,
+                    "maximum": 100,
+                    "step": 5,
+                    "value": 100,
+                    "conditions": [
+                        {
+                            "id": "side_visual_count",
+                            "operation": "!=",
+                            "value": "off"
+                        }
+                    ]
+                },
+                {
+                    "type": "number",
+                    "icon": "sicon-columns",
+                    "id": "side_width",
+                    "label": "عرض العنصر على الجوال (٪)",
+                    "format": "slider",
+                    "required": false,
+                    "minimum": 5,
+                    "maximum": 120,
+                    "value": 19,
+                    "description": "نسبة من عرض القسم. أكثر من ١٠٠٪ يعني أعرض من القسم نفسه.",
+                    "inputType": "range",
+                    "step": 1,
+                    "conditions": [
+                        {
+                            "id": "side_visual_count",
+                            "operation": "!=",
+                            "value": "off"
+                        }
+                    ]
+                },
+                {
+                    "type": "items",
+                    "icon": "sicon-layout-grid",
+                    "id": "side_vpos",
+                    "label": "الموضع العمودي على الجوال",
+                    "format": "dropdown-list",
+                    "source": "Manual",
+                    "required": false,
+                    "selected": [
+                        {
+                            "label": "أعلى القسم",
+                            "value": "top",
+                            "key": "side_vpos-0"
+                        }
+                    ],
+                    "value": "top",
+                    "options": [
+                        {
+                            "label": "أعلى القسم",
+                            "value": "top",
+                            "key": "side_vpos-0"
+                        },
+                        {
+                            "label": "منتصف القسم",
+                            "value": "center",
+                            "key": "side_vpos-1"
+                        },
+                        {
+                            "label": "أسفل القسم",
+                            "value": "bottom",
+                            "key": "side_vpos-2"
+                        }
+                    ],
+                    "conditions": [
+                        {
+                            "id": "side_visual_count",
+                            "operation": "!=",
+                            "value": "off"
+                        }
+                    ]
+                },
+                {
+                    "type": "number",
+                    "icon": "sicon-move",
+                    "id": "side_x",
+                    "label": "الإزاحة الأفقية على الجوال (٪)",
+                    "format": "slider",
+                    "required": false,
+                    "minimum": -100,
+                    "maximum": 100,
+                    "value": 0,
+                    "description": "نسبة من عرض العنصر. الرقم الموجب يطلّعه برا القسم أكثر، والسالب يدخّله جوّه.",
+                    "inputType": "range",
+                    "step": 1,
+                    "conditions": [
+                        {
+                            "id": "side_visual_count",
+                            "operation": "!=",
+                            "value": "off"
+                        }
+                    ]
+                },
+                {
+                    "type": "number",
+                    "icon": "sicon-move",
+                    "id": "side_y",
+                    "label": "الإزاحة الرأسية على الجوال (٪)",
+                    "format": "slider",
+                    "required": false,
+                    "minimum": -200,
+                    "maximum": 200,
+                    "value": -37,
+                    "description": "نسبة من ارتفاع العنصر. الموجب ينزّله تحت والسالب يطلّعه فوق.",
+                    "inputType": "range",
+                    "step": 1,
+                    "conditions": [
+                        {
+                            "id": "side_visual_count",
+                            "operation": "!=",
+                            "value": "off"
+                        }
+                    ]
+                },
+                {
+                    "type": "static",
+                    "format": "title",
+                    "id": "section-tst-side-desktop",
+                    "value": "<div style='position:relative;overflow:hidden;display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:12px;background:radial-gradient(circle at left center,#6241d9 0%,#3b2878 35%,#160f2a 62%,#020204 100%);border:1px solid rgba(139,109,255,.28);direction:rtl;margin:14px 0;font-weight:bold;'><svg aria-hidden='true' style='position:absolute;inset:0;width:100%;height:100%;pointer-events:none;' viewBox='0 0 320 52' preserveAspectRatio='none'><polyline class='gk-line' pathLength='1' points='320,46 268,40 236,43 196,32 164,35 124,22 96,26 58,13 20,16' fill='none' stroke='rgba(160,133,255,.55)' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/><circle class='gk-dot' cx='20' cy='16' r='3' fill='#cabcff'/></svg><span style='position:relative;flex:0 0 auto;display:inline-flex;color:#cabcff;'><svg width='1.05em' height='1.05em' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><rect x='2' y='3' width='20' height='14' rx='2'/><path d='M8 21h8M12 17v4'/></svg></span><span style='position:relative;font-size:.9em;font-weight:700;color:#fff;'>العنصر الأول — سطح المكتب</span></div>",
+                    "variant": "h6",
+                    "conditions": [
+                        {
+                            "id": "side_visual_count",
+                            "operation": "!=",
+                            "value": "off"
+                        }
+                    ]
+                },
+                {
+                    "type": "static",
+                    "format": "description",
+                    "id": "tst-side-desktop-note",
+                    "value": "<div style='background-color:#6036c11f;color:#6036C1;padding:12px 16px;border-radius:8px;margin-bottom:14px;font-size:13px;line-height:1.7;direction:rtl;'>اضبط مقاس ومكان العنصر الأول على الشاشات الكبيرة بشكل مستقل عن الجوال.</div>",
+                    "conditions": [
+                        {
+                            "id": "side_visual_count",
+                            "operation": "!=",
+                            "value": "off"
+                        }
+                    ]
+                },
+                {
+                    "type": "number",
+                    "icon": "sicon-columns",
+                    "id": "side_width_desktop",
+                    "label": "عرض العنصر على سطح المكتب (٪)",
+                    "format": "slider",
+                    "required": false,
+                    "minimum": 5,
+                    "maximum": 120,
+                    "value": 10,
+                    "inputType": "range",
+                    "step": 1,
+                    "conditions": [
+                        {
+                            "id": "side_visual_count",
+                            "operation": "!=",
+                            "value": "off"
+                        }
+                    ]
+                },
+                {
+                    "type": "items",
+                    "icon": "sicon-layout-grid",
+                    "id": "side_vpos_desktop",
+                    "label": "الموضع العمودي على سطح المكتب",
+                    "format": "dropdown-list",
+                    "source": "Manual",
+                    "required": false,
+                    "selected": [
+                        {
+                            "label": "نفس الجوال",
+                            "value": "inherit",
+                            "key": "side_vpos_desktop-0"
+                        }
+                    ],
+                    "value": "inherit",
+                    "options": [
+                        {
+                            "label": "نفس الجوال",
+                            "value": "inherit",
+                            "key": "side_vpos_desktop-0"
+                        },
+                        {
+                            "label": "أعلى القسم",
+                            "value": "top",
+                            "key": "side_vpos_desktop-1"
+                        },
+                        {
+                            "label": "منتصف القسم",
+                            "value": "center",
+                            "key": "side_vpos_desktop-2"
+                        },
+                        {
+                            "label": "أسفل القسم",
+                            "value": "bottom",
+                            "key": "side_vpos_desktop-3"
+                        }
+                    ],
+                    "conditions": [
+                        {
+                            "id": "side_visual_count",
+                            "operation": "!=",
+                            "value": "off"
+                        }
+                    ]
+                },
+                {
+                    "type": "number",
+                    "icon": "sicon-move",
+                    "id": "side_x_desktop",
+                    "label": "الإزاحة الأفقية على سطح المكتب (٪)",
+                    "format": "slider",
+                    "required": false,
+                    "minimum": -100,
+                    "maximum": 100,
+                    "inputType": "range",
+                    "step": 1,
+                    "value": 0,
+                    "conditions": [
+                        {
+                            "id": "side_visual_count",
+                            "operation": "!=",
+                            "value": "off"
+                        }
+                    ]
+                },
+                {
+                    "type": "number",
+                    "icon": "sicon-move",
+                    "id": "side_y_desktop",
+                    "label": "الإزاحة الرأسية على سطح المكتب (٪)",
+                    "format": "slider",
+                    "required": false,
+                    "minimum": -200,
+                    "maximum": 200,
+                    "inputType": "range",
+                    "step": 1,
+                    "value": -37,
+                    "conditions": [
+                        {
+                            "id": "side_visual_count",
+                            "operation": "!=",
+                            "value": "off"
+                        }
+                    ]
+                },
+                {
+                    "type": "static",
+                    "format": "title",
+                    "id": "section-tst-side-second",
+                    "value": "<div style='position:relative;overflow:hidden;display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:12px;background:radial-gradient(circle at left center,#6241d9 0%,#3b2878 35%,#160f2a 62%,#020204 100%);border:1px solid rgba(139,109,255,.28);direction:rtl;margin:14px 0;font-weight:bold;'><svg aria-hidden='true' style='position:absolute;inset:0;width:100%;height:100%;pointer-events:none;' viewBox='0 0 320 52' preserveAspectRatio='none'><polyline class='gk-line' pathLength='1' points='320,46 268,40 236,43 196,32 164,35 124,22 96,26 58,13 20,16' fill='none' stroke='rgba(160,133,255,.55)' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/><circle class='gk-dot' cx='20' cy='16' r='3' fill='#cabcff'/></svg><span style='position:relative;flex:0 0 auto;display:inline-flex;color:#cabcff;'><svg width='1.05em' height='1.05em' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><rect x='3' y='5' width='14' height='14' rx='2'/><path d='M7 5V3h14v14h-4'/></svg></span><span style='position:relative;font-size:.9em;font-weight:700;color:#fff;'>العنصر الثاني</span></div>",
+                    "variant": "h6",
+                    "conditions": [
+                        {
+                            "id": "side_visual_count",
+                            "operation": "=",
+                            "value": "two"
+                        }
+                    ]
+                },
+                {
+                    "type": "string",
+                    "icon": "sicon-image",
+                    "id": "side2_image",
+                    "label": "صورة العنصر الثاني",
+                    "format": "image",
+                    "required": false,
+                    "value": "",
+                    "description": "يفضّل PNG بخلفية شفافة.",
+                    "conditions": [
+                        {
+                            "id": "side_visual_count",
+                            "operation": "=",
+                            "value": "two"
+                        }
+                    ]
+                },
+                {
+                    "type": "items",
+                    "icon": "sicon-layout-grid",
+                    "id": "side2_side",
+                    "label": "جهة العنصر الثاني",
+                    "format": "dropdown-list",
+                    "source": "Manual",
+                    "required": false,
+                    "selected": [
+                        {
+                            "label": "يمين القسم",
+                            "value": "right",
+                            "key": "side2_side-0"
+                        }
+                    ],
+                    "value": "right",
+                    "options": [
+                        {
+                            "label": "يمين القسم",
+                            "value": "right",
+                            "key": "side2_side-0"
+                        },
+                        {
+                            "label": "يسار القسم",
+                            "value": "left",
+                            "key": "side2_side-1"
+                        }
+                    ],
+                    "description": "الجهة ثابتة بالنسبة للقسم وما تنقلب مع تغيّر لغة المتجر.",
+                    "conditions": [
+                        {
+                            "id": "side_visual_count",
+                            "operation": "=",
+                            "value": "two"
+                        }
+                    ]
+                },
+                {
+                    "type": "number",
+                    "icon": "sicon-format-fill",
+                    "id": "side2_opacity",
+                    "label": "شفافية العنصر الثاني (٪)",
+                    "format": "slider",
+                    "required": false,
+                    "inputType": "range",
+                    "minimum": 10,
+                    "maximum": 100,
+                    "step": 5,
+                    "value": 100,
+                    "conditions": [
+                        {
+                            "id": "side_visual_count",
+                            "operation": "=",
+                            "value": "two"
+                        }
+                    ]
+                },
+                {
+                    "type": "number",
+                    "icon": "sicon-columns",
+                    "id": "side2_width",
+                    "label": "عرض العنصر الثاني على الجوال (٪)",
+                    "format": "slider",
+                    "required": false,
+                    "minimum": 5,
+                    "maximum": 120,
+                    "value": 25,
+                    "description": "نسبة من عرض القسم. أكثر من ١٠٠٪ يعني أعرض من القسم نفسه.",
+                    "inputType": "range",
+                    "step": 1,
+                    "conditions": [
+                        {
+                            "id": "side_visual_count",
+                            "operation": "=",
+                            "value": "two"
+                        }
+                    ]
+                },
+                {
+                    "type": "items",
+                    "icon": "sicon-layout-grid",
+                    "id": "side2_vpos",
+                    "label": "الموضع العمودي للعنصر الثاني على الجوال",
+                    "format": "dropdown-list",
+                    "source": "Manual",
+                    "required": false,
+                    "selected": [
+                        {
+                            "label": "أسفل القسم",
+                            "value": "bottom",
+                            "key": "side2_vpos-2"
+                        }
+                    ],
+                    "value": "bottom",
+                    "options": [
+                        {
+                            "label": "أعلى القسم",
+                            "value": "top",
+                            "key": "side2_vpos-0"
+                        },
+                        {
+                            "label": "منتصف القسم",
+                            "value": "center",
+                            "key": "side2_vpos-1"
+                        },
+                        {
+                            "label": "أسفل القسم",
+                            "value": "bottom",
+                            "key": "side2_vpos-2"
+                        }
+                    ],
+                    "conditions": [
+                        {
+                            "id": "side_visual_count",
+                            "operation": "=",
+                            "value": "two"
+                        }
+                    ]
+                },
+                {
+                    "type": "number",
+                    "icon": "sicon-move",
+                    "id": "side2_x",
+                    "label": "الإزاحة الأفقية للعنصر الثاني على الجوال (٪)",
+                    "format": "slider",
+                    "required": false,
+                    "minimum": -100,
+                    "maximum": 100,
+                    "value": 0,
+                    "description": "الرقم الموجب يطلّعه برا القسم أكثر، والسالب يدخّله جوّه.",
+                    "inputType": "range",
+                    "step": 1,
+                    "conditions": [
+                        {
+                            "id": "side_visual_count",
+                            "operation": "=",
+                            "value": "two"
+                        }
+                    ]
+                },
+                {
+                    "type": "number",
+                    "icon": "sicon-move",
+                    "id": "side2_y",
+                    "label": "الإزاحة الرأسية للعنصر الثاني على الجوال (٪)",
+                    "format": "slider",
+                    "required": false,
+                    "minimum": -200,
+                    "maximum": 200,
+                    "value": 31,
+                    "description": "الموجب ينزّله تحت والسالب يطلّعه فوق.",
+                    "inputType": "range",
+                    "step": 1,
+                    "conditions": [
+                        {
+                            "id": "side_visual_count",
+                            "operation": "=",
+                            "value": "two"
+                        }
+                    ]
+                },
+                {
+                    "type": "static",
+                    "format": "title",
+                    "id": "section-tst-side2-desktop",
+                    "value": "<div style='position:relative;overflow:hidden;display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:12px;background:radial-gradient(circle at left center,#6241d9 0%,#3b2878 35%,#160f2a 62%,#020204 100%);border:1px solid rgba(139,109,255,.28);direction:rtl;margin:14px 0;font-weight:bold;'><svg aria-hidden='true' style='position:absolute;inset:0;width:100%;height:100%;pointer-events:none;' viewBox='0 0 320 52' preserveAspectRatio='none'><polyline class='gk-line' pathLength='1' points='320,46 268,40 236,43 196,32 164,35 124,22 96,26 58,13 20,16' fill='none' stroke='rgba(160,133,255,.55)' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/><circle class='gk-dot' cx='20' cy='16' r='3' fill='#cabcff'/></svg><span style='position:relative;flex:0 0 auto;display:inline-flex;color:#cabcff;'><svg width='1.05em' height='1.05em' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><rect x='2' y='3' width='20' height='14' rx='2'/><path d='M8 21h8M12 17v4'/></svg></span><span style='position:relative;font-size:.9em;font-weight:700;color:#fff;'>العنصر الثاني — سطح المكتب</span></div>",
+                    "variant": "h6",
+                    "conditions": [
+                        {
+                            "id": "side_visual_count",
+                            "operation": "=",
+                            "value": "two"
+                        }
+                    ]
+                },
+                {
+                    "type": "static",
+                    "format": "description",
+                    "id": "tst-side2-desktop-note",
+                    "value": "<div style='background-color:#6036c11f;color:#6036C1;padding:12px 16px;border-radius:8px;margin-bottom:14px;font-size:13px;line-height:1.7;direction:rtl;'>اضبط مقاس ومكان العنصر الثاني على الشاشات الكبيرة بشكل مستقل عن الجوال.</div>",
+                    "conditions": [
+                        {
+                            "id": "side_visual_count",
+                            "operation": "=",
+                            "value": "two"
+                        }
+                    ]
+                },
+                {
+                    "type": "number",
+                    "icon": "sicon-columns",
+                    "id": "side2_width_desktop",
+                    "label": "عرض العنصر الثاني على سطح المكتب (٪)",
+                    "format": "slider",
+                    "required": false,
+                    "minimum": 5,
+                    "maximum": 120,
+                    "value": 14,
+                    "inputType": "range",
+                    "step": 1,
+                    "conditions": [
+                        {
+                            "id": "side_visual_count",
+                            "operation": "=",
+                            "value": "two"
+                        }
+                    ]
+                },
+                {
+                    "type": "items",
+                    "icon": "sicon-layout-grid",
+                    "id": "side2_vpos_desktop",
+                    "label": "الموضع العمودي للعنصر الثاني على سطح المكتب",
+                    "format": "dropdown-list",
+                    "source": "Manual",
+                    "required": false,
+                    "selected": [
+                        {
+                            "label": "نفس الجوال",
+                            "value": "inherit",
+                            "key": "side2_vpos_desktop-0"
+                        }
+                    ],
+                    "value": "inherit",
+                    "options": [
+                        {
+                            "label": "نفس الجوال",
+                            "value": "inherit",
+                            "key": "side2_vpos_desktop-0"
+                        },
+                        {
+                            "label": "أعلى القسم",
+                            "value": "top",
+                            "key": "side2_vpos_desktop-1"
+                        },
+                        {
+                            "label": "منتصف القسم",
+                            "value": "center",
+                            "key": "side2_vpos_desktop-2"
+                        },
+                        {
+                            "label": "أسفل القسم",
+                            "value": "bottom",
+                            "key": "side2_vpos_desktop-3"
+                        }
+                    ],
+                    "conditions": [
+                        {
+                            "id": "side_visual_count",
+                            "operation": "=",
+                            "value": "two"
+                        }
+                    ]
+                },
+                {
+                    "type": "number",
+                    "icon": "sicon-move",
+                    "id": "side2_x_desktop",
+                    "label": "الإزاحة الأفقية للعنصر الثاني على سطح المكتب (٪)",
+                    "format": "slider",
+                    "required": false,
+                    "minimum": -100,
+                    "maximum": 100,
+                    "inputType": "range",
+                    "step": 1,
+                    "value": 0,
+                    "conditions": [
+                        {
+                            "id": "side_visual_count",
+                            "operation": "=",
+                            "value": "two"
+                        }
+                    ]
+                },
+                {
+                    "type": "number",
+                    "icon": "sicon-move",
+                    "id": "side2_y_desktop",
+                    "label": "الإزاحة الرأسية للعنصر الثاني على سطح المكتب (٪)",
+                    "format": "slider",
+                    "required": false,
+                    "minimum": -200,
+                    "maximum": 200,
+                    "inputType": "range",
+                    "step": 1,
+                    "value": 31,
+                    "conditions": [
+                        {
+                            "id": "side_visual_count",
+                            "operation": "=",
+                            "value": "two"
                         }
                     ]
                 },
@@ -9839,6 +9797,789 @@
                 {
                     "type": "static",
                     "format": "title",
+                    "id": "section-uc-side",
+                    "value": "<div style='position:relative;overflow:hidden;display:flex;align-items:center;gap:10px;padding:13px 16px;border-radius:12px;background:radial-gradient(circle at left center,#6241d9 0%,#3b2878 35%,#160f2a 62%,#020204 100%);border:1px solid rgba(139,109,255,.28);direction:rtl;margin-bottom:18px;font-weight:bold;'><svg aria-hidden='true' style='position:absolute;inset:0;width:100%;height:100%;pointer-events:none;' viewBox='0 0 320 52' preserveAspectRatio='none'><polyline class='gk-line' pathLength='1' points='320,46 268,40 236,43 196,32 164,35 124,22 96,26 58,13 20,16' fill='none' stroke='rgba(160,133,255,.55)' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/><circle class='gk-dot' cx='20' cy='16' r='3' fill='#cabcff'/></svg><span style='position:relative;flex:0 0 auto;display:inline-flex;color:#cabcff;'><svg width='1.2em' height='1.2em' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><rect x='3' y='3' width='18' height='18' rx='2'/><circle cx='8.5' cy='8.5' r='1.5'/><path d='m21 15-5-5L5 21'/></svg></span><span style='position:relative;font-size:17px;font-weight:700;color:#fff;'>عنصر بصري جانبي</span></div>"
+                },
+                {
+                    "type": "static",
+                    "format": "description",
+                    "id": "uc-side-note",
+                    "value": "<div style='display:flex;gap:10px;background-color:#fff5e6;color:#8a5200;border:1px solid #ffd899;padding:12px 16px;border-radius:8px;margin-bottom:14px;font-size:13px;line-height:1.7;direction:rtl;'><span><strong>زخرفة اختيارية حول القسم</strong> — صورة بخلفية شفافة (PNG) مثل منتج أو مشهد صغير. يمكن وضعها يمين القسم أو يساره أو في المنتصف، وضبطها للجوال وسطح المكتب بشكل مستقل.</span></div>"
+                },
+                {
+                    "type": "items",
+                    "icon": "sicon-layout-grid",
+                    "id": "side_visual_count",
+                    "label": "عدد العناصر البصرية الجانبية",
+                    "format": "dropdown-list",
+                    "source": "Manual",
+                    "required": false,
+                    "selected": [
+                        {
+                            "label": "إيقاف",
+                            "value": "off",
+                            "key": "side-count-off"
+                        }
+                    ],
+                    "options": [
+                        {
+                            "label": "إيقاف",
+                            "value": "off",
+                            "key": "side-count-off"
+                        },
+                        {
+                            "label": "عنصر واحد",
+                            "value": "one",
+                            "key": "side-count-one"
+                        },
+                        {
+                            "label": "عنصران",
+                            "value": "two",
+                            "key": "side-count-two"
+                        }
+                    ],
+                    "description": "اختر عدد الزخارف التي تريدها؛ الإعدادات لا تظهر إلا عند الحاجة.",
+                    "value": "off"
+                },
+                {
+                    "type": "static",
+                    "format": "title",
+                    "id": "section-uc-side-first",
+                    "value": "<div style='position:relative;overflow:hidden;display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:12px;background:radial-gradient(circle at left center,#6241d9 0%,#3b2878 35%,#160f2a 62%,#020204 100%);border:1px solid rgba(139,109,255,.28);direction:rtl;margin:14px 0;font-weight:bold;'><svg aria-hidden='true' style='position:absolute;inset:0;width:100%;height:100%;pointer-events:none;' viewBox='0 0 320 52' preserveAspectRatio='none'><polyline class='gk-line' pathLength='1' points='320,46 268,40 236,43 196,32 164,35 124,22 96,26 58,13 20,16' fill='none' stroke='rgba(160,133,255,.55)' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/><circle class='gk-dot' cx='20' cy='16' r='3' fill='#cabcff'/></svg><span style='position:relative;flex:0 0 auto;display:inline-flex;color:#cabcff;'><svg width='1.05em' height='1.05em' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><rect x='3' y='5' width='14' height='14' rx='2'/><path d='M7 5V3h14v14h-4'/></svg></span><span style='position:relative;font-size:.9em;font-weight:700;color:#fff;'>العنصر الأول</span></div>",
+                    "variant": "h6",
+                    "conditions": [
+                        {
+                            "id": "side_visual_count",
+                            "operation": "!=",
+                            "value": "off"
+                        }
+                    ]
+                },
+                {
+                    "type": "string",
+                    "icon": "sicon-image",
+                    "id": "side_image",
+                    "label": "صورة العنصر",
+                    "format": "image",
+                    "required": false,
+                    "value": "",
+                    "description": "يفضّل PNG بخلفية شفافة.",
+                    "conditions": [
+                        {
+                            "id": "side_visual_count",
+                            "operation": "!=",
+                            "value": "off"
+                        }
+                    ]
+                },
+                {
+                    "type": "items",
+                    "icon": "sicon-layout-grid",
+                    "id": "side_side",
+                    "label": "جهة العنصر",
+                    "format": "dropdown-list",
+                    "source": "Manual",
+                    "required": false,
+                    "selected": [
+                        {
+                            "label": "يمين القسم",
+                            "value": "right",
+                            "key": "side_side-0"
+                        }
+                    ],
+                    "options": [
+                        {
+                            "label": "يمين القسم",
+                            "value": "right",
+                            "key": "side_side-0"
+                        },
+                        {
+                            "label": "منتصف القسم",
+                            "value": "center",
+                            "key": "side_side-center"
+                        },
+                        {
+                            "label": "يسار القسم",
+                            "value": "left",
+                            "key": "side_side-1"
+                        }
+                    ],
+                    "description": "الموضع أفقي وثابت بالنسبة للقسم، ولا ينقلب مع تغيّر لغة المتجر.",
+                    "conditions": [
+                        {
+                            "id": "side_visual_count",
+                            "operation": "!=",
+                            "value": "off"
+                        }
+                    ],
+                    "value": "right"
+                },
+                {
+                    "type": "items",
+                    "icon": "sicon-layout-grid",
+                    "id": "side_depth",
+                    "label": "طبقة العنصر",
+                    "format": "dropdown-list",
+                    "source": "Manual",
+                    "required": false,
+                    "selected": [
+                        {
+                            "label": "خلف الأسئلة",
+                            "value": "behind",
+                            "key": "side_depth-behind"
+                        }
+                    ],
+                    "options": [
+                        {
+                            "label": "خلف المحتوى",
+                            "value": "behind",
+                            "key": "side_depth-behind"
+                        },
+                        {
+                            "label": "أمام المحتوى",
+                            "value": "front",
+                            "key": "side_depth-front"
+                        }
+                    ],
+                    "description": "ضع الزخرفة خلف البطاقات لحماية القراءة، أو أمامها لتراكب بصري أقوى.",
+                    "conditions": [
+                        {
+                            "id": "side_visual_count",
+                            "operation": "!=",
+                            "value": "off"
+                        }
+                    ],
+                    "value": "behind"
+                },
+                {
+                    "type": "number",
+                    "icon": "sicon-format-fill",
+                    "id": "side_opacity",
+                    "label": "شفافية العنصر (٪)",
+                    "format": "slider",
+                    "required": false,
+                    "inputType": "range",
+                    "minimum": 10,
+                    "maximum": 100,
+                    "step": 5,
+                    "value": 100,
+                    "conditions": [
+                        {
+                            "id": "side_visual_count",
+                            "operation": "!=",
+                            "value": "off"
+                        }
+                    ]
+                },
+                {
+                    "type": "number",
+                    "icon": "sicon-columns",
+                    "id": "side_width",
+                    "label": "عرض العنصر على الجوال (٪)",
+                    "format": "slider",
+                    "required": false,
+                    "minimum": 5,
+                    "maximum": 120,
+                    "value": 30,
+                    "description": "نسبة من عرض القسم. أكثر من ١٠٠٪ يعني أعرض من القسم نفسه.",
+                    "inputType": "range",
+                    "step": 1,
+                    "conditions": [
+                        {
+                            "id": "side_visual_count",
+                            "operation": "!=",
+                            "value": "off"
+                        }
+                    ]
+                },
+                {
+                    "type": "items",
+                    "icon": "sicon-layout-grid",
+                    "id": "side_vpos",
+                    "label": "الموضع العمودي على الجوال",
+                    "format": "dropdown-list",
+                    "source": "Manual",
+                    "required": false,
+                    "selected": [
+                        {
+                            "label": "أعلى القسم",
+                            "value": "top",
+                            "key": "side_vpos-0"
+                        }
+                    ],
+                    "options": [
+                        {
+                            "label": "أعلى القسم",
+                            "value": "top",
+                            "key": "side_vpos-0"
+                        },
+                        {
+                            "label": "منتصف القسم",
+                            "value": "center",
+                            "key": "side_vpos-1"
+                        },
+                        {
+                            "label": "أسفل القسم",
+                            "value": "bottom",
+                            "key": "side_vpos-2"
+                        }
+                    ],
+                    "conditions": [
+                        {
+                            "id": "side_visual_count",
+                            "operation": "!=",
+                            "value": "off"
+                        }
+                    ],
+                    "value": "top"
+                },
+                {
+                    "type": "number",
+                    "icon": "sicon-move",
+                    "id": "side_x",
+                    "label": "الإزاحة الأفقية على الجوال (٪)",
+                    "format": "slider",
+                    "required": false,
+                    "minimum": -100,
+                    "maximum": 100,
+                    "value": 16,
+                    "description": "نسبة من عرض العنصر. الموجب يحركه يمينًا والسالب يحركه يسارًا.",
+                    "inputType": "range",
+                    "step": 1,
+                    "conditions": [
+                        {
+                            "id": "side_visual_count",
+                            "operation": "!=",
+                            "value": "off"
+                        }
+                    ]
+                },
+                {
+                    "type": "number",
+                    "icon": "sicon-move",
+                    "id": "side_y",
+                    "label": "الإزاحة الرأسية على الجوال (٪)",
+                    "format": "slider",
+                    "required": false,
+                    "minimum": -200,
+                    "maximum": 200,
+                    "value": -4,
+                    "description": "نسبة من ارتفاع العنصر. الموجب ينزّله تحت والسالب يطلّعه فوق.",
+                    "inputType": "range",
+                    "step": 1,
+                    "conditions": [
+                        {
+                            "id": "side_visual_count",
+                            "operation": "!=",
+                            "value": "off"
+                        }
+                    ]
+                },
+                {
+                    "type": "static",
+                    "format": "title",
+                    "id": "section-uc-side-first-desktop",
+                    "value": "<div style='position:relative;overflow:hidden;display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:12px;background:radial-gradient(circle at left center,#6241d9 0%,#3b2878 35%,#160f2a 62%,#020204 100%);border:1px solid rgba(139,109,255,.28);direction:rtl;margin:14px 0;font-weight:bold;'><svg aria-hidden='true' style='position:absolute;inset:0;width:100%;height:100%;pointer-events:none;' viewBox='0 0 320 52' preserveAspectRatio='none'><polyline class='gk-line' pathLength='1' points='320,46 268,40 236,43 196,32 164,35 124,22 96,26 58,13 20,16' fill='none' stroke='rgba(160,133,255,.55)' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/><circle class='gk-dot' cx='20' cy='16' r='3' fill='#cabcff'/></svg><span style='position:relative;flex:0 0 auto;display:inline-flex;color:#cabcff;'><svg width='1.05em' height='1.05em' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><rect x='2' y='3' width='20' height='14' rx='2'/><path d='M8 21h8M12 17v4'/></svg></span><span style='position:relative;font-size:.9em;font-weight:700;color:#fff;'>العنصر الأول — سطح المكتب</span></div>",
+                    "variant": "h6",
+                    "conditions": [
+                        {
+                            "id": "side_visual_count",
+                            "operation": "!=",
+                            "value": "off"
+                        }
+                    ]
+                },
+                {
+                    "type": "static",
+                    "format": "description",
+                    "id": "uc-side-desktop-note",
+                    "value": "<div style='background-color:#6036c11f;color:#6036C1;padding:12px 16px;border-radius:8px;margin-bottom:14px;font-size:13px;line-height:1.7;direction:rtl;'>اضبط مقاس ومكان العنصر الأول على الشاشات الكبيرة بشكل مستقل عن الجوال.</div>",
+                    "conditions": [
+                        {
+                            "id": "side_visual_count",
+                            "operation": "!=",
+                            "value": "off"
+                        }
+                    ]
+                },
+                {
+                    "type": "number",
+                    "icon": "sicon-columns",
+                    "id": "side_width_desktop",
+                    "label": "عرض العنصر على سطح المكتب (٪)",
+                    "format": "slider",
+                    "required": false,
+                    "minimum": 5,
+                    "maximum": 120,
+                    "value": 13,
+                    "inputType": "range",
+                    "step": 1,
+                    "conditions": [
+                        {
+                            "id": "side_visual_count",
+                            "operation": "!=",
+                            "value": "off"
+                        }
+                    ]
+                },
+                {
+                    "type": "items",
+                    "icon": "sicon-layout-grid",
+                    "id": "side_vpos_desktop",
+                    "label": "الموضع العمودي على سطح المكتب",
+                    "format": "dropdown-list",
+                    "source": "Manual",
+                    "required": false,
+                    "selected": [
+                        {
+                            "label": "نفس الجوال",
+                            "value": "inherit",
+                            "key": "side_vpos_desktop-0"
+                        }
+                    ],
+                    "options": [
+                        {
+                            "label": "نفس الجوال",
+                            "value": "inherit",
+                            "key": "side_vpos_desktop-0"
+                        },
+                        {
+                            "label": "أعلى القسم",
+                            "value": "top",
+                            "key": "side_vpos_desktop-1"
+                        },
+                        {
+                            "label": "منتصف القسم",
+                            "value": "center",
+                            "key": "side_vpos_desktop-2"
+                        },
+                        {
+                            "label": "أسفل القسم",
+                            "value": "bottom",
+                            "key": "side_vpos_desktop-3"
+                        }
+                    ],
+                    "conditions": [
+                        {
+                            "id": "side_visual_count",
+                            "operation": "!=",
+                            "value": "off"
+                        }
+                    ],
+                    "value": "inherit"
+                },
+                {
+                    "type": "number",
+                    "icon": "sicon-move",
+                    "id": "side_x_desktop",
+                    "label": "الإزاحة الأفقية على سطح المكتب (٪)",
+                    "format": "slider",
+                    "required": false,
+                    "minimum": -100,
+                    "maximum": 100,
+                    "inputType": "range",
+                    "step": 1,
+                    "value": 7,
+                    "conditions": [
+                        {
+                            "id": "side_visual_count",
+                            "operation": "!=",
+                            "value": "off"
+                        }
+                    ],
+                    "description": "نسبة من عرض العنصر على سطح المكتب. الموجب يمينًا والسالب يسارًا."
+                },
+                {
+                    "type": "number",
+                    "icon": "sicon-move",
+                    "id": "side_y_desktop",
+                    "label": "الإزاحة الرأسية على سطح المكتب (٪)",
+                    "format": "slider",
+                    "required": false,
+                    "minimum": -200,
+                    "maximum": 200,
+                    "inputType": "range",
+                    "step": 1,
+                    "value": 2,
+                    "conditions": [
+                        {
+                            "id": "side_visual_count",
+                            "operation": "!=",
+                            "value": "off"
+                        }
+                    ]
+                },
+                {
+                    "type": "static",
+                    "format": "title",
+                    "id": "section-uc-side-second",
+                    "value": "<div style='position:relative;overflow:hidden;display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:12px;background:radial-gradient(circle at left center,#6241d9 0%,#3b2878 35%,#160f2a 62%,#020204 100%);border:1px solid rgba(139,109,255,.28);direction:rtl;margin:14px 0;font-weight:bold;'><svg aria-hidden='true' style='position:absolute;inset:0;width:100%;height:100%;pointer-events:none;' viewBox='0 0 320 52' preserveAspectRatio='none'><polyline class='gk-line' pathLength='1' points='320,46 268,40 236,43 196,32 164,35 124,22 96,26 58,13 20,16' fill='none' stroke='rgba(160,133,255,.55)' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/><circle class='gk-dot' cx='20' cy='16' r='3' fill='#cabcff'/></svg><span style='position:relative;flex:0 0 auto;display:inline-flex;color:#cabcff;'><svg width='1.05em' height='1.05em' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><rect x='3' y='5' width='14' height='14' rx='2'/><path d='M7 5V3h14v14h-4'/></svg></span><span style='position:relative;font-size:.9em;font-weight:700;color:#fff;'>العنصر الثاني</span></div>",
+                    "variant": "h6",
+                    "conditions": [
+                        {
+                            "id": "side_visual_count",
+                            "operation": "=",
+                            "value": "two"
+                        }
+                    ]
+                },
+                {
+                    "type": "string",
+                    "icon": "sicon-image",
+                    "id": "side2_image",
+                    "label": "صورة العنصر الثاني",
+                    "format": "image",
+                    "required": false,
+                    "value": "",
+                    "description": "يفضّل PNG بخلفية شفافة.",
+                    "conditions": [
+                        {
+                            "id": "side_visual_count",
+                            "operation": "=",
+                            "value": "two"
+                        }
+                    ]
+                },
+                {
+                    "type": "items",
+                    "icon": "sicon-layout-grid",
+                    "id": "side2_side",
+                    "label": "جهة العنصر الثاني",
+                    "format": "dropdown-list",
+                    "source": "Manual",
+                    "required": false,
+                    "selected": [
+                        {
+                            "label": "يسار القسم",
+                            "value": "left",
+                            "key": "side2_side-1"
+                        }
+                    ],
+                    "options": [
+                        {
+                            "label": "يمين القسم",
+                            "value": "right",
+                            "key": "side2_side-0"
+                        },
+                        {
+                            "label": "منتصف القسم",
+                            "value": "center",
+                            "key": "side2_side-center"
+                        },
+                        {
+                            "label": "يسار القسم",
+                            "value": "left",
+                            "key": "side2_side-1"
+                        }
+                    ],
+                    "description": "الموضع أفقي وثابت بالنسبة للقسم، ولا ينقلب مع تغيّر لغة المتجر.",
+                    "conditions": [
+                        {
+                            "id": "side_visual_count",
+                            "operation": "=",
+                            "value": "two"
+                        }
+                    ],
+                    "value": "left"
+                },
+                {
+                    "type": "items",
+                    "icon": "sicon-layout-grid",
+                    "id": "side2_depth",
+                    "label": "طبقة العنصر الثاني",
+                    "format": "dropdown-list",
+                    "source": "Manual",
+                    "required": false,
+                    "selected": [
+                        {
+                            "label": "خلف الأسئلة",
+                            "value": "behind",
+                            "key": "side2_depth-behind"
+                        }
+                    ],
+                    "options": [
+                        {
+                            "label": "خلف المحتوى",
+                            "value": "behind",
+                            "key": "side2_depth-behind"
+                        },
+                        {
+                            "label": "أمام المحتوى",
+                            "value": "front",
+                            "key": "side2_depth-front"
+                        }
+                    ],
+                    "description": "ضع الزخرفة خلف البطاقات لحماية القراءة، أو أمامها لتراكب بصري أقوى.",
+                    "conditions": [
+                        {
+                            "id": "side_visual_count",
+                            "operation": "=",
+                            "value": "two"
+                        }
+                    ],
+                    "value": "behind"
+                },
+                {
+                    "type": "number",
+                    "icon": "sicon-format-fill",
+                    "id": "side2_opacity",
+                    "label": "شفافية العنصر الثاني (٪)",
+                    "format": "slider",
+                    "required": false,
+                    "inputType": "range",
+                    "minimum": 10,
+                    "maximum": 100,
+                    "step": 5,
+                    "value": 100,
+                    "conditions": [
+                        {
+                            "id": "side_visual_count",
+                            "operation": "=",
+                            "value": "two"
+                        }
+                    ]
+                },
+                {
+                    "type": "number",
+                    "icon": "sicon-columns",
+                    "id": "side2_width",
+                    "label": "عرض العنصر الثاني على الجوال (٪)",
+                    "format": "slider",
+                    "required": false,
+                    "minimum": 5,
+                    "maximum": 120,
+                    "value": 28,
+                    "description": "نسبة من عرض القسم. أكثر من ١٠٠٪ يعني أعرض من القسم نفسه.",
+                    "inputType": "range",
+                    "step": 1,
+                    "conditions": [
+                        {
+                            "id": "side_visual_count",
+                            "operation": "=",
+                            "value": "two"
+                        }
+                    ]
+                },
+                {
+                    "type": "items",
+                    "icon": "sicon-layout-grid",
+                    "id": "side2_vpos",
+                    "label": "الموضع العمودي للعنصر الثاني على الجوال",
+                    "format": "dropdown-list",
+                    "source": "Manual",
+                    "required": false,
+                    "selected": [
+                        {
+                            "label": "أسفل القسم",
+                            "value": "bottom",
+                            "key": "side2_vpos-2"
+                        }
+                    ],
+                    "options": [
+                        {
+                            "label": "أعلى القسم",
+                            "value": "top",
+                            "key": "side2_vpos-0"
+                        },
+                        {
+                            "label": "منتصف القسم",
+                            "value": "center",
+                            "key": "side2_vpos-1"
+                        },
+                        {
+                            "label": "أسفل القسم",
+                            "value": "bottom",
+                            "key": "side2_vpos-2"
+                        }
+                    ],
+                    "conditions": [
+                        {
+                            "id": "side_visual_count",
+                            "operation": "=",
+                            "value": "two"
+                        }
+                    ],
+                    "value": "bottom"
+                },
+                {
+                    "type": "number",
+                    "icon": "sicon-move",
+                    "id": "side2_x",
+                    "label": "الإزاحة الأفقية للعنصر الثاني على الجوال (٪)",
+                    "format": "slider",
+                    "required": false,
+                    "minimum": -100,
+                    "maximum": 100,
+                    "value": 14,
+                    "description": "نسبة من عرض العنصر. الموجب يحركه يمينًا والسالب يحركه يسارًا.",
+                    "inputType": "range",
+                    "step": 1,
+                    "conditions": [
+                        {
+                            "id": "side_visual_count",
+                            "operation": "=",
+                            "value": "two"
+                        }
+                    ]
+                },
+                {
+                    "type": "number",
+                    "icon": "sicon-move",
+                    "id": "side2_y",
+                    "label": "الإزاحة الرأسية للعنصر الثاني على الجوال (٪)",
+                    "format": "slider",
+                    "required": false,
+                    "minimum": -200,
+                    "maximum": 200,
+                    "value": 18,
+                    "description": "الموجب ينزّله تحت والسالب يطلّعه فوق.",
+                    "inputType": "range",
+                    "step": 1,
+                    "conditions": [
+                        {
+                            "id": "side_visual_count",
+                            "operation": "=",
+                            "value": "two"
+                        }
+                    ]
+                },
+                {
+                    "type": "static",
+                    "format": "title",
+                    "id": "section-uc-side-second-desktop",
+                    "value": "<div style='position:relative;overflow:hidden;display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:12px;background:radial-gradient(circle at left center,#6241d9 0%,#3b2878 35%,#160f2a 62%,#020204 100%);border:1px solid rgba(139,109,255,.28);direction:rtl;margin:14px 0;font-weight:bold;'><svg aria-hidden='true' style='position:absolute;inset:0;width:100%;height:100%;pointer-events:none;' viewBox='0 0 320 52' preserveAspectRatio='none'><polyline class='gk-line' pathLength='1' points='320,46 268,40 236,43 196,32 164,35 124,22 96,26 58,13 20,16' fill='none' stroke='rgba(160,133,255,.55)' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/><circle class='gk-dot' cx='20' cy='16' r='3' fill='#cabcff'/></svg><span style='position:relative;flex:0 0 auto;display:inline-flex;color:#cabcff;'><svg width='1.05em' height='1.05em' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><rect x='2' y='3' width='20' height='14' rx='2'/><path d='M8 21h8M12 17v4'/></svg></span><span style='position:relative;font-size:.9em;font-weight:700;color:#fff;'>العنصر الثاني — سطح المكتب</span></div>",
+                    "variant": "h6",
+                    "conditions": [
+                        {
+                            "id": "side_visual_count",
+                            "operation": "=",
+                            "value": "two"
+                        }
+                    ]
+                },
+                {
+                    "type": "static",
+                    "format": "description",
+                    "id": "uc-side2-desktop-note",
+                    "value": "<div style='background-color:#6036c11f;color:#6036C1;padding:12px 16px;border-radius:8px;margin-bottom:14px;font-size:13px;line-height:1.7;direction:rtl;'>اضبط مقاس ومكان العنصر الثاني على الشاشات الكبيرة بشكل مستقل عن الجوال.</div>",
+                    "conditions": [
+                        {
+                            "id": "side_visual_count",
+                            "operation": "=",
+                            "value": "two"
+                        }
+                    ]
+                },
+                {
+                    "type": "number",
+                    "icon": "sicon-columns",
+                    "id": "side2_width_desktop",
+                    "label": "عرض العنصر الثاني على سطح المكتب (٪)",
+                    "format": "slider",
+                    "required": false,
+                    "minimum": 5,
+                    "maximum": 120,
+                    "value": 11,
+                    "inputType": "range",
+                    "step": 1,
+                    "conditions": [
+                        {
+                            "id": "side_visual_count",
+                            "operation": "=",
+                            "value": "two"
+                        }
+                    ]
+                },
+                {
+                    "type": "items",
+                    "icon": "sicon-layout-grid",
+                    "id": "side2_vpos_desktop",
+                    "label": "الموضع العمودي للعنصر الثاني على سطح المكتب",
+                    "format": "dropdown-list",
+                    "source": "Manual",
+                    "required": false,
+                    "selected": [
+                        {
+                            "label": "نفس الجوال",
+                            "value": "inherit",
+                            "key": "side2_vpos_desktop-0"
+                        }
+                    ],
+                    "options": [
+                        {
+                            "label": "نفس الجوال",
+                            "value": "inherit",
+                            "key": "side2_vpos_desktop-0"
+                        },
+                        {
+                            "label": "أعلى القسم",
+                            "value": "top",
+                            "key": "side2_vpos_desktop-1"
+                        },
+                        {
+                            "label": "منتصف القسم",
+                            "value": "center",
+                            "key": "side2_vpos_desktop-2"
+                        },
+                        {
+                            "label": "أسفل القسم",
+                            "value": "bottom",
+                            "key": "side2_vpos_desktop-3"
+                        }
+                    ],
+                    "conditions": [
+                        {
+                            "id": "side_visual_count",
+                            "operation": "=",
+                            "value": "two"
+                        }
+                    ],
+                    "value": "inherit"
+                },
+                {
+                    "type": "number",
+                    "icon": "sicon-move",
+                    "id": "side2_x_desktop",
+                    "label": "الإزاحة الأفقية للعنصر الثاني على سطح المكتب (٪)",
+                    "format": "slider",
+                    "required": false,
+                    "minimum": -100,
+                    "maximum": 100,
+                    "inputType": "range",
+                    "step": 1,
+                    "value": 6,
+                    "conditions": [
+                        {
+                            "id": "side_visual_count",
+                            "operation": "=",
+                            "value": "two"
+                        }
+                    ],
+                    "description": "نسبة من عرض العنصر على سطح المكتب. الموجب يمينًا والسالب يسارًا."
+                },
+                {
+                    "type": "number",
+                    "icon": "sicon-move",
+                    "id": "side2_y_desktop",
+                    "label": "الإزاحة الرأسية للعنصر الثاني على سطح المكتب (٪)",
+                    "format": "slider",
+                    "required": false,
+                    "minimum": -200,
+                    "maximum": 200,
+                    "inputType": "range",
+                    "step": 1,
+                    "value": 6,
+                    "conditions": [
+                        {
+                            "id": "side_visual_count",
+                            "operation": "=",
+                            "value": "two"
+                        }
+                    ]
+                },
+                {
+                    "type": "static",
+                    "format": "title",
                     "id": "section-uc-motion",
                     "value": "<div style='position:relative;overflow:hidden;display:flex;align-items:center;gap:10px;padding:13px 16px;border-radius:12px;background:radial-gradient(circle at left center,#6241d9 0%,#3b2878 35%,#160f2a 62%,#020204 100%);border:1px solid rgba(139,109,255,.28);direction:rtl;margin-bottom:18px;font-weight:bold;'><svg aria-hidden='true' style='position:absolute;inset:0;width:100%;height:100%;pointer-events:none;' viewBox='0 0 320 52' preserveAspectRatio='none'><polyline class='gk-line' pathLength='1' points='320,46 268,40 236,43 196,32 164,35 124,22 96,26 58,13 20,16' fill='none' stroke='rgba(160,133,255,.55)' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/><circle class='gk-dot' cx='20' cy='16' r='3' fill='#cabcff'/></svg><span style='position:relative;flex:0 0 auto;display:inline-flex;color:#cabcff;'><svg width='1.2em' height='1.2em' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polygon points='13 2 3 14 12 14 11 22 21 10 12 10 13 2'/></svg></span><span style='position:relative;font-size:17px;font-weight:700;color:#fff;'>الحركة</span></div>",
                     "variant": "h6"
@@ -11756,6 +12497,17 @@
                     "value": "normal"
                 },
                 {
+                    "type": "boolean",
+                    "icon": "sicon-expand",
+                    "id": "full_width_mobile",
+                    "label": "تمديد الجدول بعرض الشاشة على الجوال",
+                    "format": "switch",
+                    "selected": false,
+                    "value": false,
+                    "required": false,
+                    "description": "يلغي الهوامش الجانبية للجدول على الجوال فقط، ويبقى سطح المكتب بعرضه المعتاد."
+                },
+                {
                     "type": "items",
                     "icon": "sicon-image",
                     "id": "logo_size_mobile",
@@ -12300,6 +13052,27 @@
                     ]
                 },
                 {
+                    "type": "number",
+                    "icon": "sicon-arrow-up",
+                    "id": "side_top_clearance_mobile",
+                    "label": "مساحة العنصر فوق الجدول — الجوال (بكسل)",
+                    "format": "slider",
+                    "required": false,
+                    "minimum": 0,
+                    "maximum": 240,
+                    "value": 0,
+                    "inputType": "range",
+                    "step": 4,
+                    "description": "تحجز مساحة فارغة فوق الجدول عندما يكون العنصر البصري في أعلى القسم.",
+                    "conditions": [
+                        {
+                            "id": "side_visual_count",
+                            "operation": "!=",
+                            "value": "off"
+                        }
+                    ]
+                },
+                {
                     "type": "static",
                     "format": "title",
                     "id": "section-comparison-side-first-desktop",
@@ -12424,6 +13197,27 @@
                     "inputType": "range",
                     "step": 1,
                     "value": 2,
+                    "conditions": [
+                        {
+                            "id": "side_visual_count",
+                            "operation": "!=",
+                            "value": "off"
+                        }
+                    ]
+                },
+                {
+                    "type": "number",
+                    "icon": "sicon-arrow-up",
+                    "id": "side_top_clearance_desktop",
+                    "label": "مساحة العنصر فوق الجدول — سطح المكتب (بكسل)",
+                    "format": "slider",
+                    "required": false,
+                    "minimum": 0,
+                    "maximum": 320,
+                    "value": 0,
+                    "inputType": "range",
+                    "step": 4,
+                    "description": "اتركها صفرًا إذا تبي العنصر يتداخل مع الجدول.",
                     "conditions": [
                         {
                             "id": "side_visual_count",
@@ -13279,6 +14073,36 @@
                     "required": false,
                     "value": "/assets/demo/hero/perfume-logo.png",
                     "description": "يظهر في منتصف التذييل. إذا تُرك فارغًا يظهر اسم المتجر كنص أنيق."
+                },
+                {
+                    "type": "items",
+                    "icon": "sicon-adjust",
+                    "id": "logo_tone",
+                    "label": "لون الشعار",
+                    "format": "dropdown-list",
+                    "source": "Manual",
+                    "required": false,
+                    "selected": [
+                        {
+                            "label": "الألوان الأصلية",
+                            "value": "original",
+                            "key": "footer-logo-original"
+                        }
+                    ],
+                    "value": "original",
+                    "options": [
+                        {
+                            "label": "الألوان الأصلية",
+                            "value": "original",
+                            "key": "footer-logo-original"
+                        },
+                        {
+                            "label": "أبيض للخلفيات الداكنة",
+                            "value": "light",
+                            "key": "footer-logo-light"
+                        }
+                    ],
+                    "description": "اختر الأبيض عندما تكون خلفية التذييل داكنة."
                 },
                 {
                     "type": "string",
@@ -14175,6 +14999,588 @@
                     "label": "معرّف القسم",
                     "required": false,
                     "placeholder": "flexible-banner-content",
+                    "maxLength": 40
+                }
+            ]
+        },
+        {
+            "title": "الشارات المصوّرة",
+            "icon": "sicon-award-ribbon",
+            "name": "image-badges",
+            "key": "3fd40d80-86ae-4a07-a8a5-7a13b5193869",
+            "image": "/assets/templates/solara/badge-1.webp",
+            "fields": [
+                {
+                    "type": "static",
+                    "format": "title",
+                    "id": "brand-header",
+                    "value": "<style>@keyframes gkDraw{0%{stroke-dashoffset:1;opacity:0}8%{opacity:1}55%{stroke-dashoffset:0;opacity:1}78%{stroke-dashoffset:0;opacity:1}100%{stroke-dashoffset:0;opacity:0}}.gk-line{stroke-dasharray:1;stroke-dashoffset:1;animation:gkDraw 5s ease-in-out infinite}@keyframes gkDotPop{0%,50%{opacity:0;transform:scale(.4)}58%,78%{opacity:1;transform:scale(1)}100%{opacity:0;transform:scale(.6)}}.gk-dot{transform-origin:center;transform-box:fill-box;animation:gkDotPop 5s ease-in-out infinite}</style><div style='position:relative;overflow:hidden;border-radius:16px;background:linear-gradient(180deg,#ffffff 0%,#f8f6ff 100%);border:1px solid rgba(98,65,217,.18);box-shadow:0 10px 28px rgba(34,20,80,.08);direction:rtl;font-weight:normal;margin-bottom:16px;'><div aria-hidden='true' style='position:absolute;top:-42px;left:50%;transform:translateX(-50%);width:300px;height:165px;background:radial-gradient(60% 70% at 50% 0%,rgba(98,65,217,.16),transparent 70%);pointer-events:none;'></div><div style='position:relative;display:flex;align-items:center;justify-content:center;padding:23px 20px 18px;border-bottom:1px solid rgba(98,65,217,.10);'><img src='/assets/brand/landing-logo.png' alt='صفحات النمو' style='display:block;width:210px;max-width:82%;height:auto;'></div><div style='position:relative;padding:15px 16px 16px;text-align:center;'><div style='font-size:13px;font-weight:700;line-height:1.8;color:#342663;'>حزمة عناصر مصمّمة خصيصًا لبناء صفحات هبوط سريعة وفعّالة.</div><a href='https://growthkit.growthstack-sa.com/' target='_blank' rel='noopener noreferrer' aria-label='اكتشف عناصر النمو' style='margin-top:13px;display:flex;align-items:center;justify-content:space-between;gap:14px;padding:12px 13px;border-radius:12px;background:#ffffff;border:1px solid rgba(98,65,217,.20);box-shadow:0 6px 18px rgba(51,35,108,.08);text-decoration:none;text-align:right;'><span style='min-width:0;display:flex;flex-direction:column;align-items:flex-start;gap:6px;'><span style='font-size:11.5px;font-weight:700;line-height:1.6;color:#6b7280;'>للمزيد من العناصر والتخصيصات المتقدمة</span><img src='https://growthkit.growthstack-sa.com/logo.png' alt='عناصر النمو' style='display:block;width:118px;max-width:100%;height:auto;'></span><span style='flex:0 0 auto;width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,#6b4de0,#4c2fb8);display:grid;place-items:center;color:#ffffff;box-shadow:0 6px 14px rgba(98,65,217,.24);'><svg width='15' height='15' viewBox='0 0 24 24' fill='none' aria-hidden='true'><path d='M19 12H5M11 18l-6-6 6-6' stroke='currentColor' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'></path></svg></span></a></div></div>",
+                    "variant": "h5"
+                },
+                {
+                    "type": "static",
+                    "format": "title",
+                    "id": "section-ib-content",
+                    "variant": "h5",
+                    "value": "<div style='position:relative;overflow:hidden;display:flex;align-items:center;gap:10px;padding:13px 16px;border-radius:12px;background:radial-gradient(circle at left center,#6241d9 0%,#3b2878 35%,#160f2a 62%,#020204 100%);border:1px solid rgba(139,109,255,.28);direction:rtl;margin:18px 0;font-weight:bold;'><span style='position:relative;display:inline-flex;color:#cabcff;'><svg width='1.2em' height='1.2em' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M4 5h16v14H4zM8 13l3-3 5 5 2-2'/></svg></span><span style='position:relative;font-size:17px;font-weight:700;color:#fff;'>المحتوى والصور</span></div>"
+                },
+                {
+                    "type": "static",
+                    "format": "description",
+                    "id": "ib-content-note",
+                    "value": "<div style='background-color:#6036c11f;color:#6036C1;padding:12px 16px;border-radius:8px;margin-bottom:14px;font-size:13px;line-height:1.7;direction:rtl;'>قائمة صور صغيرة للشهادات والاعتمادات والمزايا وأيقونات الثقة. عنوان القسم وعنوان كل صورة اختياريان، والصورة تبقى بكامل أبعادها بدون قص.</div>"
+                },
+                {
+                    "type": "string",
+                    "icon": "sicon-format-text-alt",
+                    "id": "section_title",
+                    "label": "عنوان القسم (اختياري)",
+                    "format": "text",
+                    "multilanguage": true,
+                    "required": false,
+                    "value": {
+                        "ar": "مناسبة لك إذا:",
+                        "en": "Perfect for you if:"
+                    },
+                    "maxLength": 80
+                },
+                {
+                    "type": "string",
+                    "icon": "sicon-paragraph",
+                    "id": "section_subtitle",
+                    "label": "وصف قصير (اختياري)",
+                    "format": "textarea",
+                    "multilanguage": true,
+                    "required": false,
+                    "value": {
+                        "ar": "",
+                        "en": ""
+                    },
+                    "maxLength": 220
+                },
+                {
+                    "type": "collection",
+                    "icon": "sicon-image-landscape",
+                    "id": "items",
+                    "label": "الشارات والصور",
+                    "format": "collection",
+                    "required": true,
+                    "minLength": 1,
+                    "maxLength": 12,
+                    "item_label": "شارة مصوّرة",
+                    "value": [
+                        {
+                            "image": "/assets/templates/solara/badge-1.webp",
+                            "image_alt": {
+                                "ar": "ميزة 1",
+                                "en": "Feature 1"
+                            },
+                            "title": {
+                                "ar": "",
+                                "en": ""
+                            }
+                        },
+                        {
+                            "image": "/assets/templates/solara/badge-3.webp",
+                            "image_alt": {
+                                "ar": "ميزة 3",
+                                "en": "Feature 3"
+                            },
+                            "title": {
+                                "ar": "",
+                                "en": ""
+                            }
+                        },
+                        {
+                            "image": "/assets/templates/solara/badge-2.webp",
+                            "image_alt": {
+                                "ar": "ميزة 2",
+                                "en": "Feature 2"
+                            },
+                            "title": {
+                                "ar": "",
+                                "en": ""
+                            }
+                        }
+                    ],
+                    "fields": [
+                        {
+                            "type": "string",
+                            "icon": "sicon-image-landscape",
+                            "id": "image",
+                            "label": "الصورة",
+                            "format": "image",
+                            "required": true
+                        },
+                        {
+                            "type": "string",
+                            "icon": "sicon-format-text-alt",
+                            "id": "image_alt",
+                            "label": "وصف الصورة لمحركات البحث",
+                            "format": "text",
+                            "multilanguage": true,
+                            "required": false,
+                            "maxLength": 120
+                        },
+                        {
+                            "type": "string",
+                            "icon": "sicon-format-text-alt",
+                            "id": "title",
+                            "label": "عنوان تحت الصورة (اختياري)",
+                            "format": "text",
+                            "multilanguage": true,
+                            "required": false,
+                            "maxLength": 80
+                        }
+                    ]
+                },
+                {
+                    "type": "static",
+                    "format": "title",
+                    "id": "section-ib-layout",
+                    "variant": "h5",
+                    "value": "<div style='position:relative;overflow:hidden;display:flex;align-items:center;gap:10px;padding:13px 16px;border-radius:12px;background:radial-gradient(circle at left center,#6241d9 0%,#3b2878 35%,#160f2a 62%,#020204 100%);border:1px solid rgba(139,109,255,.28);direction:rtl;margin:18px 0;font-weight:bold;'><span style='position:relative;display:inline-flex;color:#cabcff;'><svg width='1.2em' height='1.2em' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h6v6h-6z'/></svg></span><span style='position:relative;font-size:17px;font-weight:700;color:#fff;'>التخطيط</span></div>"
+                },
+                {
+                    "type": "items",
+                    "icon": "sicon-keyboard_arrow_down",
+                    "id": "layout",
+                    "label": "ترتيب الصور",
+                    "format": "dropdown-list",
+                    "source": "Manual",
+                    "required": false,
+                    "selected": [
+                        {
+                            "label": "هرمي — الأولى بالأعلى",
+                            "value": "pyramid",
+                            "key": "ib-layout-pyramid"
+                        }
+                    ],
+                    "value": "pyramid",
+                    "options": [
+                        {
+                            "label": "هرمي — الأولى بالأعلى",
+                            "value": "pyramid",
+                            "key": "ib-layout-pyramid"
+                        },
+                        {
+                            "label": "شبكة منتظمة",
+                            "value": "grid",
+                            "key": "ib-layout-grid"
+                        }
+                    ]
+                },
+                {
+                    "type": "items",
+                    "icon": "sicon-keyboard_arrow_down",
+                    "id": "gap",
+                    "label": "المسافة بين الصور",
+                    "format": "dropdown-list",
+                    "source": "Manual",
+                    "required": false,
+                    "selected": [
+                        {
+                            "label": "متقاربة",
+                            "value": "compact",
+                            "key": "ib-gap-compact"
+                        }
+                    ],
+                    "value": "compact",
+                    "options": [
+                        {
+                            "label": "متقاربة",
+                            "value": "compact",
+                            "key": "ib-gap-compact"
+                        },
+                        {
+                            "label": "عادية",
+                            "value": "normal",
+                            "key": "ib-gap-normal"
+                        },
+                        {
+                            "label": "متباعدة",
+                            "value": "spacious",
+                            "key": "ib-gap-spacious"
+                        }
+                    ]
+                },
+                {
+                    "type": "static",
+                    "format": "title",
+                    "id": "section-ib-mobile",
+                    "variant": "h5",
+                    "value": "<div style='position:relative;overflow:hidden;display:flex;align-items:center;gap:10px;padding:13px 16px;border-radius:12px;background:radial-gradient(circle at left center,#6241d9 0%,#3b2878 35%,#160f2a 62%,#020204 100%);border:1px solid rgba(139,109,255,.28);direction:rtl;margin:18px 0;font-weight:bold;'><span style='position:relative;display:inline-flex;color:#cabcff;'><svg width='1.2em' height='1.2em' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M7 2h10v20H7zM11 18h2'/></svg></span><span style='position:relative;font-size:17px;font-weight:700;color:#fff;'>الجوال — أساسي</span></div>"
+                },
+                {
+                    "type": "items",
+                    "icon": "sicon-keyboard_arrow_down",
+                    "id": "columns_mobile",
+                    "label": "عدد الصور في الصف",
+                    "format": "dropdown-list",
+                    "source": "Manual",
+                    "required": false,
+                    "selected": [
+                        {
+                            "label": "٣ صور",
+                            "value": "3",
+                            "key": "ib-cols-m-3"
+                        }
+                    ],
+                    "value": "3",
+                    "options": [
+                        {
+                            "label": "صورتان",
+                            "value": "2",
+                            "key": "ib-cols-m-2"
+                        },
+                        {
+                            "label": "٣ صور",
+                            "value": "3",
+                            "key": "ib-cols-m-3"
+                        },
+                        {
+                            "label": "٤ صور",
+                            "value": "4",
+                            "key": "ib-cols-m-4"
+                        }
+                    ],
+                    "conditions": [
+                        {
+                            "id": "layout",
+                            "operation": "=",
+                            "value": "grid"
+                        }
+                    ]
+                },
+                {
+                    "type": "items",
+                    "icon": "sicon-keyboard_arrow_down",
+                    "id": "image_size_mobile",
+                    "label": "حجم الصور على الجوال",
+                    "format": "dropdown-list",
+                    "source": "Manual",
+                    "required": false,
+                    "selected": [
+                        {
+                            "label": "كبير",
+                            "value": "lg",
+                            "key": "ib-size-m-lg"
+                        }
+                    ],
+                    "value": "lg",
+                    "options": [
+                        {
+                            "label": "صغير",
+                            "value": "sm",
+                            "key": "ib-size-m-sm"
+                        },
+                        {
+                            "label": "متوسط",
+                            "value": "md",
+                            "key": "ib-size-m-md"
+                        },
+                        {
+                            "label": "كبير",
+                            "value": "lg",
+                            "key": "ib-size-m-lg"
+                        }
+                    ]
+                },
+                {
+                    "type": "static",
+                    "format": "title",
+                    "id": "section-ib-desktop",
+                    "variant": "h5",
+                    "value": "<div style='position:relative;overflow:hidden;display:flex;align-items:center;gap:10px;padding:13px 16px;border-radius:12px;background:radial-gradient(circle at left center,#6241d9 0%,#3b2878 35%,#160f2a 62%,#020204 100%);border:1px solid rgba(139,109,255,.28);direction:rtl;margin:18px 0;font-weight:bold;'><span style='position:relative;display:inline-flex;color:#cabcff;'><svg width='1.2em' height='1.2em' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M2 3h20v14H2zM8 21h8M12 17v4'/></svg></span><span style='position:relative;font-size:17px;font-weight:700;color:#fff;'>سطح المكتب — تخصيص اختياري</span></div>"
+                },
+                {
+                    "type": "items",
+                    "icon": "sicon-keyboard_arrow_down",
+                    "id": "columns_desktop",
+                    "label": "عدد الصور في الصف على سطح المكتب",
+                    "format": "dropdown-list",
+                    "source": "Manual",
+                    "required": false,
+                    "selected": [
+                        {
+                            "label": "نفس الجوال",
+                            "value": "inherit",
+                            "key": "ib-cols-d-inherit"
+                        }
+                    ],
+                    "value": "inherit",
+                    "options": [
+                        {
+                            "label": "نفس الجوال",
+                            "value": "inherit",
+                            "key": "ib-cols-d-inherit"
+                        },
+                        {
+                            "label": "٣ صور",
+                            "value": "3",
+                            "key": "ib-cols-d-3"
+                        },
+                        {
+                            "label": "٤ صور",
+                            "value": "4",
+                            "key": "ib-cols-d-4"
+                        },
+                        {
+                            "label": "٥ صور",
+                            "value": "5",
+                            "key": "ib-cols-d-5"
+                        },
+                        {
+                            "label": "٦ صور",
+                            "value": "6",
+                            "key": "ib-cols-d-6"
+                        }
+                    ],
+                    "conditions": [
+                        {
+                            "id": "layout",
+                            "operation": "=",
+                            "value": "grid"
+                        }
+                    ]
+                },
+                {
+                    "type": "items",
+                    "icon": "sicon-keyboard_arrow_down",
+                    "id": "image_size_desktop",
+                    "label": "حجم الصور على سطح المكتب",
+                    "format": "dropdown-list",
+                    "source": "Manual",
+                    "required": false,
+                    "selected": [
+                        {
+                            "label": "نفس مستوى الجوال",
+                            "value": "inherit",
+                            "key": "ib-size-d-inherit"
+                        }
+                    ],
+                    "value": "inherit",
+                    "options": [
+                        {
+                            "label": "نفس مستوى الجوال",
+                            "value": "inherit",
+                            "key": "ib-size-d-inherit"
+                        },
+                        {
+                            "label": "صغير",
+                            "value": "sm",
+                            "key": "ib-size-d-sm"
+                        },
+                        {
+                            "label": "متوسط",
+                            "value": "md",
+                            "key": "ib-size-d-md"
+                        },
+                        {
+                            "label": "كبير",
+                            "value": "lg",
+                            "key": "ib-size-d-lg"
+                        }
+                    ]
+                },
+                {
+                    "type": "static",
+                    "format": "title",
+                    "id": "section-ib-motion",
+                    "variant": "h5",
+                    "value": "<div style='position:relative;overflow:hidden;display:flex;align-items:center;gap:10px;padding:13px 16px;border-radius:12px;background:radial-gradient(circle at left center,#6241d9 0%,#3b2878 35%,#160f2a 62%,#020204 100%);border:1px solid rgba(139,109,255,.28);direction:rtl;margin:18px 0;font-weight:bold;'><span style='position:relative;display:inline-flex;color:#cabcff;'><svg width='1.2em' height='1.2em' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M13 2 3 14h9l-1 8 10-12h-9z'/></svg></span><span style='position:relative;font-size:17px;font-weight:700;color:#fff;'>الحركة</span></div>"
+                },
+                {
+                    "type": "boolean",
+                    "icon": "sicon-toggle-off",
+                    "id": "enable_entrance_anim",
+                    "label": "حركة ظهور تدريجية",
+                    "format": "switch",
+                    "selected": true,
+                    "value": true,
+                    "required": false
+                },
+                {
+                    "type": "static",
+                    "format": "title",
+                    "id": "section-ib-colors",
+                    "variant": "h5",
+                    "value": "<div style='position:relative;overflow:hidden;display:flex;align-items:center;gap:10px;padding:13px 16px;border-radius:12px;background:radial-gradient(circle at left center,#6241d9 0%,#3b2878 35%,#160f2a 62%,#020204 100%);border:1px solid rgba(139,109,255,.28);direction:rtl;margin:18px 0;font-weight:bold;'><span style='position:relative;display:inline-flex;color:#cabcff;'><svg width='1.2em' height='1.2em' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M12 2a10 10 0 1 0 0 20c1 0 2-1 2-2 0-1-1-2 0-3 1-1 2 0 4-1 3-1 4-3 4-6 0-5-4-9-10-9z'/></svg></span><span style='position:relative;font-size:17px;font-weight:700;color:#fff;'>الألوان</span></div>"
+                },
+                {
+                    "type": "string",
+                    "format": "color",
+                    "inputType": "color",
+                    "icon": "sicon-format-fill",
+                    "id": "bg_color",
+                    "label": "لون خلفية القسم",
+                    "required": false,
+                    "value": "#FEECD4"
+                },
+                {
+                    "type": "string",
+                    "format": "color",
+                    "inputType": "color",
+                    "icon": "sicon-format-fill",
+                    "id": "title_color",
+                    "label": "لون عنوان القسم",
+                    "required": false,
+                    "value": "#111111"
+                },
+                {
+                    "type": "string",
+                    "format": "color",
+                    "inputType": "color",
+                    "icon": "sicon-format-fill",
+                    "id": "subtitle_color",
+                    "label": "لون الوصف",
+                    "required": false,
+                    "value": "#4B5563"
+                },
+                {
+                    "type": "string",
+                    "format": "color",
+                    "inputType": "color",
+                    "icon": "sicon-format-fill",
+                    "id": "item_title_color",
+                    "label": "لون عناوين الصور",
+                    "required": false,
+                    "value": "#003B1D"
+                },
+                {
+                    "type": "static",
+                    "format": "title",
+                    "id": "section-ib-space",
+                    "variant": "h5",
+                    "value": "<div style='position:relative;overflow:hidden;display:flex;align-items:center;gap:10px;padding:13px 16px;border-radius:12px;background:radial-gradient(circle at left center,#6241d9 0%,#3b2878 35%,#160f2a 62%,#020204 100%);border:1px solid rgba(139,109,255,.28);direction:rtl;margin:18px 0;font-weight:bold;'><span style='position:relative;display:inline-flex;color:#cabcff;'><svg width='1.2em' height='1.2em' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M12 3v18M8 6l4-3 4 3M8 18l4 3 4-3'/></svg></span><span style='position:relative;font-size:17px;font-weight:700;color:#fff;'>المسافات حول القسم</span></div>"
+                },
+                {
+                    "type": "static",
+                    "format": "description",
+                    "id": "ib-space-note",
+                    "value": "<div style='background-color:#6036c11f;color:#6036C1;padding:12px 16px;border-radius:8px;margin-bottom:14px;font-size:13px;line-height:1.7;direction:rtl;'>تحكم بالمساحة الفارغة فوق القسم وتحته. في التخطيط الهرمي تُحجز المساحة حسب حجم الصور تلقائيًا.</div>"
+                },
+                {
+                    "type": "items",
+                    "icon": "sicon-keyboard_arrow_down",
+                    "id": "space_top",
+                    "label": "المسافة فوق القسم",
+                    "format": "dropdown-list",
+                    "source": "Manual",
+                    "required": false,
+                    "selected": [
+                        {
+                            "label": "متوسطة",
+                            "value": "md",
+                            "key": "space_top-md"
+                        }
+                    ],
+                    "options": [
+                        {
+                            "label": "بدون",
+                            "value": "none",
+                            "key": "space_top-none"
+                        },
+                        {
+                            "label": "ضيقة",
+                            "value": "xs",
+                            "key": "space_top-xs"
+                        },
+                        {
+                            "label": "صغيرة",
+                            "value": "sm",
+                            "key": "space_top-sm"
+                        },
+                        {
+                            "label": "متوسطة",
+                            "value": "md",
+                            "key": "space_top-md"
+                        },
+                        {
+                            "label": "كبيرة",
+                            "value": "lg",
+                            "key": "space_top-lg"
+                        },
+                        {
+                            "label": "كبيرة جدًا",
+                            "value": "xl",
+                            "key": "space_top-xl"
+                        }
+                    ],
+                    "description": "المسافة الفاضية فوق محتوى القسم.",
+                    "value": "md"
+                },
+                {
+                    "type": "items",
+                    "icon": "sicon-keyboard_arrow_down",
+                    "id": "space_bottom",
+                    "label": "المسافة تحت القسم",
+                    "format": "dropdown-list",
+                    "source": "Manual",
+                    "required": false,
+                    "selected": [
+                        {
+                            "label": "كبيرة جدًا",
+                            "value": "xl",
+                            "key": "space_bottom-xl"
+                        }
+                    ],
+                    "options": [
+                        {
+                            "label": "بدون",
+                            "value": "none",
+                            "key": "space_bottom-none"
+                        },
+                        {
+                            "label": "ضيقة",
+                            "value": "xs",
+                            "key": "space_bottom-xs"
+                        },
+                        {
+                            "label": "صغيرة",
+                            "value": "sm",
+                            "key": "space_bottom-sm"
+                        },
+                        {
+                            "label": "متوسطة",
+                            "value": "md",
+                            "key": "space_bottom-md"
+                        },
+                        {
+                            "label": "كبيرة",
+                            "value": "lg",
+                            "key": "space_bottom-lg"
+                        },
+                        {
+                            "label": "كبيرة جدًا",
+                            "value": "xl",
+                            "key": "space_bottom-xl"
+                        }
+                    ],
+                    "description": "المسافة الفاضية تحت محتوى القسم.",
+                    "value": "xl"
+                },
+                {
+                    "type": "static",
+                    "format": "title",
+                    "id": "section-ib-anchor",
+                    "variant": "h5",
+                    "value": "<div style='position:relative;overflow:hidden;display:flex;align-items:center;gap:10px;padding:13px 16px;border-radius:12px;background:radial-gradient(circle at left center,#6241d9 0%,#3b2878 35%,#160f2a 62%,#020204 100%);border:1px solid rgba(139,109,255,.28);direction:rtl;margin:18px 0;font-weight:bold;'><span style='position:relative;display:inline-flex;color:#cabcff;'><svg width='1.2em' height='1.2em' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M12 2a3 3 0 1 0 0 6v14M5 12H2a10 10 0 0 0 20 0h-3'/></svg></span><span style='position:relative;font-size:17px;font-weight:700;color:#fff;'>الربط من القائمة</span></div>"
+                },
+                {
+                    "type": "static",
+                    "format": "description",
+                    "id": "ib-anchor-note",
+                    "value": "<div style='background-color:#6036c11f;color:#6036C1;padding:12px 16px;border-radius:8px;margin-bottom:14px;font-size:13px;line-height:1.7;direction:rtl;'>هذا معرّف القسم لاستخدامه في روابط قائمة الهيرو. اتركه فارغًا لاستخدام image-badges.</div>"
+                },
+                {
+                    "type": "string",
+                    "icon": "sicon-link",
+                    "id": "anchor_id",
+                    "label": "معرّف القسم",
+                    "format": "text",
+                    "required": false,
+                    "placeholder": "image-badges",
                     "maxLength": 40
                 }
             ]

@@ -114,6 +114,80 @@ export const useCasesStyles = css`
     line-height: 1.8;
   }
 
+  .uc-header,
+  .uc-stack,
+  .uc-strip,
+  .uc-empty {
+    position: relative;
+    z-index: 2;
+  }
+
+  /* ============================================================
+     SIDE DESIGN ELEMENT (عنصر بصري جانبي)
+     Uses the same shared resolver and controls as FAQ and Gallery.
+     ============================================================ */
+  .uc-side {
+    position: absolute;
+    top: var(--se-top, 0%);
+    width: var(--se-w, 45%);
+    height: auto;
+    opacity: var(--se-op, 1);
+    pointer-events: none;
+    user-select: none;
+    max-width: none;
+  }
+  .uc-side[data-depth="behind"] {
+    z-index: 0;
+  }
+  .uc-side[data-depth="front"] {
+    z-index: 3;
+  }
+  .uc-side[data-slot="1"] {
+    --se-w: var(--se1-w-m);
+    --se-x: var(--se1-x-m);
+    --se-y: var(--se1-y-m);
+    --se-top: var(--se1-top-m);
+    --se-pull: var(--se1-pull-m);
+    --se-op: var(--se1-op);
+  }
+  .uc-side[data-slot="2"] {
+    --se-w: var(--se2-w-m);
+    --se-x: var(--se2-x-m);
+    --se-y: var(--se2-y-m);
+    --se-top: var(--se2-top-m);
+    --se-pull: var(--se2-pull-m);
+    --se-op: var(--se2-op);
+  }
+  .uc-side[data-side="left"] {
+    left: 0;
+    transform: translate(
+      calc(-1 * var(--se-x, 0%)),
+      calc(var(--se-pull, 0%) + var(--se-y, 0%))
+    );
+  }
+  .uc-side[data-side="center"] {
+    left: 50%;
+    transform: translate(
+      calc(-50% + var(--se-x, 0%)),
+      calc(var(--se-pull, 0%) + var(--se-y, 0%))
+    );
+  }
+  .uc-side[data-flow="true"][data-side="center"] {
+    position: relative;
+    top: auto;
+    left: auto;
+    display: block;
+    margin: clamp(2.5rem, 10vw, 5rem) auto 0;
+    transform: translate(var(--se-x, 0%), var(--se-y, 0%));
+  }
+  .uc-side[data-side="right"] {
+    right: 0;
+    transform: translate(
+      var(--se-x, 0%),
+      calc(var(--se-pull, 0%) + var(--se-y, 0%))
+    );
+  }
+
   /* ============================================================
      FRAME — one photo with its copy laid over it.
      Shared by the row layout and by stack cards set to "text over photo".
@@ -503,6 +577,20 @@ export const useCasesStyles = css`
     .uc-body {
       gap: 0.6rem;
       padding: clamp(1.5rem, 3vw, 2.75rem);
+    }
+    .uc-side[data-slot="1"] {
+      --se-w: var(--se1-w-d);
+      --se-x: var(--se1-x-d);
+      --se-y: var(--se1-y-d);
+      --se-top: var(--se1-top-d);
+      --se-pull: var(--se1-pull-d);
+    }
+    .uc-side[data-slot="2"] {
+      --se-w: var(--se2-w-d);
+      --se-x: var(--se2-x-d);
+      --se-y: var(--se2-y-d);
+      --se-top: var(--se2-top-d);
+      --se-pull: var(--se2-pull-d);
     }
     .uc-cap-title {
       font-size: clamp(1.05rem, 1.3vw, 1.3rem);

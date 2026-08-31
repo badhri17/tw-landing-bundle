@@ -8,8 +8,7 @@
  *
  * Card placement: `side` picks the physical edge (left/right — never flipped by
  * RTL, so a card stays where the merchant put it relative to the photo) and
- * `top` is a percentage of the IMAGE height, same convention as
- * `interactive-product`'s hotspots.
+ * `top` is a percentage of the IMAGE height.
  *
  * With no product image the component falls back to a plain stacked list, so a
  * half-configured section still renders something sensible.

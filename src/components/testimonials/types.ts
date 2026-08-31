@@ -13,6 +13,7 @@
 
 import type { SectionSpacingFields } from "../../shared/section-spacing";
 import type { WaveEdgeFields } from "../../shared/wave-edges";
+import type { SideElementFields } from "../../shared/side-element";
 
 /** Value coming back from a Salla `multilanguage: true` field. */
 export type MaybeMultiLang =
@@ -68,7 +69,8 @@ export interface TestimonialItem {
 
 export interface TestimonialsConfig
   extends SectionSpacingFields,
-    WaveEdgeFields {
+    WaveEdgeFields,
+    SideElementFields {
   /** This section's anchor id, so hero nav links can target it. */
   anchor_id?: string;
 

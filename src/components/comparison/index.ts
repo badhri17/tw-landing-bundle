@@ -212,6 +212,14 @@ export default class GrowthComparison extends GrowthElement {
       `--cmp-fs-d:${density.d.fs}rem`,
       `--cmp-logo-m:${logo.m}px`,
       `--cmp-logo-d:${logo.d}px`,
+      `--cmp-side-clearance-m:${Math.max(
+        0,
+        this._num(c.side_top_clearance_mobile, 0),
+      )}px`,
+      `--cmp-side-clearance-d:${Math.max(
+        0,
+        this._num(c.side_top_clearance_desktop, 0),
+      )}px`,
       ...sideVars,
       ...resolveSectionSpacing(c, (v, f) => this._pickValue(v, f)),
     ]
@@ -314,7 +322,11 @@ export default class GrowthComparison extends GrowthElement {
 
     const items = this._items();
     if (items.length === 0) {
-      return html`<section class="cmp" style=${hostStyle}>
+      return html`<section
+        class="cmp"
+        data-full-mobile=${c.full_width_mobile === true ? "on" : "off"}
+        style=${hostStyle}
+      >
         ${sideEls}
         <p class="cmp-empty">
           ${
@@ -377,7 +389,11 @@ export default class GrowthComparison extends GrowthElement {
           </th>`;
 
     return html`
-      <section class="cmp" style=${hostStyle}>
+      <section
+        class="cmp"
+        data-full-mobile=${c.full_width_mobile === true ? "on" : "off"}
+        style=${hostStyle}
+      >
         ${sideEls}
         ${
           headerAbove
