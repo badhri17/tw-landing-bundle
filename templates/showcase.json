@@ -430,7 +430,7 @@
           "label": "لون خلفية الشريط بعد التمرير",
           "icon": "sicon-format-fill",
           "required": false,
-          "value": "#0E0F12",
+          "value": "#FFFFFF",
           "conditions": [
             {
               "id": "nav_fixed",
@@ -448,7 +448,7 @@
           "label": "لون نص الشريط بعد التمرير",
           "icon": "sicon-format-fill",
           "required": false,
-          "value": "#F4F1EA",
+          "value": "#1A1A1A",
           "conditions": [
             {
               "id": "nav_fixed",
@@ -675,9 +675,9 @@
           "required": false,
           "selected": [
             {
-              "label": "فاتح (على خلفية داكنة)",
-              "value": "light",
-              "key": "tt-l"
+              "label": "داكن (على خلفية فاتحة)",
+              "value": "dark",
+              "key": "tt-d"
             }
           ],
           "options": [
@@ -692,7 +692,7 @@
               "key": "tt-d"
             }
           ],
-          "value": "light"
+          "value": "dark"
         },
         {
           "type": "static",
@@ -727,7 +727,7 @@
               "value": true
             }
           ],
-          "value": "#F4F1EA"
+          "value": "#1A1A1A"
         },
         {
           "type": "string",
@@ -761,7 +761,7 @@
               "value": true
             }
           ],
-          "value": "#A8A29A"
+          "value": "#6B6B6B"
         },
         {
           "type": "string",
@@ -779,7 +779,7 @@
               "value": true
             }
           ],
-          "value": "#C9A227"
+          "value": "#1A1A1A"
         },
         {
           "type": "string",
@@ -796,7 +796,7 @@
               "value": true
             }
           ],
-          "value": "#0E0F12"
+          "value": "#FFFFFF"
         },
         {
           "type": "static",
@@ -1009,7 +1009,7 @@
           "id": "gradient_from",
           "label": "اللون الأساسي",
           "icon": "sicon-format-fill",
-          "value": "#111111"
+          "value": "#FFFFFF"
         },
         {
           "type": "string",
@@ -1345,7 +1345,7 @@
               "value": "split"
             }
           ],
-          "value": "#0E0F12"
+          "value": "#FFFFFF"
         },
         {
           "type": "items",
@@ -1358,9 +1358,9 @@
           "description": "يُطبّق على جهة النص في سطح المكتب فقط، ولا يغيّر لون النص على الجوال.",
           "selected": [
             {
-              "label": "فاتح (على خلفية داكنة)",
-              "value": "light",
-              "key": "stt-light"
+              "label": "داكن (على خلفية فاتحة)",
+              "value": "dark",
+              "key": "stt-dark"
             }
           ],
           "options": [
@@ -1382,7 +1382,7 @@
               "value": "split"
             }
           ],
-          "value": "light"
+          "value": "dark"
         },
         {
           "type": "static",
@@ -1633,186 +1633,6 @@
         {
           "type": "items",
           "icon": "sicon-keyboard_arrow_down",
-          "id": "display_mode",
-          "label": "نمط العرض",
-          "format": "dropdown-list",
-          "source": "Manual",
-          "required": false,
-          "description": "«كاروسيل أفقي»: العرض الكلاسيكي بثلاث شرائح متراكبة. «وضع الشنطة»: المنتجات تخرج من شنطة أو صندوق ترفع صورته — مثالي للبكجات والهدايا والعطور.",
-          "selected": [
-            {
-              "label": "وضع الشنطة (المنتجات تخرج من الشنطة)",
-              "value": "bag",
-              "key": "cdm-bag"
-            }
-          ],
-          "options": [
-            {
-              "label": "كاروسيل أفقي (افتراضي)",
-              "value": "carousel",
-              "key": "cdm-carousel"
-            },
-            {
-              "label": "وضع الشنطة (المنتجات تخرج من الشنطة)",
-              "value": "bag",
-              "key": "cdm-bag"
-            }
-          ],
-          "value": "bag"
-        },
-        {
-          "type": "static",
-          "format": "description",
-          "id": "bag-note",
-          "value": "<div style='background-color:#6036c11f;color:#6036C1;padding:12px 16px;border-radius:8px;margin-bottom:14px;font-size:13px;line-height:1.7;'>في <strong>وضع الشنطة</strong> يظهر منتج واحد في كل مرة وكأنه يخرج من الشنطة عند التنقل.<br/>• استخدم صورة شنطة وصور منتجات بخلفية شفافة (PNG/WebP).<br/>• اضبط حجم الشنطة وحجم المنتجات كلًا على حدة حتى يتناسبا معًا.</div>",
-          "conditions": [
-            {
-              "id": "display_mode",
-              "operation": "=",
-              "value": "bag"
-            }
-          ]
-        },
-        {
-          "type": "string",
-          "icon": "sicon-image",
-          "id": "bag_image",
-          "label": "صورة الشنطة / الصندوق",
-          "format": "image",
-          "value": "https://cdn.salla.sa/form-builder/2bOvYO9IU2XQnPy1YmNnzIaTQkrqb9sXrYdtdgF5.webp",
-          "required": false,
-          "description": "تظهر أسفل المشهد وتخرج المنتجات من فتحتها. يُفضَّل صورة بخلفية شفافة (PNG أو WebP).",
-          "conditions": [
-            {
-              "id": "display_mode",
-              "operation": "=",
-              "value": "bag"
-            }
-          ]
-        },
-        {
-          "type": "items",
-          "icon": "sicon-keyboard_arrow_down",
-          "id": "bag_size",
-          "label": "حجم الشنطة",
-          "format": "dropdown-list",
-          "source": "Manual",
-          "required": false,
-          "description": "حجم صورة الشنطة والمشهد حولها.",
-          "selected": [
-            {
-              "label": "متوسط",
-              "value": "medium",
-              "key": "cbs-m"
-            }
-          ],
-          "options": [
-            {
-              "label": "صغير",
-              "value": "small",
-              "key": "cbs-s"
-            },
-            {
-              "label": "متوسط",
-              "value": "medium",
-              "key": "cbs-m"
-            },
-            {
-              "label": "كبير",
-              "value": "large",
-              "key": "cbs-l"
-            }
-          ],
-          "conditions": [
-            {
-              "id": "display_mode",
-              "operation": "=",
-              "value": "bag"
-            }
-          ],
-          "value": "medium"
-        },
-        {
-          "type": "items",
-          "icon": "sicon-keyboard_arrow_down",
-          "id": "bag_product_size",
-          "label": "حجم المنتجات",
-          "format": "dropdown-list",
-          "source": "Manual",
-          "required": false,
-          "description": "حجم المنتج الذي يخرج من الشنطة — مستقل عن حجم الشنطة حتى تضبط التناسب بينهما.",
-          "selected": [
-            {
-              "label": "متوسط",
-              "value": "medium",
-              "key": "cbps-m"
-            }
-          ],
-          "options": [
-            {
-              "label": "صغير",
-              "value": "small",
-              "key": "cbps-s"
-            },
-            {
-              "label": "متوسط",
-              "value": "medium",
-              "key": "cbps-m"
-            },
-            {
-              "label": "كبير",
-              "value": "large",
-              "key": "cbps-l"
-            }
-          ],
-          "conditions": [
-            {
-              "id": "display_mode",
-              "operation": "=",
-              "value": "bag"
-            }
-          ],
-          "value": "medium"
-        },
-        {
-          "type": "string",
-          "format": "color",
-          "inputType": "color",
-          "id": "bag_circle_color",
-          "label": "لون الهالة خلف المنتجات",
-          "icon": "sicon-format-fill",
-          "required": false,
-          "value": "#EBA3A8",
-          "description": "لون القبّة والضباب الناعم الذي يظهر خلف المنتج. اختر درجة قريبة من هوية متجرك.",
-          "conditions": [
-            {
-              "id": "display_mode",
-              "operation": "=",
-              "value": "bag"
-            }
-          ]
-        },
-        {
-          "type": "string",
-          "icon": "sicon-format-text-alt",
-          "id": "bag_bottom_title",
-          "label": "نص ختامي تحت الشنطة",
-          "format": "text",
-          "multilanguage": true,
-          "required": false,
-          "placeholder": "مثل: شنطة أنيقة تجمع بين الجمال والعملية",
-          "maxLength": 120,
-          "conditions": [
-            {
-              "id": "display_mode",
-              "operation": "=",
-              "value": "bag"
-            }
-          ]
-        },
-        {
-          "type": "items",
-          "icon": "sicon-keyboard_arrow_down",
           "id": "slide_animation",
           "label": "أسلوب الانيميشن داخل الشريحة",
           "format": "dropdown-list",
@@ -1838,27 +1658,13 @@
               "key": "sa-reveal"
             }
           ],
-          "conditions": [
-            {
-              "id": "display_mode",
-              "operation": "=",
-              "value": "carousel"
-            }
-          ],
           "value": "simple"
         },
         {
           "type": "static",
           "format": "description",
           "id": "carousel-sizes-diagram",
-          "value": "<div style='margin-bottom:14px;'><img src='https://radaar.b-cdn.net/growth%20bundle/ratio-examples.png' alt='مقاسات الصورة' style='width:100%;max-width:520px;border-radius:10px;display:block;margin:0 auto;'/></div>",
-          "conditions": [
-            {
-              "id": "display_mode",
-              "operation": "=",
-              "value": "carousel"
-            }
-          ]
+          "value": "<div style='margin-bottom:14px;'><img src='https://radaar.b-cdn.net/growth%20bundle/ratio-examples.png' alt='مقاسات الصورة' style='width:100%;max-width:520px;border-radius:10px;display:block;margin:0 auto;'/></div>"
         },
         {
           "type": "items",
@@ -1903,13 +1709,6 @@
               "key": "car-9-16"
             }
           ],
-          "conditions": [
-            {
-              "id": "display_mode",
-              "operation": "=",
-              "value": "carousel"
-            }
-          ],
           "value": "1/1"
         },
         {
@@ -1938,13 +1737,6 @@
               "label": "شريحة واحدة فقط في المنتصف",
               "value": "single",
               "key": "cdl-s"
-            }
-          ],
-          "conditions": [
-            {
-              "id": "display_mode",
-              "operation": "=",
-              "value": "carousel"
             }
           ],
           "value": "coverflow"
@@ -1989,13 +1781,6 @@
               "label": "دائري ناعم (٣٢ بكسل)",
               "value": "32",
               "key": "ccr-32"
-            }
-          ],
-          "conditions": [
-            {
-              "id": "display_mode",
-              "operation": "=",
-              "value": "carousel"
             }
           ],
           "value": "20"
@@ -2181,7 +1966,7 @@
           "label": "لون خلفية القسم",
           "icon": "sicon-format-fill",
           "required": false,
-          "value": "#0E0F12"
+          "value": "#F7F5F2"
         },
         {
           "type": "string",
@@ -2191,7 +1976,7 @@
           "label": "لون العنوان الرئيسي",
           "icon": "sicon-color-palette",
           "required": false,
-          "value": "#F4F1EA"
+          "value": "#1A1A1A"
         },
         {
           "type": "string",
@@ -2201,7 +1986,7 @@
           "label": "لون عنوان الشريحة (تحت السلايدر)",
           "icon": "sicon-color-palette",
           "required": false,
-          "value": "#F4F1EA"
+          "value": "#1A1A1A"
         },
         {
           "type": "string",
@@ -2211,7 +1996,7 @@
           "label": "لون وصف الشريحة (تحت السلايدر)",
           "icon": "sicon-color-palette",
           "required": false,
-          "value": "#A8A29A"
+          "value": "#6B6B6B"
         },
         {
           "type": "string",
@@ -2221,7 +2006,7 @@
           "label": "لون خلفية أزرار التنقل",
           "icon": "sicon-format-fill",
           "required": false,
-          "value": "#C9A227"
+          "value": "#1A1A1A"
         },
         {
           "type": "string",
@@ -2231,7 +2016,7 @@
           "label": "لون أيقونة أزرار التنقل",
           "icon": "sicon-color-palette",
           "required": false,
-          "value": "#0E0F12"
+          "value": "#FFFFFF"
         },
         {
           "type": "string",
@@ -2241,7 +2026,7 @@
           "label": "لون نقاط التنقل",
           "icon": "sicon-color-palette",
           "required": false,
-          "value": "#C9A227"
+          "value": "#1A1A1A"
         },
         {
           "type": "static",
@@ -2569,16 +2354,16 @@
               "avatar": "https://cdn.salla.network/images/themes/landing-page/default-avatar.png",
               "name": {
                 "ar": "نورة",
-                "en": ""
+                "en": "نورة"
               },
               "meta": {
                 "ar": "الرياض",
-                "en": ""
+                "en": "الرياض"
               },
               "rating": "5",
               "quote": {
-                "ar": "من أول رشة لفتني توازن الصندل والفانيليا. رائحته دافئة وأنيقة بدون ما تكون ثقيلة، وصرت أستخدمه كل يوم.",
-                "en": ""
+                "ar": "المقشر ناعم على البشرة وما يخدش أبدًا. استخدمته مرتين بالأسبوع وصار ملمس جسمي أنعم بشكل واضح.",
+                "en": "The scrub is gentle and never scratches. Twice a week and my skin is noticeably smoother."
               }
             },
             {
@@ -2586,16 +2371,16 @@
               "avatar": "https://cdn.salla.network/images/themes/landing-page/default-avatar.png",
               "name": {
                 "ar": "سارة",
-                "en": ""
+                "en": "سارة"
               },
               "meta": {
                 "ar": "جدة",
-                "en": ""
+                "en": "جدة"
               },
               "rating": "4.9",
               "quote": {
-                "ar": "ثباته جميل جدًا؛ بقي واضحًا معي لساعات وعلى الملابس لليوم التالي. حتى التغليف فخم ويصلح كهدية.",
-                "en": ""
+                "ar": "طلبت الطقم كامل — مقشر وزبدة ولوشن. صار روتيني أبسط وما احتجت أدور على منتجات ثانية.",
+                "en": "I ordered the full set — scrub, butter and lotion. My routine got simpler and I needed nothing else."
               }
             },
             {
@@ -2603,16 +2388,16 @@
               "avatar": "https://cdn.salla.network/images/themes/landing-page/default-avatar.png",
               "name": {
                 "ar": "عبدالله",
-                "en": ""
+                "en": "عبدالله"
               },
               "meta": {
                 "ar": "الدمام",
-                "en": ""
+                "en": "الدمام"
               },
               "rating": "5",
               "quote": {
-                "ar": "رائحة مميزة وراقية، فيها دفء وحضور من غير مبالغة. أكثر من شخص سألني عن اسم العطر من أول استخدام.",
-                "en": ""
+                "ar": "زبدة الجسم غنية وتمتص بسرعة بدون لزوجة. أستخدمها بعد الاستحمام والترطيب يثبت لين الصباح.",
+                "en": "The body butter is rich but absorbs fast with no stickiness. It lasts until morning."
               }
             },
             {
@@ -2620,16 +2405,16 @@
               "avatar": "https://cdn.salla.network/images/themes/landing-page/default-avatar.png",
               "name": {
                 "ar": "مها",
-                "en": ""
+                "en": "مها"
               },
               "meta": {
                 "ar": "مكة",
-                "en": ""
+                "en": "مكة"
               },
               "rating": "4.5",
               "quote": {
-                "ar": "الياسمين يظهر بنعومة ثم تبقى لمسة الفانيليا والصندل لساعات. عطر متوازن يناسب الدوام والمناسبات.",
-                "en": ""
+                "ar": "أول مقشر أجربه برائحة منعشة وما يترك أثر دهني. بشرتي صارت أصفى وخصوصًا عند الأكتاف.",
+                "en": "The first scrub I've tried with a fresh scent and no greasy residue. My skin looks clearer."
               }
             },
             {
@@ -2637,16 +2422,16 @@
               "avatar": "https://cdn.salla.network/images/themes/landing-page/default-avatar.png",
               "name": {
                 "ar": "ريم",
-                "en": ""
+                "en": "ريم"
               },
               "meta": {
                 "ar": "الخبر",
-                "en": ""
+                "en": "الخبر"
               },
               "rating": "5",
               "quote": {
-                "ar": "صار عطري المفضل؛ هادئ في البداية ثم يترك أثرًا دافئًا ومميزًا. الرائحة قريبة وفخمة وتناسب كل وقت.",
-                "en": ""
+                "ar": "التغليف أنيق والكميات كبيرة تكفي شهور. أهديت الطقم لأختي وطلبت واحد لها بعدها مباشرة.",
+                "en": "Lovely packaging and generous sizes that last months. I gifted the set and my sister ordered her own."
               }
             }
           ],
@@ -4091,7 +3876,7 @@
           "label": "لون خلفية القسم",
           "icon": "sicon-format-fill",
           "required": false,
-          "value": "#0E0F12"
+          "value": "#F7F5F2"
         },
         {
           "type": "string",
@@ -4101,7 +3886,7 @@
           "label": "لون العنوان",
           "icon": "sicon-color-palette",
           "required": false,
-          "value": "#F4F1EA"
+          "value": "#1A1A1A"
         },
         {
           "type": "string",
@@ -4111,7 +3896,7 @@
           "label": "لون النص الوصفي",
           "icon": "sicon-color-palette",
           "required": false,
-          "value": "#A8A29A"
+          "value": "#6B6B6B"
         },
         {
           "type": "string",
@@ -4132,7 +3917,7 @@
           "icon": "sicon-color-palette",
           "required": false,
           "description": "خلفية السهمين على جانبي السلايدر.",
-          "value": "#C9A227",
+          "value": "#1A1A1A",
           "conditions": [
             {
               "id": "layout",
@@ -4150,7 +3935,7 @@
           "icon": "sicon-color-palette",
           "required": false,
           "description": "لون رمز السهم نفسه.",
-          "value": "#0E0F12",
+          "value": "#FFFFFF",
           "conditions": [
             {
               "id": "layout",
@@ -4167,7 +3952,7 @@
           "label": "لون خلفية البطاقة",
           "icon": "sicon-format-fill",
           "required": false,
-          "value": "#16181D"
+          "value": "#FFFFFF"
         },
         {
           "type": "string",
@@ -4177,7 +3962,7 @@
           "label": "لون حدود البطاقة",
           "icon": "sicon-color-palette",
           "required": false,
-          "value": "#2A2E36"
+          "value": "#E6E3DE"
         },
         {
           "type": "string",
@@ -4187,7 +3972,7 @@
           "label": "لون اسم العميل",
           "icon": "sicon-color-palette",
           "required": false,
-          "value": "#F4F1EA"
+          "value": "#1A1A1A"
         },
         {
           "type": "string",
@@ -4197,7 +3982,7 @@
           "label": "لون التفاصيل الثانوية",
           "icon": "sicon-color-palette",
           "required": false,
-          "value": "#A8A29A"
+          "value": "#6B6B6B"
         },
         {
           "type": "string",
@@ -4207,7 +3992,7 @@
           "label": "لون نص الرأي",
           "icon": "sicon-color-palette",
           "required": false,
-          "value": "#F4F1EA"
+          "value": "#333333"
         },
         {
           "type": "string",
@@ -4227,7 +4012,7 @@
           "label": "لون النجوم الفارغة",
           "icon": "sicon-color-palette",
           "required": false,
-          "value": "#2A2E36"
+          "value": "#E0DDD8"
         },
         {
           "type": "static",
@@ -6496,7 +6281,7 @@
           "label": "لون خلفية القسم",
           "icon": "sicon-format-fill",
           "required": false,
-          "value": "#0E0F12"
+          "value": "#FFFFFF"
         },
         {
           "type": "string",
@@ -6506,7 +6291,7 @@
           "label": "لون العنوان",
           "icon": "sicon-format-fill",
           "required": false,
-          "value": "#F4F1EA"
+          "value": "#1A1A1A"
         },
         {
           "type": "string",
@@ -6516,7 +6301,7 @@
           "label": "لون الوصف تحت العنوان",
           "icon": "sicon-format-fill",
           "required": false,
-          "value": "#A8A29A"
+          "value": "#6B6B6B"
         },
         {
           "type": "string",
@@ -6563,7 +6348,7 @@
           "label": "لون العنوان فوق الصورة",
           "icon": "sicon-format-fill",
           "required": false,
-          "value": "#F4F1EA"
+          "value": "#FFFFFF"
         },
         {
           "type": "string",
@@ -6573,7 +6358,7 @@
           "label": "لون النص فوق الصورة",
           "icon": "sicon-format-fill",
           "required": false,
-          "value": "#A8A29A"
+          "value": "#F0EEEA"
         },
         {
           "type": "string",
@@ -7854,7 +7639,7 @@
           "label": "لون خلفية القسم",
           "icon": "sicon-format-fill",
           "required": false,
-          "value": "#0E0F12"
+          "value": "#F7F5F2"
         },
         {
           "type": "string",
@@ -7864,7 +7649,7 @@
           "label": "لون العنوان",
           "icon": "sicon-format-fill",
           "required": false,
-          "value": "#F4F1EA"
+          "value": "#1A1A1A"
         },
         {
           "type": "string",
@@ -7874,7 +7659,7 @@
           "label": "لون الوصف أسفل العنوان",
           "icon": "sicon-format-fill",
           "required": false,
-          "value": "#A8A29A"
+          "value": "#6B6B6B"
         },
         {
           "type": "string",
@@ -7884,7 +7669,7 @@
           "label": "لون اسم المكوّن",
           "icon": "sicon-format-fill",
           "required": false,
-          "value": "#F4F1EA"
+          "value": "#1A1A1A"
         },
         {
           "type": "string",
@@ -8554,7 +8339,7 @@
           "id": "overlay_text_color",
           "label": "لون النص فوق الصورة",
           "required": false,
-          "value": "#F4F1EA",
+          "value": "#FFFFFF",
           "conditions": [
             {
               "id": "layout_mode",
@@ -8595,7 +8380,7 @@
           "id": "background_color",
           "label": "لون الخلفية",
           "required": false,
-          "value": "#0E0F12",
+          "value": "#FFFFFF",
           "description": "يظهر خلف الصورة ومع المحتوى، ويصبح خلفية القسم كاملة عند عدم إضافة صورة."
         },
         {
@@ -9122,7 +8907,7 @@
           "id": "bg_color",
           "label": "لون خلفية القسم",
           "required": false,
-          "value": "#0E0F12"
+          "value": "#FFFFFF"
         },
         {
           "type": "string",
@@ -9132,7 +8917,7 @@
           "id": "title_color",
           "label": "لون عنوان القسم",
           "required": false,
-          "value": "#F4F1EA"
+          "value": "#1A1A1A"
         },
         {
           "type": "string",
@@ -9142,7 +8927,7 @@
           "id": "subtitle_color",
           "label": "لون الوصف",
           "required": false,
-          "value": "#A8A29A"
+          "value": "#6B6B6B"
         },
         {
           "type": "string",
@@ -9152,7 +8937,7 @@
           "id": "item_title_color",
           "label": "لون عناوين الصور",
           "required": false,
-          "value": "#F4F1EA"
+          "value": "#1A1A1A"
         },
         {
           "type": "static",
@@ -9650,11 +9435,12 @@
           "required": false,
           "selected": [
             {
-              "label": "أبيض للخلفيات الداكنة",
-              "value": "light"
+              "label": "الألوان الأصلية",
+              "value": "original",
+              "key": "footer-logo-original"
             }
           ],
-          "value": "light",
+          "value": "original",
           "options": [
             {
               "label": "الألوان الأصلية",
@@ -9812,7 +9598,7 @@
           "id": "background_color",
           "label": "لون الخلفية",
           "required": false,
-          "value": "#0E0F12"
+          "value": "#FFFFFF"
         },
         {
           "type": "string",
@@ -9822,7 +9608,7 @@
           "id": "text_color",
           "label": "لون النص والأيقونات",
           "required": false,
-          "value": "#F4F1EA"
+          "value": "#1A1A1A"
         },
         {
           "type": "items",

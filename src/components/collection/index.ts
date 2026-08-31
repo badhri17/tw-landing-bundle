@@ -6,9 +6,7 @@ import type {
   CollectionConfig,
   CollectionAnimation,
   CollectionAspect,
-  CollectionBagSize,
   CollectionDesktopLayout,
-  CollectionDisplayMode,
   CollectionSlideItem,
 } from "./types";
 import { collectionStyles } from "./style";
@@ -25,16 +23,9 @@ import { collectionStyles } from "./style";
  *   • reveal → swap a closed image for an opened image on the active slide
  *              (daily.html style). Slides without an `image_opened` fall back
  *              to the simple behaviour automatically.
- *
- * Two display modes:
- *   • carousel → the horizontal coverflow above (default).
- *   • bag      → "وضع الشنطة": a vertical stage where the active product
- *                rises out of a merchant-uploaded bag image while the
- *                previous one sinks back into it.
  */
 export default class GrowthCollection extends GrowthElement {
   static styles = collectionStyles;
-
 
   @property({ type: Object })
   config?: CollectionConfig;
@@ -44,15 +35,6 @@ export default class GrowthCollection extends GrowthElement {
   @state() private _animState: "ready" | "in" = "ready";
   /** Drives the caption fade — flips out → in when the active slide changes. */
   @state() private _captionState: "in" | "out" = "in";
-  /** Bag mode: the slide currently sinking back into the bag. */
-  @state() private _bagLeavingIndex: number | null = null;
-  /** Bag mode: false until the first navigation, so the initial slide shows
-      without playing the rise animation on page load. */
-  @state() private _bagNavigated = false;
-  /** Bag mode: measured h/w ratio of the tallest product image. */
-  @state() private _bagProdRatio: number | null = null;
-  /** Bag mode: measured h/w ratio of the bag image. */
-  @state() private _bagImgRatio: number | null = null;
 
   private _autoplayTimer: number | null = null;
   private _captionTimer: number | null = null;
@@ -74,16 +56,6 @@ export default class GrowthCollection extends GrowthElement {
   // ------------------------------------------------------------
   // Helpers
   // ------------------------------------------------------------
-
-
-
-
-  private _displayMode(): CollectionDisplayMode {
-    return this._pickValue<CollectionDisplayMode>(
-      this.config?.display_mode,
-      "carousel"
-    );
-  }
 
   private _slides() {
     const list = this.config?.slides;
@@ -151,10 +123,8 @@ export default class GrowthCollection extends GrowthElement {
     const slides = this._slides();
     if (!this._hasInitializedActive && slides.length > 0) {
       const wanted = this._num(this.config?.initial_slide, NaN);
-      // Bag mode reads top-to-bottom like a story — start at the first slide;
-      // the coverflow starts centered so both neighbours peek in.
-      const autoStart =
-        this._displayMode() === "bag" ? 0 : Math.floor(slides.length / 2);
+      // The coverflow starts centered so both neighbours peek in.
+      const autoStart = Math.floor(slides.length / 2);
       const start = Number.isNaN(wanted)
         ? autoStart
         : Math.max(0, Math.min(slides.length - 1, Math.round(wanted) - 1));
@@ -178,46 +148,6 @@ export default class GrowthCollection extends GrowthElement {
     const n = this._slides().length;
     this._prevDiff.clear();
     for (let i = 0; i < n; i++) this._prevDiff.set(i, this._wrappedDiff(i));
-
-    if (this._displayMode() === "bag") this._measureBagImages();
-  }
-
-  /**
-   * Bag mode: read the h/w ratio of the loaded images and expose them as
-   * CSS vars, so the stage shrinks to the real artwork instead of holding
-   * worst-case headroom (which showed as a big gap under the caption).
-   * Uses the tallest product so the stage doesn't bounce while navigating.
-   */
-  private _measureBagImages() {
-    const root = this.shadowRoot;
-    if (!root) return;
-    const ratioOf = (img: HTMLImageElement): number => {
-      if (img.naturalWidth > 0) return img.naturalHeight / img.naturalWidth;
-      if (!img.dataset.measureHooked) {
-        img.dataset.measureHooked = "1";
-        img.addEventListener("load", () => this.requestUpdate(), {
-          once: true,
-        });
-      }
-      return 0;
-    };
-
-    let prodRatio = 0;
-    for (const img of root.querySelectorAll<HTMLImageElement>(
-      ".col-bag-slide img"
-    ))
-      prodRatio = Math.max(prodRatio, ratioOf(img));
-
-    const bagImg = root.querySelector<HTMLImageElement>(".col-bag-img");
-    const bagRatio = bagImg ? ratioOf(bagImg) : 0;
-
-    const round = (x: number) => Math.round(x * 100) / 100;
-    const prod = prodRatio > 0 ? round(prodRatio) : null;
-    const bag = bagRatio > 0 ? round(bagRatio) : null;
-    // Guarded assignment — @state setters re-render, so only touch them
-    // when a measurement actually changed.
-    if (prod !== this._bagProdRatio) this._bagProdRatio = prod;
-    if (bag !== this._bagImgRatio) this._bagImgRatio = bag;
   }
 
   // ------------------------------------------------------------
@@ -249,8 +179,6 @@ export default class GrowthCollection extends GrowthElement {
 
   private _changeActive(next: number) {
     if (next === this._activeIndex) return;
-    this._bagLeavingIndex = this._activeIndex;
-    this._bagNavigated = true;
     this._activeIndex = next;
     this._flashCaption();
   }
@@ -417,7 +345,6 @@ export default class GrowthCollection extends GrowthElement {
   render() {
     const c: CollectionConfig = this.config || {};
     const slides = this._slides();
-    const displayMode = this._displayMode();
     const animation = this._pickValue<CollectionAnimation>(
       c.slide_animation,
       "reveal"
@@ -450,7 +377,6 @@ export default class GrowthCollection extends GrowthElement {
       c.nav_bg ? `--col-nav-bg: ${c.nav_bg}` : "",
       c.nav_icon_color ? `--col-nav-icon: ${c.nav_icon_color}` : "",
       c.dot_color ? `--col-dot-color: ${c.dot_color}` : "",
-      c.bag_circle_color ? `--bag-circle-color: ${c.bag_circle_color}` : "",
       `--col-aspect: ${aspect}`,
       ...resolveSectionSpacing(
         c,
@@ -481,19 +407,6 @@ export default class GrowthCollection extends GrowthElement {
       ? this.localizedString(activeSlide.description)
       : "";
     const hasCaption = !!(showCaption && (activeTitle || activeDesc));
-
-    if (displayMode === "bag") {
-      return this._renderBag(c, slides, {
-        hostStyle,
-        sectionTitle: localizedSectionTitle,
-        enableAnim,
-        showNav,
-        showDots,
-        hasCaption,
-        activeTitle,
-        activeDesc,
-      });
-    }
 
     return html`
       <section
@@ -613,170 +526,6 @@ export default class GrowthCollection extends GrowthElement {
           : nothing}
 
         ${!isSingle && showDots
-          ? html`
-              <div class="col-dots" role="tablist">
-                ${slides.map(
-                  (_, i) => html`
-                    <button
-                      class="col-dot"
-                      type="button"
-                      aria-current=${this._activeIndex === i
-                        ? "true"
-                        : "false"}
-                      aria-label=${`Slide ${i + 1}`}
-                      @click=${() => this._goTo(i)}
-                    ></button>
-                  `
-                )}
-              </div>
-            `
-          : nothing}
-      </section>
-    `;
-  }
-
-  /**
-   * Bag mode (وضع الشنطة) — vertical stage: half-dome + fog backdrop, the
-   * merchant's bag image in front, and one product visible at a time. On
-   * navigation the new product rises out of the bag while the previous one
-   * sinks back in. Products need transparent (PNG/WebP) images to sell it.
-   */
-  private _renderBag(
-    c: CollectionConfig,
-    slides: CollectionSlideItem[],
-    v: {
-      hostStyle: string;
-      sectionTitle: string;
-      enableAnim: boolean;
-      showNav: boolean;
-      showDots: boolean;
-      hasCaption: boolean;
-      activeTitle: string;
-      activeDesc: string;
-    }
-  ) {
-    const bagImage = typeof c.bag_image === "string" ? c.bag_image.trim() : "";
-    const bagSize = this._pickValue<CollectionBagSize>(c.bag_size, "medium");
-    const productSize = this._pickValue<CollectionBagSize>(
-      c.bag_product_size,
-      "medium"
-    );
-    const bottomTitle = this.localizedString(c.bag_bottom_title);
-    const isSingle = slides.length === 1;
-    const upPath = "M18 15l-6-6-6 6";
-    const downPath = "M6 9l6 6 6-6";
-
-    const sectionStyle = [
-      v.hostStyle,
-      this._bagProdRatio !== null
-        ? `--bag-prod-ratio: ${this._bagProdRatio}`
-        : "",
-      this._bagImgRatio !== null ? `--bag-ratio: ${this._bagImgRatio}` : "",
-    ]
-      .filter(Boolean)
-      .join("; ");
-
-    return html`
-      <section
-        class="col-section col-section--bag"
-        style=${sectionStyle}
-        data-bag-size=${bagSize}
-        data-product-size=${productSize}
-        @mouseenter=${this._onHoverIn}
-        @mouseleave=${this._onHoverOut}
-      >
-        ${v.sectionTitle
-          ? html`
-              <div
-                class="col-header"
-                data-anim=${v.enableAnim ? this._animState : "in"}
-              >
-                <h2 class="col-title">${v.sectionTitle}</h2>
-              </div>
-            `
-          : nothing}
-        ${v.hasCaption
-          ? html`
-              <div class="col-caption" data-state=${this._captionState}>
-                ${v.activeTitle
-                  ? html`<h3 class="col-caption__title">${v.activeTitle}</h3>`
-                  : nothing}
-                ${v.activeDesc
-                  ? html`<p class="col-caption__desc">${v.activeDesc}</p>`
-                  : nothing}
-              </div>
-            `
-          : nothing}
-
-        <div
-          class="col-bag-stage"
-          @pointerdown=${this._onPointerDown}
-          @pointermove=${this._onPointerMove}
-          @pointerup=${this._onPointerUp}
-          @pointercancel=${this._onPointerUp}
-        >
-          <div class="col-bag-circle" aria-hidden="true"></div>
-          <div class="col-bag-fog" aria-hidden="true"></div>
-
-          <div class="col-bag-layer">
-            ${slides.map((slide, i) => {
-              const { closed, alt } = this._slideImage(slide);
-              let state: "active" | "rising" | "sinking" | "hidden" = "hidden";
-              if (i === this._activeIndex)
-                state = this._bagNavigated ? "rising" : "active";
-              else if (i === this._bagLeavingIndex) state = "sinking";
-              return html`
-                <div class="col-bag-slide" data-state=${state}>
-                  ${closed
-                    ? html`<img
-                        src=${closed}
-                        alt=${alt}
-                        loading="lazy"
-                        draggable="false"
-                      />`
-                    : nothing}
-                </div>
-              `;
-            })}
-          </div>
-
-          ${bagImage
-            ? html`<img
-                class="col-bag-img"
-                src=${bagImage}
-                alt=""
-                aria-hidden="true"
-                draggable="false"
-              />`
-            : nothing}
-          ${!isSingle && v.showNav
-            ? html`
-                <button
-                  class="col-bag-nav col-bag-nav--up"
-                  type="button"
-                  @click=${this._goNext}
-                  ?disabled=${this._isNextDisabled()}
-                  aria-label="Next"
-                >
-                  <svg viewBox="0 0 24 24"><path d=${upPath} /></svg>
-                </button>
-                <button
-                  class="col-bag-nav col-bag-nav--down"
-                  type="button"
-                  @click=${this._goPrev}
-                  ?disabled=${this._isPrevDisabled()}
-                  aria-label="Previous"
-                >
-                  <svg viewBox="0 0 24 24"><path d=${downPath} /></svg>
-                </button>
-              `
-            : nothing}
-        </div>
-
-        ${bottomTitle
-          ? html`<div class="col-bag-bottom">${bottomTitle}</div>`
-          : nothing}
-        ${!isSingle && v.showDots
           ? html`
               <div class="col-dots" role="tablist">
                 ${slides.map(
