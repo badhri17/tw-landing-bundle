@@ -4,11 +4,11 @@
         "en": "tw-landing-bundle"
     },
     "description": {
-        "ar": "",
-        "en": ""
+        "ar": null,
+        "en": null
     },
-    "author_email": "Badrbadhri+growth@gmail.com",
-    "support_url": "",
+    "author_email": "salla@useazz.com",
+    "support_url": "https://growthkit.growthstack-sa.com/",
     "repository": "https://github.com/badhri17/tw-landing-bundle",
     "components": [
         {
