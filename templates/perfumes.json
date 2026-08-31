@@ -2122,7 +2122,8 @@
           "maxLength": 40,
           "value": ""
         }
-      ]
+      ],
+      "image": "https://radaar.b-cdn.net/landing-bundle/metrics.webp"
     },
     {
       "title": "مميزات المنتج",
@@ -2957,14 +2958,15 @@
           "maxLength": 40,
           "value": ""
         }
-      ]
+      ],
+      "image": "https://radaar.b-cdn.net/landing-bundle/product-features.webp"
     },
     {
       "title": "بنر ومحتوى مرن",
       "icon": "sicon-image",
       "name": "flexible-banner-content",
       "key": "31d9358f-7154-4cee-8e93-f580c9aaa5d8",
-      "image": "/assets/demo/flexible-banner-content/banner.png",
+      "image": "https://radaar.b-cdn.net/landing-bundle/flexible-banner-content.webp",
       "fields": [
         {
           "type": "static",
@@ -5127,7 +5129,8 @@
           "maxLength": 40,
           "value": ""
         }
-      ]
+      ],
+      "image": "https://radaar.b-cdn.net/landing-bundle/gallery.webp"
     },
     {
       "title": "آراء العملاء",
@@ -8611,7 +8614,8 @@
           "maxLength": 40,
           "value": ""
         }
-      ]
+      ],
+      "image": "https://radaar.b-cdn.net/landing-bundle/ingredients.webp"
     },
     {
       "title": "استخدامات وفوائد المنتج",
@@ -10757,14 +10761,15 @@
           "maxLength": 40,
           "value": ""
         }
-      ]
+      ],
+      "image": "https://radaar.b-cdn.net/landing-bundle/use-cases.webp"
     },
     {
       "title": "الأسئلة الشائعة",
       "icon": "sicon-question-circle",
       "name": "faq",
       "key": "664616c5-b430-4883-9f04-c1d136b7edde",
-      "image": "https://cdn.salla.network/images/themes/default/placeholder.jpg",
+      "image": "https://radaar.b-cdn.net/landing-bundle/faq.webp",
       "fields": [
         {
           "type": "static",
@@ -11987,7 +11992,7 @@
       "icon": "sicon-window-layout",
       "name": "footer",
       "key": "d057d3a9-657f-4043-952a-661341c068e5",
-      "image": "https://radaar.b-cdn.net/growth%20bundle/hero-preview.gif",
+      "image": "https://radaar.b-cdn.net/landing-bundle/footer.webp",
       "fields": [
         {
           "type": "static",

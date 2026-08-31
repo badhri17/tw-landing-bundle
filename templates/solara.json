@@ -1474,7 +1474,7 @@
       "icon": "sicon-image",
       "name": "flexible-banner-content",
       "key": "31d9358f-7154-4cee-8e93-f580c9aaa5d8",
-      "image": "/assets/demo/flexible-banner-content/banner.png",
+      "image": "https://radaar.b-cdn.net/landing-bundle/flexible-banner-content.webp",
       "fields": [
         {
           "type": "static",
@@ -4997,7 +4997,8 @@
           "maxLength": 40,
           "value": "benefits"
         }
-      ]
+      ],
+      "image": "https://radaar.b-cdn.net/landing-bundle/use-cases.webp"
     },
     {
       "title": "آراء العملاء",
@@ -8615,14 +8616,15 @@
           "maxLength": 40,
           "value": "gallery"
         }
-      ]
+      ],
+      "image": "https://radaar.b-cdn.net/landing-bundle/gallery.webp"
     },
     {
       "title": "جدول المقارنة",
       "icon": "sicon-table",
       "name": "comparison",
       "key": "6178895e-c61f-4a77-8e40-53ce1b761fcb",
-      "image": "https://cdn.salla.network/images/themes/default/placeholder.jpg",
+      "image": "https://radaar.b-cdn.net/landing-bundle/comparison.webp",
       "fields": [
         {
           "type": "static",
@@ -10259,7 +10261,7 @@
       "icon": "sicon-award-ribbon",
       "name": "image-badges",
       "key": "3fd40d80-86ae-4a07-a8a5-7a13b5193869",
-      "image": "/assets/templates/solara/badge-1.webp",
+      "image": "https://radaar.b-cdn.net/landing-bundle/image-badges.webp",
       "fields": [
         {
           "type": "static",
@@ -10841,7 +10843,7 @@
       "icon": "sicon-question-circle",
       "name": "faq",
       "key": "664616c5-b430-4883-9f04-c1d136b7edde",
-      "image": "https://cdn.salla.network/images/themes/default/placeholder.jpg",
+      "image": "https://radaar.b-cdn.net/landing-bundle/faq.webp",
       "fields": [
         {
           "type": "static",
@@ -12070,7 +12072,7 @@
       "icon": "sicon-window-layout",
       "name": "footer",
       "key": "d057d3a9-657f-4043-952a-661341c068e5",
-      "image": "https://radaar.b-cdn.net/growth%20bundle/hero-preview.gif",
+      "image": "https://radaar.b-cdn.net/landing-bundle/footer.webp",
       "fields": [
         {
           "type": "static",
