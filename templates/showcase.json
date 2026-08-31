@@ -2,7 +2,7 @@
   "id": "68892761-d354-4f6b-b82a-8d3533269416",
   "components": [
     {
-      "title": "واجهة المتجر (هيرو)",
+      "title": "بداية الصفحة",
       "icon": "sicon-window-layout",
       "name": "hero",
       "key": "199e5bbf-c642-4ba9-be60-9d77f7ca8282",
@@ -203,7 +203,7 @@
               ],
               "options": [
                 {
-                  "label": "واجهة المتجر (الهيرو)",
+                  "label": "بداية الصفحة",
                   "value": "hero",
                   "key": "nt-hero"
                 },
@@ -253,7 +253,7 @@
                   "key": "target-comparison"
                 },
                 {
-                  "label": "الشارات المصوّرة",
+                  "label": "صور وشارات",
                   "value": "image-badges",
                   "key": "target-image-badges"
                 },
@@ -8496,7 +8496,7 @@
       ]
     },
     {
-      "title": "الشارات المصوّرة",
+      "title": "صور وشارات",
       "icon": "sicon-award-ribbon",
       "name": "image-badges",
       "key": "3fd40d80-86ae-4a07-a8a5-7a13b5193869",
