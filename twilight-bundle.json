@@ -15394,15 +15394,6 @@
             "thumbnail": "https://cdn.assets.salla.network/previews/o36uzxxmxi5a/assets/e00f49609cbaf0c157132c79632c16aec8ba8e98f20db80255932f35c6ece4cf/templates-thumbs/solara.jpg",
             "is_default": false,
             "public_preview_url": "https://salla.design/preview/s/o36uzxxmxi5a/solara"
-        },
-        {
-            "id": "68892761-d354-4f6b-b82a-8d3533269416",
-            "path": "templates.showcase",
-            "category_id": "665151403",
-            "primary_color": "#F7F5F2",
-            "thumbnail": "https://cdn.assets.salla.network/previews/o36uzxxmxi5a/assets/e00f49609cbaf0c157132c79632c16aec8ba8e98f20db80255932f35c6ece4cf/templates-thumbs/showcase.jpg",
-            "is_default": false,
-            "public_preview_url": "https://salla.design/preview/s/o36uzxxmxi5a/showcase"
         }
     ],
     "features": [
