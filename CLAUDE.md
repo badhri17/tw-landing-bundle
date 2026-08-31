@@ -70,7 +70,7 @@ There is deliberately **no product plumbing** here. `product.ts` (`sallaGlobal`,
 
 The `GrowthElement` name is kept deliberately (rather than renamed to something landing-specific) so components copied from `tw-growth-kit` stay drop-in with no rename diff.
 
-`vite.config.ts` defines `duplicateSharedPerComponentPlugin`, which tags every `src/shared/*` import with the importing component (`?gk=<name>`) so Rollup inlines a private copy into each entry. **Do not remove it** — without it, the multi-entry build splits shared modules into hashed chunks (`dist/growth-element-<hash>.js`) and breaks Salla's one-self-contained-file-per-component contract. Corollary: module-level state in `src/shared/` is per-component at runtime, never shared across components.
+`vite.config.ts` defines `duplicateSharedPerComponentPlugin`, which tags every `src/shared/*` import with the importing component (`?gk=<name>`) so Rollup inlines a private copy into each entry. **Do not remove it** — without it, the multi-entry build splits shared modules into hashed chunks (`dist/growth-element-<hash>.js`) and breaks Salla's one-self-contained-file-per-component contract. ⚠️ **It compares paths normalised, and must stay that way.** Vite reports module ids with forward slashes, but `path.resolve()` returns backslashes on Windows — so an un-normalised `startsWith` matched nothing, no import got tagged, and every build on Windows silently fell back to hashed chunks while still reporting success. The check after any build is `ls dist/`: thirteen `<name>.js` files and no `<name>-<hash>.js` means it is working. Corollary: module-level state in `src/shared/` is per-component at runtime, never shared across components.
 
 ### Media — `public/assets/` → `dist/assets/` → `/assets/…`
 
