@@ -15382,7 +15382,7 @@
             "path": "templates.perfumes",
             "category_id": "665151403",
             "primary_color": "",
-            "thumbnail": "https://cdn.assets.salla.network/previews/o36uzxxmxi5a/assets/ad6b1b3fa5c07bd50132de3720508c206702d7f179d329ace529bcacd967b65a/templates-thumbs/perfumes.jpg",
+            "thumbnail": "templates-thumbs/perfumes.jpg",
             "is_default": true,
             "public_preview_url": "https://salla.design/preview/s/o36uzxxmxi5a/perfumes"
         },
@@ -15391,7 +15391,7 @@
             "path": "templates.solara",
             "category_id": "665151403",
             "primary_color": "#ffead0",
-            "thumbnail": "https://cdn.assets.salla.network/previews/o36uzxxmxi5a/assets/e00f49609cbaf0c157132c79632c16aec8ba8e98f20db80255932f35c6ece4cf/templates-thumbs/solara.jpg",
+            "thumbnail": "templates-thumbs/solara.jpg",
             "is_default": false,
             "public_preview_url": "https://salla.design/preview/s/o36uzxxmxi5a/solara"
         }
