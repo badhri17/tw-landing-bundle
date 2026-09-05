@@ -1,7 +1,7 @@
-import { LitElement as A, css as P, nothing as s, html as c } from "lit";
-import { property as I } from "lit/decorators.js";
+import { LitElement as D, css as T, nothing as s, html as c } from "lit";
+import { property as A } from "lit/decorators.js";
 import { ifDefined as w } from "lit/directives/if-defined.js";
-function L(n, t) {
+function P(n, t) {
   if (typeof n == "string") return n;
   if (!n || typeof n != "object") return "";
   const i = n[t] || n.ar || n.en || "";
@@ -10,7 +10,7 @@ function L(n, t) {
 function x(n) {
   return n.replace(/[٠-٩]/g, (t) => String(t.charCodeAt(0) - 1632)).replace(/[۰-۹]/g, (t) => String(t.charCodeAt(0) - 1776));
 }
-class N extends A {
+class I extends D {
   constructor() {
     super(...arguments), this._anchorBase = "", this._anchorDeepLinked = !1;
   }
@@ -41,7 +41,7 @@ class N extends A {
   }
   /** Pull the store-language string out of a Salla multilanguage value. */
   localizedString(t) {
-    return L(t, this._lang());
+    return P(t, this._lang());
   }
   /** Dropdown-list values from settings may come as [{ label, value }]. */
   _pickValue(t, i) {
@@ -153,7 +153,7 @@ class N extends A {
     return i;
   }
 }
-const V = P`
+const L = T`
   :host {
     display: block;
     width: 100%;
@@ -451,10 +451,10 @@ const V = P`
     .cta { transition: none; }
   }
 `;
-var D = Object.defineProperty, T = (n, t, i, e) => {
+var N = Object.defineProperty, V = (n, t, i, e) => {
   for (var a = void 0, r = n.length - 1, o; r >= 0; r--)
     (o = n[r]) && (a = o(t, i, a) || a);
-  return a && D(t, i, a), a;
+  return a && N(t, i, a), a;
 };
 const E = {
   compact: "220px",
@@ -466,7 +466,7 @@ const E = {
   medium: "420px",
   large: "560px",
   screen: "75svh"
-}, b = class b extends N {
+}, b = class b extends I {
   updated() {
     var t;
     this._syncAnchor((t = this.config) == null ? void 0 : t.anchor_id, "flexible-banner-content");
@@ -475,9 +475,9 @@ const E = {
     const i = !!t.currentPrice || !!t.oldPrice, e = !!t.ctaLabel && !!t.ctaUrl;
     return c`
       <div class="copy">
-        ${t.title ? c`<h2 class="title">${t.title}</h2>` : s}
-        ${t.description ? c`<p class="description">${t.description}</p>` : s}
-        ${t.details ? c`<p class="details">${t.details}</p>` : s}
+        ${t.localizedTitle ? c`<h2 class="title">${t.localizedTitle}</h2>` : s}
+        ${t.localizedDescription ? c`<p class="description">${t.localizedDescription}</p>` : s}
+        ${t.localizedDetails ? c`<p class="details">${t.localizedDetails}</p>` : s}
         ${i ? c`
               <div class="prices" aria-label="السعر">
                 ${t.currentPrice ? c`<span class="current-price">${t.currentPrice}</span>` : s}
@@ -525,22 +525,22 @@ const E = {
       t.cta_style,
       "filled"
     ), f = typeof t.image == "string" ? t.image.trim() : "", g = i === "overlay" && f ? "overlay" : "separate", y = this.localizedString(t.image_alt), l = {
-      title: this.localizedString(t.title),
-      description: this.localizedString(t.description),
-      details: this.localizedString(t.details),
+      localizedTitle: this.localizedString(t.title),
+      localizedDescription: this.localizedString(t.description),
+      localizedDetails: this.localizedString(t.details),
       currentPrice: this.localizedString(t.current_price),
       oldPrice: this.localizedString(t.old_price),
       ctaLabel: this.localizedString(t.cta_label),
       ctaUrl: typeof t.cta_url == "string" ? t.cta_url.trim() : "",
       ctaStyle: $
-    }, u = !!(l.title || l.description || l.details || l.currentPrice || l.oldPrice || l.ctaLabel && l.ctaUrl);
+    }, u = !!(l.localizedTitle || l.localizedDescription || l.localizedDetails || l.currentPrice || l.oldPrice || l.ctaLabel && l.ctaUrl);
     if (!f && !u) return s;
-    const k = this._num(t.overlay_darkness, 40), S = Math.min(90, Math.max(0, k)) / 100, z = g === "overlay" ? t.overlay_text_color || "#ffffff" : t.separate_text_color || "#21150d", C = [
+    const k = this._num(t.overlay_darkness, 40), z = Math.min(90, Math.max(0, k)) / 100, S = g === "overlay" ? t.overlay_text_color || "#ffffff" : t.separate_text_color || "#21150d", C = [
       `--fbc-bg:${t.background_color || "#f6f4f1"}`,
-      `--fbc-text:${z}`,
+      `--fbc-text:${S}`,
       `--fbc-button-bg:${t.button_background || "#3D230E"}`,
       `--fbc-button-text:${t.button_text_color || "#ffffff"}`,
-      `--fbc-overlay:${S}`,
+      `--fbc-overlay:${z}`,
       `--fbc-height-mobile:${E[h]}`,
       `--fbc-height-desktop:${j[d]}`,
       `--fbc-image-fit:${r}`,
@@ -552,7 +552,7 @@ const E = {
         style=${C}
         data-spacing=${_}
         data-radius=${v}
-        aria-label=${l.title || y || "بنر ومحتوى مرن"}
+        aria-label=${l.localizedTitle || y || "بنر ومحتوى مرن"}
       >
         <div
           class="frame"
@@ -583,10 +583,10 @@ const E = {
     `;
   }
 };
-b.styles = V;
+b.styles = L;
 let m = b;
-T([
-  I({ type: Object })
+V([
+  A({ type: Object })
 ], m.prototype, "config");
 typeof m < "u" && m.registerSallaComponent("salla-flexible-banner-content");
 export {

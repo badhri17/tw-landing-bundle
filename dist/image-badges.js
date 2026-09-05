@@ -1,5 +1,5 @@
 import { LitElement as S, css as v, html as m, nothing as p } from "lit";
-import { property as k, state as z } from "lit/decorators.js";
+import { property as z, state as k } from "lit/decorators.js";
 function A(s, t) {
   if (typeof s == "string") return s;
   if (!s || typeof s != "object") return "";
@@ -478,10 +478,10 @@ const f = {
 h.styles = I;
 let d = h;
 w([
-  k({ type: Object })
+  z({ type: Object })
 ], d.prototype, "config");
 w([
-  z()
+  k()
 ], d.prototype, "_animState");
 typeof d < "u" && d.registerSallaComponent("salla-image-badges");
 export {

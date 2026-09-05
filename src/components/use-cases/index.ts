@@ -427,10 +427,10 @@ export default class GrowthUseCases extends GrowthElement {
       place: UseCasesTextPlacement;
     }
   ) {
-    const title = this.localizedString(item.title);
-    const text = this.localizedString(item.text);
+    const localizedTitle = this.localizedString(item.title);
+    const localizedText = this.localizedString(item.text);
     // A numbered photo still needs its caption box, and its scrim with it.
-    const bare = !title && !text && !o.step;
+    const bare = !localizedTitle && !localizedText && !o.step;
 
     const photo = html`<img
       src=${item.image || ""}
@@ -449,8 +449,12 @@ export default class GrowthUseCases extends GrowthElement {
           dir=${o.dir}
         >
           ${this._renderNumber(o.step)}
-          ${title ? html`<span class="uc-cap-title">${title}</span>` : nothing}
-          ${text ? html`<span class="uc-cap-text">${text}</span>` : nothing}
+          ${localizedTitle
+            ? html`<span class="uc-cap-title">${localizedTitle}</span>`
+            : nothing}
+          ${localizedText
+            ? html`<span class="uc-cap-text">${localizedText}</span>`
+            : nothing}
         </figcaption>`;
 
     if (o.place === "outside") {
@@ -480,8 +484,8 @@ export default class GrowthUseCases extends GrowthElement {
       step: number;
     }
   ) {
-    const title = this.localizedString(item.title);
-    const text = this.localizedString(item.text);
+    const localizedTitle = this.localizedString(item.title);
+    const localizedText = this.localizedString(item.text);
 
     const cardStyle = item.background_color
       ? `--uc-card-bg:${item.background_color}`
@@ -502,8 +506,12 @@ export default class GrowthUseCases extends GrowthElement {
       </div>
       <div class="uc-body" data-align=${o.align} dir=${o.dir}>
         ${this._renderNumber(o.step)}
-        ${title ? html`<h3 class="uc-card-title">${title}</h3>` : nothing}
-        ${text ? html`<p class="uc-card-text">${text}</p>` : nothing}
+        ${localizedTitle
+          ? html`<h3 class="uc-card-title">${localizedTitle}</h3>`
+          : nothing}
+        ${localizedText
+          ? html`<p class="uc-card-text">${localizedText}</p>`
+          : nothing}
       </div>
     </article>`;
   }
@@ -567,17 +575,21 @@ export default class GrowthUseCases extends GrowthElement {
       </section>`;
     }
 
-    const title = this.localizedString(c.section_title);
-    const subtitle = this.localizedString(c.section_subtitle);
+    const localizedTitle = this.localizedString(c.section_title);
+    const localizedSubtitle = this.localizedString(c.section_subtitle);
     const entrance = c.enable_entrance_anim !== false && !this._reduceMotion();
     const anim = entrance ? this._animState : "in";
     const dir = this._lang() === "ar" ? "rtl" : "ltr";
 
     const header =
-      title || subtitle
+      localizedTitle || localizedSubtitle
         ? html`<header class="uc-header">
-            ${title ? html`<h2 class="uc-h2">${title}</h2>` : nothing}
-            ${subtitle ? html`<p class="uc-sub">${subtitle}</p>` : nothing}
+            ${localizedTitle
+              ? html`<h2 class="uc-h2">${localizedTitle}</h2>`
+              : nothing}
+            ${localizedSubtitle
+              ? html`<p class="uc-sub">${localizedSubtitle}</p>`
+              : nothing}
           </header>`
         : nothing;
 

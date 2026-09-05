@@ -25,7 +25,7 @@ import { heroStyles } from "./style";
 
 /** A nav entry after label + destination have been resolved to strings. */
 interface ResolvedNavItem {
-  label: string;
+  localizedLabel: string;
   href: string;
 }
 
@@ -208,13 +208,13 @@ export default class GrowthHero extends GrowthElement {
 
   /** Resolve one nav row to a label + href, or null when it can't render. */
   private _resolveNavItem(item: HeroNavItem): ResolvedNavItem | null {
-    const label = this.localizedString(item?.label);
-    if (!label) return null;
+    const localizedLabel = this.localizedString(item?.label);
+    if (!localizedLabel) return null;
 
     const target = this._pickValue<HeroNavTargetKind>(item?.target, "custom");
     if (target === "link") {
       const href = this._resolveLink(item?.link);
-      return href ? { label, href } : null;
+      return href ? { localizedLabel, href } : null;
     }
     // Every other option is an in-page section: either one of the bundle's
     // default slugs, or whatever the merchant typed under `custom`.
@@ -222,7 +222,7 @@ export default class GrowthHero extends GrowthElement {
       target === "custom"
         ? this._slugify(item?.section_custom, "")
         : this._slugify(target, "");
-    return slug ? { label, href: `#${slug}` } : null;
+    return slug ? { localizedLabel, href: `#${slug}` } : null;
   }
 
   /**
@@ -751,14 +751,14 @@ export default class GrowthHero extends GrowthElement {
     const navFixed = hasNav && c.nav_fixed === true;
     const navCta =
       hasNav && c.nav_show_cta !== false && localizedPrimaryLabel
-        ? { label: localizedPrimaryLabel, href: c.primary_url || "#" }
+        ? { localizedLabel: localizedPrimaryLabel, href: c.primary_url || "#" }
         : null;
 
     const navLink = (it: ResolvedNavItem) => html`
       <a
         href=${it.href}
         @click=${(e: Event) => this._onNavLinkClick(e, it.href)}
-        >${it.label}</a
+        >${it.localizedLabel}</a
       >
     `;
 
@@ -851,7 +851,7 @@ export default class GrowthHero extends GrowthElement {
                   <div class="nav-actions">
                     ${navCta
                       ? html`<a class="btn btn-primary nav-cta" href=${navCta.href}
-                          >${navCta.label}</a
+                          >${navCta.localizedLabel}</a
                         >`
                       : nothing}
                     ${navItems.length
@@ -908,7 +908,7 @@ export default class GrowthHero extends GrowthElement {
                   ${navCta
                     ? html`<div class="menu-cta" style=${`--i:${navItems.length}`}>
                         <a class="btn btn-primary" href=${navCta.href}
-                          >${navCta.label}</a
+                          >${navCta.localizedLabel}</a
                         >
                       </div>`
                     : nothing}

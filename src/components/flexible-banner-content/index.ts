@@ -31,9 +31,9 @@ const DESKTOP_HEIGHTS: Record<FlexibleBannerHeight, string> = {
 };
 
 interface ContentValues {
-  title: string;
-  description: string;
-  details: string;
+  localizedTitle: string;
+  localizedDescription: string;
+  localizedDetails: string;
   currentPrice: string;
   oldPrice: string;
   ctaLabel: string;
@@ -57,11 +57,15 @@ export default class FlexibleBannerContent extends GrowthElement {
 
     return html`
       <div class="copy">
-        ${values.title ? html`<h2 class="title">${values.title}</h2>` : nothing}
-        ${values.description
-          ? html`<p class="description">${values.description}</p>`
+        ${values.localizedTitle
+          ? html`<h2 class="title">${values.localizedTitle}</h2>`
           : nothing}
-        ${values.details ? html`<p class="details">${values.details}</p>` : nothing}
+        ${values.localizedDescription
+          ? html`<p class="description">${values.localizedDescription}</p>`
+          : nothing}
+        ${values.localizedDetails
+          ? html`<p class="details">${values.localizedDetails}</p>`
+          : nothing}
         ${hasPrice
           ? html`
               <div class="prices" aria-label="السعر">
@@ -140,9 +144,9 @@ export default class FlexibleBannerContent extends GrowthElement {
       configuredLayout === "overlay" && image ? "overlay" : "separate";
     const imageAlt = this.localizedString(c.image_alt);
     const values: ContentValues = {
-      title: this.localizedString(c.title),
-      description: this.localizedString(c.description),
-      details: this.localizedString(c.details),
+      localizedTitle: this.localizedString(c.title),
+      localizedDescription: this.localizedString(c.description),
+      localizedDetails: this.localizedString(c.details),
       currentPrice: this.localizedString(c.current_price),
       oldPrice: this.localizedString(c.old_price),
       ctaLabel: this.localizedString(c.cta_label),
@@ -150,9 +154,9 @@ export default class FlexibleBannerContent extends GrowthElement {
       ctaStyle,
     };
     const hasContent = !!(
-      values.title ||
-      values.description ||
-      values.details ||
+      values.localizedTitle ||
+      values.localizedDescription ||
+      values.localizedDetails ||
       values.currentPrice ||
       values.oldPrice ||
       (values.ctaLabel && values.ctaUrl)
@@ -184,7 +188,7 @@ export default class FlexibleBannerContent extends GrowthElement {
         style=${sectionStyle}
         data-spacing=${spacing}
         data-radius=${radius}
-        aria-label=${values.title || imageAlt || "بنر ومحتوى مرن"}
+        aria-label=${values.localizedTitle || imageAlt || "بنر ومحتوى مرن"}
       >
         <div
           class="frame"

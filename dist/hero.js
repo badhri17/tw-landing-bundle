@@ -886,7 +886,7 @@ var ee = Object.defineProperty, _ = (l, e, t, n) => {
     (r = l[i]) && (a = r(e, t, a) || a);
   return a && ee(e, t, a), a;
 };
-const z = class z extends Q {
+const A = class A extends Q {
   constructor() {
     super(...arguments), this._videoFailed = !1, this._animState = "ready", this._isDesktop = !1, this._menuOpen = !1, this._prevBodyOverflow = null, this._videoEl = null, this._videoGeneration = 0, this._lastVideoSrc = "", this._fallbackTimer = null, this._autoplayCheckTimer = null, this._io = null, this._inView = !0, this._rafId = null, this._navPastHero = !1, this._navRafId = null, this._closeMenu = () => {
       this._menuOpen = !1;
@@ -985,10 +985,10 @@ const z = class z extends Q {
     const n = this._pickValue(e == null ? void 0 : e.target, "custom");
     if (n === "link") {
       const i = this._resolveLink(e == null ? void 0 : e.link);
-      return i ? { label: t, href: i } : null;
+      return i ? { localizedLabel: t, href: i } : null;
     }
     const a = n === "custom" ? this._slugify(e == null ? void 0 : e.section_custom, "") : this._slugify(n, "");
-    return a ? { label: t, href: `#${a}` } : null;
+    return a ? { localizedLabel: t, href: `#${a}` } : null;
   }
   /**
    * Which of the three bar shapes the merchant picked.
@@ -1243,11 +1243,11 @@ const z = class z extends Q {
       C === "gradient" ? "is-gradient" : "",
       C === "image" && y ? "is-ken-burns" : "",
       E ? "is-parallax" : ""
-    ].filter(Boolean).join(" "), M = this._navEnabled(), G = this._navLayout(), v = M ? this._navItems() : [], w = (e.nav_logo || "").trim(), k = this.localizedString(e.nav_store_name), T = M && (v.length > 0 || !!w || !!k), A = T && e.nav_fixed === !0, b = T && e.nav_show_cta !== !1 && S ? { label: S, href: e.primary_url || "#" } : null, P = (d) => o`
+    ].filter(Boolean).join(" "), M = this._navEnabled(), G = this._navLayout(), v = M ? this._navItems() : [], w = (e.nav_logo || "").trim(), k = this.localizedString(e.nav_store_name), T = M && (v.length > 0 || !!w || !!k), L = T && e.nav_fixed === !0, b = T && e.nav_show_cta !== !1 && S ? { localizedLabel: S, href: e.primary_url || "#" } : null, P = (d) => o`
       <a
         href=${d.href}
-        @click=${(L) => this._onNavLinkClick(L, d.href)}
-        >${d.label}</a
+        @click=${(z) => this._onNavLinkClick(z, d.href)}
+        >${d.localizedLabel}</a
       >
     `;
     return o`
@@ -1255,7 +1255,7 @@ const z = class z extends Q {
         class="hero"
         style=${Y}
         data-has-nav=${T ? "on" : "off"}
-        data-nav-fixed=${A ? "on" : "off"}
+        data-nav-fixed=${L ? "on" : "off"}
         data-height=${a}
         data-layout=${V}
         data-media-col=${p ? p.mediaCol : "start"}
@@ -1300,8 +1300,8 @@ const z = class z extends Q {
               <nav
                 class="nav"
                 data-border=${e.nav_border ? "on" : "off"}
-                data-fixed=${A ? "on" : "off"}
-                data-scrolled=${A && this._navPastHero ? "on" : "off"}
+                data-fixed=${L ? "on" : "off"}
+                data-scrolled=${L && this._navPastHero ? "on" : "off"}
                 data-anim=${g ? this._animState : "in"}
               >
                 <div
@@ -1323,7 +1323,7 @@ const z = class z extends Q {
 
                   <div class="nav-actions">
                     ${b ? o`<a class="btn btn-primary nav-cta" href=${b.href}
-                          >${b.label}</a
+                          >${b.localizedLabel}</a
                         >` : h}
                     ${v.length ? o`
                           <button
@@ -1367,12 +1367,12 @@ const z = class z extends Q {
                   </div>
                   <ul class="menu-links">
                     ${v.map(
-      (d, L) => o`<li style=${`--i:${L}`}>${P(d)}</li>`
+      (d, z) => o`<li style=${`--i:${z}`}>${P(d)}</li>`
     )}
                   </ul>
                   ${b ? o`<div class="menu-cta" style=${`--i:${v.length}`}>
                         <a class="btn btn-primary" href=${b.href}
-                          >${b.label}</a
+                          >${b.localizedLabel}</a
                         >
                       </div>` : h}
                 </div>
@@ -1425,8 +1425,8 @@ const z = class z extends Q {
     `;
   }
 };
-z.styles = Z;
-let u = z;
+A.styles = Z;
+let u = A;
 _([
   X({ type: Object })
 ], u.prototype, "config");

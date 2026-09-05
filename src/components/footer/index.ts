@@ -15,7 +15,7 @@ import type {
 import { footerStyles } from "./style";
 
 interface SocialLink {
-  label: string;
+  networkName: string;
   href: string;
   icon: TemplateResult;
 }
@@ -76,12 +76,12 @@ export default class GrowthFooter extends GrowthElement {
   }
 
   private _social(
-    label: string,
+    networkName: string,
     rawHref: string | undefined,
     icon: TemplateResult,
   ): SocialLink | null {
     const href = typeof rawHref === "string" ? rawHref.trim() : "";
-    return href ? { label, href, icon } : null;
+    return href ? { networkName, href, icon } : null;
   }
 
   protected updated() {
@@ -137,8 +137,8 @@ export default class GrowthFooter extends GrowthElement {
     const logo = (c.logo || "").trim();
     const logoTone = this._pickValue<FooterLogoTone>(c.logo_tone, "original");
     const brandName = this.localizedString(c.brand_name) || "AUREN";
-    const description = this.localizedString(c.description);
-    const copyright = this.localizedString(c.copyright);
+    const localizedDescription = this.localizedString(c.description);
+    const localizedCopyright = this.localizedString(c.copyright);
     const socials = this._socials();
     const socialStyle = this._pickValue<FooterSocialStyle>(
       c.social_style,
@@ -218,8 +218,8 @@ export default class GrowthFooter extends GrowthElement {
           </div>
 
           ${
-            description
-              ? html`<p class="description">${description}</p>`
+            localizedDescription
+              ? html`<p class="description">${localizedDescription}</p>`
               : nothing
           }
           ${
@@ -237,7 +237,7 @@ export default class GrowthFooter extends GrowthElement {
                             ? undefined
                             : "noopener noreferrer",
                         )}
-                        aria-label=${social.label}
+                        aria-label=${social.networkName}
                       >
                         ${social.icon}
                       </a>
@@ -247,7 +247,9 @@ export default class GrowthFooter extends GrowthElement {
                 `
               : nothing
           }
-          ${copyright ? html`<p class="copyright">${copyright}</p>` : nothing}
+          ${localizedCopyright
+            ? html`<p class="copyright">${localizedCopyright}</p>`
+            : nothing}
         </div>
       </footer>
     `;

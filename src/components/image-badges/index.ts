@@ -150,8 +150,8 @@ export default class ImageBadges extends GrowthElement {
   render() {
     const c: ImageBadgesConfig = this.config || {};
     const items = this._items();
-    const title = this.localizedString(c.section_title);
-    const subtitle = this.localizedString(c.section_subtitle);
+    const localizedTitle = this.localizedString(c.section_title);
+    const localizedSubtitle = this.localizedString(c.section_subtitle);
     const entrance = c.enable_entrance_anim !== false && !this._reduceMotion();
     const hostStyle = this._hostStyle(c);
 
@@ -174,12 +174,14 @@ export default class ImageBadges extends GrowthElement {
         data-anim=${entrance ? this._animState : "in"}
       >
         ${
-          title || subtitle
+          localizedTitle || localizedSubtitle
             ? html`<header class="ib-header">
-                ${title ? html`<h2 class="ib-title">${title}</h2>` : nothing}
+                ${localizedTitle
+                  ? html`<h2 class="ib-title">${localizedTitle}</h2>`
+                  : nothing}
                 ${
-                subtitle
-                  ? html`<p class="ib-subtitle">${subtitle}</p>`
+                localizedSubtitle
+                  ? html`<p class="ib-subtitle">${localizedSubtitle}</p>`
                   : nothing
               }
               </header>`

@@ -20,12 +20,12 @@ class K extends j {
    * component file executes.
    */
   static registerSallaComponent(e) {
-    const i = String(e || "").trim(), a = i.toLowerCase().replace(/[^a-z0-9._-]/g, "-"), s = a.includes("-") ? a : `salla-${a || "component"}`, r = () => `${s}-${Math.random().toString(36).substring(2, 8)}`, n = () => {
+    const i = String(e || "").trim(), a = i.toLowerCase().replace(/[^a-z0-9._-]/g, "-"), r = a.includes("-") ? a : `salla-${a || "component"}`, s = () => `${r}-${Math.random().toString(36).substring(2, 8)}`, n = () => {
       var c;
       const d = (c = window.Salla) == null ? void 0 : c.bundles;
       return d && typeof d.registerComponent == "function" ? (d.registerComponent(i, {
         component: this,
-        dynamicTagName: r()
+        dynamicTagName: s()
       }), !0) : !1;
     };
     if (n()) return;
@@ -74,8 +74,8 @@ class K extends j {
    * and drop the characters that would break a URL fragment or a selector.
    */
   _slugify(e, i) {
-    var r;
-    return (typeof e == "string" ? e : Array.isArray(e) ? String(((r = e[0]) == null ? void 0 : r.value) ?? "") : "").trim().replace(/^#+/, "").replace(/\s+/g, "-").replace(/["'<>&#?/\\%]/g, "").replace(/-+/g, "-").replace(/^-|-$/g, "") || i;
+    var s;
+    return (typeof e == "string" ? e : Array.isArray(e) ? String(((s = e[0]) == null ? void 0 : s.value) ?? "") : "").trim().replace(/^#+/, "").replace(/\s+/g, "-").replace(/["'<>&#?/\\%]/g, "").replace(/-+/g, "-").replace(/^-|-$/g, "") || i;
   }
   /**
    * Publish this component as a linkable page section.
@@ -95,23 +95,23 @@ class K extends j {
    * @param navOffset px of breathing room above the section when scrolled to
    */
   _syncAnchor(e, i, a = 24) {
-    const s = this._slugify(e, i);
-    if (!s || s === this._anchorBase) return;
-    this._anchorBase = s;
-    let r = s;
+    const r = this._slugify(e, i);
+    if (!r || r === this._anchorBase) return;
+    this._anchorBase = r;
+    let s = r;
     for (let o = 2; ; o++) {
-      const d = document.getElementById(r);
+      const d = document.getElementById(s);
       if (!d || d === this) break;
-      r = `${s}-${o}`;
+      s = `${r}-${o}`;
     }
-    if (this.id = r, this.style.scrollMarginTop = `${a}px`, this._anchorDeepLinked) return;
+    if (this.id = s, this.style.scrollMarginTop = `${a}px`, this._anchorDeepLinked) return;
     let n = "";
     try {
       n = decodeURIComponent(location.hash.slice(1));
     } catch {
       n = location.hash.slice(1);
     }
-    n && n === r && (this._anchorDeepLinked = !0, requestAnimationFrame(
+    n && n === s && (this._anchorDeepLinked = !0, requestAnimationFrame(
       () => this.scrollIntoView({ block: "start", behavior: "auto" })
     ));
   }
@@ -126,15 +126,15 @@ class K extends j {
       a = decodeURIComponent(a);
     } catch {
     }
-    const s = document.getElementById(a);
-    if (!s) return;
+    const r = document.getElementById(a);
+    if (!r) return;
     e.preventDefault();
-    const r = window.matchMedia(
+    const s = window.matchMedia(
       "(prefers-reduced-motion: reduce)"
     ).matches;
-    s.scrollIntoView({
+    r.scrollIntoView({
       block: "start",
-      behavior: r ? "auto" : "smooth"
+      behavior: s ? "auto" : "smooth"
     }), history.replaceState(null, "", `#${a}`);
   }
   /** Coerce a config number that may arrive as a string (Arabic-Indic
@@ -168,7 +168,7 @@ const $ = {
   xl: 128
 };
 function q(t, e, i = "md", a = "md") {
-  const s = e(t == null ? void 0 : t.space_top, i), r = e(t == null ? void 0 : t.space_bottom, a), n = $[s] ?? $.md, o = $[r] ?? $.md, d = g[s] ?? g.md, c = g[r] ?? g.md;
+  const r = e(t == null ? void 0 : t.space_top, i), s = e(t == null ? void 0 : t.space_bottom, a), n = $[r] ?? $.md, o = $[s] ?? $.md, d = g[r] ?? g.md, c = g[s] ?? g.md;
   return [
     `--sp-top-m:${n}px`,
     `--sp-bot-m:${o}px`,
@@ -182,8 +182,8 @@ const S = {
   bottom: { top: "100%", pull: "-100%" }
 };
 function H(t, e, i, a = 1) {
-  const s = t == null ? void 0 : t.side_visual_count, r = s == null ? void 0 : e(s, "off"), n = ((t == null ? void 0 : t.side_image) || "").trim(), o = r ? r !== "off" : (t == null ? void 0 : t.enable_side_visual) === !0 || (t == null ? void 0 : t.enable_side_visual) == null && !!n;
-  if (!(a === 1 ? o : r ? r === "two" : o && (t == null ? void 0 : t.enable_second_side_visual) === !0)) return null;
+  const r = t == null ? void 0 : t.side_visual_count, s = r == null ? void 0 : e(r, "off"), n = ((t == null ? void 0 : t.side_image) || "").trim(), o = s ? s !== "off" : (t == null ? void 0 : t.enable_side_visual) === !0 || (t == null ? void 0 : t.enable_side_visual) == null && !!n;
+  if (!(a === 1 ? o : s ? s === "two" : o && (t == null ? void 0 : t.enable_second_side_visual) === !0)) return null;
   const c = (a === 1 ? (t == null ? void 0 : t.side_image) || "" : (t == null ? void 0 : t.side2_image) || "").trim();
   if (!c) return null;
   const p = e(
@@ -203,8 +203,8 @@ function H(t, e, i, a = 1) {
     t == null ? void 0 : t.side2_x_desktop,
     t == null ? void 0 : t.side2_y_desktop
   ]).some(
-    (I) => I != null && I !== ""
-  ), h = r ? !0 : (a === 1 ? t == null ? void 0 : t.side_desktop_custom : t == null ? void 0 : t.side2_desktop_custom) === !0 || m, w = e(
+    (T) => T != null && T !== ""
+  ), h = s ? !0 : (a === 1 ? t == null ? void 0 : t.side_desktop_custom : t == null ? void 0 : t.side2_desktop_custom) === !0 || m, w = e(
     a === 1 ? t == null ? void 0 : t.side_vpos : t == null ? void 0 : t.side2_vpos,
     a === 1 ? "top" : "bottom"
   ), k = e(
@@ -213,7 +213,7 @@ function H(t, e, i, a = 1) {
   ), l = !h || k === "inherit" ? w : k, b = i(a === 1 ? t == null ? void 0 : t.side_width : t == null ? void 0 : t.side2_width, 45), x = h ? i(
     a === 1 ? t == null ? void 0 : t.side_width_desktop : t == null ? void 0 : t.side2_width_desktop,
     b
-  ) : b, z = i(a === 1 ? t == null ? void 0 : t.side_x : t == null ? void 0 : t.side2_x, 20), B = h ? i(a === 1 ? t == null ? void 0 : t.side_x_desktop : t == null ? void 0 : t.side2_x_desktop, z) : z, E = i(a === 1 ? t == null ? void 0 : t.side_y : t == null ? void 0 : t.side2_y, 0), L = h ? i(a === 1 ? t == null ? void 0 : t.side_y_desktop : t == null ? void 0 : t.side2_y_desktop, E) : E, T = S[w] ?? S.top, C = S[l] ?? S.top;
+  ) : b, z = i(a === 1 ? t == null ? void 0 : t.side_x : t == null ? void 0 : t.side2_x, 20), B = h ? i(a === 1 ? t == null ? void 0 : t.side_x_desktop : t == null ? void 0 : t.side2_x_desktop, z) : z, E = i(a === 1 ? t == null ? void 0 : t.side_y : t == null ? void 0 : t.side2_y, 0), L = h ? i(a === 1 ? t == null ? void 0 : t.side_y_desktop : t == null ? void 0 : t.side2_y_desktop, E) : E, M = S[w] ?? S.top, C = S[l] ?? S.top;
   return {
     image: c,
     side: p,
@@ -226,9 +226,9 @@ function H(t, e, i, a = 1) {
       `--se${a}-x-d:${B}%`,
       `--se${a}-y-m:${E}%`,
       `--se${a}-y-d:${L}%`,
-      `--se${a}-top-m:${T.top}`,
+      `--se${a}-top-m:${M.top}`,
       `--se${a}-top-d:${C.top}`,
-      `--se${a}-pull-m:${T.pull}`,
+      `--se${a}-pull-m:${M.pull}`,
       `--se${a}-pull-d:${C.pull}`,
       `--se${a}-op:${Math.max(
         0,
@@ -815,10 +815,10 @@ const G = F`
     }
   }
 `;
-var U = Object.defineProperty, A = (t, e, i, a) => {
-  for (var s = void 0, r = t.length - 1, n; r >= 0; r--)
-    (n = t[r]) && (s = n(e, i, s) || s);
-  return s && U(e, i, s), s;
+var U = Object.defineProperty, I = (t, e, i, a) => {
+  for (var r = void 0, s = t.length - 1, n; s >= 0; s--)
+    (n = t[s]) && (r = n(e, i, r) || r);
+  return r && U(e, i, r), r;
 };
 const Y = {
   small: "48vw",
@@ -844,7 +844,7 @@ const Y = {
   soft: 0.28,
   medium: 0.48,
   strong: 0.66
-}, O = (t, e, i) => Math.max(e, Math.min(i, t)), Z = (t) => t === "left" ? "right" : "left", M = class M extends K {
+}, O = (t, e, i) => Math.max(e, Math.min(i, t)), Z = (t) => t === "left" ? "right" : "left", A = class A extends K {
   constructor() {
     super(...arguments), this._animState = "ready", this._activeIndex = -1, this._io = null, this._fallbackTimer = null, this._strip = null, this._centered = !1, this._rafId = null, this._reveal = () => {
       var e;
@@ -942,18 +942,18 @@ const Y = {
   _syncActive() {
     const e = this._strip, i = this._slides();
     if (!e || i.length === 0) return;
-    const a = e.getBoundingClientRect(), s = a.left + a.width / 2;
-    let r = 0, n = 1 / 0;
+    const a = e.getBoundingClientRect(), r = a.left + a.width / 2;
+    let s = 0, n = 1 / 0;
     i.forEach((o, d) => {
-      const c = o.getBoundingClientRect(), p = Math.abs(c.left + c.width / 2 - s);
-      p < n && (n = p, r = d);
-    }), r !== this._activeIndex && (this._activeIndex = r);
+      const c = o.getBoundingClientRect(), p = Math.abs(c.left + c.width / 2 - r);
+      p < n && (n = p, s = d);
+    }), s !== this._activeIndex && (this._activeIndex = s);
   }
   /** Scroll the strip so one frame sits in its middle. Direction-agnostic. */
   _centerSlide(e) {
     const i = this._strip, a = this._slides()[e];
     if (!i || !a) return;
-    const s = i.getBoundingClientRect(), r = a.getBoundingClientRect(), n = r.left + r.width / 2 - (s.left + s.width / 2);
+    const r = i.getBoundingClientRect(), s = a.getBoundingClientRect(), n = s.left + s.width / 2 - (r.left + r.width / 2);
     Math.abs(n) < 1 || i.scrollBy({ left: n, behavior: "auto" });
   }
   // ------------------------------------------------------------
@@ -963,10 +963,10 @@ const Y = {
     const a = this._pickValue(
       e.image_share,
       "md"
-    ), s = this._pickValue(
+    ), r = this._pickValue(
       e.image_share_desktop,
       "inherit"
-    ), r = s === "inherit" ? a : s, n = this._pickValue(e.item_size, "medium"), o = this._pickValue(
+    ), s = r === "inherit" ? a : r, n = this._pickValue(e.item_size, "medium"), o = this._pickValue(
       e.item_size_desktop,
       "inherit"
     ), d = o === "inherit" ? n : o, c = Math.max(0, this._num(e.gap, 16)), p = D[this._pickValue(e.overlay_strength, "medium")] ?? D.medium, _ = N[this._pickValue(e.dim_strength, "medium")] ?? N.medium;
@@ -985,7 +985,7 @@ const Y = {
       `--uc-gap-m:${c}px`,
       `--uc-gap-d:${Math.round(c * 1.4)}px`,
       `--uc-share-m:${J[a] ?? "38%"}`,
-      `--uc-share-d:${X[r] ?? "42%"}`,
+      `--uc-share-d:${X[s] ?? "42%"}`,
       `--uc-item-m:${Y[n] ?? "62vw"}`,
       `--uc-item-d:${Q[d] ?? "22vw"}`,
       `--uc-aspect:${this._pickValue(e.aspect_ratio, "4/5")}`,
@@ -1030,12 +1030,12 @@ const Y = {
    * ratio, and a caption underneath has to sit outside it.
    */
   _renderFrame(e, i) {
-    const a = this.localizedString(e.title), s = this.localizedString(e.text), r = !a && !s && !i.step, n = u`<img
+    const a = this.localizedString(e.title), r = this.localizedString(e.text), s = !a && !r && !i.step, n = u`<img
       src=${e.image || ""}
       alt=${this._alt(e)}
       loading="lazy"
       decoding="async"
-    />`, o = r ? y : u`<figcaption
+    />`, o = s ? y : u`<figcaption
           class="uc-cap"
           data-place=${i.place}
           data-pos=${i.pos}
@@ -1044,7 +1044,7 @@ const Y = {
         >
           ${this._renderNumber(i.step)}
           ${a ? u`<span class="uc-cap-title">${a}</span>` : y}
-          ${s ? u`<span class="uc-cap-text">${s}</span>` : y}
+          ${r ? u`<span class="uc-cap-text">${r}</span>` : y}
         </figcaption>`;
     return i.place === "outside" ? u`<figure class="uc-fig">
         <div class="uc-frame" data-bare="true">${n}</div>
@@ -1052,18 +1052,18 @@ const Y = {
       </figure>` : u`<figure
       class="uc-frame"
       data-pos=${i.pos}
-      data-bare=${r ? "true" : "false"}
+      data-bare=${s ? "true" : "false"}
     >
       ${n}${o}
     </figure>`;
   }
   /** A stack card: the photo on one physical side, the copy on the other. */
   _renderSplitCard(e, i) {
-    const a = this.localizedString(e.title), s = this.localizedString(e.text), r = e.background_color ? `--uc-card-bg:${e.background_color}` : "";
+    const a = this.localizedString(e.title), r = this.localizedString(e.text), s = e.background_color ? `--uc-card-bg:${e.background_color}` : "";
     return u`<article
       class="uc-card"
       data-side=${i.side}
-      style=${r}
+      style=${s}
     >
       <div class="uc-media">
         <img
@@ -1076,7 +1076,7 @@ const Y = {
       <div class="uc-body" data-align=${i.align} dir=${i.dir}>
         ${this._renderNumber(i.step)}
         ${a ? u`<h3 class="uc-card-title">${a}</h3>` : y}
-        ${s ? u`<p class="uc-card-text">${s}</p>` : y}
+        ${r ? u`<p class="uc-card-text">${r}</p>` : y}
       </div>
     </article>`;
   }
@@ -1086,16 +1086,16 @@ const Y = {
       side_visual_count: e.side_visual_count ?? "off",
       side_depth: e.side_depth ?? "front",
       side2_depth: e.side2_depth ?? "front"
-    }, s = (l) => H(
+    }, r = (l) => H(
       a,
       (b, x) => this._pickValue(b, x),
       (b, x) => this._num(b, x),
       l
-    ), r = [s(1), s(2)].filter(
+    ), s = [r(1), r(2)].filter(
       (l) => !!l
     ), n = this._hostStyle(
       e,
-      r.flatMap((l) => l.vars)
+      s.flatMap((l) => l.vars)
     ), o = (l, b = !1) => u`<img
         class="uc-side"
         src=${l.image}
@@ -1107,7 +1107,7 @@ const Y = {
         data-flow=${b ? "true" : "false"}
         decoding="async"
         loading="lazy"
-      />`, d = r.filter((l) => l.side !== "center").map((l) => o(l)), c = r.filter((l) => l.side === "center").map((l) => o(l, !0));
+      />`, d = s.filter((l) => l.side !== "center").map((l) => o(l)), c = s.filter((l) => l.side === "center").map((l) => o(l, !0));
     if (i.length === 0)
       return u`<section class="uc" style=${n}>
         ${d}
@@ -1125,8 +1125,8 @@ const Y = {
     </section>`;
   }
   /** Cards one above the other — the default layout. */
-  _renderStack(e, i, a, s) {
-    const r = this._isOverlay(), n = this._pickValue(e.first_image_side, "right"), o = e.alternate_sides !== !1, d = this._pickValue(e.text_align, "center"), c = this._pickValue(
+  _renderStack(e, i, a, r) {
+    const s = this._isOverlay(), n = this._pickValue(e.first_image_side, "right"), o = e.alternate_sides !== !1, d = this._pickValue(e.text_align, "center"), c = this._pickValue(
       e.overlay_position,
       "bottom"
     ), p = this._pickValue(
@@ -1138,24 +1138,24 @@ const Y = {
     }, v = e.show_numbers === !0;
     return u`<div class="uc-stack" data-anim=${a}>
       ${i.map(
-      (m, h) => r ? this._renderFrame(m, {
+      (m, h) => s ? this._renderFrame(m, {
         pos: c,
         align: p,
-        dir: s,
+        dir: r,
         step: v ? h + 1 : 0,
         place: "over"
       }) : this._renderSplitCard(m, {
         side: _(m, h),
         align: d,
-        dir: s,
+        dir: r,
         step: v ? h + 1 : 0
       })
     )}
     </div>`;
   }
   /** A strip of captioned photos bleeding off both edges of the section. */
-  _renderRow(e, i, a, s) {
-    const r = this._pickValue(
+  _renderRow(e, i, a, r) {
+    const s = this._pickValue(
       e.overlay_position,
       "bottom"
     ), n = this._focusEnabled(), o = e.show_numbers === !0, d = this._isOverlay() ? "over" : "outside", c = d === "over" ? this._pickValue(e.overlay_align, "center") : "center", p = this._activeIndex >= 0 ? this._activeIndex : Math.floor((i.length - 1) / 2);
@@ -1170,9 +1170,9 @@ const Y = {
             data-active=${n && v === p ? "true" : "false"}
           >
             ${this._renderFrame(_, {
-        pos: r,
+        pos: s,
         align: c,
-        dir: s,
+        dir: r,
         step: o ? v + 1 : 0,
         place: d
       })}
@@ -1181,15 +1181,15 @@ const Y = {
     </div>`;
   }
 };
-M.styles = G;
-let f = M;
-A([
+A.styles = G;
+let f = A;
+I([
   P({ type: Object })
 ], f.prototype, "config");
-A([
+I([
   R()
 ], f.prototype, "_animState");
-A([
+I([
   R()
 ], f.prototype, "_activeIndex");
 typeof f < "u" && f.registerSallaComponent("salla-use-cases");

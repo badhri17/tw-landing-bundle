@@ -239,7 +239,7 @@ function U(e, t, s, i = 1) {
   ), D = !p || E === "inherit" ? v : E, k = s(i === 1 ? e == null ? void 0 : e.side_width : e == null ? void 0 : e.side2_width, 45), V = p ? s(
     i === 1 ? e == null ? void 0 : e.side_width_desktop : e == null ? void 0 : e.side2_width_desktop,
     k
-  ) : k, $ = s(i === 1 ? e == null ? void 0 : e.side_x : e == null ? void 0 : e.side2_x, 20), R = p ? s(i === 1 ? e == null ? void 0 : e.side_x_desktop : e == null ? void 0 : e.side2_x_desktop, $) : $, S = s(i === 1 ? e == null ? void 0 : e.side_y : e == null ? void 0 : e.side2_y, 0), j = p ? s(i === 1 ? e == null ? void 0 : e.side_y_desktop : e == null ? void 0 : e.side2_y_desktop, S) : S, f = x[v] ?? x.top, z = x[D] ?? x.top;
+  ) : k, $ = s(i === 1 ? e == null ? void 0 : e.side_x : e == null ? void 0 : e.side2_x, 20), R = p ? s(i === 1 ? e == null ? void 0 : e.side_x_desktop : e == null ? void 0 : e.side2_x_desktop, $) : $, S = s(i === 1 ? e == null ? void 0 : e.side_y : e == null ? void 0 : e.side2_y, 0), j = p ? s(i === 1 ? e == null ? void 0 : e.side_y_desktop : e == null ? void 0 : e.side2_y_desktop, S) : S, z = x[v] ?? x.top, f = x[D] ?? x.top;
   return {
     image: h,
     side: c,
@@ -252,10 +252,10 @@ function U(e, t, s, i = 1) {
       `--se${i}-x-d:${R}%`,
       `--se${i}-y-m:${S}%`,
       `--se${i}-y-d:${j}%`,
-      `--se${i}-top-m:${f.top}`,
-      `--se${i}-top-d:${z.top}`,
-      `--se${i}-pull-m:${f.pull}`,
-      `--se${i}-pull-d:${z.pull}`,
+      `--se${i}-top-m:${z.top}`,
+      `--se${i}-top-d:${f.top}`,
+      `--se${i}-pull-m:${z.pull}`,
+      `--se${i}-pull-d:${f.pull}`,
       `--se${i}-op:${Math.max(
         0,
         Math.min(

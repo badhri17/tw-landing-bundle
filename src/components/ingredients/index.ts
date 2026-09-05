@@ -292,7 +292,7 @@ export default class GrowthIngredients extends GrowthElement {
     out?: number;
   }) {
     const { item, i } = o;
-    const name = this.localizedString(item.name);
+    const localizedName = this.localizedString(item.name);
     const src = (item.image || "").trim();
     const offset = clamp(this._num(item.offset_y, 0), -60, 60);
     const scale = clamp(this._num(item.image_scale, 100), 20, 300);
@@ -315,13 +315,13 @@ export default class GrowthIngredients extends GrowthElement {
       style=${style}
     >
       ${
-        name
+        localizedName
           ? html`<figcaption class="ing-label" dir=${o.dir}>
-              ${name}
+              ${localizedName}
             </figcaption>`
           : nothing
       }
-      ${name && src ? this._renderLink(o.link, o.dot) : nothing}
+      ${localizedName && src ? this._renderLink(o.link, o.dot) : nothing}
       ${
         src
           ? html`<span class="ing-media">
@@ -350,8 +350,8 @@ export default class GrowthIngredients extends GrowthElement {
       </section>`;
     }
 
-    const title = this.localizedString(c.section_title);
-    const subtitle = this.localizedString(c.section_subtitle);
+    const localizedTitle = this.localizedString(c.section_title);
+    const localizedSubtitle = this.localizedString(c.section_subtitle);
     const layout = this._pickValue<IngredientLayout>(c.layout, "circle");
     const link = this._pickValue<IngredientConnector>(
       c.connector_style,
@@ -361,7 +361,8 @@ export default class GrowthIngredients extends GrowthElement {
     const entrance = c.enable_entrance_anim !== false && !this._reduceMotion();
     const anim = entrance ? this._animState : "in";
     const dir = this._lang() === "ar" ? "rtl" : "ltr";
-    const alt = this.localizedString(c.product_image_alt) || title || "";
+    const localizedAlt =
+      this.localizedString(c.product_image_alt) || localizedTitle || "";
 
     // Sides are physical, so an ingredient stays where the merchant put it in
     // either store language. Unset sides alternate left/right down the list.
@@ -370,22 +371,36 @@ export default class GrowthIngredients extends GrowthElement {
     );
 
     const header =
-      title || subtitle
+      localizedTitle || localizedSubtitle
         ? html`<header class="ing-header">
-            ${title ? html`<h2 class="ing-h2">${title}</h2>` : nothing}
-            ${subtitle ? html`<p class="ing-sub">${subtitle}</p>` : nothing}
+            ${localizedTitle
+              ? html`<h2 class="ing-h2">${localizedTitle}</h2>`
+              : nothing}
+            ${localizedSubtitle
+              ? html`<p class="ing-sub">${localizedSubtitle}</p>`
+              : nothing}
           </header>`
         : nothing;
 
     const body =
       layout === "circle"
-        ? this._renderOrbit(c, items, sides, image, alt, anim, link, dot, dir)
+        ? this._renderOrbit(
+            c,
+            items,
+            sides,
+            image,
+            localizedAlt,
+            anim,
+            link,
+            dot,
+            dir,
+          )
         : this._renderColumns(
             c,
             items,
             sides,
             image,
-            alt,
+            localizedAlt,
             anim,
             link,
             dot,
@@ -403,7 +418,7 @@ export default class GrowthIngredients extends GrowthElement {
     items: IngredientItem[],
     sides: IngredientSide[],
     image: string,
-    alt: string,
+    localizedAlt: string,
     anim: string,
     link: IngredientConnector,
     dot: boolean,
@@ -444,7 +459,7 @@ export default class GrowthIngredients extends GrowthElement {
       ${
         image
           ? html`<div class="ing-product">
-              <img src=${image} alt=${alt} decoding="async" />
+              <img src=${image} alt=${localizedAlt} decoding="async" />
             </div>`
           : nothing
       }
@@ -458,7 +473,7 @@ export default class GrowthIngredients extends GrowthElement {
     items: IngredientItem[],
     sides: IngredientSide[],
     image: string,
-    alt: string,
+    localizedAlt: string,
     anim: string,
     link: IngredientConnector,
     dot: boolean,
@@ -520,7 +535,7 @@ export default class GrowthIngredients extends GrowthElement {
       ${
         image
           ? html`<div class="ing-product">
-              <img src=${image} alt=${alt} decoding="async" />
+              <img src=${image} alt=${localizedAlt} decoding="async" />
             </div>`
           : nothing
       }

@@ -1,15 +1,15 @@
-import { LitElement as j, css as K, svg as M, html as l, nothing as x } from "lit";
-import { property as G, state as H } from "lit/decorators.js";
-function q(e, t) {
+import { LitElement as j, css as K, svg as O, html as l, nothing as x } from "lit";
+import { property as F, state as G } from "lit/decorators.js";
+function H(e, t) {
   if (typeof e == "string") return e;
   if (!e || typeof e != "object") return "";
   const s = e[t] || e.ar || e.en || "";
   return typeof s == "string" ? s.trim() : "";
 }
-function L(e) {
+function M(e) {
   return e.replace(/[٠-٩]/g, (t) => String(t.charCodeAt(0) - 1632)).replace(/[۰-۹]/g, (t) => String(t.charCodeAt(0) - 1776));
 }
-class F extends j {
+class q extends j {
   constructor() {
     super(...arguments), this._anchorBase = "", this._anchorDeepLinked = !1;
   }
@@ -40,7 +40,7 @@ class F extends j {
   }
   /** Pull the store-language string out of a Salla multilanguage value. */
   localizedString(t) {
-    return q(t, this._lang());
+    return H(t, this._lang());
   }
   /** Dropdown-list values from settings may come as [{ label, value }]. */
   _pickValue(t, s) {
@@ -54,7 +54,7 @@ class F extends j {
   }
   /** See module-level toLatinDigits; exposed for subclasses. */
   _toLatinDigits(t) {
-    return L(t);
+    return M(t);
   }
   /**
    * The inverse: render a number in the digits the store's language uses, so a
@@ -142,7 +142,7 @@ class F extends j {
   _num(t, s) {
     if (typeof t == "number" && !Number.isNaN(t)) return t;
     if (typeof t == "string" && t.trim() !== "") {
-      const a = Number(L(t.trim()));
+      const a = Number(M(t.trim()));
       if (!Number.isNaN(a)) return a;
     }
     if (Array.isArray(t) && t.length > 0) {
@@ -207,13 +207,13 @@ function W(e, t, s, a = 1) {
   ), u = r ? !0 : (a === 1 ? e == null ? void 0 : e.side_desktop_custom : e == null ? void 0 : e.side2_desktop_custom) === !0 || v, $ = t(
     a === 1 ? e == null ? void 0 : e.side_vpos : e == null ? void 0 : e.side2_vpos,
     a === 1 ? "top" : "bottom"
-  ), z = t(
+  ), f = t(
     a === 1 ? e == null ? void 0 : e.side_vpos_desktop : e == null ? void 0 : e.side2_vpos_desktop,
     "inherit"
-  ), S = !u || z === "inherit" ? $ : z, w = s(a === 1 ? e == null ? void 0 : e.side_width : e == null ? void 0 : e.side2_width, 45), C = u ? s(
+  ), S = !u || f === "inherit" ? $ : f, w = s(a === 1 ? e == null ? void 0 : e.side_width : e == null ? void 0 : e.side2_width, 45), C = u ? s(
     a === 1 ? e == null ? void 0 : e.side_width_desktop : e == null ? void 0 : e.side2_width_desktop,
     w
-  ) : w, y = s(a === 1 ? e == null ? void 0 : e.side_x : e == null ? void 0 : e.side2_x, 20), n = u ? s(a === 1 ? e == null ? void 0 : e.side_x_desktop : e == null ? void 0 : e.side2_x_desktop, y) : y, m = s(a === 1 ? e == null ? void 0 : e.side_y : e == null ? void 0 : e.side2_y, 0), h = u ? s(a === 1 ? e == null ? void 0 : e.side_y_desktop : e == null ? void 0 : e.side2_y_desktop, m) : m, I = E[$] ?? E.top, O = E[S] ?? E.top;
+  ) : w, y = s(a === 1 ? e == null ? void 0 : e.side_x : e == null ? void 0 : e.side2_x, 20), n = u ? s(a === 1 ? e == null ? void 0 : e.side_x_desktop : e == null ? void 0 : e.side2_x_desktop, y) : y, m = s(a === 1 ? e == null ? void 0 : e.side_y : e == null ? void 0 : e.side2_y, 0), h = u ? s(a === 1 ? e == null ? void 0 : e.side_y_desktop : e == null ? void 0 : e.side2_y_desktop, m) : m, I = E[$] ?? E.top, L = E[S] ?? E.top;
   return {
     image: c,
     side: _,
@@ -227,9 +227,9 @@ function W(e, t, s, a = 1) {
       `--se${a}-y-m:${m}%`,
       `--se${a}-y-d:${h}%`,
       `--se${a}-top-m:${I.top}`,
-      `--se${a}-top-d:${O.top}`,
+      `--se${a}-top-d:${L.top}`,
       `--se${a}-pull-m:${I.pull}`,
-      `--se${a}-pull-d:${O.pull}`,
+      `--se${a}-pull-d:${L.pull}`,
       `--se${a}-op:${Math.max(
         0,
         Math.min(
@@ -788,7 +788,7 @@ const N = {
   sm: 92,
   md: 124,
   lg: 160
-}, A = class A extends F {
+}, A = class A extends q {
   constructor() {
     super(...arguments), this._animState = "ready", this._io = null, this._fallbackTimer = null, this._reveal = () => {
       var t;
@@ -911,7 +911,7 @@ const N = {
       aria-label=${t ? a ? "متوفر" : "Included" : a ? "غير متوفر" : "Not included"}
     >
       <svg viewBox="0 0 24 24" aria-hidden="true">
-        ${t ? M`<path d="M20 6 9 17l-5-5" />` : M`<path d="M18 6 6 18" /> <path d="m6 6 12 12" />`}
+        ${t ? O`<path d="M20 6 9 17l-5-5" />` : O`<path d="M18 6 6 18" /> <path d="m6 6 12 12" />`}
       </svg>
     </span>`;
   }
@@ -970,7 +970,7 @@ const N = {
     const d = this._pickValue(
       t.title_position,
       "in_table"
-    ), c = d === "hidden" ? "" : this.localizedString(t.section_title), _ = this.localizedString(t.section_subtitle), k = this.localizedString(t.footnote), f = this.localizedString(t.us_label), v = (t.us_logo || "").trim(), u = this.localizedString(t.others_label), $ = this._pickValue(
+    ), c = d === "hidden" ? "" : this.localizedString(t.section_title), _ = this.localizedString(t.section_subtitle), k = this.localizedString(t.footnote), z = this.localizedString(t.us_label), v = (t.us_logo || "").trim(), u = this.localizedString(t.others_label), $ = this._pickValue(
       t.mark_style,
       "plain"
     ), S = this._pickValue(
@@ -981,9 +981,9 @@ const N = {
               ${v ? l`<img
                       class="cmp-logo"
                       src=${v}
-                      alt=${f}
+                      alt=${z}
                       decoding="async"
-                    />` : l`<span class="cmp-col-label">${f}</span>`}
+                    />` : l`<span class="cmp-col-label">${z}</span>`}
             </span>
           </th>` : l`<th class="cmp-th" data-col="others" scope="col">
             <span class="cmp-in" style="--i:0">
@@ -1050,10 +1050,10 @@ const N = {
 A.styles = Y;
 let b = A;
 P([
-  G({ type: Object })
+  F({ type: Object })
 ], b.prototype, "config");
 P([
-  H()
+  G()
 ], b.prototype, "_animState");
 typeof b < "u" && b.registerSallaComponent("salla-comparison");
 export {

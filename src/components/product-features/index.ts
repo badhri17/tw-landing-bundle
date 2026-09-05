@@ -237,8 +237,8 @@ export default class GrowthProductFeatures extends GrowthElement {
     overlay: boolean,
     showLine: boolean
   ) {
-    const title = this.localizedString(item.title);
-    const text = this.localizedString(item.description);
+    const localizedTitle = this.localizedString(item.title);
+    const localizedText = this.localizedString(item.description);
     const thumb = shape === "none" ? "" : (item.image || "").trim();
 
     const side = this._pickValue<FeatureSide>(
@@ -262,8 +262,12 @@ export default class GrowthProductFeatures extends GrowthElement {
               <img src=${thumb} alt="" loading="lazy" decoding="async" />
             </span>`
           : nothing}
-        ${title ? html`<h3 class="pf-card-title">${title}</h3>` : nothing}
-        ${text ? html`<p class="pf-card-text">${text}</p>` : nothing}
+        ${localizedTitle
+          ? html`<h3 class="pf-card-title">${localizedTitle}</h3>`
+          : nothing}
+        ${localizedText
+          ? html`<p class="pf-card-text">${localizedText}</p>`
+          : nothing}
       </div>
     </div>`;
   }
@@ -284,8 +288,8 @@ export default class GrowthProductFeatures extends GrowthElement {
       </section>`;
     }
 
-    const title = this.localizedString(c.section_title);
-    const subtitle = this.localizedString(c.section_subtitle);
+    const localizedTitle = this.localizedString(c.section_title);
+    const localizedSubtitle = this.localizedString(c.section_subtitle);
     const shape = this._pickValue<FeatureThumbShape>(c.thumb_shape, "circle");
     const thumbPos = this._pickValue<FeatureThumbPosition>(
       c.thumb_position,
@@ -299,10 +303,14 @@ export default class GrowthProductFeatures extends GrowthElement {
     const overlay = !!image;
 
     const header =
-      title || subtitle
+      localizedTitle || localizedSubtitle
         ? html`<header class="pf-header">
-            ${title ? html`<h2 class="pf-h2">${title}</h2>` : nothing}
-            ${subtitle ? html`<p class="pf-sub">${subtitle}</p>` : nothing}
+            ${localizedTitle
+              ? html`<h2 class="pf-h2">${localizedTitle}</h2>`
+              : nothing}
+            ${localizedSubtitle
+              ? html`<p class="pf-sub">${localizedSubtitle}</p>`
+              : nothing}
           </header>`
         : nothing;
 
@@ -321,7 +329,7 @@ export default class GrowthProductFeatures extends GrowthElement {
             ? html`<img
                 class="pf-product"
                 src=${image}
-                alt=${this.localizedString(c.product_image_alt) || title || ""}
+                alt=${this.localizedString(c.product_image_alt) || localizedTitle || ""}
                 decoding="async"
               />`
             : nothing}

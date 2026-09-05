@@ -1,4 +1,4 @@
-import { LitElement as z, css as I, html as d, nothing as p } from "lit";
+import { LitElement as A, css as I, html as d, nothing as p } from "lit";
 import { property as E, state as k } from "lit/decorators.js";
 function M(o, e) {
   if (typeof o == "string") return o;
@@ -9,7 +9,7 @@ function M(o, e) {
 function $(o) {
   return o.replace(/[٠-٩]/g, (e) => String(e.charCodeAt(0) - 1632)).replace(/[۰-۹]/g, (e) => String(e.charCodeAt(0) - 1776));
 }
-class D extends z {
+class D extends A {
   constructor() {
     super(...arguments), this._anchorBase = "", this._anchorDeepLinked = !1;
   }
@@ -379,12 +379,12 @@ const V = I`
     }
   }
 `;
-var B = Object.defineProperty, v = (o, e, r, t) => {
+var L = Object.defineProperty, v = (o, e, r, t) => {
   for (var i = void 0, s = o.length - 1, n; s >= 0; s--)
     (n = o[s]) && (i = n(e, r, i) || i);
-  return i && B(e, r, i), i;
+  return i && L(e, r, i), i;
 };
-const S = 120, L = {
+const S = 120, B = {
   fast: 1e3,
   normal: 1800,
   slow: 2600
@@ -422,7 +422,7 @@ const S = 120, L = {
       decimals: n,
       prefix: typeof e.prefix == "string" ? e.prefix.trim() : "",
       suffix: typeof e.suffix == "string" ? e.suffix.trim() : "",
-      label: this.localizedString(e.label)
+      localizedLabel: this.localizedString(e.label)
     };
   }
   /** Render a number the way the merchant asked for it. */
@@ -435,7 +435,7 @@ const S = 120, L = {
   }
   _speed() {
     var e;
-    return L[this._pickValue((e = this.config) == null ? void 0 : e.count_speed, "normal")];
+    return B[this._pickValue((e = this.config) == null ? void 0 : e.count_speed, "normal")];
   }
   /** 0 → 1 for a single counter, offset by its position in the row. */
   _progress(e) {
@@ -560,8 +560,8 @@ const S = 120, L = {
       >
         ${C}
         <div class="m-grid" style="--m-chars:${this._widest(r, s, i)}">
-          ${r.map((A, y) => {
-      const m = this._parse(A);
+          ${r.map((z, y) => {
+      const m = this._parse(z);
       let b;
       if (m.target === null)
         b = m.raw;
@@ -572,7 +572,7 @@ const S = 120, L = {
       const x = `${m.prefix}${b}${m.suffix}`;
       return d`<div class="m-card" style="--i:${y}">
               ${x ? d`<div class="m-value" dir="auto">${x}</div>` : p}
-              ${m.label ? d`<div class="m-label">${m.label}</div>` : p}
+              ${m.localizedLabel ? d`<div class="m-label">${m.localizedLabel}</div>` : p}
             </div>`;
     })}
         </div>

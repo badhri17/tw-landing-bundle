@@ -1,13 +1,13 @@
 import { LitElement as k, css as S, nothing as l, html as p } from "lit";
-import { property as T, state as A } from "lit/decorators.js";
-function z(n, t) {
-  if (typeof n == "string") return n;
-  if (!n || typeof n != "object") return "";
-  const e = n[t] || n.ar || n.en || "";
+import { property as T, state as z } from "lit/decorators.js";
+function A(s, t) {
+  if (typeof s == "string") return s;
+  if (!s || typeof s != "object") return "";
+  const e = s[t] || s.ar || s.en || "";
   return typeof e == "string" ? e.trim() : "";
 }
-function _(n) {
-  return n.replace(/[٠-٩]/g, (t) => String(t.charCodeAt(0) - 1632)).replace(/[۰-۹]/g, (t) => String(t.charCodeAt(0) - 1776));
+function _(s) {
+  return s.replace(/[٠-٩]/g, (t) => String(t.charCodeAt(0) - 1632)).replace(/[۰-۹]/g, (t) => String(t.charCodeAt(0) - 1776));
 }
 class C extends k {
   constructor() {
@@ -20,17 +20,17 @@ class C extends k {
    * component file executes.
    */
   static registerSallaComponent(t) {
-    const e = String(t || "").trim(), a = e.toLowerCase().replace(/[^a-z0-9._-]/g, "-"), r = a.includes("-") ? a : `salla-${a || "component"}`, i = () => `${r}-${Math.random().toString(36).substring(2, 8)}`, s = () => {
+    const e = String(t || "").trim(), a = e.toLowerCase().replace(/[^a-z0-9._-]/g, "-"), r = a.includes("-") ? a : `salla-${a || "component"}`, i = () => `${r}-${Math.random().toString(36).substring(2, 8)}`, o = () => {
       var d;
-      const o = (d = window.Salla) == null ? void 0 : d.bundles;
-      return o && typeof o.registerComponent == "function" ? (o.registerComponent(e, {
+      const n = (d = window.Salla) == null ? void 0 : d.bundles;
+      return n && typeof n.registerComponent == "function" ? (n.registerComponent(e, {
         component: this,
         dynamicTagName: i()
       }), !0) : !1;
     };
-    if (s()) return;
+    if (o()) return;
     const c = window.setInterval(() => {
-      s() && window.clearInterval(c);
+      o() && window.clearInterval(c);
     }, 100);
     window.setTimeout(() => window.clearInterval(c), 5e3);
   }
@@ -40,7 +40,7 @@ class C extends k {
   }
   /** Pull the store-language string out of a Salla multilanguage value. */
   localizedString(t) {
-    return z(t, this._lang());
+    return A(t, this._lang());
   }
   /** Dropdown-list values from settings may come as [{ label, value }]. */
   _pickValue(t, e) {
@@ -100,18 +100,18 @@ class C extends k {
     this._anchorBase = r;
     let i = r;
     for (let c = 2; ; c++) {
-      const o = document.getElementById(i);
-      if (!o || o === this) break;
+      const n = document.getElementById(i);
+      if (!n || n === this) break;
       i = `${r}-${c}`;
     }
     if (this.id = i, this.style.scrollMarginTop = `${a}px`, this._anchorDeepLinked) return;
-    let s = "";
+    let o = "";
     try {
-      s = decodeURIComponent(location.hash.slice(1));
+      o = decodeURIComponent(location.hash.slice(1));
     } catch {
-      s = location.hash.slice(1);
+      o = location.hash.slice(1);
     }
-    s && s === i && (this._anchorDeepLinked = !0, requestAnimationFrame(
+    o && o === i && (this._anchorDeepLinked = !0, requestAnimationFrame(
       () => this.scrollIntoView({ block: "start", behavior: "auto" })
     ));
   }
@@ -167,12 +167,12 @@ const u = {
   lg: 96,
   xl: 128
 };
-function E(n, t, e = "md", a = "md") {
-  const r = t(n == null ? void 0 : n.space_top, e), i = t(n == null ? void 0 : n.space_bottom, a), s = u[r] ?? u.md, c = u[i] ?? u.md, o = m[r] ?? m.md, d = m[i] ?? m.md;
+function E(s, t, e = "md", a = "md") {
+  const r = t(s == null ? void 0 : s.space_top, e), i = t(s == null ? void 0 : s.space_bottom, a), o = u[r] ?? u.md, c = u[i] ?? u.md, n = m[r] ?? m.md, d = m[i] ?? m.md;
   return [
-    `--sp-top-m:${s}px`,
+    `--sp-top-m:${o}px`,
     `--sp-bot-m:${c}px`,
-    `--sp-top-d:${o}px`,
+    `--sp-top-d:${n}px`,
     `--sp-bot-d:${d}px`
   ];
 }
@@ -559,9 +559,9 @@ const I = S`
     }
   }
 `;
-var D = Object.defineProperty, v = (n, t, e, a) => {
-  for (var r = void 0, i = n.length - 1, s; i >= 0; i--)
-    (s = n[i]) && (r = s(t, e, r) || r);
+var D = Object.defineProperty, v = (s, t, e, a) => {
+  for (var r = void 0, i = s.length - 1, o; i >= 0; i--)
+    (o = s[i]) && (r = o(t, e, r) || r);
   return r && D(t, e, r), r;
 };
 const L = {
@@ -612,8 +612,8 @@ const L = {
     if (!r) return "";
     let i = r[1];
     i.length <= 4 && (i = i.split("").map((d) => d + d).join(""));
-    const s = parseInt(i.slice(0, 2), 16), c = parseInt(i.slice(2, 4), 16), o = parseInt(i.slice(4, 6), 16);
-    return `rgba(${s}, ${c}, ${o}, ${e})`;
+    const o = parseInt(i.slice(0, 2), 16), c = parseInt(i.slice(2, 4), 16), n = parseInt(i.slice(4, 6), 16);
+    return `rgba(${o}, ${c}, ${n}, ${e})`;
   }
   connectedCallback() {
     if (super.connectedCallback(), !("IntersectionObserver" in window)) {
@@ -650,7 +650,7 @@ const L = {
     const e = this._pickValue(t.card_width, "medium"), a = this._pickValue(t.card_size, "md"), r = this._pickValue(
       t.card_size_desktop,
       "inherit"
-    ), i = r === "inherit" ? a : r, s = this._stageRatio(t), c = this._translucent(t.card_bg ?? "#ffffff", 0.72);
+    ), i = r === "inherit" ? a : r, o = this._stageRatio(t), c = this._translucent(t.card_bg ?? "#ffffff", 0.72);
     return [
       t.bg_color ? `--pf-bg:${t.bg_color}` : "",
       t.title_color ? `--pf-title:${t.title_color}` : "",
@@ -668,15 +668,15 @@ const L = {
       `--pf-scale-d:${R[i] ?? 1.16}`,
       `--pf-radius:${this._num(t.card_radius, 16)}px`,
       `--pf-stage-max:${this._num(t.stage_max_width, 560)}px`,
-      s === "auto" ? "" : `--pf-ratio:${s}`,
+      o === "auto" ? "" : `--pf-ratio:${o}`,
       ...E(
         t,
-        (o, d) => this._pickValue(o, d)
+        (n, d) => this._pickValue(n, d)
       )
     ].filter(Boolean).join("; ");
   }
   _renderCard(t, e, a, r, i) {
-    const s = this.localizedString(t.title), c = this.localizedString(t.description), o = a === "none" ? "" : (t.image || "").trim(), d = this._pickValue(
+    const o = this.localizedString(t.title), c = this.localizedString(t.description), n = a === "none" ? "" : (t.image || "").trim(), d = this._pickValue(
       t.side,
       e % 2 === 0 ? "right" : "left"
     ), g = Math.max(
@@ -689,11 +689,11 @@ const L = {
       style=${r ? `--i:${e};--top:${g}%` : `--i:${e}`}
     >
       ${r && i ? p`<span class="pf-line"></span>` : l}
-      <div class="pf-card" data-thumb=${o ? "on" : "off"}>
-        ${o ? p`<span class="pf-thumb" data-shape=${a}>
-              <img src=${o} alt="" loading="lazy" decoding="async" />
+      <div class="pf-card" data-thumb=${n ? "on" : "off"}>
+        ${n ? p`<span class="pf-thumb" data-shape=${a}>
+              <img src=${n} alt="" loading="lazy" decoding="async" />
             </span>` : l}
-        ${s ? p`<h3 class="pf-card-title">${s}</h3>` : l}
+        ${o ? p`<h3 class="pf-card-title">${o}</h3>` : l}
         ${c ? p`<p class="pf-card-text">${c}</p>` : l}
       </div>
     </div>`;
@@ -706,12 +706,12 @@ const L = {
           ${this._lang() === "ar" ? "أضف صورة المنتج وميزة واحدة على الأقل لعرض هذا القسم." : "Add a product image and at least one feature to display this section."}
         </p>
       </section>`;
-    const i = this.localizedString(t.section_title), s = this.localizedString(t.section_subtitle), c = this._pickValue(t.thumb_shape, "circle"), o = this._pickValue(
+    const i = this.localizedString(t.section_title), o = this.localizedString(t.section_subtitle), c = this._pickValue(t.thumb_shape, "circle"), n = this._pickValue(
       t.thumb_position,
       "side"
-    ), d = this._pickValue(t.card_style, "glass"), g = t.show_connectors !== !1, w = t.enable_entrance_anim !== !1 && !this._reduceMotion(), f = !!a, x = i || s ? p`<header class="pf-header">
+    ), d = this._pickValue(t.card_style, "glass"), g = t.show_connectors !== !1, w = t.enable_entrance_anim !== !1 && !this._reduceMotion(), f = !!a, x = i || o ? p`<header class="pf-header">
             ${i ? p`<h2 class="pf-h2">${i}</h2>` : l}
-            ${s ? p`<p class="pf-sub">${s}</p>` : l}
+            ${o ? p`<p class="pf-sub">${o}</p>` : l}
           </header>` : l;
     return p`
       <section class="pf" style=${r}>
@@ -720,7 +720,7 @@ const L = {
           class="pf-stage"
           data-mode=${f ? "overlay" : "stack"}
           data-ratio=${f && this._stageRatio(t) !== "auto" ? "on" : "off"}
-          data-thumb-pos=${o}
+          data-thumb-pos=${n}
           data-card=${d}
           data-anim=${w ? this._animState : "in"}
         >
@@ -744,7 +744,7 @@ v([
   T({ type: Object })
 ], h.prototype, "config");
 v([
-  A()
+  z()
 ], h.prototype, "_animState");
 typeof h < "u" && h.registerSallaComponent("salla-product-features");
 export {

@@ -446,7 +446,7 @@ export default class GrowthGallery extends GrowthElement {
       </section>`;
     }
 
-    const title = this.localizedString(c.section_title);
+    const localizedTitle = this.localizedString(c.section_title);
     const savedRowStyle = this._pickValue<GalleryRowStyle | "staggered">(
       c.row_style,
       "equal",
@@ -478,9 +478,9 @@ export default class GrowthGallery extends GrowthElement {
             />`,
         )}
         ${
-          title
+          localizedTitle
             ? html`<header class="gal-header">
-                <h2 class="gal-h2">${title}</h2>
+                <h2 class="gal-h2">${localizedTitle}</h2>
               </header>`
             : nothing
         }
@@ -491,7 +491,7 @@ export default class GrowthGallery extends GrowthElement {
           data-anim=${entrance ? this._animState : "in"}
         >
           ${images.map((img, i) => {
-            const alt = this.localizedString(img.alt);
+            const localizedAlt = this.localizedString(img.alt);
             return html`<button
               class="gal-item"
               type="button"
@@ -506,7 +506,7 @@ export default class GrowthGallery extends GrowthElement {
             >
               <img
                 src=${img.image || ""}
-                alt=${alt}
+                alt=${localizedAlt}
                 loading="lazy"
                 decoding="async"
               />

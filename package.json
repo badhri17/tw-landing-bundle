@@ -4,15 +4,17 @@
   "description": "",
   "type": "module",
   "scripts": {
-    "predev": "pnpm run audit:defaults && pnpm run audit:runtime-defaults",
+    "predev": "pnpm run audit:defaults && pnpm run audit:runtime-defaults && pnpm run audit:localized",
     "dev": "vite",
-    "prebuild": "pnpm run audit:defaults && pnpm run audit:runtime-defaults",
+    "prebuild": "pnpm run audit:defaults && pnpm run audit:runtime-defaults && pnpm run audit:localized",
     "build": "vite build",
     "audit:defaults": "node scripts/audit-default-values.mjs",
     "audit:runtime-defaults": "node scripts/audit-runtime-defaults.mjs",
     "fix:defaults": "node scripts/audit-default-values.mjs --fix",
     "format": "prettier --write \"src/**/*.{ts,html,css}\"",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "audit:localized": "node scripts/audit-localized-strings.mjs",
+    "postbuild": "node scripts/audit-localized-strings.mjs --dist"
   },
   "devDependencies": {
     "@testing-library/dom": "^9.3.4",

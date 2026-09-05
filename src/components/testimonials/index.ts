@@ -422,16 +422,15 @@ export default class GrowthTestimonials extends GrowthElement {
   private _starPath =
     "M12 17.27l-6.18 3.73 1.64-7.03L2 9.24l7.19-.61L12 2l2.81 6.63 7.19.61-5.46 4.73 1.64 7.03z";
 
-  private _icon(name: "chevron" | "quote") {
-    switch (name) {
-      case "chevron":
-        return html`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
-          stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"
-          aria-hidden="true"><path d="m9 6 6 6-6 6" /></svg>`;
-      case "quote":
-        return html`<svg viewBox="0 0 24 24" fill="currentColor"
-          aria-hidden="true"><path d="M9.5 7C6.5 7 4 9.5 4 12.5V19h6.5v-6.5H7.2c0-1.8 1.5-3 3.3-3V7zm10 0C16.5 7 14 9.5 14 12.5V19h6.5v-6.5h-3.3c0-1.8 1.5-3 3.3-3V7z" /></svg>`;
-    }
+  private _chevronIcon() {
+    return html`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"
+      aria-hidden="true"><path d="m9 6 6 6-6 6" /></svg>`;
+  }
+
+  private _quoteMarkIcon() {
+    return html`<svg viewBox="0 0 24 24" fill="currentColor"
+      aria-hidden="true"><path d="M9.5 7C6.5 7 4 9.5 4 12.5V19h6.5v-6.5H7.2c0-1.8 1.5-3 3.3-3V7zm10 0C16.5 7 14 9.5 14 12.5V19h6.5v-6.5h-3.3c0-1.8 1.5-3 3.3-3V7z" /></svg>`;
   }
 
   // ------------------------------------------------------------
@@ -458,19 +457,19 @@ export default class GrowthTestimonials extends GrowthElement {
   private _renderRating(item: TestimonialItem, style: TestimonialRatingStyle) {
     const rating = Math.max(0, Math.min(5, this._num(item.rating, 5)));
     if (rating <= 0) return nothing;
-    const label = this._formatRating(rating);
+    const ratingLabel = this._formatRating(rating);
     if (style === "number") {
-      return html`<div class="t-rating t-rating--num" aria-label=${`${label}/5`}>
+      return html`<div class="t-rating t-rating--num" aria-label=${`${ratingLabel}/5`}>
         <svg class="t-rating-star" viewBox="0 0 24 24" aria-hidden="true">
           <path d=${this._starPath} />
         </svg>
-        <span>${label}</span>
+        <span>${ratingLabel}</span>
       </div>`;
     }
-    return html`<div class="t-rating" aria-label=${`${label}/5`} role="img">
+    return html`<div class="t-rating" aria-label=${`${ratingLabel}/5`} role="img">
       ${this._renderStars(rating)}
       ${style === "stars-number"
-        ? html`<span class="t-rating-text">(${label}/5)</span>`
+        ? html`<span class="t-rating-text">(${ratingLabel}/5)</span>`
         : nothing}
     </div>`;
   }
@@ -568,7 +567,7 @@ export default class GrowthTestimonials extends GrowthElement {
     return html`
       <article class="t-card" data-style="quote" data-index=${index}>
         ${opts.showQuoteMark
-          ? html`<span class="t-quote-mark">${this._icon("quote")}</span>`
+          ? html`<span class="t-quote-mark">${this._quoteMarkIcon()}</span>`
           : nothing}
         ${author(true, true)}
         ${ratingBlock}
@@ -625,7 +624,7 @@ export default class GrowthTestimonials extends GrowthElement {
                 aria-label=${this._lang() === "ar" ? "السابق" : "Previous"}
                 @click=${this._carouselPrev}
               >
-                ${this._icon("chevron")}
+                ${this._chevronIcon()}
               </button>
               <button
                 type="button"
@@ -633,7 +632,7 @@ export default class GrowthTestimonials extends GrowthElement {
                 aria-label=${this._lang() === "ar" ? "التالي" : "Next"}
                 @click=${this._carouselNext}
               >
-                ${this._icon("chevron")}
+                ${this._chevronIcon()}
               </button>
             `
           : nothing}

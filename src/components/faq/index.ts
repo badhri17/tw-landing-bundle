@@ -219,28 +219,32 @@ export default class GrowthFaq extends GrowthElement {
 
     const items = this._items();
     if (items.length === 0) {
+      const emptyHint =
+        this._lang() === "ar"
+          ? "أضف سؤالًا واحدًا على الأقل لعرض هذا القسم."
+          : "Add at least one row to display this section.";
       return html`<section class="faq" style=${hostStyle}>
         ${sideEls}
-        <p class="faq-empty">
-          ${this._lang() === "ar"
-            ? "أضف سؤالًا واحدًا على الأقل لعرض هذا القسم."
-            : "Add at least one question to display this section."}
-        </p>
+        <p class="faq-empty">${emptyHint}</p>
       </section>`;
     }
 
-    const title = this.localizedString(c.section_title);
-    const subtitle = this.localizedString(c.section_subtitle);
+    const localizedTitle = this.localizedString(c.section_title);
+    const localizedSubtitle = this.localizedString(c.section_subtitle);
     const iconStyle = this._pickValue<FaqIconStyle>(c.icon_style, "chevron");
     const entrance = c.enable_entrance_anim !== false && !this._reduceMotion();
 
     return html`
       <section class="faq" style=${hostStyle}>
         ${sideEls}
-        ${title || subtitle
+        ${localizedTitle || localizedSubtitle
           ? html`<header class="faq-header">
-              ${title ? html`<h2 class="faq-title">${title}</h2>` : nothing}
-              ${subtitle ? html`<p class="faq-sub">${subtitle}</p>` : nothing}
+              ${localizedTitle
+                ? html`<h2 class="faq-title">${localizedTitle}</h2>`
+                : nothing}
+              ${localizedSubtitle
+                ? html`<p class="faq-sub">${localizedSubtitle}</p>`
+                : nothing}
             </header>`
           : nothing}
 

@@ -805,7 +805,7 @@ const $ = class $ extends E {
   // ------------------------------------------------------------
   _slideImage(t) {
     const e = t.image || void 0, i = t.image_opened || void 0, o = this.localizedString(t.title) || "";
-    return { closed: e, opened: i, alt: o };
+    return { closed: e, opened: i, localizedAlt: o };
   }
   // ------------------------------------------------------------
   // Render
@@ -869,7 +869,7 @@ const $ = class $ extends E {
         >
           <div class="col-track">
             ${e.map((f, c) => {
-      const X = this._wrappedDiff(c), M = this._slidePos(c), I = this._prevDiff.get(c), Z = I !== void 0 && Math.abs(X - I) > e.length / 2, { closed: z, opened: b, alt: C } = this._slideImage(f), Y = !b || i !== "reveal";
+      const X = this._wrappedDiff(c), M = this._slidePos(c), I = this._prevDiff.get(c), Z = I !== void 0 && Math.abs(X - I) > e.length / 2, { closed: z, opened: b, localizedAlt: C } = this._slideImage(f), Y = !b || i !== "reveal";
       return r`
                 <div
                   class="col-slide"

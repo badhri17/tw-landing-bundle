@@ -237,7 +237,7 @@ export default class GrowthComparison extends GrowthElement {
       template boundary that opens inside the element is. */
   private _mark(on: boolean, style: ComparisonMarkStyle) {
     const ar = this._lang() === "ar";
-    const label = on
+    const markLabel = on
       ? ar
         ? "متوفر"
         : "Included"
@@ -249,7 +249,7 @@ export default class GrowthComparison extends GrowthElement {
       data-on=${on ? "yes" : "no"}
       data-style=${style}
       role="img"
-      aria-label=${label}
+      aria-label=${markLabel}
     >
       <svg viewBox="0 0 24 24" aria-hidden="true">
         ${
@@ -342,10 +342,10 @@ export default class GrowthComparison extends GrowthElement {
       c.title_position,
       "in_table",
     );
-    const title =
+    const localizedTitle =
       titlePos === "hidden" ? "" : this.localizedString(c.section_title);
-    const subtitle = this.localizedString(c.section_subtitle);
-    const footnote = this.localizedString(c.footnote);
+    const localizedSubtitle = this.localizedString(c.section_subtitle);
+    const localizedFootnote = this.localizedString(c.footnote);
 
     const usLabel = this.localizedString(c.us_label);
     const usLogo = (c.us_logo || "").trim();
@@ -364,7 +364,8 @@ export default class GrowthComparison extends GrowthElement {
       order === "others_first" ? ["others", "us"] : ["us", "others"];
 
     const entrance = c.enable_entrance_anim !== false && !this._reduceMotion();
-    const headerAbove = (titlePos === "above" && title) || subtitle;
+    const headerAbove =
+      (titlePos === "above" && localizedTitle) || localizedSubtitle;
 
     const headCell = (kind: "us" | "others") =>
       kind === "us"
@@ -399,11 +400,13 @@ export default class GrowthComparison extends GrowthElement {
           headerAbove
             ? html`<header class="cmp-header">
                 ${
-                  titlePos === "above" && title
-                    ? html`<h2 class="cmp-title">${title}</h2>`
+                  titlePos === "above" && localizedTitle
+                    ? html`<h2 class="cmp-title">${localizedTitle}</h2>`
                     : nothing
                 }
-                ${subtitle ? html`<p class="cmp-sub">${subtitle}</p>` : nothing}
+                ${localizedSubtitle
+                  ? html`<p class="cmp-sub">${localizedSubtitle}</p>`
+                  : nothing}
               </header>`
             : nothing
         }
@@ -421,9 +424,9 @@ export default class GrowthComparison extends GrowthElement {
               <tr>
                 <th class="cmp-th" data-col="feature" scope="col">
                   ${
-                    titlePos === "in_table" && title
+                    titlePos === "in_table" && localizedTitle
                       ? html`<span class="cmp-in" style="--i:0"
-                          ><span class="cmp-table-title">${title}</span></span
+                          ><span class="cmp-table-title">${localizedTitle}</span></span
                         >`
                       : nothing
                   }
@@ -454,7 +457,9 @@ export default class GrowthComparison extends GrowthElement {
           </table>
         </div>
 
-        ${footnote ? html`<p class="cmp-note">${footnote}</p>` : nothing}
+        ${localizedFootnote
+          ? html`<p class="cmp-note">${localizedFootnote}</p>`
+          : nothing}
       </section>
     `;
   }

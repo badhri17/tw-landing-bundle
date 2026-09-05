@@ -631,10 +631,10 @@ const I = N`
     }
   }
 `;
-var M = Object.defineProperty, T = (o, t, e, a) => {
+var D = Object.defineProperty, M = (o, t, e, a) => {
   for (var r = void 0, n = o.length - 1, l; n >= 0; n--)
     (l = o[n]) && (r = l(t, e, r) || r);
-  return r && M(t, e, r), r;
+  return r && D(t, e, r), r;
 };
 const h = class h extends L {
   _socials() {
@@ -686,7 +686,7 @@ const h = class h extends L {
   }
   _social(t, e, a) {
     const r = typeof e == "string" ? e.trim() : "";
-    return r ? { label: t, href: r, icon: a } : null;
+    return r ? { networkName: t, href: r, icon: a } : null;
   }
   updated() {
     var t;
@@ -719,7 +719,7 @@ const h = class h extends L {
     ].filter(Boolean).join("; "), u = (t.logo || "").trim(), $ = this._pickValue(t.logo_tone, "original"), b = this.localizedString(t.brand_name) || "AUREN", x = this.localizedString(t.description), v = this.localizedString(t.copyright), y = this._socials(), C = this._pickValue(
       t.social_style,
       "filled"
-    ), S = this._pickValue(t.corner_radius, "rounded"), z = this._pickValue(t.spacing, "comfortable"), j = [
+    ), z = this._pickValue(t.corner_radius, "rounded"), S = this._pickValue(t.spacing, "comfortable"), j = [
       t.background_color ? `--f-bg: ${t.background_color}` : "",
       t.text_color ? `--f-text: ${t.text_color}` : ""
     ].filter(Boolean).join("; ");
@@ -757,8 +757,8 @@ const h = class h extends L {
       <footer
         class="footer"
         style=${j}
-        data-radius=${S}
-        data-spacing=${z}
+        data-radius=${z}
+        data-spacing=${S}
         data-logo-tone=${$}
         aria-label="تذييل الصفحة"
       >
@@ -779,7 +779,7 @@ const h = class h extends L {
                         rel=${_(
         f.href === "#" ? void 0 : "noopener noreferrer"
       )}
-                        aria-label=${f.label}
+                        aria-label=${f.networkName}
                       >
                         ${f.icon}
                       </a>
@@ -795,7 +795,7 @@ const h = class h extends L {
 };
 h.styles = I;
 let g = h;
-T([
+M([
   A({ type: Object })
 ], g.prototype, "config");
 typeof g < "u" && g.registerSallaComponent("salla-footer");

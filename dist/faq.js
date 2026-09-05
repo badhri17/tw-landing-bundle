@@ -167,7 +167,7 @@ const q = {
   lg: 96,
   xl: 128
 };
-function U(e, t, a = "md", i = "md") {
+function H(e, t, a = "md", i = "md") {
   const s = t(e == null ? void 0 : e.space_top, a), r = t(e == null ? void 0 : e.space_bottom, i), n = q[s] ?? q.md, d = q[r] ?? q.md, l = b[s] ?? b.md, p = b[r] ?? b.md;
   return [
     `--sp-top-m:${n}px`,
@@ -181,7 +181,7 @@ const w = {
   center: { top: "50%", pull: "-50%" },
   bottom: { top: "100%", pull: "-100%" }
 };
-function G(e, t, a, i = 1) {
+function U(e, t, a, i = 1) {
   const s = e == null ? void 0 : e.side_visual_count, r = s == null ? void 0 : t(s, "off"), n = ((e == null ? void 0 : e.side_image) || "").trim(), d = r ? r !== "off" : (e == null ? void 0 : e.enable_side_visual) === !0 || (e == null ? void 0 : e.enable_side_visual) == null && !!n;
   if (!(i === 1 ? d : r ? r === "two" : d && (e == null ? void 0 : e.enable_second_side_visual) === !0)) return null;
   const p = (i === 1 ? (e == null ? void 0 : e.side_image) || "" : (e == null ? void 0 : e.side2_image) || "").trim();
@@ -213,7 +213,7 @@ function G(e, t, a, i = 1) {
   ), D = !m || v === "inherit" ? c : v, x = a(i === 1 ? e == null ? void 0 : e.side_width : e == null ? void 0 : e.side2_width, 45), N = m ? a(
     i === 1 ? e == null ? void 0 : e.side_width_desktop : e == null ? void 0 : e.side2_width_desktop,
     x
-  ) : x, $ = a(i === 1 ? e == null ? void 0 : e.side_x : e == null ? void 0 : e.side2_x, 20), B = m ? a(i === 1 ? e == null ? void 0 : e.side_x_desktop : e == null ? void 0 : e.side2_x_desktop, $) : $, k = a(i === 1 ? e == null ? void 0 : e.side_y : e == null ? void 0 : e.side2_y, 0), O = m ? a(i === 1 ? e == null ? void 0 : e.side_y_desktop : e == null ? void 0 : e.side2_y_desktop, k) : k, A = w[c] ?? w.top, z = w[D] ?? w.top;
+  ) : x, $ = a(i === 1 ? e == null ? void 0 : e.side_x : e == null ? void 0 : e.side2_x, 20), B = m ? a(i === 1 ? e == null ? void 0 : e.side_x_desktop : e == null ? void 0 : e.side2_x_desktop, $) : $, k = a(i === 1 ? e == null ? void 0 : e.side_y : e == null ? void 0 : e.side2_y, 0), O = m ? a(i === 1 ? e == null ? void 0 : e.side_y_desktop : e == null ? void 0 : e.side2_y_desktop, k) : k, z = w[c] ?? w.top, A = w[D] ?? w.top;
   return {
     image: p,
     side: y,
@@ -226,10 +226,10 @@ function G(e, t, a, i = 1) {
       `--se${i}-x-d:${B}%`,
       `--se${i}-y-m:${k}%`,
       `--se${i}-y-d:${O}%`,
-      `--se${i}-top-m:${A.top}`,
-      `--se${i}-top-d:${z.top}`,
-      `--se${i}-pull-m:${A.pull}`,
-      `--se${i}-pull-d:${z.pull}`,
+      `--se${i}-top-m:${z.top}`,
+      `--se${i}-top-d:${A.top}`,
+      `--se${i}-pull-m:${z.pull}`,
+      `--se${i}-pull-d:${A.pull}`,
       `--se${i}-op:${Math.max(
         0,
         Math.min(
@@ -240,7 +240,7 @@ function G(e, t, a, i = 1) {
     ]
   };
 }
-const H = R`
+const G = R`
   :host {
     display: block;
     font-family: inherit;
@@ -679,7 +679,7 @@ const E = class E extends j {
       t.icon_color ? `--faq-icon:${t.icon_color}` : "",
       `--faq-radius:${this._num(t.card_radius, 14)}px`,
       ...a,
-      ...U(
+      ...H(
         t,
         (i, s) => this._pickValue(i, s)
       )
@@ -700,7 +700,7 @@ const E = class E extends j {
       ...t,
       side_depth: t.side_depth ?? "behind",
       side2_depth: t.side2_depth ?? "behind"
-    }, i = (o) => G(
+    }, i = (o) => U(
       a,
       (h, m) => this._pickValue(h, m),
       (h, m) => this._num(h, m),
@@ -723,13 +723,13 @@ const E = class E extends j {
         loading="lazy"
       />`
     ), d = this._items();
-    if (d.length === 0)
+    if (d.length === 0) {
+      const o = this._lang() === "ar" ? "أضف سؤالًا واحدًا على الأقل لعرض هذا القسم." : "Add at least one row to display this section.";
       return u`<section class="faq" style=${r}>
         ${n}
-        <p class="faq-empty">
-          ${this._lang() === "ar" ? "أضف سؤالًا واحدًا على الأقل لعرض هذا القسم." : "Add at least one question to display this section."}
-        </p>
+        <p class="faq-empty">${o}</p>
       </section>`;
+    }
     const l = this.localizedString(t.section_title), p = this.localizedString(t.section_subtitle), y = this._pickValue(t.icon_style, "chevron"), f = t.enable_entrance_anim !== !1 && !this._reduceMotion();
     return u`
       <section class="faq" style=${r}>
@@ -776,7 +776,7 @@ const E = class E extends j {
     `;
   }
 };
-E.styles = H;
+E.styles = G;
 let _ = E;
 C([
   V({ type: Object })

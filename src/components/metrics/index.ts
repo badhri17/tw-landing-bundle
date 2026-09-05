@@ -40,7 +40,7 @@ interface ParsedMetric {
   decimals: number;
   prefix: string;
   suffix: string;
-  label: string;
+  localizedLabel: string;
 }
 
 /**
@@ -111,7 +111,7 @@ export default class GrowthMetrics extends GrowthElement {
       decimals,
       prefix: typeof item.prefix === "string" ? item.prefix.trim() : "",
       suffix: typeof item.suffix === "string" ? item.suffix.trim() : "",
-      label: this.localizedString(item.label),
+      localizedLabel: this.localizedString(item.label),
     };
   }
 
@@ -342,8 +342,8 @@ export default class GrowthMetrics extends GrowthElement {
     const animate = c.enable_count !== false && !this._reduceMotion();
     const entrance = c.enable_entrance_anim !== false && !this._reduceMotion();
 
-    const title = this.localizedString(c.section_title);
-    const subtitle = this.localizedString(c.section_subtitle);
+    const localizedTitle = this.localizedString(c.section_title);
+    const localizedSubtitle = this.localizedString(c.section_subtitle);
 
     if (items.length === 0) {
       return html`<section class="m-section" style=${hostStyle}>
@@ -356,10 +356,14 @@ export default class GrowthMetrics extends GrowthElement {
     }
 
     const header =
-      title || subtitle
+      localizedTitle || localizedSubtitle
         ? html`<header class="m-header">
-            ${title ? html`<h2 class="m-title">${title}</h2>` : nothing}
-            ${subtitle ? html`<p class="m-subtitle">${subtitle}</p>` : nothing}
+            ${localizedTitle
+              ? html`<h2 class="m-title">${localizedTitle}</h2>`
+              : nothing}
+            ${localizedSubtitle
+              ? html`<p class="m-subtitle">${localizedSubtitle}</p>`
+              : nothing}
           </header>`
         : nothing;
 
@@ -387,12 +391,14 @@ export default class GrowthMetrics extends GrowthElement {
             // "+" is a bidi separator and would otherwise jump to the right.
             // A suffix written in Arabic ("9,750 ألف") is strong, so that case
             // still reads right-to-left.
-            const text = `${m.prefix}${shown}${m.suffix}`;
+            const valueText = `${m.prefix}${shown}${m.suffix}`;
             return html`<div class="m-card" style="--i:${i}">
-              ${text
-                ? html`<div class="m-value" dir="auto">${text}</div>`
+              ${valueText
+                ? html`<div class="m-value" dir="auto">${valueText}</div>`
                 : nothing}
-              ${m.label ? html`<div class="m-label">${m.label}</div>` : nothing}
+              ${m.localizedLabel
+                ? html`<div class="m-label">${m.localizedLabel}</div>`
+                : nothing}
             </div>`;
           })}
         </div>

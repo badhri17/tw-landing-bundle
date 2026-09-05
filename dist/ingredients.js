@@ -856,7 +856,17 @@ const q = {
     ), v = a || r ? d`<header class="ing-header">
             ${a ? d`<h2 class="ing-h2">${a}</h2>` : _}
             ${r ? d`<p class="ing-sub">${r}</p>` : _}
-          </header>` : _, k = s === "circle" ? this._renderOrbit(t, i, f, e, b, h, o, c, p) : this._renderColumns(
+          </header>` : _, k = s === "circle" ? this._renderOrbit(
+      t,
+      i,
+      f,
+      e,
+      b,
+      h,
+      o,
+      c,
+      p
+    ) : this._renderColumns(
       t,
       i,
       f,

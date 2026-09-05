@@ -331,11 +331,11 @@ export default class GrowthCollection extends GrowthElement {
 
   private _slideImage(
     slide: CollectionSlideItem
-  ): { closed?: string; opened?: string; alt: string } {
+  ): { closed?: string; opened?: string; localizedAlt: string } {
     const closed = slide.image || undefined;
     const opened = slide.image_opened || undefined;
-    const alt = this.localizedString(slide.title) || "";
-    return { closed, opened, alt };
+    const localizedAlt = this.localizedString(slide.title) || "";
+    return { closed, opened, localizedAlt };
   }
 
   // ------------------------------------------------------------
@@ -447,7 +447,7 @@ export default class GrowthCollection extends GrowthElement {
               const instant =
                 prev !== undefined &&
                 Math.abs(diff - prev) > slides.length / 2;
-              const { closed, opened, alt } = this._slideImage(slide);
+              const { closed, opened, localizedAlt } = this._slideImage(slide);
               const noOpened = !opened || animation !== "reveal";
               return html`
                 <div
@@ -464,7 +464,7 @@ export default class GrowthCollection extends GrowthElement {
                       ? html`<img
                           class="col-img-closed"
                           src=${closed}
-                          alt=${alt}
+                          alt=${localizedAlt}
                           loading="lazy"
                           draggable="false"
                         />`
@@ -473,7 +473,7 @@ export default class GrowthCollection extends GrowthElement {
                       ? html`<img
                           class="col-img-opened"
                           src=${opened}
-                          alt=${alt}
+                          alt=${localizedAlt}
                           loading="lazy"
                           draggable="false"
                         />`

@@ -6,7 +6,7 @@ function F(e, t) {
   const i = e[t] || e.ar || e.en || "";
   return typeof i == "string" ? i.trim() : "";
 }
-function V(e) {
+function I(e) {
   return e.replace(/[٠-٩]/g, (t) => String(t.charCodeAt(0) - 1632)).replace(/[۰-۹]/g, (t) => String(t.charCodeAt(0) - 1776));
 }
 class Y extends O {
@@ -54,7 +54,7 @@ class Y extends O {
   }
   /** See module-level toLatinDigits; exposed for subclasses. */
   _toLatinDigits(t) {
-    return V(t);
+    return I(t);
   }
   /**
    * The inverse: render a number in the digits the store's language uses, so a
@@ -142,7 +142,7 @@ class Y extends O {
   _num(t, i) {
     if (typeof t == "number" && !Number.isNaN(t)) return t;
     if (typeof t == "string" && t.trim() !== "") {
-      const a = Number(V(t.trim()));
+      const a = Number(I(t.trim()));
       if (!Number.isNaN(a)) return a;
     }
     if (Array.isArray(t) && t.length > 0) {
@@ -176,7 +176,7 @@ function U(e, t, i = "md", a = "md") {
     `--sp-bot-d:${d}px`
   ];
 }
-const I = {
+const V = {
   wave: "M0,62 C240,14 480,14 720,46 C960,78 1200,80 1440,30 V100 H0 Z",
   double: "M0,50 C120,10 240,10 360,50 C480,90 600,90 720,50 C840,10 960,10 1080,50 C1200,90 1320,90 1440,50 V100 H0 Z",
   arc: "M0,84 C480,4 960,4 1440,84 V100 H0 Z"
@@ -188,7 +188,7 @@ function L(e, t) {
 function W(e, t) {
   const i = t(e == null ? void 0 : e.wave_edges, "off"), a = i === "top" || i === "both", s = i === "bottom" || i === "both";
   if (!a && !s) return { on: !1, vars: [] };
-  const r = t(e == null ? void 0 : e.wave_shape, "wave"), o = I[r] || I.wave, n = t(e == null ? void 0 : e.wave_height_mobile, "md"), h = t(e == null ? void 0 : e.wave_height_desktop, "inherit"), d = h === "inherit" ? n : h, p = B[n] ?? B.md, m = N[d] ?? N.md, v = ((e == null ? void 0 : e.wave_behind_color) || "").trim();
+  const r = t(e == null ? void 0 : e.wave_shape, "wave"), o = V[r] || V.wave, n = t(e == null ? void 0 : e.wave_height_mobile, "md"), h = t(e == null ? void 0 : e.wave_height_desktop, "inherit"), d = h === "inherit" ? n : h, p = B[n] ?? B.md, m = N[d] ?? N.md, v = ((e == null ? void 0 : e.wave_behind_color) || "").trim();
   return {
     on: !0,
     vars: [
@@ -1237,16 +1237,14 @@ const Q = "https://cdn.salla.network/images/themes/landing-page/default-avatar.p
   _teardownAutoplay() {
     this._autoplayTimer && (clearTimeout(this._autoplayTimer), this._autoplayTimer = null);
   }
-  _icon(t) {
-    switch (t) {
-      case "chevron":
-        return l`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
-          stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"
-          aria-hidden="true"><path d="m9 6 6 6-6 6" /></svg>`;
-      case "quote":
-        return l`<svg viewBox="0 0 24 24" fill="currentColor"
-          aria-hidden="true"><path d="M9.5 7C6.5 7 4 9.5 4 12.5V19h6.5v-6.5H7.2c0-1.8 1.5-3 3.3-3V7zm10 0C16.5 7 14 9.5 14 12.5V19h6.5v-6.5h-3.3c0-1.8 1.5-3 3.3-3V7z" /></svg>`;
-    }
+  _chevronIcon() {
+    return l`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"
+      aria-hidden="true"><path d="m9 6 6 6-6 6" /></svg>`;
+  }
+  _quoteMarkIcon() {
+    return l`<svg viewBox="0 0 24 24" fill="currentColor"
+      aria-hidden="true"><path d="M9.5 7C6.5 7 4 9.5 4 12.5V19h6.5v-6.5H7.2c0-1.8 1.5-3 3.3-3V7zm10 0C16.5 7 14 9.5 14 12.5V19h6.5v-6.5h-3.3c0-1.8 1.5-3 3.3-3V7z" /></svg>`;
   }
   // ------------------------------------------------------------
   // Render: stars
@@ -1322,7 +1320,7 @@ const Q = "https://cdn.salla.network/images/themes/landing-page/default-avatar.p
         </article>
       ` : l`
       <article class="t-card" data-style="quote" data-index=${i}>
-        ${s.showQuoteMark ? l`<span class="t-quote-mark">${this._icon("quote")}</span>` : c}
+        ${s.showQuoteMark ? l`<span class="t-quote-mark">${this._quoteMarkIcon()}</span>` : c}
         ${m(!0, !0)}
         ${p}
         ${n ? l`<p class="t-quote">${n}</p>` : c}
@@ -1363,7 +1361,7 @@ const Q = "https://cdn.salla.network/images/themes/landing-page/default-avatar.p
                 aria-label=${this._lang() === "ar" ? "السابق" : "Previous"}
                 @click=${this._carouselPrev}
               >
-                ${this._icon("chevron")}
+                ${this._chevronIcon()}
               </button>
               <button
                 type="button"
@@ -1371,7 +1369,7 @@ const Q = "https://cdn.salla.network/images/themes/landing-page/default-avatar.p
                 aria-label=${this._lang() === "ar" ? "التالي" : "Next"}
                 @click=${this._carouselNext}
               >
-                ${this._icon("chevron")}
+                ${this._chevronIcon()}
               </button>
             ` : c}
       </div>

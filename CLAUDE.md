@@ -157,6 +157,64 @@ export default class MyComponent extends GrowthElement {
 - **Dropdowns** — `items` fields arrive as a plain string **or** `[{ label, value }]`. Resolve with `this._pickValue(value, fallback)`.
 - **Numbers** — may arrive as numbers, strings, Arabic-Indic digits, or dropdown arrays. Resolve with `this._num(value, fallback)`.
 
+#### ⚠️ Calling `localizedString` is not enough — the *binding* has to be named for it
+
+Salla's publication check for multilanguage fields (the "Objects are not valid as
+a React child", React #31, class of crash) is **textual and per line**, not
+semantic. For each `${…}` it finds on a line it reads the words inside the
+braces, and rejects the line if any of them matches a `multilanguage: true`
+field id **anywhere in the bundle** — unless the expression itself mentions
+`localizedString`.
+
+So this is rejected even though it is perfectly correct code:
+
+```ts
+const title = this.localizedString(c.section_title);
+…
+${title ? html`<h2>${title}</h2>` : nothing}   // ❌ "title" is a multilanguage id
+```
+
+and this is accepted:
+
+```ts
+const localizedTitle = this.localizedString(c.section_title);
+…
+${localizedTitle ? html`<h2>${localizedTitle}</h2>` : nothing}   // ✅
+```
+
+The whole bundle was rejected once on 48 such lines across all thirteen
+components. Four consequences worth remembering:
+
+- **The id set is global.** `metrics` has no `title` or `subtitle` field — its
+  ids are `section_title` / `section_subtitle` — but `${title}` in `metrics`
+  was still flagged, because `hero` declares a `subtitle` and `collection` a
+  `title`. Adding one multilanguage field can retroactively break a line in a
+  different component.
+- **Property names count too**, so an internal shape carries the name as well:
+  `ResolvedNavItem.label` → `localizedLabel`, `ParsedMetric.label` →
+  `localizedLabel`, `ContentValues.title` → `localizedTitle`, and the
+  collection's `_slideImage()` returns `localizedAlt`, not `alt`.
+- **A bare string argument counts if it equals a field id.** `this._icon("quote")`
+  was flagged because `quote` is `testimonials`' field id; the fix was to split
+  the helper into `_chevronIcon()` / `_quoteMarkIcon()` so no such literal is
+  interpolated. A field-id word merely *inside* a longer sentence is not flagged
+  (`"Add at least one question to display this section."` passed in the source),
+  but minification folds that ternary onto one line and **`dist/faq.js` was
+  flagged for it** — so hoist that kind of copy into a local before interpolating.
+- **`dist/*.js` is checked too**, since the marketplace releases from it. Always
+  rebuild and commit `dist/` after a rename like this.
+
+`scripts/audit-localized-strings.mjs` replicates the check and reproduces the
+reviewer's report line for line. It runs on `src/` from `prebuild` and on
+`src/` + `dist/` from `postbuild` (dist is still the *previous* build during
+prebuild, so failing on it there would be unfixable). Run it directly with
+`--dist` to check a committed build.
+
+Not every flagged binding is a multilanguage value — `testimonials`' rating
+`label` is a formatted number and `comparison`'s mark `label` is a hardcoded
+a11y string. They were renamed (`ratingLabel`, `markLabel`) anyway: the check
+cannot tell, and neither can a reader skimming the line.
+
 ### ⚠️ CSS custom properties that derive from other custom properties
 
 Components pass merchant settings to CSS as an inline `style` on the **rendered section element**, not on the host. Custom-property substitution happens on the element where the property is *declared*, so a variable declared on `:host` that references another variable resolves against the host's own values — it never sees the inline override on the descendant, and the setting silently does nothing.
