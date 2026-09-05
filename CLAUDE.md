@@ -120,6 +120,35 @@ trip is byte-identical.
 Keep the local copies on disk — `pnpm dev` and `tw-preview` still work with
 them, and they are the originals if the CDN ever has to be re-seeded.
 
+#### Adding or editing an image afterwards
+
+`public/assets/` does not move; it stops being *tracked*. It stays the source
+of truth on disk, and the loop is two commands once `assetsBaseUrl` is set in
+`package.json`:
+
+```bash
+pnpm assets:local     # references back to /assets/… — edit, pnpm dev, tw-preview
+…                     # add or replace files under public/assets/
+pnpm assets:remote    # references back to absolute URLs — the form that is committed
+```
+
+The round trip is byte-identical on all three JSON files, so flipping does not
+churn the diff. With a **path-preserving** host the URL is a pure function of
+the path, which is what makes this cheap:
+
+- **Replacing an image, same filename** — upload it over the old one. The URL
+  is unchanged, so nothing in the bundle needs rewriting or re-releasing.
+- **Adding an image** — drop it in `public/assets/…`, reference it as
+  `/assets/…` while working locally, upload it, then `pnpm assets:remote`.
+
+A `--map` host (the Salla admin image picker, which mints one opaque URL per
+file) loses that property: every new file needs its URL pasted into
+`assets-map.json`. That is the main reason to prefer a host that keeps the
+directory layout.
+
+`pnpm audit:size` is the backstop — it fails the moment the media is tracked
+again.
+
 ### Media — `public/assets/` → `dist/assets/` → `/assets/…`
 
 All bundle media (demo imagery, decorative PNGs, anything a field's default `value` points at) lives in **`public/assets/`** and is referenced by the **root-absolute path** `/assets/<…>`.

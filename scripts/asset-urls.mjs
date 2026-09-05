@@ -30,6 +30,12 @@ import process from "node:process";
  *   node scripts/asset-urls.mjs --to-local --base https://cdn.example.com/landing
  *       The inverse, for editing against local files again.
  *
+ * `assetsBaseUrl` in package.json supplies --base when it is not passed, which
+ * is what makes `pnpm assets:local` / `pnpm assets:remote` a two-command
+ * authoring loop: work in the /assets/… spelling, flip to URLs before
+ * committing. The committed form is always the remote one — `pnpm audit:size`
+ * fails if the media is tracked again.
+ *
  * A template's `thumbnail` is a bundle-root relative path
  * (`templates-thumbs/<name>.<ext>`), not an `/assets/…` reference, and
  * tw-preview rewrites it on its own — so it is only touched when a mapping
@@ -56,7 +62,14 @@ const flag = (name) => {
 };
 const has = (name) => args.includes(name);
 
-const base = (flag("--base") || "").replace(/\/+$/, "");
+const configuredBase = (() => {
+  try {
+    return JSON.parse(fs.readFileSync("package.json", "utf8")).assetsBaseUrl || "";
+  } catch {
+    return "";
+  }
+})();
+const base = (flag("--base") ?? configuredBase).replace(/\/+$/, "");
 const mapPath = flag("--map");
 const toLocal = has("--to-local");
 
@@ -110,7 +123,7 @@ if (has("--list")) {
 
 if (!base && !mapPath) {
   console.error(
-    "Nothing to do. Pass --list, or --base <url>, or --map <file.json> (add --to-local to reverse).",
+    'No base URL. Pass --base <url> or --map <file.json>, or set "assetsBaseUrl" in package.json (add --to-local to reverse). --list writes the map skeleton.',
   );
   process.exit(1);
 }

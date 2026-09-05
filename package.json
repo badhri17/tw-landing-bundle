@@ -16,7 +16,9 @@
     "audit:localized": "node scripts/audit-localized-strings.mjs",
     "postbuild": "node scripts/audit-localized-strings.mjs --dist",
     "audit:size": "node scripts/audit-bundle-size.mjs",
-    "assets:list": "node scripts/asset-urls.mjs --list"
+    "assets:list": "node scripts/asset-urls.mjs --list",
+    "assets:remote": "node scripts/asset-urls.mjs",
+    "assets:local": "node scripts/asset-urls.mjs --to-local"
   },
   "devDependencies": {
     "@testing-library/dom": "^9.3.4",
@@ -43,5 +45,6 @@
     "@salla.sa/twilight-bundles-starter-kit": "^0.1.56",
     "lit": "^3.2.1",
     "@salla.sa/twilight-bundles": "0.1.62"
-  }
+  },
+  "assetsBaseUrl": ""
 }
