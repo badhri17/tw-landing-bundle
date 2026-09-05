@@ -74,6 +74,52 @@ The `GrowthElement` name is kept deliberately (rather than renamed to something 
 
 ⚠️ **`dist/*.js` is COMMITTED — the marketplace releases from it.** Salla's "Twilight Check" GitHub App fails the commit with *"The `dist/` directory is missing or empty"* if the thirteen `dist/<name>.js` files are not in the repository, and it names every one it expects. So `.gitignore` ignores `dist/*` but re-includes `!dist/*.js`; `dist/assets/` stays ignored because it is only a copy of `public/assets/`, which is already tracked, and the check does not ask for it. **Re-run `pnpm build` and commit `dist/` whenever component source changes**, or the released bundle silently ships the previous build.
 
+### ⚠️ Bundle size — `theme.zip` is the repository, and the cap is 1 MB
+
+Salla rejects a public bundle whose `theme.zip` exceeds **1 MB** (2 MB private).
+That zip is built from what is **committed** — not from `dist/`, not from the
+Vite build. The rejection that surfaced this quoted **6.17 MB**, and
+`git archive HEAD` of this repo produced 6.14 MB, so there is nothing else in
+it. Consequences:
+
+- **`build.copyPublicDir: false` does not help, and neither does any build
+  flag.** The only lever is `.gitignore`.
+- **`public/assets/` (5.0 MB zipped) and `templates-thumbs/` (0.77 MB) are the
+  whole problem.** Everything else — all thirteen `dist/*.js`, all of `src/`,
+  the 873 KB `twilight-bundle.json`, both template files — comes to **393 KB**,
+  which fits with room to spare.
+- **Recompressing cannot close a 5× gap.** 53 images inside a ~600 KB budget is
+  ~11 KB each; that is not a premium landing bundle.
+
+The sibling `tw-growth-kit` never hit this because it has no `public/` at all:
+every image there is an absolute CDN URL (`cdn.files.salla.network`,
+`cdn.salla.sa`, its own host) and it zips to **364 KB**. That is the shape to
+copy — media on a CDN, code in the repo.
+
+`pnpm audit:size` estimates the released zip from the tracked files and breaks
+it down by path; it came within 0.6 % of the size Salla reported.
+
+#### Migrating the media to a CDN
+
+`scripts/asset-urls.mjs` rewrites the ~120 `/assets/…` references spread across
+`twilight-bundle.json` and `templates/*.json`, in both directions, and the round
+trip is byte-identical.
+
+1. `pnpm assets:list` — prints all 53 referenced files with their sizes and
+   writes `assets-map.json` (gitignored) as a skeleton to fill in.
+2. Upload them, then either
+   `node scripts/asset-urls.mjs --base <url>` when the host keeps the directory
+   layout, or `node scripts/asset-urls.mjs --map assets-map.json` when it mints
+   one opaque URL per file (which is what the Salla admin image picker does).
+   The `--map` form also promotes each template's `thumbnail`.
+3. Only then add `public/assets/` and `templates-thumbs/` to `.gitignore` and
+   `git rm -r --cached` them. Doing this before step 2 ships a bundle whose
+   every default image 404s.
+4. `pnpm audit:size` to confirm the headroom.
+
+Keep the local copies on disk — `pnpm dev` and `tw-preview` still work with
+them, and they are the originals if the CDN ever has to be re-seeded.
+
 ### Media — `public/assets/` → `dist/assets/` → `/assets/…`
 
 All bundle media (demo imagery, decorative PNGs, anything a field's default `value` points at) lives in **`public/assets/`** and is referenced by the **root-absolute path** `/assets/<…>`.

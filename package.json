@@ -14,7 +14,9 @@
     "format": "prettier --write \"src/**/*.{ts,html,css}\"",
     "preview": "vite preview",
     "audit:localized": "node scripts/audit-localized-strings.mjs",
-    "postbuild": "node scripts/audit-localized-strings.mjs --dist"
+    "postbuild": "node scripts/audit-localized-strings.mjs --dist",
+    "audit:size": "node scripts/audit-bundle-size.mjs",
+    "assets:list": "node scripts/asset-urls.mjs --list"
   },
   "devDependencies": {
     "@testing-library/dom": "^9.3.4",
