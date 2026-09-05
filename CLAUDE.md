@@ -99,26 +99,59 @@ copy — media on a CDN, code in the repo.
 `pnpm audit:size` estimates the released zip from the tracked files and breaks
 it down by path; it came within 0.6 % of the size Salla reported.
 
-#### Migrating the media to a CDN
+#### Migrating the media off the repository
 
-`scripts/asset-urls.mjs` rewrites the ~120 `/assets/…` references spread across
-`twilight-bundle.json` and `templates/*.json`, in both directions, and the round
-trip is byte-identical.
+The host is the **tw-preview snapshot store**, which already holds every file:
+`pnpm exec tw-preview` uploads all of `dist/assets/**` plus each
+`templates-thumbs/<name>.<ext>` on every run. Its objects are content
+addressed:
 
-1. `pnpm assets:list` — prints all 53 referenced files with their sizes and
-   writes `assets-map.json` (gitignored) as a skeleton to fill in.
-2. Upload them, then either
-   `node scripts/asset-urls.mjs --base <url>` when the host keeps the directory
-   layout, or `node scripts/asset-urls.mjs --map assets-map.json` when it mints
-   one opaque URL per file (which is what the Salla admin image picker does).
-   The `--map` form also promotes each template's `thumbnail`.
-3. Only then add `public/assets/` and `templates-thumbs/` to `.gitignore` and
-   `git rm -r --cached` them. Doing this before step 2 ships a bundle whose
-   every default image 404s.
-4. `pnpm audit:size` to confirm the headroom.
+```
+https://cdn.assets.salla.network/previews/<snapshotId>/assets/<sha256-of-file>/<relPath>
+```
 
-Keep the local copies on disk — `pnpm dev` and `tw-preview` still work with
-them, and they are the originals if the CDN ever has to be re-seeded.
+⚠️ **That is proven, not assumed.** tw-preview wrote two of these URLs back
+into `twilight-bundle.json` in earlier commits, and the hashes in them are the
+sha256 of those exact files byte for byte —
+`templates-thumbs/perfumes.png` → `8603a76e…52acae6` and
+`templates-thumbs/solara.jpg` → `e00f4960…c6ece4cf`. So every URL is
+computable locally, with no upload step and no second host to pay for.
+`assetsBaseUrl` + `assetsUrlStyle: "hashed"` in `package.json` configure it,
+and `scripts/asset-urls.mjs` generates all 124 references.
+
+Nothing on Salla's side deletes these. The `DELETE` loop lives in
+`uploadAssets` **inside tw-preview**, and it fires only for a remote object
+whose file is absent from the local `dist/assets` walk. ⚠️ **So never run
+`tw-preview` from a checkout that lacks `public/assets/`** — that one command
+wipes all 53 objects and every published bundle's images with them. The files
+are untracked, not gone; keep them.
+
+The order matters, because a hash names content that must already be uploaded:
+
+```bash
+pnpm build                 # public/assets → dist/assets (what tw-preview uploads)
+pnpm exec tw-preview       # push every current file to the snapshot
+pnpm assets:remote         # generate the 124 URLs from the local hashes
+git rm -r --cached public/assets templates-thumbs   # after the rewrite, never before
+pnpm audit:size            # 6284 KB → 542 KB
+```
+
+`assets:remote` reads each hash from `dist/assets/`, not `public/assets/`,
+because dist is what was uploaded — and it hard-fails if a file is missing
+from dist or differs from its `public/` original, so a stale build cannot mint
+a URL for an object that was never pushed.
+
+Two ongoing consequences of a content-addressed URL:
+
+- **Editing an image changes its URL**, so an edit is the full five-command
+  sequence again, not just a file copy.
+- **The snapshot id is load-bearing.** It lives in `.salla-preview.json`
+  (gitignored, machine-local). Lose that file and the next publish mints a new
+  id, orphaning all 124 URLs — back it up.
+
+If either becomes annoying, any path-preserving host (`assetsUrlStyle: "path"`)
+turns the URL back into a pure function of the path, and switching is
+`pnpm assets:local`, change the base, `pnpm assets:remote`.
 
 #### Adding or editing an image afterwards
 
@@ -136,15 +169,14 @@ The round trip is byte-identical on all three JSON files, so flipping does not
 churn the diff. With a **path-preserving** host the URL is a pure function of
 the path, which is what makes this cheap:
 
-- **Replacing an image, same filename** — upload it over the old one. The URL
-  is unchanged, so nothing in the bundle needs rewriting or re-releasing.
-- **Adding an image** — drop it in `public/assets/…`, reference it as
-  `/assets/…` while working locally, upload it, then `pnpm assets:remote`.
-
-A `--map` host (the Salla admin image picker, which mints one opaque URL per
-file) loses that property: every new file needs its URL pasted into
-`assets-map.json`. That is the main reason to prefer a host that keeps the
-directory layout.
+- **On the hashed snapshot store** (the current setup) any change to a file
+  changes its hash, so both adding and replacing need
+  `pnpm build && pnpm exec tw-preview && pnpm assets:remote`.
+- **On a path-preserving host** replacing an image under the same filename
+  needs nothing at all — same path, same URL — and only a new file needs a
+  rewrite.
+- **On a `--map` host** (the Salla admin image picker, one opaque URL per file)
+  every new file needs its URL pasted into `assets-map.json` by hand.
 
 `pnpm audit:size` is the backstop — it fails the moment the media is tracked
 again.

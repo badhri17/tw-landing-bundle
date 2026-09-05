@@ -46,5 +46,6 @@
     "lit": "^3.2.1",
     "@salla.sa/twilight-bundles": "0.1.62"
   },
-  "assetsBaseUrl": ""
+  "assetsBaseUrl": "https://cdn.assets.salla.network/previews/o36uzxxmxi5a/assets",
+  "assetsUrlStyle": "hashed"
 }
