@@ -1,3 +1,4 @@
+import crypto from "node:crypto";
 import fs from "node:fs";
 import path from "node:path";
 import process from "node:process";
@@ -30,6 +31,15 @@ import process from "node:process";
  *   node scripts/asset-urls.mjs --to-local --base https://cdn.example.com/landing
  *       The inverse, for editing against local files again.
  *
+ * `assetsUrlStyle: "hashed"` switches the URL shape from `<base>/<relPath>` to
+ * `<base>/<sha256-of-file>/<relPath>`, which is how the tw-preview snapshot
+ * store addresses its objects — verified against the two thumbnail URLs
+ * tw-preview itself wrote back into twilight-bundle.json, whose hashes are the
+ * sha256 of those files byte for byte. In that mode the hash is read from
+ * `dist/assets/<relPath>`, not `public/assets/`, because dist is what
+ * tw-preview uploads: a stale dist would otherwise mint a URL for an object
+ * that was never pushed.
+ *
  * `assetsBaseUrl` in package.json supplies --base when it is not passed, which
  * is what makes `pnpm assets:local` / `pnpm assets:remote` a two-command
  * authoring loop: work in the /assets/… spelling, flip to URLs before
@@ -52,6 +62,19 @@ const TARGETS = [
     : []),
 ];
 
+/** Characters that can end the token preceding an /assets/ match. */
+const URL_DELIMITERS = new Set([
+  '"',
+  "'",
+  "(",
+  ")",
+  ",",
+  " ",
+  "\t",
+  "\n",
+  "\r",
+  "\\",
+]);
 const ASSET_REF = /\/assets\/[A-Za-z0-9_+\-./]+\.[A-Za-z0-9]+/g;
 const MAP_FILE = "assets-map.json";
 
@@ -62,6 +85,27 @@ const flag = (name) => {
 };
 const has = (name) => args.includes(name);
 
+const VALUE_ARGS = new Set(["--base", "--map"]);
+const BOOL_ARGS = new Set(["--list", "--to-local", "--hashed"]);
+for (let at = 0; at < args.length; at++) {
+  if (VALUE_ARGS.has(args[at])) {
+    at++;
+    continue;
+  }
+  if (BOOL_ARGS.has(args[at])) continue;
+  // A bare invocation rewrites every asset reference in the bundle, so an
+  // argument this script does not recognise — "--help" included — has to stop
+  // it rather than fall through to that.
+  console.error(
+    [
+      'Unknown argument "' + args[at] + '".',
+      "Usage: --list | --base <url> | --map <file.json> | --to-local | --hashed",
+      "Normally: pnpm assets:list | pnpm assets:remote | pnpm assets:local",
+    ].join("\n"),
+  );
+  process.exit(1);
+}
+
 const configuredBase = (() => {
   try {
     return JSON.parse(fs.readFileSync("package.json", "utf8")).assetsBaseUrl || "";
@@ -70,6 +114,47 @@ const configuredBase = (() => {
   }
 })();
 const base = (flag("--base") ?? configuredBase).replace(/\/+$/, "");
+const hashed =
+  has("--hashed") ||
+  (() => {
+    try {
+      return (
+        JSON.parse(fs.readFileSync("package.json", "utf8")).assetsUrlStyle ===
+        "hashed"
+      );
+    } catch {
+      return false;
+    }
+  })();
+
+/**
+ * sha256 of the copy tw-preview would upload. dist/assets is the source of
+ * truth for the hash; public/assets only becomes it after a build.
+ */
+function uploadedHash(relPath) {
+  const fromDist = path.join("dist", "assets", relPath);
+  const fromRoot = relPath.startsWith("templates-thumbs/") ? relPath : null;
+  const file = fs.existsSync(fromDist)
+    ? fromDist
+    : fromRoot && fs.existsSync(fromRoot)
+      ? fromRoot
+      : null;
+  if (!file) {
+    throw new Error(
+      `${relPath} is not in dist/assets — run \`pnpm build\` then \`pnpm exec tw-preview\` before generating hashed URLs.`,
+    );
+  }
+  const source = path.join("public", "assets", relPath);
+  if (
+    fs.existsSync(source) &&
+    !fs.readFileSync(source).equals(fs.readFileSync(file))
+  ) {
+    throw new Error(
+      `${relPath} differs between public/assets and dist/assets — run \`pnpm build\` so the hash matches what tw-preview uploads.`,
+    );
+  }
+  return crypto.createHash("sha256").update(fs.readFileSync(file)).digest("hex");
+}
 const mapPath = flag("--map");
 const toLocal = has("--to-local");
 
@@ -142,10 +227,26 @@ if (mapping && !toLocal) {
   }
 }
 
+/**
+ * True when this match is the tail of an already-absolute URL rather than a
+ * local reference. The snapshot store's own path contains "/assets/", and
+ * tw-preview writes such a URL into each template's "thumbnail" on every
+ * publish — so without this the next run tries to hash
+ * "<sha256>/templates-thumbs/x.webp" and dies. Makes the rewrite idempotent.
+ */
+function alreadyAbsolute(text, at) {
+  let start = at;
+  while (start > 0 && !URL_DELIMITERS.has(text[start - 1])) start--;
+  return text.slice(start, at).includes("://");
+}
+
 /** "/assets/demo/x.png" → the absolute URL it should become, or null. */
 function toRemote(ref) {
   if (mapping) return mapping[ref] || null;
-  return `${base}${ref.replace(/^\/assets/, "")}`;
+  const relPath = ref.replace(/^\/assets\//, "");
+  return hashed
+    ? `${base}/${uploadedHash(relPath)}/${relPath}`
+    : `${base}/${relPath}`;
 }
 
 let rewritten = 0;
@@ -159,16 +260,22 @@ for (const file of TARGETS) {
         if (url) after = after.split(url).join(ref);
       }
     } else {
+      const escaped = base.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
       after = after.replace(
         new RegExp(
-          `${base.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}(/[A-Za-z0-9_+\\-./]+)`,
+          hashed
+            ? `${escaped}/[0-9a-f]{64}(/[A-Za-z0-9_+\\-./]+)`
+            : `${escaped}(/[A-Za-z0-9_+\\-./]+)`,
           "g",
         ),
-        (_, rest) => `/assets${rest}`,
+        (_, rest) =>
+          rest.startsWith("/templates-thumbs/") ? rest.slice(1) : `/assets${rest}`,
       );
     }
   } else {
-    after = after.replace(ASSET_REF, (ref) => toRemote(ref) ?? ref);
+    after = after.replace(ASSET_REF, (ref, at, whole) =>
+      alreadyAbsolute(whole, at) ? ref : (toRemote(ref) ?? ref),
+    );
   }
 
   if (after === before) continue;
@@ -177,20 +284,27 @@ for (const file of TARGETS) {
   console.log(`rewrote ${file}`);
 }
 
-if (mapping && !toLocal) {
-  const manifest = JSON.parse(fs.readFileSync("twilight-bundle.json", "utf8"));
-  let touched = false;
-  for (const entry of manifest.templates || []) {
-    const url = mapping[entry.thumbnail];
+if (!toLocal) {
+  // Rewritten as text, never via JSON.parse + stringify: twilight-bundle.json
+  // is 4-space indented and re-serializing it churns all 15k lines.
+  const file = "twilight-bundle.json";
+  const raw = fs.readFileSync(file, "utf8");
+  let next = raw;
+  for (const entry of JSON.parse(raw).templates || []) {
+    const thumb = entry.thumbnail;
+    if (typeof thumb !== "string" || !thumb.startsWith("templates-thumbs/")) {
+      continue;
+    }
+    const url = mapping
+      ? mapping[thumb]
+      : hashed
+        ? `${base}/${uploadedHash(thumb)}/${thumb}`
+        : `${base}/${thumb}`;
     if (!url) continue;
-    entry.thumbnail = url;
-    touched = true;
+    next = next.split(`"${thumb}"`).join(`"${url}"`);
   }
-  if (touched) {
-    fs.writeFileSync(
-      "twilight-bundle.json",
-      JSON.stringify(manifest, null, 2) + "\n",
-    );
+  if (next !== raw) {
+    fs.writeFileSync(file, next);
     console.log("rewrote template thumbnails in twilight-bundle.json");
   }
 }
