@@ -133,8 +133,22 @@ pnpm build                 # public/assets → dist/assets (what tw-preview uplo
 pnpm exec tw-preview       # push every current file to the snapshot
 pnpm assets:remote         # generate the 124 URLs from the local hashes
 git rm -r --cached public/assets templates-thumbs   # after the rewrite, never before
-pnpm audit:size            # 6284 KB → 542 KB
+pnpm audit:size            # 6293 KB → 555 KB, 469 KB of headroom
 ```
+
+⚠️ **The publish in step 2 is what makes step 3 need a guard.** tw-preview
+writes each template's `thumbnail` back as an absolute URL on every run, and
+the snapshot store's own path contains `/assets/` — so on the next run the
+rewrite regex matches inside a URL it already generated, and
+`uploadedHash("<sha256>/templates-thumbs/x.webp")` throws. `alreadyAbsolute()`
+skips any match whose preceding token carries a scheme, which makes
+`pnpm assets:remote` idempotent: run it twice and the second run reports
+"No references changed."
+
+The script also refuses an argument it does not recognise. A bare invocation
+rewrites all 124 references, and every unknown flag used to fall through to
+exactly that — `--help` included, which rewrote the bundle instead of
+printing usage.
 
 `assets:remote` reads each hash from `dist/assets/`, not `public/assets/`,
 because dist is what was uploaded — and it hard-fails if a file is missing
