@@ -62,6 +62,19 @@ const TARGETS = [
     : []),
 ];
 
+/** Characters that can end the token preceding an /assets/ match. */
+const URL_DELIMITERS = new Set([
+  '"',
+  "'",
+  "(",
+  ")",
+  ",",
+  " ",
+  "\t",
+  "\n",
+  "\r",
+  "\\",
+]);
 const ASSET_REF = /\/assets\/[A-Za-z0-9_+\-./]+\.[A-Za-z0-9]+/g;
 const MAP_FILE = "assets-map.json";
 
@@ -71,6 +84,27 @@ const flag = (name) => {
   return at === -1 ? null : (args[at + 1] ?? "");
 };
 const has = (name) => args.includes(name);
+
+const VALUE_ARGS = new Set(["--base", "--map"]);
+const BOOL_ARGS = new Set(["--list", "--to-local", "--hashed"]);
+for (let at = 0; at < args.length; at++) {
+  if (VALUE_ARGS.has(args[at])) {
+    at++;
+    continue;
+  }
+  if (BOOL_ARGS.has(args[at])) continue;
+  // A bare invocation rewrites every asset reference in the bundle, so an
+  // argument this script does not recognise — "--help" included — has to stop
+  // it rather than fall through to that.
+  console.error(
+    [
+      'Unknown argument "' + args[at] + '".',
+      "Usage: --list | --base <url> | --map <file.json> | --to-local | --hashed",
+      "Normally: pnpm assets:list | pnpm assets:remote | pnpm assets:local",
+    ].join("\n"),
+  );
+  process.exit(1);
+}
 
 const configuredBase = (() => {
   try {
@@ -193,6 +227,19 @@ if (mapping && !toLocal) {
   }
 }
 
+/**
+ * True when this match is the tail of an already-absolute URL rather than a
+ * local reference. The snapshot store's own path contains "/assets/", and
+ * tw-preview writes such a URL into each template's "thumbnail" on every
+ * publish — so without this the next run tries to hash
+ * "<sha256>/templates-thumbs/x.webp" and dies. Makes the rewrite idempotent.
+ */
+function alreadyAbsolute(text, at) {
+  let start = at;
+  while (start > 0 && !URL_DELIMITERS.has(text[start - 1])) start--;
+  return text.slice(start, at).includes("://");
+}
+
 /** "/assets/demo/x.png" → the absolute URL it should become, or null. */
 function toRemote(ref) {
   if (mapping) return mapping[ref] || null;
@@ -226,7 +273,9 @@ for (const file of TARGETS) {
       );
     }
   } else {
-    after = after.replace(ASSET_REF, (ref) => toRemote(ref) ?? ref);
+    after = after.replace(ASSET_REF, (ref, at, whole) =>
+      alreadyAbsolute(whole, at) ? ref : (toRemote(ref) ?? ref),
+    );
   }
 
   if (after === before) continue;
