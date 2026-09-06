@@ -231,6 +231,22 @@ the path, which is what makes this cheap:
 - **On the hashed snapshot store** (the current setup) any change to a file
   changes its hash, so both adding and replacing need
   `pnpm build && pnpm exec tw-preview && pnpm assets:remote`.
+
+✅ **Replacing an image does not break the released bundle.** The store keeps one
+object per content hash, so a re-upload lands at a *new* key and the old one
+keeps serving — the URL the currently-released `twilight-bundle.json` points at
+goes on working until you release the new one. There is no window where the
+marketplace bundle is broken, so the publish and the re-release do not have to
+be the same afternoon. Measured with an unreferenced probe file published twice
+under one relPath: both hashes returned 200 at the same time.
+
+⚠️ **What does break a URL is the relPath disappearing.** That is the `🧹 Removed`
+line, and it is the same code path the bare-clone catastrophe runs through — so
+deleting an image is the one edit that invalidates a live URL. Deletion is also
+not instant: a relPath removed long ago 404s, while the probe's objects were
+still being served minutes after tw-preview reported removing them. Don't read a
+200 straight after a delete as proof the object survived, and don't rely on a
+deleted object staying reachable.
 - **On a path-preserving host** replacing an image under the same filename
   needs nothing at all — same path, same URL — and only a new file needs a
   rewrite.
