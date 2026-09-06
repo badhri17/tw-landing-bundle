@@ -93,7 +93,13 @@ const flag = (name) => {
 const has = (name) => args.includes(name);
 
 const VALUE_ARGS = new Set(["--base", "--map"]);
-const BOOL_ARGS = new Set(["--list", "--to-local", "--hashed", "--fetch"]);
+const BOOL_ARGS = new Set([
+  "--list",
+  "--to-local",
+  "--hashed",
+  "--fetch",
+  "--force",
+]);
 for (let at = 0; at < args.length; at++) {
   if (VALUE_ARGS.has(args[at])) {
     at++;
@@ -283,8 +289,10 @@ if (has("--fetch")) {
     process.exit(1);
   }
 
+  const force = has("--force");
   let present = 0;
   let downloaded = 0;
+  const kept = [];
   const failed = [];
   for (const [dest, { url, hash }] of wanted) {
     if (fs.existsSync(dest)) {
@@ -294,6 +302,13 @@ if (has("--fetch")) {
         .digest("hex");
       if (!hash || onDisk === hash) {
         present++;
+        continue;
+      }
+      // The file here is not the one this URL names. Overwhelmingly that means
+      // an edit that has not been published yet, so keep it: fetch exists to
+      // supply files that are MISSING, never to revert work in progress.
+      if (!force) {
+        kept.push(dest);
         continue;
       }
     }
@@ -321,8 +336,21 @@ if (has("--fetch")) {
   }
 
   console.log(
-    `\n${downloaded} downloaded, ${present} already present${failed.length ? `, ${failed.length} FAILED` : ""}.`,
+    `\n${downloaded} downloaded, ${present} already present${kept.length ? `, ${kept.length} kept` : ""}${failed.length ? `, ${failed.length} FAILED` : ""}.`,
   );
+  if (kept.length > 0) {
+    console.log("\nKept the copy already here, which differs from the published one:");
+    for (const dest of kept.slice(0, 10)) console.log(`  ${dest}`);
+    if (kept.length > 10) console.log(`  … and ${kept.length - 10} more`);
+    console.log(
+      [
+        "",
+        "That is what an unpublished edit looks like, so nothing was touched.",
+        "Publish it with:  pnpm assets:local && pnpm build && pnpm exec tw-preview && pnpm assets:remote",
+        "Or replace it with the published version:  pnpm assets:fetch --force",
+      ].join("\n"),
+    );
+  }
   if (failed.length) {
     for (const line of failed) console.error(`  ${line}`);
     process.exit(1);

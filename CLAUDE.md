@@ -200,6 +200,13 @@ swapped object fails loudly rather than being written. It skips a file that is
 already present and already matches, so re-running it costs nothing and it is
 safe to put in front of any build.
 
+✅ **It never overwrites an image you changed.** A local file whose bytes do not
+match the hash in its URL is almost always an edit that has not been published
+yet, so fetch leaves it alone and says which ones it kept. Only
+`pnpm assets:fetch --force` replaces them with the published copies. So the
+answer to "will fetch drag the old photos back over my new ones" is no — it
+fills in what is missing, it does not revert work.
+
 Two things it cannot do:
 
 - **It only works while the references are in their remote spelling.** After
