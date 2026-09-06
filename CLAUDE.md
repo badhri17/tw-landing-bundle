@@ -224,6 +224,15 @@ pnpm assets:local     # references back to /assets/… — edit, pnpm dev, tw-pr
 pnpm assets:remote    # references back to absolute URLs — the form that is committed
 ```
 
+⚠️ **`pnpm assets:local` is not optional here — it is what makes the edit
+shippable.** `assets:remote` rewrites `/assets/…` references, and it skips one
+that is already an absolute URL (that is what makes it idempotent). So editing
+an image without flipping to local first leaves nothing for it to match: it
+prints "No references changed", the bundle keeps pointing at the previous
+image's hash, and the new picture never ships. Nothing is broken — which is why
+this is easy to miss. The script now hard-fails instead, naming every file whose
+reference no longer matches the bytes on disk.
+
 The round trip is byte-identical on all three JSON files, so flipping does not
 churn the diff. With a **path-preserving** host the URL is a pure function of
 the path, which is what makes this cheap:

@@ -412,6 +412,50 @@ if (!toLocal) {
   }
 }
 
+// A file replaced while the bundle was in its remote spelling leaves the rewrite
+// nothing to match: every reference is already an absolute URL, so this script
+// reports "No references changed" and the bundle goes on pointing at the
+// previous image. Silently shipping the old picture is worse than failing.
+if (!toLocal && hashed && !mapping) {
+  const escaped = base.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  const pattern = new RegExp(
+    escaped + "/([0-9a-f]{64})/([A-Za-z0-9_+\\-./]+)",
+    "g",
+  );
+  const stale = new Set();
+  for (const target of TARGETS) {
+    for (const match of fs.readFileSync(target, "utf8").matchAll(pattern)) {
+      const local = localPathFor(match[2]);
+      if (!fs.existsSync(local)) continue;
+      const onDisk = crypto
+        .createHash("sha256")
+        .update(fs.readFileSync(local))
+        .digest("hex");
+      if (onDisk !== match[1]) stale.add(match[2]);
+    }
+  }
+  if (stale.size > 0) {
+    const listed = [...stale].slice(0, 10).map((relPath) => "  " + relPath);
+    if (stale.size > 10) listed.push(`  … and ${stale.size - 10} more`);
+    console.error(
+      [
+        "",
+        `${stale.size} reference(s) name a hash the local file no longer has:`,
+        ...listed,
+        "",
+        "Those files changed while the bundle was in its remote spelling, so",
+        "there is nothing here for the rewrite to match — it would leave the",
+        "previous image in place. Flip to local first:",
+        "",
+        "  pnpm assets:local",
+        "  pnpm build && pnpm exec tw-preview",
+        "  pnpm assets:remote",
+      ].join("\n"),
+    );
+    process.exit(1);
+  }
+}
+
 console.log(
   rewritten === 0
     ? "No references changed."
