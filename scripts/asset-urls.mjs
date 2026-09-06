@@ -31,6 +31,13 @@ import process from "node:process";
  *   node scripts/asset-urls.mjs --to-local --base https://cdn.example.com/landing
  *       The inverse, for editing against local files again.
  *
+ *   node scripts/asset-urls.mjs --fetch
+ *       Download every referenced asset back into public/assets/ and
+ *       templates-thumbs/. The media is untracked, so a clone arrives without
+ *       it; this is how a second machine gets a complete working copy. In
+ *       hashed mode the sha256 in each URL is checked against the bytes that
+ *       come back, so a corrupted or swapped object is caught on arrival.
+ *
  * `assetsUrlStyle: "hashed"` switches the URL shape from `<base>/<relPath>` to
  * `<base>/<sha256-of-file>/<relPath>`, which is how the tw-preview snapshot
  * store addresses its objects — verified against the two thumbnail URLs
@@ -86,7 +93,7 @@ const flag = (name) => {
 const has = (name) => args.includes(name);
 
 const VALUE_ARGS = new Set(["--base", "--map"]);
-const BOOL_ARGS = new Set(["--list", "--to-local", "--hashed"]);
+const BOOL_ARGS = new Set(["--list", "--to-local", "--hashed", "--fetch"]);
 for (let at = 0; at < args.length; at++) {
   if (VALUE_ARGS.has(args[at])) {
     at++;
@@ -225,6 +232,102 @@ if (mapping && !toLocal) {
     );
     process.exit(1);
   }
+}
+
+/** Where a referenced asset lives in the working tree. */
+function localPathFor(relPath) {
+  return relPath.startsWith("templates-thumbs/")
+    ? relPath
+    : path.join("public", "assets", relPath);
+}
+
+if (has("--fetch")) {
+  // The media is untracked, so a fresh clone has none of it — and publishing
+  // from a checkout that is missing files DELETES the matching objects from
+  // the snapshot store, taking every published bundle's images with them.
+  // This is the way back: the CDN is a complete copy of what was uploaded.
+  const wanted = new Map();
+  if (mapping) {
+    for (const [ref, url] of Object.entries(mapping)) {
+      if (!url) continue;
+      const relPath = ref.startsWith("templates-thumbs/")
+        ? ref
+        : ref.replace(/^\/assets\//, "");
+      wanted.set(localPathFor(relPath), { url, hash: null });
+    }
+  } else {
+    const escaped = base.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    const pattern = new RegExp(
+      hashed
+        ? escaped + "/([0-9a-f]{64})/([A-Za-z0-9_+\\-./]+)"
+        : escaped + "/([A-Za-z0-9_+\\-./]+)",
+      "g",
+    );
+    for (const target of TARGETS) {
+      for (const match of fs.readFileSync(target, "utf8").matchAll(pattern)) {
+        const hash = hashed ? match[1] : null;
+        const relPath = hashed ? match[2] : match[1];
+        wanted.set(localPathFor(relPath), { url: match[0], hash });
+      }
+    }
+  }
+
+  if (wanted.size === 0) {
+    console.error(
+      [
+        "No absolute asset URLs to fetch from.",
+        "The bundle is in its local /assets/… spelling — either the media is",
+        "already here, or you want `pnpm assets:remote` first.",
+      ].join("\n"),
+    );
+    process.exit(1);
+  }
+
+  let present = 0;
+  let downloaded = 0;
+  const failed = [];
+  for (const [dest, { url, hash }] of wanted) {
+    if (fs.existsSync(dest)) {
+      const onDisk = crypto
+        .createHash("sha256")
+        .update(fs.readFileSync(dest))
+        .digest("hex");
+      if (!hash || onDisk === hash) {
+        present++;
+        continue;
+      }
+    }
+    try {
+      const response = await fetch(url);
+      if (!response.ok) {
+        failed.push(`HTTP ${response.status}  ${dest}`);
+        continue;
+      }
+      const body = Buffer.from(await response.arrayBuffer());
+      if (hash) {
+        const got = crypto.createHash("sha256").update(body).digest("hex");
+        if (got !== hash) {
+          failed.push(`hash mismatch  ${dest}`);
+          continue;
+        }
+      }
+      fs.mkdirSync(path.dirname(dest), { recursive: true });
+      fs.writeFileSync(dest, body);
+      downloaded++;
+      console.log(`  ${dest}`);
+    } catch (error) {
+      failed.push(`${error.message}  ${dest}`);
+    }
+  }
+
+  console.log(
+    `\n${downloaded} downloaded, ${present} already present${failed.length ? `, ${failed.length} FAILED` : ""}.`,
+  );
+  if (failed.length) {
+    for (const line of failed) console.error(`  ${line}`);
+    process.exit(1);
+  }
+  process.exit(0);
 }
 
 /**

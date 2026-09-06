@@ -121,10 +121,24 @@ and `scripts/asset-urls.mjs` generates all 124 references.
 
 Nothing on Salla's side deletes these. The `DELETE` loop lives in
 `uploadAssets` **inside tw-preview**, and it fires only for a remote object
-whose file is absent from the local `dist/assets` walk. ⚠️ **So never run
-`tw-preview` from a checkout that lacks `public/assets/`** — that one command
-wipes all 53 objects and every published bundle's images with them. The files
-are untracked, not gone; keep them.
+whose file is absent from the local `dist/assets` walk.
+
+> ### ⚠️ The rule
+>
+> **Never run `tw-preview` from a checkout that does not have the media.**
+>
+> `uploadAssets` treats the local `dist/assets` walk as the complete truth and
+> `DELETE`s every remote object it cannot find there. One publish from a fresh
+> clone wipes all 55 objects, and with them every image in every published
+> bundle and on every merchant's page — silently, and reported as success.
+>
+> The media is untracked now, so **a clone arrives without it**. That is the
+> whole hazard: the repository no longer carries its own safety check, and
+> `git status` looks clean either way.
+>
+> **Before `pnpm build` or `pnpm exec tw-preview` on any machine, run
+> `pnpm assets:fetch`** — or confirm `public/assets/` holds 53 files and
+> `templates-thumbs/` holds 2.
 
 The order matters, because a hash names content that must already be uploaded:
 
@@ -167,6 +181,36 @@ If either becomes annoying, any path-preserving host (`assetsUrlStyle: "path"`)
 turns the URL back into a pure function of the path, and switching is
 `pnpm assets:local`, change the base, `pnpm assets:remote`.
 
+#### A machine that does not have the media
+
+`public/assets/` and `templates-thumbs/` are untracked, so a clone does not
+bring them. The CDN is the way back — it is a complete copy of what was
+uploaded, and every URL carries the sha256 of the file it points at:
+
+```bash
+git clone …
+pnpm install
+pnpm assets:fetch     # 55 files → public/assets/ + templates-thumbs/
+```
+
+`assets:fetch` reads the URLs out of the committed `twilight-bundle.json` and
+`templates/*.json`, downloads each one to the path it was uploaded from, and
+checks the bytes that come back against the hash in the URL — so a corrupted or
+swapped object fails loudly rather than being written. It skips a file that is
+already present and already matches, so re-running it costs nothing and it is
+safe to put in front of any build.
+
+Two things it cannot do:
+
+- **It only works while the references are in their remote spelling.** After
+  `pnpm assets:local` there are no URLs left to read, and it says so rather
+  than guessing.
+- **It only recovers what is still on the CDN.** If the store has been wiped
+  (see the rule above), fetch the files from git history instead —
+  `git checkout e3d71a1 -- public/assets templates-thumbs`, the last commit
+  that tracked them — then `pnpm build && pnpm exec tw-preview` to re-seed the
+  store. That works in a full clone; a `--depth 1` clone has no such history.
+
 #### Adding or editing an image afterwards
 
 `public/assets/` does not move; it stops being *tracked*. It stays the source
@@ -174,6 +218,7 @@ of truth on disk, and the loop is two commands once `assetsBaseUrl` is set in
 `package.json`:
 
 ```bash
+pnpm assets:fetch     # first, on a machine that does not already have them
 pnpm assets:local     # references back to /assets/… — edit, pnpm dev, tw-preview
 …                     # add or replace files under public/assets/
 pnpm assets:remote    # references back to absolute URLs — the form that is committed

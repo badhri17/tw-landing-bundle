@@ -18,7 +18,8 @@
     "audit:size": "node scripts/audit-bundle-size.mjs",
     "assets:list": "node scripts/asset-urls.mjs --list",
     "assets:remote": "node scripts/asset-urls.mjs",
-    "assets:local": "node scripts/asset-urls.mjs --to-local"
+    "assets:local": "node scripts/asset-urls.mjs --to-local",
+    "assets:fetch": "node scripts/asset-urls.mjs --fetch"
   },
   "devDependencies": {
     "@testing-library/dom": "^9.3.4",
