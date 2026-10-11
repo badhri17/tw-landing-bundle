@@ -803,6 +803,52 @@ Two ways out, both used in this bundle:
 
 Vertical sliders have no equivalent problem (the track is still horizontal, so neither end is inherently "up"); keep them on the existing `negative = up` convention, as `ingredients.items[].offset_y` and `product_offset_y` do.
 
+### ⚠️ A positive `minimum` on a number field makes the panel unsaveable in production
+
+Salla's server turns a number field's `minimum` / `maximum` into Laravel `min:` /
+`max:` rules **without** a companion `numeric` / `integer` rule. Laravel's
+`getSize()` therefore falls through to `mb_strlen()`, so both rules measure the
+value's **string length**, and the save comes back `422` with
+`validation.min.string`:
+
+> يجب أن يكون طول النص circle product width أكبر من أو يساوي 10 حروف/حرفًا
+
+A save fails whenever `String(value).length < minimum` — which is true for
+essentially every slider with a positive minimum, since a merchant saving `44`
+into a field declared `minimum: 10` is submitting a 2-character string. The
+whole bundle had **42** such fields across `testimonials`, `gallery`,
+`ingredients`, `use-cases`, `faq` and `comparison`.
+
+⚠️ **This can never reproduce in `pnpm dev`.** The demo panel posts to
+`/api/v1/form-builder-mock`, which accepts anything, and the form-builder client
+bundle contains **zero Arabic** — every message in that toast comes from the
+server. Only a real store save hits the rule.
+
+Three consequences:
+
+- **`minimum` must be `0` or negative.** A negative one is already safe
+  (`length >= -100` is always true), which is why the signed offset sliders never
+  broke. The real lower bound is lost — `ring_size` used to floor at 30 and now
+  floors at 0 — so a merchant can drag a section into a degenerate state. That is
+  a worse panel than the one we wanted, and a far better one than a panel that
+  cannot be saved at all. Restore the real floors only if Salla adds the
+  `numeric` rule.
+- **`maximum` is safe and should stay.** It is measured as a length too, but any
+  value within range is at most `digits(maximum)` characters, and
+  `digits(M) <= M` for every `M >= 1`. The guard still checks it, because a field
+  reaching `-200` needs `maximum >= 4` — `"-200"` is 4 characters.
+- **Only visible fields are submitted**, so a conditional field hides its own
+  landmine until the merchant opens that branch. The production report listed
+  exactly the four `layout = "circle"` sliders; `product_width` (gated on
+  `columns`) and the four `*_desktop` ones were stored but not sent.
+
+`pnpm audit:minimums` (`scripts/audit-field-minimums.mjs`) enforces both rules
+and runs from `predev` and `prebuild`.
+
+theme-raed is no help here: it declares exactly one number field
+(`items.stars`, `minimum: 1`, value `5`), a single digit that happens to satisfy
+the length rule, so the platform bug has never surfaced there.
+
 ## ⚠️ A dropdown value is ALWAYS an array of option objects
 
 Wherever a `dropdown-list` value appears — a top-level field's `selected`, **and a `collection`'s default rows** — it must be an array of the field's own option objects, never a bare string:

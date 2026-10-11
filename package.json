@@ -4,9 +4,9 @@
   "description": "",
   "type": "module",
   "scripts": {
-    "predev": "pnpm run audit:defaults && pnpm run audit:runtime-defaults && pnpm run audit:localized",
+    "predev": "pnpm run audit:defaults && pnpm run audit:runtime-defaults && pnpm run audit:minimums && pnpm run audit:localized",
     "dev": "vite",
-    "prebuild": "pnpm run audit:defaults && pnpm run audit:runtime-defaults && pnpm run audit:localized",
+    "prebuild": "pnpm run audit:defaults && pnpm run audit:runtime-defaults && pnpm run audit:minimums && pnpm run audit:localized",
     "build": "vite build",
     "audit:defaults": "node scripts/audit-default-values.mjs",
     "audit:runtime-defaults": "node scripts/audit-runtime-defaults.mjs",
@@ -19,7 +19,8 @@
     "assets:list": "node scripts/asset-urls.mjs --list",
     "assets:remote": "node scripts/asset-urls.mjs",
     "assets:local": "node scripts/asset-urls.mjs --to-local",
-    "assets:fetch": "node scripts/asset-urls.mjs --fetch"
+    "assets:fetch": "node scripts/asset-urls.mjs --fetch",
+    "audit:minimums": "node scripts/audit-field-minimums.mjs"
   },
   "devDependencies": {
     "@testing-library/dom": "^9.3.4",
