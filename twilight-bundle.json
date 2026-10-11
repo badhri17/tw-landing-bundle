@@ -91,7 +91,7 @@
                 },
                 {
                     "type": "string",
-                    "icon": "sicon-image-landscape",
+                    "icon": "sicon-frame-image",
                     "id": "nav_logo",
                     "label": "شعار المتجر",
                     "format": "image",
@@ -813,7 +813,7 @@
                 },
                 {
                     "type": "string",
-                    "icon": "sicon-video",
+                    "icon": "sicon-film",
                     "id": "video_url",
                     "label": "رابط الفيديو",
                     "format": "text",
@@ -879,7 +879,7 @@
                 },
                 {
                     "type": "string",
-                    "icon": "sicon-video",
+                    "icon": "sicon-film",
                     "id": "video_url_desktop",
                     "label": "رابط الفيديو على سطح المكتب",
                     "format": "text",
@@ -998,7 +998,7 @@
                     "inputType": "color",
                     "id": "gradient_to",
                     "label": "لون التدرج — النهاية",
-                    "icon": "sicon-color-palette",
+                    "icon": "sicon-art-palette",
                     "required": false,
                     "conditions": [
                         {
@@ -1938,7 +1938,7 @@
                     "inputType": "color",
                     "id": "title_color",
                     "label": "لون العنوان الرئيسي",
-                    "icon": "sicon-color-palette",
+                    "icon": "sicon-art-palette",
                     "required": false,
                     "value": "#18332f"
                 },
@@ -1948,7 +1948,7 @@
                     "inputType": "color",
                     "id": "caption_title_color",
                     "label": "لون عنوان الشريحة (تحت السلايدر)",
-                    "icon": "sicon-color-palette",
+                    "icon": "sicon-art-palette",
                     "required": false,
                     "value": "#111111"
                 },
@@ -1958,7 +1958,7 @@
                     "inputType": "color",
                     "id": "caption_text_color",
                     "label": "لون وصف الشريحة (تحت السلايدر)",
-                    "icon": "sicon-color-palette",
+                    "icon": "sicon-art-palette",
                     "required": false,
                     "value": "#555555"
                 },
@@ -1978,7 +1978,7 @@
                     "inputType": "color",
                     "id": "nav_icon_color",
                     "label": "لون أيقونة أزرار التنقل",
-                    "icon": "sicon-color-palette",
+                    "icon": "sicon-art-palette",
                     "required": false,
                     "value": "#18332f"
                 },
@@ -1988,7 +1988,7 @@
                     "inputType": "color",
                     "id": "dot_color",
                     "label": "لون نقاط التنقل",
-                    "icon": "sicon-color-palette",
+                    "icon": "sicon-art-palette",
                     "required": false,
                     "value": "#18332f"
                 },
@@ -2592,7 +2592,7 @@
                 },
                 {
                     "type": "items",
-                    "icon": "sicon-columns",
+                    "icon": "sicon-layout-grid",
                     "id": "columns_mobile",
                     "label": "عدد الأعمدة على الجوال",
                     "format": "dropdown-list",
@@ -2628,7 +2628,7 @@
                 },
                 {
                     "type": "items",
-                    "icon": "sicon-columns",
+                    "icon": "sicon-layout-grid",
                     "id": "columns_desktop",
                     "label": "عدد الأعمدة على سطح المكتب",
                     "format": "dropdown-list",
@@ -3058,7 +3058,7 @@
                 },
                 {
                     "type": "number",
-                    "icon": "sicon-columns",
+                    "icon": "sicon-ruler",
                     "id": "side_width",
                     "label": "عرض العنصر على الجوال (٪)",
                     "format": "slider",
@@ -3120,7 +3120,7 @@
                 },
                 {
                     "type": "number",
-                    "icon": "sicon-move",
+                    "icon": "sicon-directional-pad",
                     "id": "side_x",
                     "label": "الإزاحة الأفقية على الجوال (٪)",
                     "format": "slider",
@@ -3141,7 +3141,7 @@
                 },
                 {
                     "type": "number",
-                    "icon": "sicon-move",
+                    "icon": "sicon-directional-pad",
                     "id": "side_y",
                     "label": "الإزاحة الرأسية على الجوال (٪)",
                     "format": "slider",
@@ -3189,7 +3189,7 @@
                 },
                 {
                     "type": "number",
-                    "icon": "sicon-columns",
+                    "icon": "sicon-ruler",
                     "id": "side_width_desktop",
                     "label": "عرض العنصر على سطح المكتب (٪)",
                     "format": "slider",
@@ -3255,7 +3255,7 @@
                 },
                 {
                     "type": "number",
-                    "icon": "sicon-move",
+                    "icon": "sicon-directional-pad",
                     "id": "side_x_desktop",
                     "label": "الإزاحة الأفقية على سطح المكتب (٪)",
                     "format": "slider",
@@ -3275,7 +3275,7 @@
                 },
                 {
                     "type": "number",
-                    "icon": "sicon-move",
+                    "icon": "sicon-directional-pad",
                     "id": "side_y_desktop",
                     "label": "الإزاحة الرأسية على سطح المكتب (٪)",
                     "format": "slider",
@@ -3383,7 +3383,7 @@
                 },
                 {
                     "type": "number",
-                    "icon": "sicon-columns",
+                    "icon": "sicon-ruler",
                     "id": "side2_width",
                     "label": "عرض العنصر الثاني على الجوال (٪)",
                     "format": "slider",
@@ -3445,7 +3445,7 @@
                 },
                 {
                     "type": "number",
-                    "icon": "sicon-move",
+                    "icon": "sicon-directional-pad",
                     "id": "side2_x",
                     "label": "الإزاحة الأفقية للعنصر الثاني على الجوال (٪)",
                     "format": "slider",
@@ -3466,7 +3466,7 @@
                 },
                 {
                     "type": "number",
-                    "icon": "sicon-move",
+                    "icon": "sicon-directional-pad",
                     "id": "side2_y",
                     "label": "الإزاحة الرأسية للعنصر الثاني على الجوال (٪)",
                     "format": "slider",
@@ -3514,7 +3514,7 @@
                 },
                 {
                     "type": "number",
-                    "icon": "sicon-columns",
+                    "icon": "sicon-ruler",
                     "id": "side2_width_desktop",
                     "label": "عرض العنصر الثاني على سطح المكتب (٪)",
                     "format": "slider",
@@ -3580,7 +3580,7 @@
                 },
                 {
                     "type": "number",
-                    "icon": "sicon-move",
+                    "icon": "sicon-directional-pad",
                     "id": "side2_x_desktop",
                     "label": "الإزاحة الأفقية للعنصر الثاني على سطح المكتب (٪)",
                     "format": "slider",
@@ -3600,7 +3600,7 @@
                 },
                 {
                     "type": "number",
-                    "icon": "sicon-move",
+                    "icon": "sicon-directional-pad",
                     "id": "side2_y_desktop",
                     "label": "الإزاحة الرأسية للعنصر الثاني على سطح المكتب (٪)",
                     "format": "slider",
@@ -3791,7 +3791,7 @@
                     "inputType": "color",
                     "id": "title_color",
                     "label": "لون العنوان",
-                    "icon": "sicon-color-palette",
+                    "icon": "sicon-art-palette",
                     "required": false,
                     "value": "#14181f"
                 },
@@ -3801,7 +3801,7 @@
                     "inputType": "color",
                     "id": "subtitle_color",
                     "label": "لون النص الوصفي",
-                    "icon": "sicon-color-palette",
+                    "icon": "sicon-art-palette",
                     "required": false,
                     "value": "#5b6573"
                 },
@@ -3811,7 +3811,7 @@
                     "inputType": "color",
                     "id": "accent_color",
                     "label": "اللون المميّز (النص العلوي/النقاط)",
-                    "icon": "sicon-color-palette",
+                    "icon": "sicon-art-palette",
                     "required": false,
                     "value": "#000000"
                 },
@@ -3821,7 +3821,7 @@
                     "inputType": "color",
                     "id": "arrow_bg",
                     "label": "لون خلفية أزرار التنقل",
-                    "icon": "sicon-color-palette",
+                    "icon": "sicon-art-palette",
                     "required": false,
                     "description": "خلفية السهمين على جانبي السلايدر.",
                     "value": "#14181f",
@@ -3839,7 +3839,7 @@
                     "inputType": "color",
                     "id": "arrow_icon_color",
                     "label": "لون السهم داخل الزر",
-                    "icon": "sicon-color-palette",
+                    "icon": "sicon-art-palette",
                     "required": false,
                     "description": "لون رمز السهم نفسه.",
                     "value": "#ffffff",
@@ -3867,7 +3867,7 @@
                     "inputType": "color",
                     "id": "border_color",
                     "label": "لون حدود البطاقة",
-                    "icon": "sicon-color-palette",
+                    "icon": "sicon-art-palette",
                     "required": false,
                     "value": "#e6e4df"
                 },
@@ -3877,7 +3877,7 @@
                     "inputType": "color",
                     "id": "name_color",
                     "label": "لون اسم العميل",
-                    "icon": "sicon-color-palette",
+                    "icon": "sicon-art-palette",
                     "required": false,
                     "value": "#14181f"
                 },
@@ -3887,7 +3887,7 @@
                     "inputType": "color",
                     "id": "meta_color",
                     "label": "لون التفاصيل الثانوية",
-                    "icon": "sicon-color-palette",
+                    "icon": "sicon-art-palette",
                     "required": false,
                     "value": "#8a93a0"
                 },
@@ -3897,7 +3897,7 @@
                     "inputType": "color",
                     "id": "text_color",
                     "label": "لون نص الرأي",
-                    "icon": "sicon-color-palette",
+                    "icon": "sicon-art-palette",
                     "required": false,
                     "value": "#3f4754"
                 },
@@ -3907,7 +3907,7 @@
                     "inputType": "color",
                     "id": "star_color",
                     "label": "لون النجوم",
-                    "icon": "sicon-color-palette",
+                    "icon": "sicon-art-palette",
                     "required": false,
                     "value": "#ff9f1c"
                 },
@@ -3917,7 +3917,7 @@
                     "inputType": "color",
                     "id": "star_empty_color",
                     "label": "لون النجوم الفارغة",
-                    "icon": "sicon-color-palette",
+                    "icon": "sicon-art-palette",
                     "required": false,
                     "value": "#dcdcd6"
                 },
@@ -3981,7 +3981,7 @@
                 },
                 {
                     "type": "items",
-                    "icon": "sicon-apps",
+                    "icon": "sicon-layout-grid",
                     "id": "wave_shape",
                     "label": "شكل الموجة",
                     "format": "dropdown-list",
@@ -4040,7 +4040,7 @@
                 },
                 {
                     "type": "items",
-                    "icon": "sicon-move",
+                    "icon": "sicon-directional-pad",
                     "id": "wave_height_mobile",
                     "label": "عمق الموجة على الجوال",
                     "format": "dropdown-list",
@@ -4096,7 +4096,7 @@
                 },
                 {
                     "type": "items",
-                    "icon": "sicon-move",
+                    "icon": "sicon-directional-pad",
                     "id": "wave_height_desktop",
                     "label": "عمق الموجة على سطح المكتب (اختياري)",
                     "format": "dropdown-list",
@@ -4409,7 +4409,7 @@
                 },
                 {
                     "type": "items",
-                    "icon": "sicon-columns",
+                    "icon": "sicon-layout-grid",
                     "id": "columns_mobile",
                     "label": "عدد الأعمدة على الجوال",
                     "format": "dropdown-list",
@@ -4567,7 +4567,7 @@
                 },
                 {
                     "type": "items",
-                    "icon": "sicon-columns",
+                    "icon": "sicon-layout-grid",
                     "id": "columns_desktop",
                     "label": "عدد الأعمدة على سطح المكتب (اختياري)",
                     "format": "dropdown-list",
@@ -5146,7 +5146,7 @@
                 },
                 {
                     "type": "items",
-                    "icon": "sicon-columns",
+                    "icon": "sicon-ruler",
                     "id": "card_width",
                     "label": "عرض البطاقة",
                     "format": "dropdown-list",
@@ -5365,7 +5365,7 @@
                 },
                 {
                     "type": "items",
-                    "icon": "sicon-image-landscape",
+                    "icon": "sicon-frame-image",
                     "id": "stage_ratio",
                     "label": "شكل مساحة الصورة",
                     "format": "dropdown-list",
@@ -5867,7 +5867,7 @@
                 },
                 {
                     "type": "items",
-                    "icon": "sicon-columns",
+                    "icon": "sicon-ruler",
                     "id": "item_size",
                     "label": "حجم الصور على الجوال",
                     "format": "dropdown-list",
@@ -5909,7 +5909,7 @@
                 },
                 {
                     "type": "items",
-                    "icon": "sicon-image-landscape",
+                    "icon": "sicon-frame-image",
                     "id": "aspect_ratio",
                     "label": "مقاس الصور",
                     "format": "dropdown-list",
@@ -6003,7 +6003,7 @@
                 },
                 {
                     "type": "items",
-                    "icon": "sicon-move",
+                    "icon": "sicon-directional-pad",
                     "id": "gap",
                     "label": "المسافة بين الصور",
                     "format": "dropdown-list",
@@ -6056,7 +6056,7 @@
                 },
                 {
                     "type": "items",
-                    "icon": "sicon-columns",
+                    "icon": "sicon-ruler",
                     "id": "item_size_desktop",
                     "label": "حجم الصور على سطح المكتب (اختياري)",
                     "format": "dropdown-list",
@@ -6278,7 +6278,7 @@
                 },
                 {
                     "type": "number",
-                    "icon": "sicon-columns",
+                    "icon": "sicon-ruler",
                     "id": "side_width",
                     "label": "عرض العنصر على الجوال (٪)",
                     "format": "slider",
@@ -6340,7 +6340,7 @@
                 },
                 {
                     "type": "number",
-                    "icon": "sicon-move",
+                    "icon": "sicon-directional-pad",
                     "id": "side_x",
                     "label": "الإزاحة الأفقية على الجوال (٪)",
                     "format": "slider",
@@ -6361,7 +6361,7 @@
                 },
                 {
                     "type": "number",
-                    "icon": "sicon-move",
+                    "icon": "sicon-directional-pad",
                     "id": "side_y",
                     "label": "الإزاحة الرأسية على الجوال (٪)",
                     "format": "slider",
@@ -6409,7 +6409,7 @@
                 },
                 {
                     "type": "number",
-                    "icon": "sicon-columns",
+                    "icon": "sicon-ruler",
                     "id": "side_width_desktop",
                     "label": "عرض العنصر على سطح المكتب (٪)",
                     "format": "slider",
@@ -6475,7 +6475,7 @@
                 },
                 {
                     "type": "number",
-                    "icon": "sicon-move",
+                    "icon": "sicon-directional-pad",
                     "id": "side_x_desktop",
                     "label": "الإزاحة الأفقية على سطح المكتب (٪)",
                     "format": "slider",
@@ -6495,7 +6495,7 @@
                 },
                 {
                     "type": "number",
-                    "icon": "sicon-move",
+                    "icon": "sicon-directional-pad",
                     "id": "side_y_desktop",
                     "label": "الإزاحة الرأسية على سطح المكتب (٪)",
                     "format": "slider",
@@ -6603,7 +6603,7 @@
                 },
                 {
                     "type": "number",
-                    "icon": "sicon-columns",
+                    "icon": "sicon-ruler",
                     "id": "side2_width",
                     "label": "عرض العنصر الثاني على الجوال (٪)",
                     "format": "slider",
@@ -6665,7 +6665,7 @@
                 },
                 {
                     "type": "number",
-                    "icon": "sicon-move",
+                    "icon": "sicon-directional-pad",
                     "id": "side2_x",
                     "label": "الإزاحة الأفقية للعنصر الثاني على الجوال (٪)",
                     "format": "slider",
@@ -6686,7 +6686,7 @@
                 },
                 {
                     "type": "number",
-                    "icon": "sicon-move",
+                    "icon": "sicon-directional-pad",
                     "id": "side2_y",
                     "label": "الإزاحة الرأسية للعنصر الثاني على الجوال (٪)",
                     "format": "slider",
@@ -6734,7 +6734,7 @@
                 },
                 {
                     "type": "number",
-                    "icon": "sicon-columns",
+                    "icon": "sicon-ruler",
                     "id": "side2_width_desktop",
                     "label": "عرض العنصر الثاني على سطح المكتب (٪)",
                     "format": "slider",
@@ -6800,7 +6800,7 @@
                 },
                 {
                     "type": "number",
-                    "icon": "sicon-move",
+                    "icon": "sicon-directional-pad",
                     "id": "side2_x_desktop",
                     "label": "الإزاحة الأفقية للعنصر الثاني على سطح المكتب (٪)",
                     "format": "slider",
@@ -6820,7 +6820,7 @@
                 },
                 {
                     "type": "number",
-                    "icon": "sicon-move",
+                    "icon": "sicon-directional-pad",
                     "id": "side2_y_desktop",
                     "label": "الإزاحة الرأسية للعنصر الثاني على سطح المكتب (٪)",
                     "format": "slider",
@@ -6949,7 +6949,7 @@
                 },
                 {
                     "type": "items",
-                    "icon": "sicon-apps",
+                    "icon": "sicon-layout-grid",
                     "id": "wave_shape",
                     "label": "شكل الموجة",
                     "format": "dropdown-list",
@@ -7008,7 +7008,7 @@
                 },
                 {
                     "type": "items",
-                    "icon": "sicon-move",
+                    "icon": "sicon-directional-pad",
                     "id": "wave_height_mobile",
                     "label": "عمق الموجة على الجوال",
                     "format": "dropdown-list",
@@ -7064,7 +7064,7 @@
                 },
                 {
                     "type": "items",
-                    "icon": "sicon-move",
+                    "icon": "sicon-directional-pad",
                     "id": "wave_height_desktop",
                     "label": "عمق الموجة على سطح المكتب (اختياري)",
                     "format": "dropdown-list",
@@ -7249,7 +7249,7 @@
         },
         {
             "title": "مكونات المنتج",
-            "icon": "sicon-diamond-fill",
+            "icon": "sicon-flower-stem",
             "name": "ingredients",
             "key": "6689b337-31d9-40d0-bd7e-4a6aff334d0b",
             "fields": [
@@ -7319,7 +7319,7 @@
                 },
                 {
                     "type": "number",
-                    "icon": "sicon-move",
+                    "icon": "sicon-directional-pad",
                     "id": "product_offset_x",
                     "label": "توسيط صورة المنتج يمين/يسار (٪)",
                     "format": "slider",
@@ -7333,7 +7333,7 @@
                 },
                 {
                     "type": "number",
-                    "icon": "sicon-move",
+                    "icon": "sicon-directional-pad",
                     "id": "product_offset_y",
                     "label": "توسيط صورة المنتج فوق/تحت (٪)",
                     "format": "slider",
@@ -7508,7 +7508,7 @@
                 },
                 {
                     "type": "items",
-                    "icon": "sicon-apps",
+                    "icon": "sicon-layout-grid",
                     "id": "layout",
                     "label": "شكل توزيع المكوّنات",
                     "format": "dropdown-list",
@@ -7573,7 +7573,7 @@
                 },
                 {
                     "type": "number",
-                    "icon": "sicon-columns",
+                    "icon": "sicon-ruler",
                     "id": "product_width",
                     "label": "عرض المنتج (٪ من عرض القسم)",
                     "format": "slider",
@@ -7594,7 +7594,7 @@
                 },
                 {
                     "type": "number",
-                    "icon": "sicon-move",
+                    "icon": "sicon-directional-pad",
                     "id": "row_gap",
                     "label": "المسافة بين المكوّنات (بكسل)",
                     "format": "slider",
@@ -7614,7 +7614,7 @@
                 },
                 {
                     "type": "number",
-                    "icon": "sicon-move",
+                    "icon": "sicon-directional-pad",
                     "id": "column_gap",
                     "label": "المسافة بين المكوّنات والمنتج (بكسل)",
                     "format": "slider",
@@ -7707,7 +7707,7 @@
                 },
                 {
                     "type": "number",
-                    "icon": "sicon-columns",
+                    "icon": "sicon-ruler",
                     "id": "circle_product_width",
                     "label": "عرض المنتج داخل الدائرة (٪ من عرض القسم)",
                     "format": "slider",
@@ -7728,7 +7728,7 @@
                 },
                 {
                     "type": "number",
-                    "icon": "sicon-move",
+                    "icon": "sicon-directional-pad",
                     "id": "ring_size",
                     "label": "قطر الحلقة (٪ من عرض القسم)",
                     "format": "slider",
@@ -7749,7 +7749,7 @@
                 },
                 {
                     "type": "number",
-                    "icon": "sicon-move",
+                    "icon": "sicon-directional-pad",
                     "id": "orbit_size",
                     "label": "قطر توزيع المكوّنات (٪ من عرض القسم)",
                     "format": "slider",
@@ -7770,7 +7770,7 @@
                 },
                 {
                     "type": "number",
-                    "icon": "sicon-move",
+                    "icon": "sicon-directional-pad",
                     "id": "circle_start_angle",
                     "label": "زاوية أول مكوّن (درجة من الأعلى)",
                     "format": "slider",
@@ -7791,7 +7791,7 @@
                 },
                 {
                     "type": "number",
-                    "icon": "sicon-move",
+                    "icon": "sicon-directional-pad",
                     "id": "circle_arc_span",
                     "label": "التباعد بين أول وآخر مكوّن في نفس الجهة (درجة)",
                     "format": "slider",
@@ -7978,7 +7978,7 @@
                 },
                 {
                     "type": "number",
-                    "icon": "sicon-move",
+                    "icon": "sicon-directional-pad",
                     "id": "connector_width",
                     "label": "سماكة الخط (بكسل)",
                     "format": "slider",
@@ -8016,7 +8016,7 @@
                 },
                 {
                     "type": "items",
-                    "icon": "sicon-apps",
+                    "icon": "sicon-layout-grid",
                     "id": "ring_style",
                     "label": "شكل الحلقة",
                     "format": "dropdown-list",
@@ -8063,7 +8063,7 @@
                 },
                 {
                     "type": "number",
-                    "icon": "sicon-move",
+                    "icon": "sicon-directional-pad",
                     "id": "ring_width",
                     "label": "سماكة الحلقة (بكسل)",
                     "format": "slider",
@@ -8101,7 +8101,7 @@
                 },
                 {
                     "type": "number",
-                    "icon": "sicon-move",
+                    "icon": "sicon-directional-pad",
                     "id": "ring_dot_size",
                     "label": "حجم النقطة على الحلقة (بكسل)",
                     "format": "slider",
@@ -8121,7 +8121,7 @@
                 },
                 {
                     "type": "number",
-                    "icon": "sicon-move",
+                    "icon": "sicon-directional-pad",
                     "id": "ring_dot_offset",
                     "label": "بُعد النقطة عن المكوّن على الحلقة (درجة)",
                     "format": "slider",
@@ -8207,7 +8207,7 @@
                 },
                 {
                     "type": "number",
-                    "icon": "sicon-columns",
+                    "icon": "sicon-ruler",
                     "id": "product_width_desktop",
                     "label": "عرض المنتج على سطح المكتب (٪)",
                     "format": "slider",
@@ -8245,7 +8245,7 @@
                 },
                 {
                     "type": "number",
-                    "icon": "sicon-columns",
+                    "icon": "sicon-ruler",
                     "id": "circle_product_width_desktop",
                     "label": "عرض المنتج داخل الدائرة على سطح المكتب (٪)",
                     "format": "slider",
@@ -8265,7 +8265,7 @@
                 },
                 {
                     "type": "number",
-                    "icon": "sicon-move",
+                    "icon": "sicon-directional-pad",
                     "id": "ring_size_desktop",
                     "label": "قطر الحلقة على سطح المكتب (٪)",
                     "format": "slider",
@@ -8285,7 +8285,7 @@
                 },
                 {
                     "type": "number",
-                    "icon": "sicon-move",
+                    "icon": "sicon-directional-pad",
                     "id": "orbit_size_desktop",
                     "label": "قطر توزيع المكوّنات على سطح المكتب (٪)",
                     "format": "slider",
@@ -8749,7 +8749,7 @@
                 },
                 {
                     "type": "items",
-                    "icon": "sicon-apps",
+                    "icon": "sicon-layout-grid",
                     "id": "layout",
                     "label": "شكل عرض الحالات",
                     "format": "dropdown-list",
@@ -8864,7 +8864,7 @@
                 },
                 {
                     "type": "items",
-                    "icon": "sicon-columns",
+                    "icon": "sicon-ruler",
                     "id": "image_share",
                     "label": "حجم الصورة داخل البطاقة (الجوال)",
                     "format": "dropdown-list",
@@ -8906,7 +8906,7 @@
                 },
                 {
                     "type": "items",
-                    "icon": "sicon-image-landscape",
+                    "icon": "sicon-frame-image",
                     "id": "stack_aspect",
                     "label": "مقاس الصورة (اذا النص جنبها)",
                     "format": "dropdown-list",
@@ -8963,7 +8963,7 @@
                 },
                 {
                     "type": "items",
-                    "icon": "sicon-image-landscape",
+                    "icon": "sicon-frame-image",
                     "id": "stack_over_aspect",
                     "label": "مقاس البطاقة (اذا النص فوق الصورة)",
                     "format": "dropdown-list",
@@ -9103,7 +9103,7 @@
                 },
                 {
                     "type": "items",
-                    "icon": "sicon-columns",
+                    "icon": "sicon-ruler",
                     "id": "item_size",
                     "label": "حجم الصور على الجوال",
                     "format": "dropdown-list",
@@ -9145,7 +9145,7 @@
                 },
                 {
                     "type": "items",
-                    "icon": "sicon-image-landscape",
+                    "icon": "sicon-frame-image",
                     "id": "aspect_ratio",
                     "label": "مقاس الصور",
                     "format": "dropdown-list",
@@ -9220,7 +9220,7 @@
                 },
                 {
                     "type": "items",
-                    "icon": "sicon-color-palette",
+                    "icon": "sicon-art-palette",
                     "id": "dim_strength",
                     "label": "قوة تعتيم الصور الجانبية",
                     "format": "dropdown-list",
@@ -9306,7 +9306,7 @@
                 },
                 {
                     "type": "items",
-                    "icon": "sicon-move",
+                    "icon": "sicon-directional-pad",
                     "id": "gap",
                     "label": "المسافة بين البطاقات",
                     "format": "dropdown-list",
@@ -9442,7 +9442,7 @@
                 },
                 {
                     "type": "items",
-                    "icon": "sicon-color-palette",
+                    "icon": "sicon-art-palette",
                     "id": "overlay_strength",
                     "label": "قوة التظليل تحت النص",
                     "format": "dropdown-list",
@@ -9491,7 +9491,7 @@
                 },
                 {
                     "type": "items",
-                    "icon": "sicon-columns",
+                    "icon": "sicon-ruler",
                     "id": "image_share_desktop",
                     "label": "حجم الصورة داخل البطاقة على سطح المكتب (اختياري)",
                     "format": "dropdown-list",
@@ -9538,7 +9538,7 @@
                 },
                 {
                     "type": "items",
-                    "icon": "sicon-columns",
+                    "icon": "sicon-ruler",
                     "id": "item_size_desktop",
                     "label": "حجم الصور على سطح المكتب (اختياري)",
                     "format": "dropdown-list",
@@ -9762,7 +9762,7 @@
                 },
                 {
                     "type": "number",
-                    "icon": "sicon-columns",
+                    "icon": "sicon-ruler",
                     "id": "side_width",
                     "label": "عرض العنصر على الجوال (٪)",
                     "format": "slider",
@@ -9824,7 +9824,7 @@
                 },
                 {
                     "type": "number",
-                    "icon": "sicon-move",
+                    "icon": "sicon-directional-pad",
                     "id": "side_x",
                     "label": "الإزاحة الأفقية على الجوال (٪)",
                     "format": "slider",
@@ -9845,7 +9845,7 @@
                 },
                 {
                     "type": "number",
-                    "icon": "sicon-move",
+                    "icon": "sicon-directional-pad",
                     "id": "side_y",
                     "label": "الإزاحة الرأسية على الجوال (٪)",
                     "format": "slider",
@@ -9893,7 +9893,7 @@
                 },
                 {
                     "type": "number",
-                    "icon": "sicon-columns",
+                    "icon": "sicon-ruler",
                     "id": "side_width_desktop",
                     "label": "عرض العنصر على سطح المكتب (٪)",
                     "format": "slider",
@@ -9959,7 +9959,7 @@
                 },
                 {
                     "type": "number",
-                    "icon": "sicon-move",
+                    "icon": "sicon-directional-pad",
                     "id": "side_x_desktop",
                     "label": "الإزاحة الأفقية على سطح المكتب (٪)",
                     "format": "slider",
@@ -9980,7 +9980,7 @@
                 },
                 {
                     "type": "number",
-                    "icon": "sicon-move",
+                    "icon": "sicon-directional-pad",
                     "id": "side_y_desktop",
                     "label": "الإزاحة الرأسية على سطح المكتب (٪)",
                     "format": "slider",
@@ -10130,7 +10130,7 @@
                 },
                 {
                     "type": "number",
-                    "icon": "sicon-columns",
+                    "icon": "sicon-ruler",
                     "id": "side2_width",
                     "label": "عرض العنصر الثاني على الجوال (٪)",
                     "format": "slider",
@@ -10192,7 +10192,7 @@
                 },
                 {
                     "type": "number",
-                    "icon": "sicon-move",
+                    "icon": "sicon-directional-pad",
                     "id": "side2_x",
                     "label": "الإزاحة الأفقية للعنصر الثاني على الجوال (٪)",
                     "format": "slider",
@@ -10213,7 +10213,7 @@
                 },
                 {
                     "type": "number",
-                    "icon": "sicon-move",
+                    "icon": "sicon-directional-pad",
                     "id": "side2_y",
                     "label": "الإزاحة الرأسية للعنصر الثاني على الجوال (٪)",
                     "format": "slider",
@@ -10261,7 +10261,7 @@
                 },
                 {
                     "type": "number",
-                    "icon": "sicon-columns",
+                    "icon": "sicon-ruler",
                     "id": "side2_width_desktop",
                     "label": "عرض العنصر الثاني على سطح المكتب (٪)",
                     "format": "slider",
@@ -10327,7 +10327,7 @@
                 },
                 {
                     "type": "number",
-                    "icon": "sicon-move",
+                    "icon": "sicon-directional-pad",
                     "id": "side2_x_desktop",
                     "label": "الإزاحة الأفقية للعنصر الثاني على سطح المكتب (٪)",
                     "format": "slider",
@@ -10348,7 +10348,7 @@
                 },
                 {
                     "type": "number",
-                    "icon": "sicon-move",
+                    "icon": "sicon-directional-pad",
                     "id": "side2_y_desktop",
                     "label": "الإزاحة الرأسية للعنصر الثاني على سطح المكتب (٪)",
                     "format": "slider",
@@ -10653,7 +10653,7 @@
         },
         {
             "title": "الأسئلة الشائعة",
-            "icon": "sicon-question-circle",
+            "icon": "sicon-help",
             "name": "faq",
             "key": "664616c5-b430-4883-9f04-c1d136b7edde",
             "image": "https://radaar.b-cdn.net/landing-bundle/faq.webp",
@@ -11145,7 +11145,7 @@
                 },
                 {
                     "type": "number",
-                    "icon": "sicon-columns",
+                    "icon": "sicon-ruler",
                     "id": "side_width",
                     "label": "عرض العنصر على الجوال (٪)",
                     "format": "slider",
@@ -11207,7 +11207,7 @@
                 },
                 {
                     "type": "number",
-                    "icon": "sicon-move",
+                    "icon": "sicon-directional-pad",
                     "id": "side_x",
                     "label": "الإزاحة الأفقية على الجوال (٪)",
                     "format": "slider",
@@ -11228,7 +11228,7 @@
                 },
                 {
                     "type": "number",
-                    "icon": "sicon-move",
+                    "icon": "sicon-directional-pad",
                     "id": "side_y",
                     "label": "الإزاحة الرأسية على الجوال (٪)",
                     "format": "slider",
@@ -11276,7 +11276,7 @@
                 },
                 {
                     "type": "number",
-                    "icon": "sicon-columns",
+                    "icon": "sicon-ruler",
                     "id": "side_width_desktop",
                     "label": "عرض العنصر على سطح المكتب (٪)",
                     "format": "slider",
@@ -11342,7 +11342,7 @@
                 },
                 {
                     "type": "number",
-                    "icon": "sicon-move",
+                    "icon": "sicon-directional-pad",
                     "id": "side_x_desktop",
                     "label": "الإزاحة الأفقية على سطح المكتب (٪)",
                     "format": "slider",
@@ -11362,7 +11362,7 @@
                 },
                 {
                     "type": "number",
-                    "icon": "sicon-move",
+                    "icon": "sicon-directional-pad",
                     "id": "side_y_desktop",
                     "label": "الإزاحة الرأسية على سطح المكتب (٪)",
                     "format": "slider",
@@ -11507,7 +11507,7 @@
                 },
                 {
                     "type": "number",
-                    "icon": "sicon-columns",
+                    "icon": "sicon-ruler",
                     "id": "side2_width",
                     "label": "عرض العنصر الثاني على الجوال (٪)",
                     "format": "slider",
@@ -11569,7 +11569,7 @@
                 },
                 {
                     "type": "number",
-                    "icon": "sicon-move",
+                    "icon": "sicon-directional-pad",
                     "id": "side2_x",
                     "label": "الإزاحة الأفقية للعنصر الثاني على الجوال (٪)",
                     "format": "slider",
@@ -11590,7 +11590,7 @@
                 },
                 {
                     "type": "number",
-                    "icon": "sicon-move",
+                    "icon": "sicon-directional-pad",
                     "id": "side2_y",
                     "label": "الإزاحة الرأسية للعنصر الثاني على الجوال (٪)",
                     "format": "slider",
@@ -11638,7 +11638,7 @@
                 },
                 {
                     "type": "number",
-                    "icon": "sicon-columns",
+                    "icon": "sicon-ruler",
                     "id": "side2_width_desktop",
                     "label": "عرض العنصر الثاني على سطح المكتب (٪)",
                     "format": "slider",
@@ -11704,7 +11704,7 @@
                 },
                 {
                     "type": "number",
-                    "icon": "sicon-move",
+                    "icon": "sicon-directional-pad",
                     "id": "side2_x_desktop",
                     "label": "الإزاحة الأفقية للعنصر الثاني على سطح المكتب (٪)",
                     "format": "slider",
@@ -11724,7 +11724,7 @@
                 },
                 {
                     "type": "number",
-                    "icon": "sicon-move",
+                    "icon": "sicon-directional-pad",
                     "id": "side2_y_desktop",
                     "label": "الإزاحة الرأسية للعنصر الثاني على سطح المكتب (٪)",
                     "format": "slider",
@@ -12041,7 +12041,7 @@
                         },
                         {
                             "type": "boolean",
-                            "icon": "sicon-close",
+                            "icon": "sicon-cancel",
                             "id": "others",
                             "label": "متوفرة عند غيرنا",
                             "format": "switch",
@@ -12739,7 +12739,7 @@
                 },
                 {
                     "type": "number",
-                    "icon": "sicon-columns",
+                    "icon": "sicon-ruler",
                     "id": "side_width",
                     "label": "عرض العنصر على الجوال (٪)",
                     "format": "slider",
@@ -12801,7 +12801,7 @@
                 },
                 {
                     "type": "number",
-                    "icon": "sicon-move",
+                    "icon": "sicon-directional-pad",
                     "id": "side_x",
                     "label": "الإزاحة الأفقية على الجوال (٪)",
                     "format": "slider",
@@ -12822,7 +12822,7 @@
                 },
                 {
                     "type": "number",
-                    "icon": "sicon-move",
+                    "icon": "sicon-directional-pad",
                     "id": "side_y",
                     "label": "الإزاحة الرأسية على الجوال (٪)",
                     "format": "slider",
@@ -12891,7 +12891,7 @@
                 },
                 {
                     "type": "number",
-                    "icon": "sicon-columns",
+                    "icon": "sicon-ruler",
                     "id": "side_width_desktop",
                     "label": "عرض العنصر على سطح المكتب (٪)",
                     "format": "slider",
@@ -12957,7 +12957,7 @@
                 },
                 {
                     "type": "number",
-                    "icon": "sicon-move",
+                    "icon": "sicon-directional-pad",
                     "id": "side_x_desktop",
                     "label": "الإزاحة الأفقية على سطح المكتب (٪)",
                     "format": "slider",
@@ -12977,7 +12977,7 @@
                 },
                 {
                     "type": "number",
-                    "icon": "sicon-move",
+                    "icon": "sicon-directional-pad",
                     "id": "side_y_desktop",
                     "label": "الإزاحة الرأسية على سطح المكتب (٪)",
                     "format": "slider",
@@ -13143,7 +13143,7 @@
                 },
                 {
                     "type": "number",
-                    "icon": "sicon-columns",
+                    "icon": "sicon-ruler",
                     "id": "side2_width",
                     "label": "عرض العنصر الثاني على الجوال (٪)",
                     "format": "slider",
@@ -13205,7 +13205,7 @@
                 },
                 {
                     "type": "number",
-                    "icon": "sicon-move",
+                    "icon": "sicon-directional-pad",
                     "id": "side2_x",
                     "label": "الإزاحة الأفقية للعنصر الثاني على الجوال (٪)",
                     "format": "slider",
@@ -13226,7 +13226,7 @@
                 },
                 {
                     "type": "number",
-                    "icon": "sicon-move",
+                    "icon": "sicon-directional-pad",
                     "id": "side2_y",
                     "label": "الإزاحة الرأسية للعنصر الثاني على الجوال (٪)",
                     "format": "slider",
@@ -13274,7 +13274,7 @@
                 },
                 {
                     "type": "number",
-                    "icon": "sicon-columns",
+                    "icon": "sicon-ruler",
                     "id": "side2_width_desktop",
                     "label": "عرض العنصر الثاني على سطح المكتب (٪)",
                     "format": "slider",
@@ -13340,7 +13340,7 @@
                 },
                 {
                     "type": "number",
-                    "icon": "sicon-move",
+                    "icon": "sicon-directional-pad",
                     "id": "side2_x_desktop",
                     "label": "الإزاحة الأفقية للعنصر الثاني على سطح المكتب (٪)",
                     "format": "slider",
@@ -13360,7 +13360,7 @@
                 },
                 {
                     "type": "number",
-                    "icon": "sicon-move",
+                    "icon": "sicon-directional-pad",
                     "id": "side2_y_desktop",
                     "label": "الإزاحة الرأسية للعنصر الثاني على سطح المكتب (٪)",
                     "format": "slider",
@@ -13575,7 +13575,7 @@
                 {
                     "type": "string",
                     "format": "text",
-                    "icon": "sicon-cursor-arrow",
+                    "icon": "sicon-tap",
                     "id": "final_cta_button_label",
                     "label": "نص الزر",
                     "multilanguage": true,
@@ -13651,7 +13651,7 @@
                 {
                     "type": "string",
                     "format": "image",
-                    "icon": "sicon-image-landscape",
+                    "icon": "sicon-frame-image",
                     "id": "final_cta_image",
                     "label": "صورة الخلفية (اختيارية)",
                     "required": false,
@@ -13795,7 +13795,7 @@
                     "type": "string",
                     "format": "color",
                     "inputType": "color",
-                    "icon": "sicon-color-palette",
+                    "icon": "sicon-art-palette",
                     "id": "final_cta_text_color",
                     "label": "لون النص",
                     "required": false,
@@ -13829,7 +13829,7 @@
                     "type": "string",
                     "format": "color",
                     "inputType": "color",
-                    "icon": "sicon-color-palette",
+                    "icon": "sicon-art-palette",
                     "id": "final_cta_button_text_color",
                     "label": "لون نص الزر",
                     "required": false,
@@ -13857,7 +13857,7 @@
                 {
                     "type": "string",
                     "format": "image",
-                    "icon": "sicon-image-landscape",
+                    "icon": "sicon-frame-image",
                     "id": "logo",
                     "label": "شعار المتجر",
                     "required": false,
@@ -13866,7 +13866,7 @@
                 },
                 {
                     "type": "items",
-                    "icon": "sicon-adjust",
+                    "icon": "sicon-tune",
                     "id": "logo_tone",
                     "label": "لون الشعار",
                     "format": "dropdown-list",
@@ -14040,7 +14040,7 @@
                     "type": "string",
                     "format": "color",
                     "inputType": "color",
-                    "icon": "sicon-color-palette",
+                    "icon": "sicon-art-palette",
                     "id": "text_color",
                     "label": "لون النص والأيقونات",
                     "required": false,
@@ -14197,7 +14197,7 @@
                 {
                     "type": "string",
                     "format": "image",
-                    "icon": "sicon-image-landscape",
+                    "icon": "sicon-frame-image",
                     "id": "image",
                     "label": "صورة البنر",
                     "required": false,
@@ -14430,7 +14430,7 @@
                 {
                     "type": "string",
                     "format": "text",
-                    "icon": "sicon-money",
+                    "icon": "sicon-tag-money",
                     "id": "current_price",
                     "label": "السعر الحالي أو المعلومة الأساسية",
                     "multilanguage": true,
@@ -14445,7 +14445,7 @@
                 {
                     "type": "string",
                     "format": "text",
-                    "icon": "sicon-money",
+                    "icon": "sicon-tag-money",
                     "id": "old_price",
                     "label": "السعر السابق (اختياري)",
                     "multilanguage": true,
@@ -14460,7 +14460,7 @@
                 {
                     "type": "string",
                     "format": "text",
-                    "icon": "sicon-cursor-arrow",
+                    "icon": "sicon-tap",
                     "id": "cta_label",
                     "label": "نص الزر",
                     "multilanguage": true,
@@ -14850,7 +14850,7 @@
                 },
                 {
                     "type": "collection",
-                    "icon": "sicon-image-landscape",
+                    "icon": "sicon-frame-image",
                     "id": "items",
                     "label": "الشارات والصور",
                     "format": "collection",
@@ -14896,7 +14896,7 @@
                     "fields": [
                         {
                             "type": "string",
-                            "icon": "sicon-image-landscape",
+                            "icon": "sicon-frame-image",
                             "id": "image",
                             "label": "الصورة",
                             "format": "image",

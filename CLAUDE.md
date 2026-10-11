@@ -849,6 +849,38 @@ theme-raed is no help here: it declares exactly one number field
 (`items.stars`, `minimum: 1`, value `5`), a single digit that happens to satisfy
 the length rule, so the platform bug has never surfaced there.
 
+### ⚠️ An invented `sicon-*` renders as an empty box, silently
+
+A field's or component's `icon` must name a class that exists in Salla's admin
+icon font. An unknown name is not an error anywhere — no console warning, no
+build failure, no panel error — the icon slot just renders **blank**. The bundle
+shipped **12 invented names across 143 references** this way; the `faq`
+component's empty tile in the marketplace listing is what finally surfaced it.
+
+The names are not guessable, and plausible ones are usually wrong: there is no
+`sicon-move`, `sicon-columns`, `sicon-color-palette`, `sicon-close`,
+`sicon-image-landscape`, `sicon-money`, `sicon-video`, `sicon-apps`,
+`sicon-adjust`, `sicon-cursor-arrow`, `sicon-question-circle` or
+`sicon-diamond-fill`. Their replacements are `sicon-directional-pad`,
+`sicon-ruler`, `sicon-art-palette`, `sicon-cancel`, `sicon-frame-image`,
+`sicon-tag-money`, `sicon-film`, `sicon-layout-grid`, `sicon-tune`, `sicon-tap`,
+`sicon-help` and `sicon-flower-stem`.
+
+`pnpm audit:icons` (`scripts/audit-icons.mjs`) checks every `icon` against
+`scripts/sallaicons.txt`, the vendored class list, and runs from `predev` and
+`prebuild`. The list is vendored rather than fetched so the build stays
+offline-capable; the script's header carries the one-line refresh command.
+
+⚠️ **Keep the extraction's character class permissive.** 14 of the 852 names are
+Material-style with underscores (`sicon-keyboard_arrow_down`, used 72 times
+here). An extraction written as `[a-z0-9-]+` drops them, which both hides a real
+typo and reports 72 perfectly valid references as broken.
+
+To eyeball a candidate before committing to it, drop an HTML page that links
+`https://cdn.assets.salla.network/prod/admin/cp/assets/css/icons/sallaicons/style.css`
+into `node_modules/.salla-temp/` and open it through the dev server — the font
+needs an http origin, so a `file://` page renders nothing.
+
 ## ⚠️ A dropdown value is ALWAYS an array of option objects
 
 Wherever a `dropdown-list` value appears — a top-level field's `selected`, **and a `collection`'s default rows** — it must be an array of the field's own option objects, never a bare string:
